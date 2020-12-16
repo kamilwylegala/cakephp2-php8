@@ -1839,13 +1839,18 @@ class HttpSocketTest extends CakeTestCase {
 	public function testVerifyPeer() {
 		$this->skipIf(!extension_loaded('openssl'), 'OpenSSL is not enabled cannot test SSL.');
 		$socket = new HttpSocket();
+
+		if ($_SERVER["http_proxy"]) {
+			[$ip, $port] = explode(":", $_SERVER["http_proxy"]);
+			$socket->configProxy($ip, (int)($port ?? 3128));
+		}
 		try {
 			$socket->get('https://tv.eurosport.com/');
 			$this->markTestSkipped('Found valid certificate, was expecting invalid certificate.');
 		} catch (SocketException $e) {
 			$message = $e->getMessage();
 			$this->skipIf(strpos($message, 'Invalid HTTP') !== false, 'Invalid HTTP Response received, skipping.');
-			$this->assertContains('Failed to enable crypto', $message);
+			$this->assertContains('certificate verify failed', $message);
 		}
 	}
 

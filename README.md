@@ -1,4 +1,24 @@
-# Fork of CakePHP 2 with support for PHP8
+# ICON LS dev team fork of CakePHP 2
+
+Prerequisites in Centos VM:
+```
+sudo yum -y install glibc-locale-source glibc-langpack-en
+sudo localedef -v -c -i es_ES -f UTF-8 es_ES
+sudo localedef -v -c -i de_DE -f UTF-8 de_DE
+```
+
+Running tests:
+`./tests AllTests`
+
+To run a single test, you need to use the "Cake namespace" of the class under test. e.g. to run `lib/Cake/Model/Datasource/CakeSessionTest`, you would run:
+
+`./tests Model/Datasource/CakeSession`
+
+By default, the tests run with an sqlite database, to run for MySQL, you need to configure a database connection in `app/Config/database.php` and make sure the following empty databases have been created:
+`cakephp_test`, `cakephp_test2`, `cakephp_test3`, and then set the env var `DB` to `mysql`, i.e.:
+`DB=mysql ./tests AllTests`
+
+# KAMI Fork of CakePHP 2 with support for PHP8
 
 ~~For original README content please check original repository: https://github.com/cakephp/cakephp/tree/2.x~~
 
