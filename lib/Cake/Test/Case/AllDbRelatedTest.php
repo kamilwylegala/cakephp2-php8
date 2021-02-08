@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllDbRelatedTest extends PHPUnit_Framework_TestSuite {
+class AllDbRelatedTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * Suite define the tests for this suite
@@ -31,7 +31,7 @@ class AllDbRelatedTest extends PHPUnit_Framework_TestSuite {
  * @return void
  */
 	public static function suite() {
-		$suite = new PHPUnit_Framework_TestSuite('All Db Related Tests');
+		$suite = new \PHPUnit\Framework\TestSuite('All Db Related Tests');
 
 		$path = CORE_TEST_CASES . DS;
 

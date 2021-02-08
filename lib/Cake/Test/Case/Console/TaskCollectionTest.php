@@ -82,12 +82,12 @@ class TaskCollectionTest extends CakeTestCase {
 	}
 
 /**
- * test missingtask exception
- *
- * @expectedException MissingTaskException
- * @return void
- */
+	 * test missingtask exception
+	 *
+	 * @return void
+	 */
 	public function testLoadMissingTask() {
+		$this->expectException(\MissingTaskException::class);
 		$this->Tasks->load('ThisTaskShouldAlwaysBeMissing');
 	}
 

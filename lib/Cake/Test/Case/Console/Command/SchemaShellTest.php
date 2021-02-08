@@ -163,10 +163,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * Test View - and that it dumps the schema file to stdout
- *
- * @return void
- */
+	 * Test View - and that it dumps the schema file to stdout
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testView() {
 		$this->Shell->startup();
 		$this->Shell->Schema->path = CONFIG . 'Schema';
@@ -177,10 +178,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test that view() can find plugin schema files.
- *
- * @return void
- */
+	 * test that view() can find plugin schema files.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testViewWithPlugins() {
 		App::build(array(
 			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
@@ -260,10 +262,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test generate with snapshot generation
- *
- * @return void
- */
+	 * test generate with snapshot generation
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGenerateSnapshot() {
 		$this->Shell->path = TMP;
 		$this->Shell->params['file'] = 'schema.php';
@@ -280,10 +283,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test generate without a snapshot.
- *
- * @return void
- */
+	 * test generate without a snapshot.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGenerateNoOverwrite() {
 		touch(TMP . 'schema.php');
 		$this->Shell->params['file'] = 'schema.php';
@@ -300,10 +304,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test generate with overwriting of the schema files.
- *
- * @return void
- */
+	 * test generate with overwriting of the schema files.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGenerateOverwrite() {
 		touch(TMP . 'schema.php');
 		$this->Shell->params['file'] = 'schema.php';
@@ -313,7 +318,7 @@ class SchemaShellTest extends CakeTestCase {
 		$this->Shell->expects($this->once())->method('in')->will($this->returnValue('o'));
 
 		$this->Shell->expects($this->at(2))->method('out')
-			->with(new PHPUnit_Framework_Constraint_PCREMatch('/Schema file:\s[a-z\.]+\sgenerated/'));
+			->with(new \PHPUnit\Framework\Constraint\RegularExpression('/Schema file:\s[a-z\.]+\sgenerated/'));
 
 		$this->Shell->Schema = $this->getMock('CakeSchema');
 		$this->Shell->Schema->path = TMP;
@@ -425,10 +430,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * Test schema run create with --yes option
- *
- * @return void
- */
+	 * Test schema run create with --yes option
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testCreateOptionYes() {
 		$this->Shell = $this->getMock(
 			'SchemaShell',
@@ -502,10 +508,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test run update with a table arg.
- *
- * @return void
- */
+	 * test run update with a table arg.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testUpdateWithTable() {
 		$this->Shell = $this->getMock(
 			'SchemaShell',
@@ -530,10 +537,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test run update with a table arg. and checks that a CREATE statement is issued
- * table creation
- * @return void
- */
+	 * test run update with a table arg. and checks that a CREATE statement is issued
+	 * table creation
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testUpdateWithTableCreate() {
 		$this->Shell = $this->getMock(
 			'SchemaShell',
@@ -558,10 +566,11 @@ class SchemaShellTest extends CakeTestCase {
 	}
 
 /**
- * test run update with --yes option
- *
- * @return void
- */
+	 * test run update with --yes option
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testUpdateWithOptionYes() {
 		$this->Shell = $this->getMock(
 			'SchemaShell',

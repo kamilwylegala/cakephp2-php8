@@ -622,12 +622,12 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * The "*" asterisk character is only allowed for the following methods: OPTIONS.
- *
- * @expectedException SocketException
- * @return void
- */
+	 * The "*" asterisk character is only allowed for the following methods: OPTIONS.
+	 *
+	 * @return void
+	 */
 	public function testRequestNotAllowedUri() {
+		$this->expectException(\SocketException::class);
 		$this->Socket->reset();
 		$request = array('uri' => '*', 'method' => 'GET');
 		$this->Socket->request($request);
@@ -683,10 +683,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testRequestWithConstructor method
- *
- * @return void
- */
+	 * testRequestWithConstructor method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRequestWithConstructor() {
 		$request = array(
 			'request' => array(
@@ -1029,10 +1030,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testGet method
- *
- * @return void
- */
+	 * testGet method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGet() {
 		$this->RequestSocket->reset();
 
@@ -1078,10 +1080,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * Test the head method
- *
- * @return void
- */
+	 * Test the head method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testHead() {
 		$this->RequestSocket->reset();
 		$this->RequestSocket->expects($this->at(0))
@@ -1200,10 +1203,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testPostPutDelete method
- *
- * @return void
- */
+	 * testPostPutDelete method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testPost() {
 		$this->RequestSocket->reset();
 		$this->RequestSocket->expects($this->at(0))
@@ -1224,10 +1228,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testPut
- *
- * @return void
- */
+	 * testPut
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testPut() {
 		$this->RequestSocket->reset();
 		$this->RequestSocket->expects($this->at(0))
@@ -1248,10 +1253,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testPatch
- *
- * @return void
- */
+	 * testPatch
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testPatch() {
 		$this->RequestSocket->reset();
 		$this->RequestSocket->expects($this->at(0))
@@ -1272,10 +1278,11 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testDelete
- *
- * @return void
- */
+	 * testDelete
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDelete() {
 		$this->RequestSocket->reset();
 		$this->RequestSocket->expects($this->at(0))
@@ -1356,22 +1363,22 @@ class HttpSocketTest extends CakeTestCase {
 	}
 
 /**
- * testBadBuildRequestLine method
- *
- * @expectedException SocketException
- * @return void
- */
+	 * testBadBuildRequestLine method
+	 *
+	 * @return void
+	 */
 	public function testBadBuildRequestLine() {
+		$this->expectException(\SocketException::class);
 		$this->Socket->buildRequestLine('Foo');
 	}
 
 /**
- * testBadBuildRequestLine2 method
- *
- * @expectedException SocketException
- * @return void
- */
+	 * testBadBuildRequestLine2 method
+	 *
+	 * @return void
+	 */
 	public function testBadBuildRequestLine2() {
+		$this->expectException(\SocketException::class);
 		$this->Socket->buildRequestLine("GET * HTTP/1.1\r\n");
 	}
 

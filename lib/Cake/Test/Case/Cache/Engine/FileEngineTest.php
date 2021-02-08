@@ -379,10 +379,11 @@ class FileEngineTest extends CakeTestCase {
 	}
 
 /**
- * check that FileEngine does not generate an error when a configured Path does not exist in debug mode.
- *
- * @return void
- */
+	 * check that FileEngine does not generate an error when a configured Path does not exist in debug mode.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testPathDoesNotExist() {
 		$this->skipIf(is_dir(TMP . 'tests' . DS . 'autocreate'), 'Cannot run if test directory exists.');
 

@@ -25,7 +25,7 @@
  *
  * @package Cake.TestSuite
  */
-class CakeTestLoader extends PHPUnit_Runner_StandardTestSuiteLoader {
+class CakeTestLoader extends \PHPUnit\Runner\StandardTestSuiteLoader {
 
 /**
  * Load a file and find the first test case / suite in that file.
@@ -47,7 +47,7 @@ class CakeTestLoader extends PHPUnit_Runner_StandardTestSuiteLoader {
  * @return string Converted path fragments.
  */
 	protected function _resolveTestFile($filePath, $params) {
-		$basePath = $this->_basePath($params) . DS . $filePath;
+		$basePath = self::_basePath($params) . DS . $filePath;
 		$ending = 'Test.php';
 		return (strpos($basePath, $ending) === (strlen($basePath) - strlen($ending))) ? $basePath : $basePath . $ending;
 	}

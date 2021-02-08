@@ -139,10 +139,11 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testCreate
- *
- * @return void
- */
+	 * testCreate
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testCreate() {
 		$data = array(
 			$this->Model->alias => array(
@@ -165,10 +166,11 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testRead
- *
- * @return void
- */
+	 * testRead
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRead() {
 		$expected = array(
 			'conditions'	=> array('status' => 'test'),
@@ -195,10 +197,11 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testUpdate
- *
- * @return void
- */
+	 * testUpdate
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testUpdate() {
 		$data = array(
 			$this->Model->alias => array(
@@ -227,10 +230,11 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testDelete
- *
- * @return void
- */
+	 * testDelete
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDelete() {
 		$this->Source->expects($this->any())
 			->method('read')

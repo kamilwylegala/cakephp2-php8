@@ -138,10 +138,11 @@ class ModelTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test that getName interacts with the user and returns the model name.
- *
- * @return void
- */
+	 * Test that getName interacts with the user and returns the model name.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGetNameQuit() {
 		$this->Task->expects($this->once())->method('in')->will($this->returnValue('q'));
 		$this->Task->expects($this->once())->method('_stop');
@@ -165,10 +166,11 @@ class ModelTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that an out of bounds option causes an error.
- *
- * @return void
- */
+	 * test that an out of bounds option causes an error.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGetNameWithOutOfBoundsOption() {
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls(99, 1));
 		$this->Task->expects($this->once())->method('err');
@@ -528,7 +530,7 @@ class ModelTaskTest extends CakeTestCase {
 			'two' => array(),
 			'key' => array('key' => 'primary')
 		);
-		$anything = new PHPUnit_Framework_Constraint_IsAnything();
+		$anything = new \PHPUnit\Framework\Constraint\IsAnything();
 		$this->Task->expects($this->once())->method('in')
 			->with($anything, null, 'key')
 			->will($this->returnValue('my_field'));
@@ -1000,11 +1002,12 @@ TEXT;
 	}
 
 /**
- * test that execute passes with different inflections of the same name.
- *
- * @dataProvider nameVariations
- * @return void
- */
+	 * test that execute passes with different inflections of the same name.
+	 *
+	 * @dataProvider nameVariations
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithNamedModelVariations($name) {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1019,10 +1022,11 @@ TEXT;
 	}
 
 /**
- * test that execute with a model name picks up hasMany associations.
- *
- * @return void
- */
+	 * test that execute with a model name picks up hasMany associations.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithNamedModelHasManyCreated() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1094,10 +1098,11 @@ TEXT;
 	}
 
 /**
- * test that odd tablenames aren't inflected back from modelname
- *
- * @return void
- */
+	 * test that odd tablenames aren't inflected back from modelname
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteIntoAllOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -1150,10 +1155,11 @@ TEXT;
 	}
 
 /**
- * test that odd tablenames aren't inflected back from modelname
- *
- * @return void
- */
+	 * test that odd tablenames aren't inflected back from modelname
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteIntoBakeOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -1206,10 +1212,11 @@ TEXT;
 	}
 
 /**
- * test that skipTables changes how all() works.
- *
- * @return void
- */
+	 * test that skipTables changes how all() works.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testSkipTablesAndAll() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
@@ -1285,10 +1292,11 @@ TEXT;
 	}
 
 /**
- * test using bake interactively with a table that does not exist.
- *
- * @return void
- */
+	 * test using bake interactively with a table that does not exist.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithNonExistantTableName() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1304,10 +1312,11 @@ TEXT;
 	}
 
 /**
- * test using bake interactively with a table that does not exist.
- *
- * @return void
- */
+	 * test using bake interactively with a table that does not exist.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testForcedExecuteWithNonExistantTableName() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';

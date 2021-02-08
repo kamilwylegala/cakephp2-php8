@@ -77,10 +77,11 @@ class TimeHelperTest extends CakeTestCase {
 	}
 
 /**
- * test CakeTime class methods are called correctly
- *
- * @return void
- */
+	 * test CakeTime class methods are called correctly
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testTimeHelperProxyMethodCalls() {
 		$methods = array(
 			'convertSpecifiers', 'convert', 'serverOffset', 'fromString',

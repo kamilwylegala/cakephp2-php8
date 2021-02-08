@@ -783,10 +783,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test that redirect triggers methods on the components.
- *
- * @return void
- */
+	 * test that redirect triggers methods on the components.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectTriggeringComponentsReturnNull() {
 		$Controller = new Controller(null);
 		$Controller->response = $this->getMock('CakeResponse', array('header', 'statusCode'));
@@ -805,10 +806,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test that beforeRedirect callback returning null doesn't affect things.
- *
- * @return void
- */
+	 * test that beforeRedirect callback returning null doesn't affect things.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectBeforeRedirectModifyingParams() {
 		$Controller = new Controller(null);
 		$Controller->response = $this->getMock('CakeResponse', array('header', 'statusCode'));
@@ -827,10 +829,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test that beforeRedirect callback returning null doesn't affect things.
- *
- * @return void
- */
+	 * test that beforeRedirect callback returning null doesn't affect things.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectBeforeRedirectModifyingParamsArrayReturn() {
 		$Controller = $this->getMock('Controller', array('header', '_stop'));
 		$Controller->response = $this->getMock('CakeResponse');
@@ -860,10 +863,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test that beforeRedirect callback returning false in controller
- *
- * @return void
- */
+	 * test that beforeRedirect callback returning false in controller
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectBeforeRedirectInController() {
 		$Controller = $this->getMock('Controller', array('_stop', 'beforeRedirect'));
 		$Controller->response = $this->getMock('CakeResponse', array('header'));
@@ -878,10 +882,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * Test that beforeRedirect works with returning an array from the controller method.
- *
- * @return void
- */
+	 * Test that beforeRedirect works with returning an array from the controller method.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectBeforeRedirectInControllerWithArray() {
 		$Controller = $this->getMock('Controller', array('_stop', 'beforeRedirect'));
 		$Controller->response = $this->getMock('CakeResponse', array('header'));
@@ -1206,13 +1211,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test postConditions raising an exception on unsafe keys.
- *
- * @expectedException RuntimeException
- * @dataProvider dangerousPostConditionsProvider
- * @return void
- */
+	 * test postConditions raising an exception on unsafe keys.
+	 *
+	 * @dataProvider dangerousPostConditionsProvider
+	 * @return void
+	 */
 	public function testPostConditionsDangerous($data) {
+		$this->expectException(\RuntimeException::class);
 		$request = new CakeRequest('controller_posts/index');
 
 		$Controller = new Controller($request);
@@ -1220,10 +1225,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * testControllerHttpCodes method
- *
- * @return void
- */
+	 * testControllerHttpCodes method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testControllerHttpCodes() {
 		$response = $this->getMock('CakeResponse', array('httpCodes'));
 		$Controller = new Controller(null, $response);
@@ -1234,10 +1240,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the startup process calls the correct functions
- *
- * @return void
- */
+	 * Tests that the startup process calls the correct functions
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testStartupProcess() {
 		$Controller = $this->getMock('Controller', array('getEventManager'));
 
@@ -1264,10 +1271,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the shutdown process calls the correct functions
- *
- * @return void
- */
+	 * Tests that the shutdown process calls the correct functions
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testStartupProcessIndirect() {
 		$Controller = $this->getMock('Controller', array('beforeFilter'));
 
@@ -1281,10 +1289,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the shutdown process calls the correct functions
- *
- * @return void
- */
+	 * Tests that the shutdown process calls the correct functions
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testShutdownProcess() {
 		$Controller = $this->getMock('Controller', array('getEventManager'));
 
@@ -1303,10 +1312,11 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the shutdown process calls the correct functions
- *
- * @return void
- */
+	 * Tests that the shutdown process calls the correct functions
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testShutdownProcessIndirect() {
 		$Controller = $this->getMock('Controller', array('afterFilter'));
 
@@ -1404,13 +1414,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * testMissingAction method
- *
- * @expectedException MissingActionException
- * @expectedExceptionMessage Action TestController::missing() could not be found.
- * @return void
- */
+	 * testMissingAction method
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionMissingAction() {
+		$this->expectException(\MissingActionException::class);
+		$this->expectExceptionMessage("Action TestController::missing() could not be found.");
 		$url = new CakeRequest('test/missing');
 		$url->addParams(array('controller' => 'test_controller', 'action' => 'missing'));
 		$response = $this->getMock('CakeResponse');
@@ -1420,13 +1430,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking private methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::private_m() is not directly accessible.
- * @return void
- */
+	 * test invoking private methods.
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionPrivate() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::private_m() is not directly accessible.");
 		$url = new CakeRequest('test/private_m/');
 		$url->addParams(array('controller' => 'test_controller', 'action' => 'private_m'));
 		$response = $this->getMock('CakeResponse');
@@ -1436,13 +1446,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking protected methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::protected_m() is not directly accessible.
- * @return void
- */
+	 * test invoking protected methods.
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionProtected() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::protected_m() is not directly accessible.");
 		$url = new CakeRequest('test/protected_m/');
 		$url->addParams(array('controller' => 'test_controller', 'action' => 'protected_m'));
 		$response = $this->getMock('CakeResponse');
@@ -1452,13 +1462,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking hidden methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::_hidden() is not directly accessible.
- * @return void
- */
+	 * test invoking hidden methods.
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionHidden() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::_hidden() is not directly accessible.");
 		$url = new CakeRequest('test/_hidden/');
 		$url->addParams(array('controller' => 'test_controller', 'action' => '_hidden'));
 		$response = $this->getMock('CakeResponse');
@@ -1468,13 +1478,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking controller methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::redirect() is not directly accessible.
- * @return void
- */
+	 * test invoking controller methods.
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionBaseMethods() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::redirect() is not directly accessible.");
 		$url = new CakeRequest('test/redirect/');
 		$url->addParams(array('controller' => 'test_controller', 'action' => 'redirect'));
 		$response = $this->getMock('CakeResponse');
@@ -1484,13 +1494,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking controller methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::admin_add() is not directly accessible.
- * @return void
- */
+	 * test invoking controller methods.
+	 *
+	 * @return void
+	 */
 	public function testInvokeActionPrefixProtection() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::admin_add() is not directly accessible.");
 		Router::reload();
 		Router::connect('/admin/:controller/:action/*', array('prefix' => 'admin'));
 
@@ -1503,13 +1513,13 @@ class ControllerTest extends CakeTestCase {
 	}
 
 /**
- * test invoking controller methods.
- *
- * @expectedException PrivateActionException
- * @expectedExceptionMessage Private Action TestController::Admin_add() is not directly accessible.
- * @return void
- */
+	 * test invoking controller methods.
+	 *21
+	 * @return void
+	 */
 	public function testInvokeActionPrefixProtectionCasing() {
+		$this->expectException(\PrivateActionException::class);
+		$this->expectExceptionMessage("Private Action TestController::Admin_add() is not directly accessible.");
 		Router::reload();
 		Router::connect('/admin/:controller/:action/*', array('prefix' => 'admin'));
 

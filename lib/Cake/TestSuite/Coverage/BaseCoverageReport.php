@@ -62,7 +62,7 @@ abstract class BaseCoverageReport {
 /**
  * Constructor
  *
- * @param array $coverage Array of coverage data from PHPUnit_Test_Result
+ * @param array $coverage Array of coverage data from \PHPUnit\Test\Result
  * @param CakeBaseReporter $reporter A reporter to use for the coverage report.
  */
 	public function __construct($coverage, CakeBaseReporter $reporter) {

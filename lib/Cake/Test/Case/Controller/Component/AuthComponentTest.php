@@ -565,10 +565,10 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
- * @return void
- */
+	 * @return void
+	 */
 	public function testIsAuthorizedMissingFile() {
+		$this->expectException(\CakeException::class);
 		$this->Controller->Auth->authorize = 'Missing';
 		$this->Controller->Auth->isAuthorized(array('User' => array('id' => 1)));
 	}
@@ -643,10 +643,10 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
- * @return void
- */
+	 * @return void
+	 */
 	public function testLoadAuthenticateNoFile() {
+		$this->expectException(\CakeException::class);
 		$this->Controller->Auth->authenticate = 'Missing';
 		$this->Controller->Auth->identify($this->Controller->request, $this->Controller->response);
 	}
@@ -1041,10 +1041,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * Default to loginRedirect, if set, on authError.
- *
- * @return void
- */
+	 * Default to loginRedirect, if set, on authError.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDefaultToLoginRedirect() {
 		$_SERVER['HTTP_REFERER'] = false;
 		$_ENV['HTTP_REFERER'] = false;
@@ -1074,10 +1075,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * testRedirectToUnauthorizedRedirect
- *
- * @return void
- */
+	 * testRedirectToUnauthorizedRedirect
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectToUnauthorizedRedirect() {
 		$url = '/party/on';
 		$this->Auth->request = $CakeRequest = new CakeRequest($url);
@@ -1112,10 +1114,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * testRedirectToUnauthorizedRedirectSuppressedAuthError
- *
- * @return void
- */
+	 * testRedirectToUnauthorizedRedirectSuppressedAuthError
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRedirectToUnauthorizedRedirectSuppressedAuthError() {
 		$url = '/party/on';
 		$this->Auth->request = $CakeRequest = new CakeRequest($url);
@@ -1151,11 +1154,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * Throw ForbiddenException if AuthComponent::$unauthorizedRedirect set to false
- * @expectedException ForbiddenException
- * @return void
- */
+	 * Throw ForbiddenException if AuthComponent::$unauthorizedRedirect set to false
+	 * @return void
+	 */
 	public function testForbiddenException() {
+		$this->expectException(\ForbiddenException::class);
 		$url = '/party/on';
 		$this->Auth->request = $CakeRequest = new CakeRequest($url);
 		$this->Auth->request->addParams(Router::parse($url));
@@ -1175,10 +1178,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * Test that no redirects or authorization tests occur on the loginAction
- *
- * @return void
- */
+	 * Test that no redirects or authorization tests occur on the loginAction
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testNoRedirectOnLoginAction() {
 		$controller = $this->getMock('Controller');
 		$controller->methods = array('login');
@@ -1447,10 +1451,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * Logout should trigger a logout method on authentication objects.
- *
- * @return void
- */
+	 * Logout should trigger a logout method on authentication objects.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testLogoutTrigger() {
 		$LogoutTriggerMockAuthenticate = $this->getMock('BaseAuthenticate', array('authenticate', 'logout'), array(), '', false);
 
@@ -1502,10 +1507,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * test mapActions loading and delegating to authorize objects.
- *
- * @return void
- */
+	 * test mapActions loading and delegating to authorize objects.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testMapActionsDelegation() {
 		$MapActionMockAuthorize = $this->getMock('BaseAuthorize', array('authorize', 'mapActions'), array(), '', false);
 
@@ -1560,10 +1566,11 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * test flash settings.
- *
- * @return void
- */
+	 * test flash settings.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFlashSettings() {
 		$this->Auth->Flash = $this->getMock('FlashComponent', array(), array(), '', false);
 		$this->Auth->Flash->expects($this->once())
@@ -1734,13 +1741,13 @@ class AuthComponentTest extends CakeTestCase {
 	}
 
 /**
- * testStatelessAuthNoRedirect method
- *
- * @expectedException UnauthorizedException
- * @expectedExceptionCode 401
- * @return void
- */
+	 * testStatelessAuthNoRedirect method
+	 *
+	 * @return void
+	 */
 	public function testStatelessAuthNoRedirect() {
+		$this->expectException(\UnauthorizedException::class);
+		$this->expectExceptionCode('401');
 		if (CakeSession::id()) {
 			session_destroy();
 			CakeSession::$id = null;

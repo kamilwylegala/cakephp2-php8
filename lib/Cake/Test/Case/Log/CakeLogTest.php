@@ -70,12 +70,12 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * test all the errors from failed logger imports
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test all the errors from failed logger imports
+	 *
+	 * @return void
+	 */
 	public function testImportingLoggerFailure() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::config('fail', array());
 	}
 
@@ -104,22 +104,22 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * test config() with invalid key name
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test config() with invalid key name
+	 *
+	 * @return void
+	 */
 	public function testInvalidKeyName() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::config('1nv', array('engine' => 'File'));
 	}
 
 /**
- * test that loggers have to implement the correct interface.
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test that loggers have to implement the correct interface.
+	 *
+	 * @return void
+	 */
 	public function testNotImplementingInterface() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::config('fail', array('engine' => 'stdClass'));
 	}
 
@@ -254,12 +254,12 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * test enable
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test enable
+	 *
+	 * @return void
+	 */
 	public function testStreamEnable() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::config('spam', array(
 			'engine' => 'File',
 			'file' => 'spam',
@@ -270,12 +270,12 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * test disable
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test disable
+	 *
+	 * @return void
+	 */
 	public function testStreamDisable() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::config('spam', array(
 			'engine' => 'File',
 			'file' => 'spam',
@@ -288,22 +288,22 @@ class CakeLogTest extends CakeTestCase {
 	}
 
 /**
- * test enabled() invalid stream
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test enabled() invalid stream
+	 *
+	 * @return void
+	 */
 	public function testStreamEnabledInvalid() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::enabled('bogus_stream');
 	}
 
 /**
- * test disable invalid stream
- *
- * @expectedException CakeLogException
- * @return void
- */
+	 * test disable invalid stream
+	 *
+	 * @return void
+	 */
 	public function testStreamDisableInvalid() {
+		$this->expectException(\CakeLogException::class);
 		CakeLog::disable('bogus_stream');
 	}
 

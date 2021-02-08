@@ -544,10 +544,11 @@ class CacheHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that afterRender checks the conditions correctly.
- *
- * @return void
- */
+	 * test that afterRender checks the conditions correctly.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testAfterRenderConditions() {
 		Configure::write('Cache.check', true);
 		$View = new View($this->Controller);
@@ -571,10 +572,11 @@ class CacheHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that afterRender checks the conditions correctly.
- *
- * @return void
- */
+	 * test that afterRender checks the conditions correctly.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testAfterLayoutConditions() {
 		Configure::write('Cache.check', true);
 		$View = new View($this->Controller);

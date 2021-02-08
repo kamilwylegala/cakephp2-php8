@@ -149,7 +149,7 @@ class CakeTestSuiteDispatcher {
  * @return bool true if found, false otherwise
  */
 	public function loadTestFramework() {
-		if (class_exists('PHPUnit_Framework_TestCase')) {
+		if (class_exists('\PHPUnit\Framework\TestCase')) {
 			return true;
 		}
 		$phpunitPath = 'phpunit' . DS . 'phpunit';
@@ -178,7 +178,7 @@ class CakeTestSuiteDispatcher {
 			}
 		}
 		include 'PHPUnit' . DS . 'Autoload.php';
-		return class_exists('PHPUnit_Framework_TestCase');
+		return class_exists('\PHPUnit\Framework\TestCase');
 	}
 
 /**

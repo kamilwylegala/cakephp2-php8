@@ -1,9 +1,5 @@
 <?php
 /**
- * ControllerTestCaseTest file
- *
- * Test Case for ControllerTestCase class
- *
  * CakePHP : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *

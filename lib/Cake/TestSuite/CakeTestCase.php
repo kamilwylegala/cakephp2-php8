@@ -24,7 +24,7 @@ App::uses('CakeTestFixture', 'TestSuite/Fixture');
  *
  * @package       Cake.TestSuite
  */
-abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
+abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 
 /**
  * The class responsible for managing the creation, loading and removing of fixtures
@@ -71,11 +71,11 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  * If no TestResult object is passed a new one will be created.
  * This method is run for each test method in this class
  *
- * @param PHPUnit_Framework_TestResult $result The test result object
- * @return PHPUnit_Framework_TestResult
+ * @param \PHPUnit\Framework\TestResult $result The test result object
+ * @return \PHPUnit\Framework\TestResult
  * @throws InvalidArgumentException
  */
-	public function run(PHPUnit_Framework_TestResult $result = null) {
+	public function run(\PHPUnit\Framework\TestResult $result = null) {
 		$level = ob_get_level();
 
 		if (!empty($this->fixtureManager)) {
@@ -121,7 +121,7 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  */
 	public function skipIf($shouldSkip, $message = '') {
 		if ($shouldSkip) {
-			$this->markTestSkipped($message);
+			self::markTestSkipped($message);
 		}
 		return $shouldSkip;
 	}
@@ -646,7 +646,10 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
 		if (!$expected) {
 			$expected = 'Exception';
 		}
-		$this->setExpectedException($expected, $message);
+		$this->expectException($expected);
+		if ($message !== "") {
+			$this->expectExceptionMessage($message);
+		}
 	}
 
 /**
@@ -654,11 +657,13 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  *
  * @param mixed $name The name of the expected Exception.
  * @param string $message the text to display if the assertion is not correct
- * @deprecated 3.0.0 This is a compatibility wrapper for 1.x. It will be removed in 3.0.
  * @return void
  */
 	public function expectException($name = 'Exception', $message = '') {
-		$this->setExpectedException($name, $message);
+		parent::expectException($name);
+		if ($message !== "") {
+			$this->expectExceptionMessage($message);
+		}
 	}
 
 /**
@@ -816,12 +821,6 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
 		$callOriginalMethods = false,
 		$proxyTarget = null
 	) {
-		$phpUnitVersion = PHPUnit_Runner_Version::id();
-		if (version_compare($phpUnitVersion, '5.7.0', '<')) {
-			return parent::getMock($originalClassName, $methods, $arguments,
-					$mockClassName, $callOriginalConstructor, $callOriginalClone,
-					$callAutoload, $cloneArguments, $callOriginalMethods, $proxyTarget);
-		}
 		if ($cloneArguments) {
 			throw new InvalidArgumentException('$cloneArguments parameter is not supported');
 		}

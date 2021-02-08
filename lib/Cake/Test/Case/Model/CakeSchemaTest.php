@@ -536,10 +536,11 @@ class CakeSchemaTest extends CakeTestCase {
 	}
 
 /**
- * testSchemaReadWithAppModel method
- *
- * @return void
- */
+	 * testSchemaReadWithAppModel method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testSchemaReadWithAppModel() {
 		$connections = ConnectionManager::enumConnectionObjects();
 		ConnectionManager::drop('default');

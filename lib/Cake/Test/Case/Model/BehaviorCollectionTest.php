@@ -604,12 +604,12 @@ class BehaviorCollectionTest extends CakeTestCase {
 	}
 
 /**
- * test that attaching a non existent Behavior triggers a cake error.
- *
- * @expectedException MissingBehaviorException
- * @return void
- */
+	 * test that attaching a non existent Behavior triggers a cake error.
+	 *
+	 * @return void
+	 */
 	public function testInvalidBehaviorCausingCakeError() {
+		$this->expectException(\MissingBehaviorException::class);
 		$Apple = new Apple();
 		$Apple->Behaviors->load('NoSuchBehavior');
 	}
@@ -1123,10 +1123,11 @@ class BehaviorCollectionTest extends CakeTestCase {
 	}
 
 /**
- * Test attach and detaching
- *
- * @return void
- */
+	 * Test attach and detaching
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testBehaviorAttachAndDetach() {
 		$Sample = new Sample();
 		$Sample->actsAs = array('Test3' => array('bar'), 'Test2' => array('foo', 'bar'));

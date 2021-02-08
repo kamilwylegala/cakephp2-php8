@@ -976,12 +976,12 @@ class CakeRequestTest extends CakeTestCase {
 	}
 
 /**
- * Test __call exceptions
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test __call exceptions
+	 *
+	 * @return void
+	 */
 	public function testMagicCallExceptionOnUnknownMethod() {
+		$this->expectException(\CakeException::class);
 		$request = new CakeRequest('some/path');
 		$request->IamABanana();
 	}
@@ -2482,7 +2482,7 @@ XML;
 			$this->assertEquals(array('Allow' => 'POST, DELETE'), $e->responseHeader());
 		}
 
-		$this->setExpectedException('MethodNotAllowedException');
+		$this->expectException('MethodNotAllowedException');
 		$request->allowMethod('POST');
 	}
 

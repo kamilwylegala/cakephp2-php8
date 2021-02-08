@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllNetworkTest extends PHPUnit_Framework_TestSuite {
+class AllNetworkTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.

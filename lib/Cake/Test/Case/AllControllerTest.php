@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllControllersTest extends PHPUnit_Framework_TestSuite {
+class AllControllerTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.
@@ -38,7 +38,6 @@ class AllControllersTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile(CORE_TEST_CASES . DS . 'Controller' . DS . 'PagesControllerTest.php');
 		$suite->addTestFile(CORE_TEST_CASES . DS . 'Controller' . DS . 'ComponentTest.php');
 		$suite->addTestFile(CORE_TEST_CASES . DS . 'Controller' . DS . 'ControllerMergeVarsTest.php');
-		$suite->addTestFile(CORE_TEST_CASES . DS . 'Controller' . DS . 'ApplicationControllerTest.php');
 		return $suite;
 	}
 }

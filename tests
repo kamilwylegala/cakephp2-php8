@@ -13,4 +13,4 @@ DB="${DB:-sqlite}" php \
 	-d auto_prepend_file=test_bootstrap.php \
 	./lib/Cake/Console/cake.php test core \
 	$* \
-	--stderr
+	--stderr --globals-backup

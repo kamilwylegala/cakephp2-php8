@@ -15,9 +15,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-if (!class_exists('PHPUnit_TextUI_TestRunner')) {
-	require_once 'PHPUnit/TextUI/TestRunner.php';
-}
+//if (!class_exists('\PHPUnit\TextUI\TestRunner')) {
+//	require_once 'PHPUnit/TextUI/TestRunner.php';
+//}
 if (class_exists('SebastianBergmann\CodeCoverage\CodeCoverage')) {
 	class_alias('SebastianBergmann\CodeCoverage\CodeCoverage', 'PHP_CodeCoverage');
 	class_alias('SebastianBergmann\CodeCoverage\Report\Text', 'PHP_CodeCoverage_Report_Text');
@@ -34,7 +34,7 @@ App::uses('CakeFixtureManager', 'TestSuite/Fixture');
  *
  * @package       Cake.TestSuite
  */
-class CakeTestRunner extends PHPUnit_TextUI_TestRunner {
+class CakeTestRunner extends \PHPUnit\TextUI\TestRunner {
 
 /**
  * Lets us pass in some options needed for CakePHP's webrunner.
@@ -50,13 +50,13 @@ class CakeTestRunner extends PHPUnit_TextUI_TestRunner {
 /**
  * Actually run a suite of tests. Cake initializes fixtures here using the chosen fixture manager
  *
- * @param PHPUnit_Framework_Test $suite The test suite to run
+ * @param \PHPUnit\Framework\Test $suite The test suite to run
  * @param array $arguments The CLI arguments
  * @param bool $exit Exits by default or returns the results
  * This argument is ignored if >PHPUnit5.2.0
- * @return void
+ * @return \PHPUnit\Framework\TestResult
  */
-	public function doRun(PHPUnit_Framework_Test $suite, array $arguments = array(), $exit = true) {
+	public function doRun(\PHPUnit\Framework\Test $suite, array $arguments = array(), $exit = true) {
 		if (isset($arguments['printer'])) {
 			static::$versionStringPrinted = true;
 		}
@@ -82,10 +82,10 @@ class CakeTestRunner extends PHPUnit_TextUI_TestRunner {
 /**
  * Create the test result and splice on our code coverage reports.
  *
- * @return PHPUnit_Framework_TestResult
+ * @return \PHPUnit\Framework\TestResult
  */
 	protected function createTestResult() {
-		$result = new PHPUnit_Framework_TestResult;
+		$result = new \PHPUnit\Framework\TestResult;
 		if (!empty($this->_params['codeCoverage'])) {
 			if (method_exists($result, 'collectCodeCoverageInformation')) {
 				$result->collectCodeCoverageInformation(true);

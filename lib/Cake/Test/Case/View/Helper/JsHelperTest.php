@@ -204,12 +204,12 @@ class JsHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that methods dispatch internally and to the engine class
- *
- * @expectedException PHPUnit_Framework_Error_Warning
- * @return void
- */
+	 * test that methods dispatch internally and to the engine class
+	 *
+	 * @return void
+	 */
 	public function testMethodDispatching() {
+		$this->expectException('\PHPUnit\Framework\Error\Warning');
 		$this->_useMock();
 
 		$this->Js->TestJsEngine
@@ -316,10 +316,11 @@ class JsHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that writing the buffer with inline = false includes a script tag.
- *
- * @return void
- */
+	 * test that writing the buffer with inline = false includes a script tag.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteBufferNotInline() {
 		$this->Js->set('foo', 1);
 
@@ -331,11 +332,12 @@ class JsHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that writeBuffer() sets domReady = false when the request is done by XHR.
- * Including a domReady() when in XHR can cause issues as events aren't triggered by some libraries
- *
- * @return void
- */
+	 * test that writeBuffer() sets domReady = false when the request is done by XHR.
+	 * Including a domReady() when in XHR can cause issues as events aren't triggered by some libraries
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteBufferAndXhr() {
 		$this->_useMock();
 		$requestWith = null;

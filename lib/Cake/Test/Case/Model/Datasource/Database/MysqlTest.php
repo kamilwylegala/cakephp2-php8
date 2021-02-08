@@ -64,7 +64,7 @@ class MysqlTest extends CakeTestCase {
 		parent::setUp();
 		$this->Dbo = ConnectionManager::getDataSource('test');
 		if (!($this->Dbo instanceof Mysql)) {
-			$this->markTestSkipped('The MySQL extension is not available.');
+			self::markTestSkipped('The MySQL extension is not available.');
 		}
 		$this->_debug = Configure::read('debug');
 		Configure::write('debug', 1);
@@ -1328,10 +1328,11 @@ SQL;
 	}
 
 /**
- * test that read() places provided joins after the generated ones.
- *
- * @return void
- */
+	 * test that read() places provided joins after the generated ones.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testReadCustomJoinsAfterGeneratedJoins() {
 		$db = $this->Dbo->config['database'];
 		$test = $this->getMock('Mysql', array('connect', '_execute', 'execute'));
@@ -1371,10 +1372,11 @@ SQL;
 	}
 
 /**
- * testGenerateInnerJoinAssociationQuery method
- *
- * @return void
- */
+	 * testGenerateInnerJoinAssociationQuery method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGenerateInnerJoinAssociationQuery() {
 		$db = $this->Dbo->config['database'];
 		$test = $this->getMock('Mysql', array('connect', '_execute', 'execute'));
@@ -2881,18 +2883,18 @@ SQL;
 	}
 
 /**
- * testDropSchemaNoSchema method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- * @throws PHPUnit_Framework_Error
- */
+	 * testDropSchemaNoSchema method
+	 *
+	 * @return void
+	 * @throws \PHPUnit\Framework\Error\Error
+	 */
 	public function testDropSchemaNoSchema() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		try {
 			$this->Dbo->dropSchema(null);
 			$this->fail('No exception');
 		} catch (TypeError $e) {
-			throw new PHPUnit_Framework_Error('Raised an error', 100, __FILE__, __LINE__);
+			throw new \PHPUnit\Framework\Error\Error('Raised an error', 100, __FILE__, __LINE__);
 		}
 	}
 
@@ -3230,12 +3232,12 @@ SQL;
 	}
 
 /**
- * testBuildColumnBadType method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testBuildColumnBadType method
+	 *
+	 * @return void
+	 */
 	public function testBuildColumnBadType() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$data = array(
 			'name' => 'testName',
 			'type' => 'varchar(255)',
@@ -3398,10 +3400,11 @@ SQL;
 	}
 
 /**
- * test hasAny()
- *
- * @return void
- */
+	 * test hasAny()
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testHasAny() {
 		$db = $this->Dbo->config['database'];
 		$this->Dbo = $this->getMock('Mysql', array('connect', '_execute', 'execute', 'value'));
@@ -3977,10 +3980,10 @@ SQL;
 	}
 
 /**
- * @expectedException MissingConnectionException
- * @return void
- */
+	 * @return void
+	 */
 	public function testExceptionOnBrokenConnection() {
+		$this->expectException(\MissingConnectionException::class);
 		new Mysql(array(
 			'driver' => 'mysql',
 			'host' => 'imaginary_host',
@@ -3991,10 +3994,11 @@ SQL;
 	}
 
 /**
- * testStatements method
- *
- * @return void
- */
+	 * testStatements method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testUpdateStatements() {
 		$this->loadFixtures('Article', 'User');
 		$test = ConnectionManager::getDatasource('test');
@@ -4023,10 +4027,11 @@ SQL;
 	}
 
 /**
- * Test deletes with a mock.
- *
- * @return void
- */
+	 * Test deletes with a mock.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDeleteStatements() {
 		$this->loadFixtures('Article', 'User');
 		$test = ConnectionManager::getDatasource('test');
@@ -4054,10 +4059,11 @@ SQL;
 	}
 
 /**
- * Test deletes without complex conditions.
- *
- * @return void
- */
+	 * Test deletes without complex conditions.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDeleteNoComplexCondition() {
 		$this->loadFixtures('Article', 'User');
 		$test = ConnectionManager::getDatasource('test');
@@ -4080,10 +4086,11 @@ SQL;
 	}
 
 /**
- * Test truncate with a mock.
- *
- * @return void
- */
+	 * Test truncate with a mock.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testTruncateStatements() {
 		$this->loadFixtures('Article', 'User');
 		$db = ConnectionManager::getDatasource('test');

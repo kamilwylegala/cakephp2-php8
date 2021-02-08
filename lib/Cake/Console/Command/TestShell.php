@@ -161,6 +161,8 @@ class TestShell extends Shell {
 			'help' => __d('cake_console', 'Choose a custom fixture manager.')
 		))->addOption('debug', array(
 			'help' => __d('cake_console', 'More verbose output.')
+		))->addOption('globals-backup', array(
+			'help' => __d('cake_console', 'Backup globals between tests')
 		));
 
 		return $parser;

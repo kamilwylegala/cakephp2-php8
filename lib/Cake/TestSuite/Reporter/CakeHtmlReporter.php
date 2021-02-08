@@ -138,7 +138,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * Paints the end of the test with a summary of
  * the passes and failures.
  *
- * @param PHPUnit_Framework_TestResult $result Result object
+ * @param \PHPUnit\Framework\TestResult $result Result object
  * @return void
  */
 	public function paintFooter($result) {
@@ -251,7 +251,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * trail of the nesting test suites below the
  * top level test.
  *
- * @param PHPUnit_Framework_AssertionFailedError $message Failure object displayed in
+ * @param \PHPUnit\Framework\AssertionFailedError $message Failure object displayed in
  *   the context of the other tests.
  * @param mixed $test The test case to paint a failure for.
  * @return void
@@ -277,13 +277,8 @@ class CakeHtmlReporter extends CakeBaseReporter {
 
 		if ((is_string($actualMsg) && is_string($expectedMsg)) || (is_array($actualMsg) && is_array($expectedMsg))) {
 
-			$diffs = "";
-			if (class_exists('PHPUnit_Util_Diff')) {
-				$diffs = PHPUnit_Util_Diff::diff($expectedMsg, $actualMsg);
-			} elseif (class_exists('SebastianBergmann\Diff\Differ')) {
-				$differ = new SebastianBergmann\Diff\Differ();
-				$diffs = $differ->diff($expectedMsg, $actualMsg);
-			}
+			$differ = new SebastianBergmann\Diff\Differ();
+			$diffs = $differ->diff($expectedMsg, $actualMsg);
 
 			echo "<br />" . $this->_htmlEntities($diffs);
 		}
@@ -304,11 +299,11 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * trail of the nesting test suites below the
  * top level test.
  *
- * @param PHPUnit_Framework_Test $test Test method that just passed
+ * @param \PHPUnit\Framework\Test $test Test method that just passed
  * @param float $time time spent to run the test method
  * @return void
  */
-	public function paintPass(PHPUnit_Framework_Test $test, $time = null) {
+	public function paintPass(\PHPUnit\Framework\Test $test, $time = null) {
 		ob_start();
 		if (isset($this->params['showPasses']) && $this->params['showPasses']) {
 			echo "<li class='pass'>\n";
@@ -346,7 +341,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * Prints the message for skipping tests.
  *
  * @param string $message Text of skip condition.
- * @param PHPUnit_Framework_TestCase $test the test method skipped
+ * @param \PHPUnit\Framework\TestCase $test the test method skipped
  * @return void
  */
 	public function paintSkip($message, $test) {
@@ -402,10 +397,10 @@ class CakeHtmlReporter extends CakeBaseReporter {
 /**
  * A test suite started.
  *
- * @param PHPUnit_Framework_TestSuite $suite The test suite to start.
+ * @param \PHPUnit\Framework\TestSuite $suite The test suite to start.
  * @return void
  */
-	public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
+	public function startTestSuite(\PHPUnit\Framework\TestSuite $suite) {
 		if (!$this->_headerSent) {
 			$this->paintHeader();
 		}
@@ -414,7 +409,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 
 /**
  * Returns the query string formatted for ouput in links
- * 
+ *
  * @return string
  */
 	protected function _getQueryLink() {

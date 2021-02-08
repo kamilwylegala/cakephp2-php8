@@ -809,10 +809,11 @@ class RequestHandlerComponentTest extends CakeTestCase {
 	}
 
 /**
- * testClientProperties method
- *
- * @return void
- */
+	 * testClientProperties method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testClientProperties() {
 		$request = $this->getMock('CakeRequest');
 		$request->expects($this->once())->method('referer');
@@ -912,10 +913,11 @@ class RequestHandlerComponentTest extends CakeTestCase {
 	}
 
 /**
- * assure that beforeRedirect with a status code will correctly set the status header
- *
- * @return void
- */
+	 * assure that beforeRedirect with a status code will correctly set the status header
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testBeforeRedirectCallingHeader() {
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 
@@ -935,10 +937,10 @@ class RequestHandlerComponentTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
- * @return void
- */
+	 * @return void
+	 */
 	public function testAddInputTypeException() {
+		$this->expectException(\CakeException::class);
 		$this->RequestHandler->addInputType('csv', array('I am not callable'));
 	}
 

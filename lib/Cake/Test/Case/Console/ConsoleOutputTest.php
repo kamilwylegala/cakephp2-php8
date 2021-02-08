@@ -47,10 +47,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test writing with no new line
- *
- * @return void
- */
+	 * test writing with no new line
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteNoNewLine() {
 		$this->output->expects($this->once())->method('_write')
 			->with('Some output');
@@ -59,10 +60,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test writing with no new line
- *
- * @return void
- */
+	 * test writing with no new line
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteNewLine() {
 		$this->output->expects($this->once())->method('_write')
 			->with('Some output' . PHP_EOL);
@@ -71,10 +73,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test write() with multiple new lines
- *
- * @return void
- */
+	 * test write() with multiple new lines
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteMultipleNewLines() {
 		$this->output->expects($this->once())->method('_write')
 			->with('Some output' . PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL);
@@ -83,10 +86,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test writing an array of messages.
- *
- * @return void
- */
+	 * test writing an array of messages.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testWriteArray() {
 		$this->output->expects($this->once())->method('_write')
 			->with('Line' . PHP_EOL . 'Line' . PHP_EOL . 'Line' . PHP_EOL);
@@ -95,10 +99,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test writing an array of messages.
- *
- * @return void
- */
+	 * test writing an array of messages.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testOverwrite() {
 		$testString = "Text";
 
@@ -148,10 +153,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test formatting text with styles.
- *
- * @return void
- */
+	 * test formatting text with styles.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingSimple() {
 		$this->output->expects($this->once())->method('_write')
 			->with("\033[31;4mError:\033[0m Something bad");
@@ -160,10 +166,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test that formatting doesn't eat tags it doesn't know about.
- *
- * @return void
- */
+	 * test that formatting doesn't eat tags it doesn't know about.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingNotEatingTags() {
 		$this->output->expects($this->once())->method('_write')
 			->with("<red> Something bad");
@@ -172,10 +179,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test formatting with custom styles.
- *
- * @return void
- */
+	 * test formatting with custom styles.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingCustom() {
 		$this->output->styles('annoying', array(
 			'text' => 'magenta',
@@ -191,10 +199,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test formatting text with missing styles.
- *
- * @return void
- */
+	 * test formatting text with missing styles.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingMissingStyleName() {
 		$this->output->expects($this->once())->method('_write')
 			->with("<not_there>Error:</not_there> Something bad");
@@ -203,10 +212,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test formatting text with multiple styles.
- *
- * @return void
- */
+	 * test formatting text with multiple styles.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingMultipleStylesName() {
 		$this->output->expects($this->once())->method('_write')
 			->with("\033[31;4mBad\033[0m \033[33mWarning\033[0m Regular");
@@ -215,10 +225,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test that multiple tags of the same name work in one string.
- *
- * @return void
- */
+	 * test that multiple tags of the same name work in one string.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFormattingMultipleSameTags() {
 		$this->output->expects($this->once())->method('_write')
 			->with("\033[31;4mBad\033[0m \033[31;4mWarning\033[0m Regular");
@@ -227,10 +238,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test raw output not getting tags replaced.
- *
- * @return void
- */
+	 * test raw output not getting tags replaced.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testOutputAsRaw() {
 		$this->output->outputAs(ConsoleOutput::RAW);
 		$this->output->expects($this->once())->method('_write')
@@ -240,10 +252,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test plain output.
- *
- * @return void
- */
+	 * test plain output.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testOutputAsPlain() {
 		$this->output->outputAs(ConsoleOutput::PLAIN);
 		$this->output->expects($this->once())->method('_write')
@@ -264,10 +277,11 @@ class ConsoleOutputTest extends CakeTestCase {
 	}
 
 /**
- * test plain output only strips tags used for formatting.
- *
- * @return void
- */
+	 * test plain output only strips tags used for formatting.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testOutputAsPlainSelectiveTagRemoval() {
 		$this->output->outputAs(ConsoleOutput::PLAIN);
 		$this->output->expects($this->once())->method('_write')

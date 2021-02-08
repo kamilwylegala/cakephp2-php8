@@ -56,10 +56,11 @@ class MediaViewTest extends CakeTestCase {
 	}
 
 /**
- * testRender method
- *
- * @return void
- */
+	 * testRender method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRender() {
 		$vars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'css' . DS,
@@ -81,10 +82,11 @@ class MediaViewTest extends CakeTestCase {
 	}
 
 /**
- * Test render() when caching is on.
- *
- * @return void
- */
+	 * Test render() when caching is on.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRenderCachingAndName() {
 		$vars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'css' . DS,
@@ -116,10 +118,11 @@ class MediaViewTest extends CakeTestCase {
 	}
 
 /**
- * Test downloading files with UPPERCASE extensions.
- *
- * @return void
- */
+	 * Test downloading files with UPPERCASE extensions.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRenderUpperExtension() {
 		$this->MediaView->viewVars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'img' . DS,

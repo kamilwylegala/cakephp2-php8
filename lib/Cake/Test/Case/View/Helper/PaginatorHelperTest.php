@@ -2781,10 +2781,11 @@ class PaginatorHelperTest extends CakeTestCase {
 	}
 
 /**
- * Ensure that the internal link class object is called when the update key is present
- *
- * @return void
- */
+	 * Ensure that the internal link class object is called when the update key is present
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testAjaxLinkGenerationNumbers() {
 		$this->Paginator->Js->expectCallCount('link', 2);
 		$this->Paginator->numbers(array(
@@ -2809,12 +2810,12 @@ class PaginatorHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that mock classes injected into paginatorHelper are called when using link()
- *
- * @expectedException CakeException
- * @return void
- */
+	 * test that mock classes injected into paginatorHelper are called when using link()
+	 *
+	 * @return void
+	 */
 	public function testMockAjaxProviderClassInjection() {
+		$this->expectException(\CakeException::class);
 		$mock = $this->getMock('PaginatorHelper', array(), array($this->View), 'PaginatorMockJsHelper');
 		$Paginator = new PaginatorHelper($this->View, array('ajax' => 'PaginatorMockJs'));
 		$Paginator->request->params['paging'] = array(

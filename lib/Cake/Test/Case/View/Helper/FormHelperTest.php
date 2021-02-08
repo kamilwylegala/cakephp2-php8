@@ -9687,9 +9687,7 @@ class FormHelperTest extends CakeTestCase {
  */
 	public function testCreateNoErrorsWithMockModel() {
 		$encoding = strtolower(Configure::read('App.encoding'));
-		$ContactMock = $this->getMockBuilder('Contact')
-			->disableOriginalConstructor()
-			->getMock();
+		$ContactMock = $this->createMock('Contact');
 		ClassRegistry::removeObject('Contact');
 		ClassRegistry::addObject('Contact', $ContactMock);
 		$result = $this->Form->create('Contact', array('type' => 'GET'));
@@ -10918,10 +10916,10 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
- * @return void
- */
+	 * @return void
+	 */
 	public function testHtml5InputException() {
+		$this->expectException(\CakeException::class);
 		$this->Form->email();
 	}
 

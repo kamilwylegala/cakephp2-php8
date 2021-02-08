@@ -216,10 +216,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test that file path generation doesn't continuously append paths.
- *
- * @return void
- */
+	 * Test that file path generation doesn't continuously append paths.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testFilePathGenerationModelRepeated() {
 		$this->Task->expects($this->never())->method('err');
 		$this->Task->expects($this->never())->method('_stop');
@@ -423,33 +424,6 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test baking controller test files
- *
- * @return void
- */
-	public function testBakeControllerTest() {
-		$this->Task->expects($this->once())->method('createFile')->will($this->returnValue(true));
-		$this->Task->expects($this->once())->method('isLoadableClass')->will($this->returnValue(true));
-
-		$result = $this->Task->bake('Controller', 'TestTaskComments');
-
-		$this->assertContains("App::uses('TestTaskCommentsController', 'Controller')", $result);
-		$this->assertContains('class TestTaskCommentsControllerTest extends ControllerTestCase', $result);
-
-		$this->assertNotContains('function setUp()', $result);
-		$this->assertNotContains("\$this->TestTaskComments = new TestTaskCommentsController()", $result);
-		$this->assertNotContains("\$this->TestTaskComments->constructClasses()", $result);
-
-		$this->assertNotContains('function tearDown()', $result);
-		$this->assertNotContains('unset($this->TestTaskComments)', $result);
-
-		$this->assertContains("'app.test_task_article'", $result);
-		$this->assertContains("'app.test_task_comment'", $result);
-		$this->assertContains("'app.test_task_tag'", $result);
-		$this->assertContains("'app.articles_tag'", $result);
-	}
-
-/**
  * test baking component test files,
  *
  * @return void
@@ -578,10 +552,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test bake() with a -plugin param
- *
- * @return void
- */
+	 * test bake() with a -plugin param
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testBakeWithPlugin() {
 		$this->Task->plugin = 'TestTest';
 
@@ -596,10 +571,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test interactive with plugins lists from the plugin
- *
- * @return void
- */
+	 * test interactive with plugins lists from the plugin
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testInteractiveWithPlugin() {
 		$testApp = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS;
 		App::build(array(
@@ -672,10 +648,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute with a type defined
- *
- * @return void
- */
+	 * test execute with a type defined
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithOneArg() {
 		$this->Task->args[0] = 'Model';
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('TestTaskTag'));
@@ -689,10 +666,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute with type and class name defined
- *
- * @return void
- */
+	 * test execute with type and class name defined
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithTwoArgs() {
 		$this->Task->args = array('Model', 'TestTaskTag');
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('TestTaskTag'));
@@ -706,10 +684,11 @@ class TestTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute with type and class name defined and lower case.
- *
- * @return void
- */
+	 * test execute with type and class name defined and lower case.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithTwoArgsLowerCase() {
 		$this->Task->args = array('model', 'TestTaskTag');
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('TestTaskTag'));

@@ -475,10 +475,11 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * testExceptionResponseHeader method
- *
- * @return void
- */
+	 * testExceptionResponseHeader method
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExceptionResponseHeader() {
 		$exception = new MethodNotAllowedException('Only allowing POST and DELETE');
 		$exception->responseHeader(array('Allow: POST, DELETE'));
@@ -513,10 +514,11 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * Returns an array of tests to run for the various CakeException classes.
- *
- * @return void
- */
+	 * Returns an array of tests to run for the various CakeException classes.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public static function testProvider() {
 		return array(
 			array(
@@ -705,10 +707,11 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * Test that exceptions in beforeRender() are handled by outputMessageSafe
- *
- * @return void
- */
+	 * Test that exceptions in beforeRender() are handled by outputMessageSafe
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRenderExceptionInBeforeRender() {
 		$exception = new NotFoundException('Not there, sorry');
 		$ExceptionRenderer = new ExceptionRenderer($exception);
@@ -766,10 +769,11 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * Test that missing plugin disables Controller::$plugin if the two are the same plugin.
- *
- * @return void
- */
+	 * Test that missing plugin disables Controller::$plugin if the two are the same plugin.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testMissingPluginRenderSafe() {
 		$exception = new NotFoundException();
 		$ExceptionRenderer = new ExceptionRenderer($exception);
@@ -797,10 +801,11 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * Test that missing plugin doesn't disable Controller::$plugin if the two aren't the same plugin.
- *
- * @return void
- */
+	 * Test that missing plugin doesn't disable Controller::$plugin if the two aren't the same plugin.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testMissingPluginRenderSafeWithPlugin() {
 		App::build(array(
 			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)

@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class ModelTest extends PHPUnit_Framework_TestSuite {
+class ModelTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.
@@ -31,7 +31,7 @@ class ModelTest extends PHPUnit_Framework_TestSuite {
  * @return void
  */
 	public static function suite() {
-		$suite = new PHPUnit_Framework_TestSuite('All Model related class tests');
+		$suite = new \PHPUnit\Framework\TestSuite('All Model related class tests');
 
 		$suite->addTestFile(CORE_TEST_CASES . DS . 'Model' . DS . 'Validator' . DS . 'CakeValidationSetTest.php');
 		$suite->addTestFile(CORE_TEST_CASES . DS . 'Model' . DS . 'Validator' . DS . 'CakeValidationRuleTest.php');

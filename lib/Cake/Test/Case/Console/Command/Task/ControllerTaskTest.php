@@ -162,10 +162,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test getting invalid indexes.
- *
- * @return void
- */
+	 * test getting invalid indexes.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testGetNameInvalidIndex() {
 		$this->Task->interactive = true;
 		$this->Task->expects($this->any())->method('in')
@@ -254,10 +255,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test Confirming controller user interaction
- *
- * @return void
- */
+	 * test Confirming controller user interaction
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testConfirmController() {
 		$controller = 'Posts';
 		$scaffold = false;
@@ -307,7 +309,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$this->Task->expects($this->at(1))->method('createFile')->with(
 			$path,
-			new PHPUnit_Framework_Constraint_IsAnything()
+			new \PHPUnit\Framework\Constraint\IsAnything()
 		);
 		$this->Task->expects($this->at(3))->method('createFile')->with(
 			$path,
@@ -375,10 +377,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test Interactive mode.
- *
- * @return void
- */
+	 * test Interactive mode.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testInteractive() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
@@ -452,10 +455,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that execute runs all when the first arg == all
- *
- * @return void
- */
+	 * test that execute runs all when the first arg == all
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteIntoAll() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
@@ -479,10 +483,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test execute() with all and --admin
- *
- * @return void
- */
+	 * Test execute() with all and --admin
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteIntoAllAdmin() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
@@ -512,10 +517,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that `cake bake controller foos` works.
- *
- * @return void
- */
+	 * test that `cake bake controller foos` works.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithController() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -542,11 +548,12 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that both plural and singular forms work for controller baking.
- *
- * @dataProvider nameVariations
- * @return void
- */
+	 * test that both plural and singular forms work for controller baking.
+	 *
+	 * @dataProvider nameVariations
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithControllerNameVariations($name) {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -560,10 +567,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that `cake bake controller foo scaffold` works.
- *
- * @return void
- */
+	 * test that `cake bake controller foo scaffold` works.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithPublicParam() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -571,7 +579,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->Task->params = array('public' => true);
 
 		$filename = '/my/path/BakeArticlesController.php';
-		$expected = new PHPUnit_Framework_Constraint_Not($this->stringContains('$scaffold'));
+		$expected = new \PHPUnit\Framework\Constraint\LogicalNot($this->stringContains('$scaffold'));
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename, $expected
 		);
@@ -579,10 +587,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that `cake bake controller foos both` works.
- *
- * @return void
- */
+	 * test that `cake bake controller foos both` works.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithControllerAndBoth() {
 		$this->Task->Project->expects($this->any())->method('getPrefix')->will($this->returnValue('admin_'));
 		$this->Task->connection = 'test';
@@ -598,10 +607,11 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that `cake bake controller foos admin` works.
- *
- * @return void
- */
+	 * test that `cake bake controller foos admin` works.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithControllerAndAdmin() {
 		$this->Task->Project->expects($this->any())->method('getPrefix')->will($this->returnValue('admin_'));
 		$this->Task->connection = 'test';

@@ -83,10 +83,11 @@ class DbConfigTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute and by extension _interactive
- *
- * @return void
- */
+	 * test execute and by extension _interactive
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteIntoInteractive() {
 		$this->Task->initialize();
 

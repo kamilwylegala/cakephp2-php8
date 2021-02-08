@@ -48,7 +48,7 @@ class CakeTextReporter extends CakeBaseReporter {
 /**
  * Paints a failing test.
  *
- * @param PHPUnit_Framework_AssertionFailedError $message Failure object displayed in
+ * @param \PHPUnit\Framework\AssertionFailedError $message Failure object displayed in
  *   the context of the other tests.
  * @return void
  */
@@ -67,7 +67,7 @@ class CakeTextReporter extends CakeBaseReporter {
  * Paints the end of the test with a summary of
  * the passes and failures.
  *
- * @param PHPUnit_Framework_TestResult $result Result object
+ * @param \PHPUnit\Framework\TestResult $result Result object
  * @return void
  */
 	public function paintFooter($result) {

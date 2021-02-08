@@ -53,7 +53,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . "/lib/Cake/Routing/",
 
 		__DIR__ . "/lib/Cake/Test/Case",
-		__DIR__ . "/lib/Cake/Test/Case/TestSuite/ControllerTestCaseTest.php",
 		__DIR__ . "/lib/Cake/Test/Case/Console/Command/BakeShellTest.php",
 		__DIR__ . "/lib/Cake/Test/Case/Console/Command/Task/ControllerTaskTest.php",
 		__DIR__ . "/lib/Cake/Test/Fixture",
@@ -68,8 +67,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 	$parameters->set(Option::PATHS, [
 		__DIR__ . "/lib/Cake/Test/Case/",
 		__DIR__ . "/lib/Cake/TestSuite/CakeTestCase.php",
-		__DIR__ . "/lib/Cake/TestSuite/ControllerTestCase.php",
 	]);
 
-	$parameters->set(Option::SETS, [SetList::PHPUNIT_50]);
+	$parameters->set(Option::SETS, [SetList::PHPUNIT_60]);
 };
