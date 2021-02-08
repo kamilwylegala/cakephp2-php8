@@ -56,10 +56,10 @@ class TestSource extends DataSource {
 
 /**
  * listSources
- *
+ * @var mixed|null $data
  * @return bool
  */
-	public function listSources() {
+	public function listSources($data = null) {
 		return null;
 	}
 
@@ -69,7 +69,7 @@ class TestSource extends DataSource {
  * @param Model $Model
  * @return array
  */
-	public function describe(Model $Model) {
+	public function describe($Model) {
 		return $this->_schema;
 	}
 

@@ -26,7 +26,8 @@
 	},
 	"require-dev": {
 		"cakephp/cakephp-codesniffer": "^1.0.0",
-		"phpunit/phpunit": "5.7.19"
+		"phpunit/phpunit": "5.7.19",
+		"rector/rector-prefixed": "^0.9.18"
 	},
 	"config": {
 		"vendor-dir": "vendors/",
