@@ -15,9 +15,6 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-//if (!class_exists('\PHPUnit\TextUI\TestRunner')) {
-//	require_once 'PHPUnit/TextUI/TestRunner.php';
-//}
 if (class_exists('SebastianBergmann\CodeCoverage\CodeCoverage')) {
 	class_alias('SebastianBergmann\CodeCoverage\CodeCoverage', 'PHP_CodeCoverage');
 	class_alias('SebastianBergmann\CodeCoverage\Report\Text', 'PHP_CodeCoverage_Report_Text');

@@ -1,6 +1,29 @@
-# ICON LS dev team fork of CakePHP 2
+# CakePHP fork
 
-Prerequisites in Centos VM:
+This is a fork of version 2 of the CakePHP project with the goal of keeping the framework running on newer versions of PHP. The official 2.x branch is EOL and the framework tests cannot be run on versions of PHPUnit above 5. This fork is therefore necessary to update PHPUnit to newer versions and therefore support PHP 8 (hopefully).
+
+[Original CakePHP 2 documentation](https://book.cakephp.org/2/en/contributing/documentation.html)
+
+# Support
+This repository is not intended to be used by developers from outside our team and will eventually be moved to a private repository/package. We will not address PRs or issues from outside our team.
+
+# Changes made to date
+- Deleted ControllerTestCase and sub-classes
+- Updated PHPUnit to version 6
+
+# Roadmap
+- Update PHPUnit to latest version (currently v10)
+- Execute framework tests on PHP 7.4
+- Execute framework tests on PHP 8.0
+- (BREAKING) Add all framework classes to composer classmap and remove App::uses()
+- (BREAKING) Re-arrange framework code into separate `src`, `test` folders, and remove the `app` template folder from this repository
+- Update the core test suite so that it can be run using PHPUnit's standard test runner and doesn't require Cake's test shell
+- Delete parts of the framework that we do not use / are unlikely to ever use (e.g. Postgres DboSource)
+
+#Running tests
+
+Run the tests in a CentOS VM. You will need the following in addition to our basic PHP set-up.
+
 ```
 sudo yum -y install glibc-locale-source glibc-langpack-en
 sudo localedef -v -c -i es_ES -f UTF-8 es_ES
@@ -17,52 +40,3 @@ To run a single test, you need to use the "Cake namespace" of the class under te
 By default, the tests run with an sqlite database, to run for MySQL, you need to configure a database connection in `app/Config/database.php` and make sure the following empty databases have been created:
 `cakephp_test`, `cakephp_test2`, `cakephp_test3`, and then set the env var `DB` to `mysql`, i.e.:
 `DB=mysql ./tests AllTests`
-
-# CakePHP
-
-[![Latest Stable Version](https://poser.pugx.org/cakephp/cakephp/v/stable.svg)](https://packagist.org/packages/cakephp/cakephp)
-[![License](https://poser.pugx.org/cakephp/cakephp/license.svg)](https://packagist.org/packages/cakephp/cakephp)
-[![Bake Status](https://secure.travis-ci.org/cakephp/cakephp.png?branch=master)](https://travis-ci.org/cakephp/cakephp)
-[![Code consistency](https://squizlabs.github.io/PHP_CodeSniffer/analysis/cakephp/cakephp/grade.svg)](https://squizlabs.github.io/PHP_CodeSniffer/analysis/cakephp/cakephp/)
-
-CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC.
-Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
-
-
-## Some Handy Links
-
-[CakePHP](https://cakephp.org) - The rapid development PHP framework
-
-[CookBook](https://book.cakephp.org) - THE CakePHP user documentation; start learning here!
-
-[API](https://api.cakephp.org) - A reference to CakePHP's classes
-
-[Plugins](https://plugins.cakephp.org) - A repository of extensions to the framework
-
-[The Bakery](https://bakery.cakephp.org) - Tips, tutorials and articles
-
-[Community Center](https://community.cakephp.org) - A source for everything community related
-
-[Training](https://training.cakephp.org) - Join a live session and get skilled with the framework
-
-[CakeFest](https://cakefest.org) - Don't miss our annual CakePHP conference
-
-[Cake Software Foundation](https://cakefoundation.org) - Promoting development related to CakePHP
-
-
-## Get Support!
-
-[#cakephp](https://webchat.freenode.net/?channels=#cakephp) on irc.freenode.net - Come chat with us, we have cake
-
-[Google Group](https://groups.google.com/group/cake-php) - Community mailing list and forum
-
-[GitHub Issues](https://github.com/cakephp/cakephp/issues) - Got issues? Please tell us!
-
-[Roadmaps](https://github.com/cakephp/cakephp/wiki#roadmaps) - Want to contribute? Get involved!
-
-
-## Contributing
-
-[CONTRIBUTING.md](CONTRIBUTING.md) - Quick pointers for contributing to the CakePHP project
-
-[CookBook "Contributing" Section (2.x)](https://book.cakephp.org/2.0/en/contributing.html) [(3.x)](https://book.cakephp.org/3.0/en/contributing.html) - Version-specific details about contributing to the project
