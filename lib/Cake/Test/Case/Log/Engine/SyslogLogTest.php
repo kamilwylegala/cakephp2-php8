@@ -27,7 +27,6 @@ class SyslogLogTest extends CakeTestCase {
 	 * Tests that the connection to the logger is open with the right arguments
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testOpenLog() {
 		$log = $this->getMock('SyslogLog', array('_open', '_write'));
@@ -51,7 +50,6 @@ class SyslogLogTest extends CakeTestCase {
 	 *
 	 * @dataProvider typesProvider
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testWriteOneLine($type, $expected) {
 		$log = $this->getMock('SyslogLog', array('_open', '_write'));
@@ -63,7 +61,6 @@ class SyslogLogTest extends CakeTestCase {
 	 * Tests that multiple lines are split and logged separately
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testWriteMultiLine() {
 		$log = $this->getMock('SyslogLog', array('_open', '_write'));

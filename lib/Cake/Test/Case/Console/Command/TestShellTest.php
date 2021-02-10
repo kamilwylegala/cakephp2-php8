@@ -289,20 +289,6 @@ class TestShellTest extends CakeTestCase {
 	}
 
 /**
-	 * test available list of test cases for an empty category
-	 *
-	 * @return void
-	 * @doesNotPerformAssertions
-	 */
-	public function testAvailableWithEmptyList() {
-		$this->Shell->startup();
-		$this->Shell->args = array('unexistant-category');
-		$this->Shell->expects($this->at(0))->method('out')->with(__d('cake_console', "No test cases available \n\n"));
-		$this->Shell->OptionParser->expects($this->once())->method('help');
-		$this->Shell->available();
-	}
-
-/**
  * test available list of test cases for core category
  *
  * @return void
@@ -329,7 +315,6 @@ class TestShellTest extends CakeTestCase {
 	 * Tests that correct option for test runner are passed
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunnerOptions() {
 		$this->Shell->startup();
@@ -348,7 +333,6 @@ class TestShellTest extends CakeTestCase {
 	 * Tests that the 'quiet' parameter gets swallowed before calling PHPUnit
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunnerOptionsQuiet() {
 		$this->Shell->startup();
@@ -367,7 +351,6 @@ class TestShellTest extends CakeTestCase {
 	 * Tests that the '--directive' parameter change to '-d' before calling PHPUnit
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunnerOptionsDirective() {
 		$this->Shell->startup();

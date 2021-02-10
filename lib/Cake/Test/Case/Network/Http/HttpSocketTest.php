@@ -686,7 +686,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testRequestWithConstructor method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRequestWithConstructor() {
 		$request = array(
@@ -1033,7 +1032,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testGet method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGet() {
 		$this->RequestSocket->reset();
@@ -1083,7 +1081,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * Test the head method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHead() {
 		$this->RequestSocket->reset();
@@ -1206,7 +1203,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testPostPutDelete method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testPost() {
 		$this->RequestSocket->reset();
@@ -1231,7 +1227,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testPut
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testPut() {
 		$this->RequestSocket->reset();
@@ -1256,7 +1251,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testPatch
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testPatch() {
 		$this->RequestSocket->reset();
@@ -1281,7 +1275,6 @@ class HttpSocketTest extends CakeTestCase {
 	 * testDelete
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testDelete() {
 		$this->RequestSocket->reset();

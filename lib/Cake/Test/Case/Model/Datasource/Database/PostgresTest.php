@@ -1018,7 +1018,6 @@ class PostgresTest extends CakeTestCase {
 	 * Test truncate with a mock.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTruncateStatements() {
 		$this->loadFixtures('Article', 'User');

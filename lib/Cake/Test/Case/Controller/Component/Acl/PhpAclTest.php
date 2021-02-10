@@ -283,18 +283,14 @@ class PhpAclTest extends CakeTestCase {
  * @return void
  */
 	public function testInvalidConfigWithAroMissing() {
-		$this->expectException(
-			'AclException'
-		);
+		$this->expectException('AclException');
 		$this->expectExceptionMessage('"roles" section not found in configuration');
 		$config = array('aco' => array('allow' => array('foo' => '')));
 		$this->PhpAcl->build($config);
 	}
 
 	public function testInvalidConfigWithAcosMissing() {
-		$this->expectException(
-			'AclException'
-		);
+		$this->expectException('AclException');
 		$this->expectExceptionMessage('Neither "allow" nor "deny" rules were provided in configuration.');
 
 		$config = array(

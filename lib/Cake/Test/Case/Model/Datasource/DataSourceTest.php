@@ -142,7 +142,6 @@ class DataSourceTest extends CakeTestCase {
 	 * testCreate
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCreate() {
 		$data = array(
@@ -169,7 +168,6 @@ class DataSourceTest extends CakeTestCase {
 	 * testRead
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRead() {
 		$expected = array(
@@ -200,7 +198,6 @@ class DataSourceTest extends CakeTestCase {
 	 * testUpdate
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testUpdate() {
 		$data = array(
@@ -233,7 +230,6 @@ class DataSourceTest extends CakeTestCase {
 	 * testDelete
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testDelete() {
 		$this->Source->expects($this->any())

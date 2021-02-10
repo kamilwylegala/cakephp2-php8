@@ -141,7 +141,6 @@ class ModelTaskTest extends CakeTestCase {
 	 * Test that getName interacts with the user and returns the model name.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGetNameQuit() {
 		$this->Task->expects($this->once())->method('in')->will($this->returnValue('q'));
@@ -169,7 +168,6 @@ class ModelTaskTest extends CakeTestCase {
 	 * test that an out of bounds option causes an error.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGetNameWithOutOfBoundsOption() {
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls(99, 1));
@@ -1006,7 +1004,6 @@ TEXT;
 	 *
 	 * @dataProvider nameVariations
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithNamedModelVariations($name) {
 		$this->Task->connection = 'test';
@@ -1025,7 +1022,6 @@ TEXT;
 	 * test that execute with a model name picks up hasMany associations.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithNamedModelHasManyCreated() {
 		$this->Task->connection = 'test';
@@ -1101,7 +1097,6 @@ TEXT;
 	 * test that odd tablenames aren't inflected back from modelname
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAllOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -1158,7 +1153,6 @@ TEXT;
 	 * test that odd tablenames aren't inflected back from modelname
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoBakeOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -1215,7 +1209,6 @@ TEXT;
 	 * test that skipTables changes how all() works.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSkipTablesAndAll() {
 		$count = count($this->Task->listAll('test'));

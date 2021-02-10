@@ -50,7 +50,6 @@ class ApiShellTest extends CakeTestCase {
 	 * Test that method names are detected properly including those with no arguments.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testMethodNameDetection() {
 		$this->Shell->expects($this->any())->method('in')->will($this->returnValue('q'));

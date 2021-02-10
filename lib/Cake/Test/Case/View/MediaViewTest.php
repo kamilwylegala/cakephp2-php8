@@ -59,7 +59,6 @@ class MediaViewTest extends CakeTestCase {
 	 * testRender method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRender() {
 		$vars = array(
@@ -85,7 +84,6 @@ class MediaViewTest extends CakeTestCase {
 	 * Test render() when caching is on.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRenderCachingAndName() {
 		$vars = array(

@@ -1894,7 +1894,7 @@ class CakeEmailTest extends CakeTestCase {
 		$this->CakeEmail->reset();
 
 		$this->assertSame('utf-8', $this->CakeEmail->charset, $this->CakeEmail->charset);
-		$this->assertNull($this->CakeEmail->headerCharset, $this->CakeEmail->headerCharset);
+		$this->assertNull($this->CakeEmail->headerCharset);
 	}
 
 /**

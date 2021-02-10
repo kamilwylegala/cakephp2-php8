@@ -879,7 +879,6 @@ class ModelWriteTest extends BaseModelTest {
 	 * test save with transaction and ensure there is no missing rollback.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Article');
@@ -4566,7 +4565,6 @@ class ModelWriteTest extends BaseModelTest {
 	 * test saveAll with transactions and ensure there is no missing rollback.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveAllManyRowsTransactionNoRollback() {
 		$this->loadFixtures('Post');
@@ -4628,7 +4626,6 @@ class ModelWriteTest extends BaseModelTest {
 	 * test saveAll with transactions and ensure there is no missing rollback.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveAllAssociatedTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Author');
@@ -6077,7 +6074,6 @@ class ModelWriteTest extends BaseModelTest {
 	 * test saveMany with transactions and ensure there is no missing rollback.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveManyTransactionNoRollback() {
 		$this->loadFixtures('Post');
@@ -6139,7 +6135,6 @@ class ModelWriteTest extends BaseModelTest {
 	 * test saveAssociated with transactions and ensure there is no missing rollback.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveAssociatedTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Author');

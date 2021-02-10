@@ -478,7 +478,6 @@ class ExceptionRendererTest extends CakeTestCase {
 	 * testExceptionResponseHeader method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExceptionResponseHeader() {
 		$exception = new MethodNotAllowedException('Only allowing POST and DELETE');
@@ -516,10 +515,9 @@ class ExceptionRendererTest extends CakeTestCase {
 /**
 	 * Returns an array of tests to run for the various CakeException classes.
 	 *
-	 * @return void
-	 * @doesNotPerformAssertions
+	 * @return array
 	 */
-	public static function testProvider() {
+	public static function exceptionsProvider() {
 		return array(
 			array(
 				new MissingActionException(array('controller' => 'PostsController', 'action' => 'index')),
@@ -659,7 +657,7 @@ class ExceptionRendererTest extends CakeTestCase {
 /**
  * Test the various CakeException sub classes
  *
- * @dataProvider testProvider
+ * @dataProvider exceptionsProvider
  * @return void
  */
 	public function testCakeExceptionHandling($exception, $patterns, $code) {
@@ -710,7 +708,6 @@ class ExceptionRendererTest extends CakeTestCase {
 	 * Test that exceptions in beforeRender() are handled by outputMessageSafe
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRenderExceptionInBeforeRender() {
 		$exception = new NotFoundException('Not there, sorry');
@@ -772,7 +769,6 @@ class ExceptionRendererTest extends CakeTestCase {
 	 * Test that missing plugin disables Controller::$plugin if the two are the same plugin.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testMissingPluginRenderSafe() {
 		$exception = new NotFoundException();
@@ -804,7 +800,6 @@ class ExceptionRendererTest extends CakeTestCase {
 	 * Test that missing plugin doesn't disable Controller::$plugin if the two aren't the same plugin.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testMissingPluginRenderSafeWithPlugin() {
 		App::build(array(

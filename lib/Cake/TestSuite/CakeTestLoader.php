@@ -34,7 +34,7 @@ class CakeTestLoader extends \PHPUnit\Runner\StandardTestSuiteLoader {
  * @param string $params Additional parameters
  * @return ReflectionClass
  */
-	public function load($filePath, $params = '') {
+	public function load(string $filePath, $params = ''): ReflectionClass {
 		$file = $this->_resolveTestFile($filePath, $params);
 		return parent::load('', $file);
 	}
@@ -47,35 +47,9 @@ class CakeTestLoader extends \PHPUnit\Runner\StandardTestSuiteLoader {
  * @return string Converted path fragments.
  */
 	protected function _resolveTestFile($filePath, $params) {
-		$basePath = self::_basePath($params) . DS . $filePath;
+		$basePath = CORE_TEST_CASES . DS . $filePath;
 		$ending = 'Test.php';
 		return (strpos($basePath, $ending) === (strlen($basePath) - strlen($ending))) ? $basePath : $basePath . $ending;
-	}
-
-/**
- * Generates the base path to a set of tests based on the parameters.
- *
- * @param array $params The path parameters.
- * @return string The base path.
- */
-	protected static function _basePath($params) {
-		$result = null;
-		if (!empty($params['core'])) {
-			$result = CORE_TEST_CASES;
-		} elseif (!empty($params['plugin'])) {
-			if (!CakePlugin::loaded($params['plugin'])) {
-				try {
-					CakePlugin::load($params['plugin']);
-					$result = CakePlugin::path($params['plugin']) . 'Test' . DS . 'Case';
-				} catch (MissingPluginException $e) {
-				}
-			} else {
-				$result = CakePlugin::path($params['plugin']) . 'Test' . DS . 'Case';
-			}
-		} elseif (!empty($params['app'])) {
-			$result = APP_TEST_CASES;
-		}
-		return $result;
 	}
 
 /**
@@ -85,7 +59,7 @@ class CakeTestLoader extends \PHPUnit\Runner\StandardTestSuiteLoader {
  * @return array
  */
 	public static function generateTestList($params) {
-		$directory = static::_basePath($params);
+		$directory = CORE_TEST_CASES;
 		$fileList = static::_getRecursiveFileList($directory);
 
 		$testCases = array();

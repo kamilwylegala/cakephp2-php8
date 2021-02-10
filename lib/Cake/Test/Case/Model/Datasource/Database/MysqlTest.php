@@ -1331,7 +1331,6 @@ SQL;
 	 * test that read() places provided joins after the generated ones.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testReadCustomJoinsAfterGeneratedJoins() {
 		$db = $this->Dbo->config['database'];
@@ -1375,7 +1374,6 @@ SQL;
 	 * testGenerateInnerJoinAssociationQuery method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGenerateInnerJoinAssociationQuery() {
 		$db = $this->Dbo->config['database'];
@@ -3403,7 +3401,6 @@ SQL;
 	 * test hasAny()
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHasAny() {
 		$db = $this->Dbo->config['database'];
@@ -3997,7 +3994,6 @@ SQL;
 	 * testStatements method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testUpdateStatements() {
 		$this->loadFixtures('Article', 'User');
@@ -4030,7 +4026,6 @@ SQL;
 	 * Test deletes with a mock.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testDeleteStatements() {
 		$this->loadFixtures('Article', 'User');
@@ -4062,7 +4057,6 @@ SQL;
 	 * Test deletes without complex conditions.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testDeleteNoComplexCondition() {
 		$this->loadFixtures('Article', 'User');
@@ -4089,7 +4083,6 @@ SQL;
 	 * Test truncate with a mock.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTruncateStatements() {
 		$this->loadFixtures('Article', 'User');

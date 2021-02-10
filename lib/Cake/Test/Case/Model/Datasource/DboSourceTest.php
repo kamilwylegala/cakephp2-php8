@@ -1415,7 +1415,6 @@ class DboSourceTest extends CakeTestCase {
 	 * Test nested transaction calls
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTransactionNested() {
 		$conn = $this->getMock('MockPDO');
@@ -1438,7 +1437,6 @@ class DboSourceTest extends CakeTestCase {
 	 * Test nested transaction calls without support
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTransactionNestedWithoutSupport() {
 		$conn = $this->getMock('MockPDO');
@@ -1458,7 +1456,6 @@ class DboSourceTest extends CakeTestCase {
 	 * Test nested transaction disabled
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTransactionNestedDisabled() {
 		$conn = $this->getMock('MockPDO');
@@ -2031,7 +2028,6 @@ class DboSourceTest extends CakeTestCase {
 	 * Test that afterFind is called correctly for 'joins'
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testJoinsAfterFind() {
 		$this->loadFixtures('Article', 'User');
@@ -2091,7 +2087,6 @@ class DboSourceTest extends CakeTestCase {
 	 * Test that afterFind is called correctly for 'hasOne' association.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHasOneAfterFind() {
 		$this->loadFixtures('Article', 'User', 'Comment');
@@ -2199,7 +2194,6 @@ class DboSourceTest extends CakeTestCase {
 
 /**
 	 * Test find with locking hint
-	 * @doesNotPerformAssertions
 	 */
 	public function testFindWithLockingHint() {
 		$db = $this->getMock('DboTestSource', array('connect', '_execute', 'execute', 'describ'));

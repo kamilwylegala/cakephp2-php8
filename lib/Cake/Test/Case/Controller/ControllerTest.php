@@ -786,7 +786,6 @@ class ControllerTest extends CakeTestCase {
 	 * test that redirect triggers methods on the components.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectTriggeringComponentsReturnNull() {
 		$Controller = new Controller(null);
@@ -809,7 +808,6 @@ class ControllerTest extends CakeTestCase {
 	 * test that beforeRedirect callback returning null doesn't affect things.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectBeforeRedirectModifyingParams() {
 		$Controller = new Controller(null);
@@ -832,7 +830,6 @@ class ControllerTest extends CakeTestCase {
 	 * test that beforeRedirect callback returning null doesn't affect things.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectBeforeRedirectModifyingParamsArrayReturn() {
 		$Controller = $this->getMock('Controller', array('header', '_stop'));
@@ -866,7 +863,6 @@ class ControllerTest extends CakeTestCase {
 	 * test that beforeRedirect callback returning false in controller
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectBeforeRedirectInController() {
 		$Controller = $this->getMock('Controller', array('_stop', 'beforeRedirect'));
@@ -885,7 +881,6 @@ class ControllerTest extends CakeTestCase {
 	 * Test that beforeRedirect works with returning an array from the controller method.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectBeforeRedirectInControllerWithArray() {
 		$Controller = $this->getMock('Controller', array('_stop', 'beforeRedirect'));
@@ -1228,7 +1223,6 @@ class ControllerTest extends CakeTestCase {
 	 * testControllerHttpCodes method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testControllerHttpCodes() {
 		$response = $this->getMock('CakeResponse', array('httpCodes'));
@@ -1243,7 +1237,6 @@ class ControllerTest extends CakeTestCase {
 	 * Tests that the startup process calls the correct functions
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testStartupProcess() {
 		$Controller = $this->getMock('Controller', array('getEventManager'));
@@ -1274,7 +1267,6 @@ class ControllerTest extends CakeTestCase {
 	 * Tests that the shutdown process calls the correct functions
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testStartupProcessIndirect() {
 		$Controller = $this->getMock('Controller', array('beforeFilter'));
@@ -1292,7 +1284,6 @@ class ControllerTest extends CakeTestCase {
 	 * Tests that the shutdown process calls the correct functions
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testShutdownProcess() {
 		$Controller = $this->getMock('Controller', array('getEventManager'));
@@ -1315,7 +1306,6 @@ class ControllerTest extends CakeTestCase {
 	 * Tests that the shutdown process calls the correct functions
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testShutdownProcessIndirect() {
 		$Controller = $this->getMock('Controller', array('afterFilter'));

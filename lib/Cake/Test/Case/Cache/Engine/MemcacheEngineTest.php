@@ -404,7 +404,6 @@ class MemcacheEngineTest extends CakeTestCase {
 	 * test that durations greater than 30 days never expire
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testLongDurationEqualToZero() {
 		$memcache = new TestMemcacheEngine();

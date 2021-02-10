@@ -207,7 +207,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Tests the send method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSend() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent', '_setCookies'));
@@ -256,7 +255,6 @@ class CakeResponseTest extends CakeTestCase {
 	 *
 	 * @dataProvider charsetTypeProvider
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSendChangingContentType($original, $expected) {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent', '_setCookies'));
@@ -277,7 +275,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Tests the send method and changing the content type to JS without adding the charset
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSendChangingContentTypeWithoutCharset() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent', '_setCookies'));
@@ -300,7 +297,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Tests the send method and changing the content type
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSendWithLocation() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent', '_setCookies'));
@@ -522,7 +518,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Tests the send and setting of Content-Length
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSendContentLength() {
 		$response = $this->getMock('CakeResponse', array('_sendHeader', '_sendContent'));
@@ -913,7 +908,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Test checkNotModified method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCheckNotModifiedByEtagStar() {
 		$_SERVER['HTTP_IF_NONE_MATCH'] = '*';
@@ -1102,7 +1096,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * @param string|bool $expectedMethods
 	 * @param string|bool $expectedHeaders
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCors($request, $origin, $domains, $methods, $headers, $expectedOrigin, $expectedMethods = false, $expectedHeaders = false) {
 		$_SERVER['HTTP_ORIGIN'] = $origin;
@@ -1452,7 +1445,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * testFileWithUnknownFileNoDownload method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFileWithUnknownFileNoDownload() {
 		$currentUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
@@ -1529,7 +1521,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Test downloading files with UPPERCASE extensions.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFileUpperExtension() {
 		$response = $this->getMock('CakeResponse', array(
@@ -1559,7 +1550,6 @@ class CakeResponseTest extends CakeTestCase {
 	 * Test downloading files with extension not explicitly set.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFileExtensionNotSet() {
 		$response = $this->getMock('CakeResponse', array(
@@ -1614,7 +1604,6 @@ class CakeResponseTest extends CakeTestCase {
 	 *
 	 * @dataProvider rangeProvider
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFileRangeOffsets($range, $length, $offsetResponse) {
 		$_SERVER['HTTP_RANGE'] = $range;
@@ -1802,7 +1791,6 @@ class CakeResponseTest extends CakeTestCase {
 	 *
 	 * @dataProvider rangeProvider
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFileRangeOffsetsNoDownload($range, $length, $offsetResponse) {
 		$_SERVER['HTTP_RANGE'] = $range;

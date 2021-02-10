@@ -2016,7 +2016,6 @@ class ModelValidationTest extends BaseModelTest {
 	 * Tests validation callbacks are triggered
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testValidateCallbacks() {
 		$TestModel = $this->getMock('Article', array('beforeValidate', 'afterValidate'));

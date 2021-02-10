@@ -80,7 +80,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testConnectEhlo method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testConnectEhlo() {
 		$this->socket->expects($this->any())->method('connect')->will($this->returnValue(true));
@@ -98,7 +97,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testConnectEhloTls method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testConnectEhloTls() {
 		$this->SmtpTransport->config(array('tls' => true));
@@ -155,7 +153,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testConnectHelo method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testConnectHelo() {
 		$this->socket->expects($this->any())->method('connect')->will($this->returnValue(true));
@@ -188,7 +185,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testAuth method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testAuth() {
 		$this->socket->expects($this->at(0))->method('write')->with("AUTH LOGIN\r\n");
@@ -296,7 +292,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testRcpt method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRcpt() {
 		$email = new CakeEmail();
@@ -323,7 +318,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testRcptWithReturnPath method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRcptWithReturnPath() {
 		$email = new CakeEmail();
@@ -343,7 +337,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testSendData method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSendData() {
 		$email = $this->getMock('CakeEmail', array('message'), array(), 'SmtpCakeEmail');
@@ -387,7 +380,6 @@ class SmtpTransportTest extends CakeTestCase {
 	 * testQuit method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testQuit() {
 		$this->socket->expects($this->at(0))->method('write')->with("QUIT\r\n");

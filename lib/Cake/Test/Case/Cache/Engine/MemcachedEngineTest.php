@@ -171,9 +171,7 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'invalid_serializer'
 		);
 
-		$this->expectException(
-			'CacheException'
-		);
+		$this->expectException('CacheException');
 		$this->expectExceptionMessage('invalid_serializer is not a valid serializer engine for Memcached');
 		$Memcached->init($settings);
 	}
@@ -284,9 +282,7 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'json'
 		);
 
-		$this->expectException(
-			'CacheException'
-		);
+		$this->expectException('CacheException');
 		$this->expectExceptionMessage('Memcached extension is not compiled with json support');
 		$Memcached->init($settings);
 	}
@@ -310,9 +306,7 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'msgpack'
 		);
 
-		$this->expectException(
-			'CacheException'
-		);
+		$this->expectException('CacheException');
 		$this->expectExceptionMessage('msgpack is not a valid serializer engine for Memcached');
 		$Memcached->init($settings);
 	}
@@ -336,9 +330,7 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'igbinary'
 		);
 
-		$this->expectException(
-			'CacheException'
-		);
+		$this->expectException('CacheException');
 		$this->expectExceptionMessage('Memcached extension is not compiled with igbinary support');
 		$Memcached->init($settings);
 	}
@@ -720,7 +712,6 @@ class MemcachedEngineTest extends CakeTestCase {
 	 * test that durations greater than 30 days never expire
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testLongDurationEqualToZero() {
 		$this->markTestSkipped('Cannot run as Memcached cannot be reflected');

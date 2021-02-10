@@ -166,7 +166,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * Test View - and that it dumps the schema file to stdout
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testView() {
 		$this->Shell->startup();
@@ -181,7 +180,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test that view() can find plugin schema files.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testViewWithPlugins() {
 		App::build(array(
@@ -265,7 +263,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test generate with snapshot generation
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGenerateSnapshot() {
 		$this->Shell->path = TMP;
@@ -286,7 +283,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test generate without a snapshot.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGenerateNoOverwrite() {
 		touch(TMP . 'schema.php');
@@ -307,7 +303,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test generate with overwriting of the schema files.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGenerateOverwrite() {
 		touch(TMP . 'schema.php');
@@ -433,7 +428,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * Test schema run create with --yes option
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCreateOptionYes() {
 		$this->Shell = $this->getMock(
@@ -511,7 +505,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test run update with a table arg.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testUpdateWithTable() {
 		$this->Shell = $this->getMock(
@@ -540,7 +533,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test run update with a table arg. and checks that a CREATE statement is issued
 	 * table creation
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testUpdateWithTableCreate() {
 		$this->Shell = $this->getMock(
@@ -569,7 +561,6 @@ class SchemaShellTest extends CakeTestCase {
 	 * test run update with --yes option
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testUpdateWithOptionYes() {
 		$this->Shell = $this->getMock(

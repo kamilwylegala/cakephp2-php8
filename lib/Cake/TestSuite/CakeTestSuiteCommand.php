@@ -56,7 +56,7 @@ class CakeTestSuiteCommand extends \PHPUnit\TextUI\Command {
  * @param bool $exit The exit mode.
  * @return void
  */
-	public function run(array $argv, $exit = true) {
+	public function run(array $argv, $exit = true): int {
 		$this->handleArguments($argv);
 
 		$runner = $this->getRunner($this->arguments['loader']);
@@ -67,7 +67,7 @@ class CakeTestSuiteCommand extends \PHPUnit\TextUI\Command {
 		} else {
 			$suite = $runner->getTest(
 				$this->arguments['test'],
-				$this->arguments['testFile']
+				$this->arguments['testFile']['case']
 			);
 		}
 
@@ -106,6 +106,8 @@ class CakeTestSuiteCommand extends \PHPUnit\TextUI\Command {
 			// Default to success even if there are warnings to match phpunit's behavior
 			exit(\PHPUnit\TextUI\TestRunner::SUCCESS_EXIT);
 		}
+
+		return \PHPUnit\TextUI\TestRunner::SUCCESS_EXIT;
 	}
 
 /**

@@ -64,7 +64,6 @@ class AclShellTest extends CakeTestCase {
 	 * test that model.foreign_key output works when looking at acl rows
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testViewWithModelForeignKeyOutput() {
 		$this->Task->command = 'view';
@@ -95,7 +94,6 @@ class AclShellTest extends CakeTestCase {
 	 * test view with an argument
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testViewWithArgument() {
 		$this->Task->args = array('aro', 'admins');
@@ -235,7 +233,6 @@ class AclShellTest extends CakeTestCase {
 	 * test checking allowed and denied perms
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCheck() {
 		$this->Task->expects($this->at(0))->method('out')
@@ -287,7 +284,6 @@ class AclShellTest extends CakeTestCase {
 	 * test getting the path for an aro/aco
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGetPath() {
 		$this->Task->args = array('aro', 'AuthUser.2');
@@ -305,7 +301,6 @@ class AclShellTest extends CakeTestCase {
 	 * test that initdb makes the correct call.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testInitDb() {
 		$this->Task->expects($this->once())->method('dispatchShell')

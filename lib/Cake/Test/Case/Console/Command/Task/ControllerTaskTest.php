@@ -165,7 +165,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test getting invalid indexes.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGetNameInvalidIndex() {
 		$this->Task->interactive = true;
@@ -258,7 +257,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test Confirming controller user interaction
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testConfirmController() {
 		$controller = 'Posts';
@@ -380,7 +378,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test Interactive mode.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testInteractive() {
 		$count = count($this->Task->listAll('test'));
@@ -458,7 +455,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test that execute runs all when the first arg == all
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAll() {
 		$count = count($this->Task->listAll('test'));
@@ -486,7 +482,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * Test execute() with all and --admin
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAllAdmin() {
 		$count = count($this->Task->listAll('test'));
@@ -520,7 +515,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test that `cake bake controller foos` works.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithController() {
 		$this->Task->connection = 'test';
@@ -552,7 +546,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 *
 	 * @dataProvider nameVariations
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithControllerNameVariations($name) {
 		$this->Task->connection = 'test';
@@ -570,7 +563,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test that `cake bake controller foo scaffold` works.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithPublicParam() {
 		$this->Task->connection = 'test';
@@ -590,7 +582,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test that `cake bake controller foos both` works.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithControllerAndBoth() {
 		$this->Task->Project->expects($this->any())->method('getPrefix')->will($this->returnValue('admin_'));
@@ -610,7 +601,6 @@ class ControllerTaskTest extends CakeTestCase {
 	 * test that `cake bake controller foos admin` works.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithControllerAndAdmin() {
 		$this->Task->Project->expects($this->any())->method('getPrefix')->will($this->returnValue('admin_'));

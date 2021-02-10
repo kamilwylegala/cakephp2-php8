@@ -1044,7 +1044,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * Default to loginRedirect, if set, on authError.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testDefaultToLoginRedirect() {
 		$_SERVER['HTTP_REFERER'] = false;
@@ -1078,7 +1077,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * testRedirectToUnauthorizedRedirect
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectToUnauthorizedRedirect() {
 		$url = '/party/on';
@@ -1117,7 +1115,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * testRedirectToUnauthorizedRedirectSuppressedAuthError
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRedirectToUnauthorizedRedirectSuppressedAuthError() {
 		$url = '/party/on';
@@ -1181,7 +1178,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * Test that no redirects or authorization tests occur on the loginAction
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testNoRedirectOnLoginAction() {
 		$controller = $this->getMock('Controller');
@@ -1454,7 +1450,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * Logout should trigger a logout method on authentication objects.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testLogoutTrigger() {
 		$LogoutTriggerMockAuthenticate = $this->getMock('BaseAuthenticate', array('authenticate', 'logout'), array(), '', false);
@@ -1510,7 +1505,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * test mapActions loading and delegating to authorize objects.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testMapActionsDelegation() {
 		$MapActionMockAuthorize = $this->getMock('BaseAuthorize', array('authorize', 'mapActions'), array(), '', false);
@@ -1569,7 +1563,6 @@ class AuthComponentTest extends CakeTestCase {
 	 * test flash settings.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFlashSettings() {
 		$this->Auth->Flash = $this->getMock('FlashComponent', array(), array(), '', false);

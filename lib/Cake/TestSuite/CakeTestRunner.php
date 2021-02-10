@@ -15,6 +15,9 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\TestResult;
+use PHPUnit\Runner\TestSuiteLoader;
+
 if (class_exists('SebastianBergmann\CodeCoverage\CodeCoverage')) {
 	class_alias('SebastianBergmann\CodeCoverage\CodeCoverage', 'PHP_CodeCoverage');
 	class_alias('SebastianBergmann\CodeCoverage\Report\Text', 'PHP_CodeCoverage_Report_Text');
@@ -51,9 +54,9 @@ class CakeTestRunner extends \PHPUnit\TextUI\TestRunner {
  * @param array $arguments The CLI arguments
  * @param bool $exit Exits by default or returns the results
  * This argument is ignored if >PHPUnit5.2.0
- * @return \PHPUnit\Framework\TestResult
+ * @return TestResult
  */
-	public function doRun(\PHPUnit\Framework\Test $suite, array $arguments = array(), $exit = true) {
+	public function doRun(\PHPUnit\Framework\Test $suite, array $arguments = array(), $exit = true): TestResult {
 		if (isset($arguments['printer'])) {
 			static::$versionStringPrinted = true;
 		}
@@ -79,10 +82,10 @@ class CakeTestRunner extends \PHPUnit\TextUI\TestRunner {
 /**
  * Create the test result and splice on our code coverage reports.
  *
- * @return \PHPUnit\Framework\TestResult
+ * @return TestResult
  */
-	protected function createTestResult() {
-		$result = new \PHPUnit\Framework\TestResult;
+	protected function createTestResult(): TestResult {
+		$result = new TestResult;
 		if (!empty($this->_params['codeCoverage'])) {
 			if (method_exists($result, 'collectCodeCoverageInformation')) {
 				$result->collectCodeCoverageInformation(true);
@@ -117,4 +120,8 @@ class CakeTestRunner extends \PHPUnit\TextUI\TestRunner {
 		return new CakeFixtureManager();
 	}
 
+	public function getLoader(): TestSuiteLoader
+	{
+		return new CakeTestLoader();
+	}
 }

@@ -798,7 +798,6 @@ class ViewTest extends CakeTestCase {
 	 * Test that elements can have callbacks
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testElementCallbacks() {
 		$Helper = $this->getMock('Helper', array(), array($this->View), 'ElementCallbackMockHtmlHelper');
@@ -981,7 +980,6 @@ class ViewTest extends CakeTestCase {
 	 * Test the correct triggering of helper callbacks
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHelperCallbackTriggering() {
 		$View = new View($this->PostsController);

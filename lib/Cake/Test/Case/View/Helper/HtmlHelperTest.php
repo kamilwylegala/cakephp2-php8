@@ -937,7 +937,6 @@ class HtmlHelperTest extends CakeTestCase {
 	 * Resource names must be treated differently for css() and script()
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBufferedCssAndScriptWithIdenticalResourceName() {
 		$this->View->expects($this->at(0))

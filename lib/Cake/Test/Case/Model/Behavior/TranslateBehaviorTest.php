@@ -746,7 +746,6 @@ class TranslateBehaviorTest extends CakeTestCase {
 	 * testSaveAssociatedAtomic method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testSaveAssociatedAtomic() {
 		$this->loadFixtures('Translate', 'TranslatedItem');

@@ -193,7 +193,6 @@ class CakeEventManagerTest extends CakeTestCase {
 	 *
 	 * @return void
 	 * @triggers fake.event
-	 * @doesNotPerformAssertions
 	 */
 	public function testDispatch() {
 		$manager = new CakeEventManager();
@@ -295,7 +294,6 @@ class CakeEventManagerTest extends CakeTestCase {
 	 *
 	 * @return void
 	 * @triggers fake.event $this, array('some' => 'data')
-	 * @doesNotPerformAssertions
 	 */
 	public function testDispatchPassingParams() {
 		$manager = new CakeEventManager();
@@ -382,7 +380,6 @@ class CakeEventManagerTest extends CakeTestCase {
 	 *
 	 * @return void
 	 * @triggers fake.event
-	 * @doesNotPerformAssertions
 	 */
 	public function testDispatchWithGlobal() {
 		$generalManager = $this->getMock('CakeEventManager', array('prioritisedListeners'));

@@ -219,7 +219,6 @@ class TestTaskTest extends CakeTestCase {
 	 * Test that file path generation doesn't continuously append paths.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFilePathGenerationModelRepeated() {
 		$this->Task->expects($this->never())->method('err');
@@ -555,7 +554,6 @@ class TestTaskTest extends CakeTestCase {
 	 * test bake() with a -plugin param
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeWithPlugin() {
 		$this->Task->plugin = 'TestTest';
@@ -574,7 +572,6 @@ class TestTaskTest extends CakeTestCase {
 	 * test interactive with plugins lists from the plugin
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testInteractiveWithPlugin() {
 		$testApp = CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS;
@@ -651,7 +648,6 @@ class TestTaskTest extends CakeTestCase {
 	 * test execute with a type defined
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithOneArg() {
 		$this->Task->args[0] = 'Model';
@@ -669,7 +665,6 @@ class TestTaskTest extends CakeTestCase {
 	 * test execute with type and class name defined
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithTwoArgs() {
 		$this->Task->args = array('Model', 'TestTaskTag');
@@ -687,7 +682,6 @@ class TestTaskTest extends CakeTestCase {
 	 * test execute with type and class name defined and lower case.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithTwoArgsLowerCase() {
 		$this->Task->args = array('model', 'TestTaskTag');

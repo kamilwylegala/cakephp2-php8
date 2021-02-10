@@ -15,6 +15,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\TestSuite;
+
 App::uses('CakeBaseReporter', 'TestSuite/Reporter');
 
 /**
@@ -209,7 +211,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 		if (!empty($this->params['case'])) {
 			$query['case'] = $this->params['case'];
 		}
-		list($show, $query) = $this->_getQueryLink();
+		[$show, $query] = $this->_getQueryLink();
 
 		echo "<p><a href='" . $this->baseUrl() . $show . "'>Run more tests</a> | <a href='" . $this->baseUrl() . $query . "&amp;show_passes=1'>Show Passes</a> | \n";
 		echo "<a href='" . $this->baseUrl() . $query . "&amp;debug=1'>Enable Debug Output</a> | \n";
@@ -286,7 +288,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 		echo "</pre></div>\n";
 		echo "<div class='msg'>" . __d('cake_dev', 'Test case: %s', $testName) . "</div>\n";
 		if (strpos($className, "PHPUnit_") === false) {
-			list($show, $query) = $this->_getQueryLink();
+			[$show, $query] = $this->_getQueryLink();
 			echo "<div class='msg'><a href='" . $this->baseUrl() . $query . "&amp;filter=" . $test->getName() . "'>" . __d('cake_dev', 'Rerun only this test: %s', $testName) . "</a></div>\n";
 		}
 		echo "<div class='msg'>" . __d('cake_dev', 'Stack trace:') . '<br />' . $trace . "</div>\n";
@@ -397,10 +399,10 @@ class CakeHtmlReporter extends CakeBaseReporter {
 /**
  * A test suite started.
  *
- * @param \PHPUnit\Framework\TestSuite $suite The test suite to start.
+ * @param TestSuite $suite The test suite to start.
  * @return void
  */
-	public function startTestSuite(\PHPUnit\Framework\TestSuite $suite) {
+	public function startTestSuite(TestSuite $suite): void {
 		if (!$this->_headerSent) {
 			$this->paintHeader();
 		}

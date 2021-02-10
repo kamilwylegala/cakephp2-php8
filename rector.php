@@ -69,5 +69,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 		__DIR__ . "/lib/Cake/TestSuite/CakeTestCase.php",
 	]);
 
-	$parameters->set(Option::SETS, [SetList::PHPUNIT_60]);
+	$parameters->set(Option::SETS, [SetList::PHPUNIT_70]);
+	$parameters->set(Option::SETS, [SetList::PHPUNIT_75]);
 };

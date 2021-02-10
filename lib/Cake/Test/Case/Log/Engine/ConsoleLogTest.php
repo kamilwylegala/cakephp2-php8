@@ -75,7 +75,6 @@ class ConsoleLogTest extends CakeTestCase {
 	 * Test writing to ConsoleOutput
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testConsoleOutputWrites() {
 		TestCakeLog::config('test_console_log', array(

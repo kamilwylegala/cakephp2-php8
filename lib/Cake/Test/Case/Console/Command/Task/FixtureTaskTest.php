@@ -266,7 +266,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test that execute includes import options
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithImportSchema() {
 		$this->Task->connection = 'test';
@@ -295,7 +294,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test that execute includes import options
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithImportRecords() {
 		$this->Task->connection = 'test';
@@ -324,7 +322,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test that execute passes runs bake depending with named model.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithNamedModel() {
 		$this->Task->connection = 'test';
@@ -342,7 +339,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test that execute runs all() when args[0] = all
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAll() {
 		$this->Task->connection = 'test';
@@ -369,7 +365,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test using all() with -count and -records
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testAllWithCountAndRecordsFlags() {
 		$this->Task->connection = 'test';
@@ -396,7 +391,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test using all() with -schema
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testAllWithSchemaImport() {
 		$this->Task->connection = 'test';
@@ -423,7 +417,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test interactive mode of execute
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteInteractive() {
 		$this->Task->connection = 'test';
@@ -500,7 +493,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * Test that file generation includes headers and correct path for plugins.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGenerateFixtureFile() {
 		$this->Task->connection = 'test';
@@ -521,7 +513,6 @@ class FixtureTaskTest extends CakeTestCase {
 	 * test generating files into plugins.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testGeneratePluginFixtureFile() {
 		$this->Task->connection = 'test';

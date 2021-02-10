@@ -138,7 +138,6 @@ class PluginTaskTest extends CakeTestCase {
 	 * test execute with no args, flowing into interactive,
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithNoArgs() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('TestPlugin'));
@@ -166,7 +165,6 @@ class PluginTaskTest extends CakeTestCase {
 	 * Test Execute
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithOneArg() {
 		$this->Task->expects($this->at(0))->method('in')
@@ -196,7 +194,6 @@ class PluginTaskTest extends CakeTestCase {
 	 * Test that findPath ignores paths that don't exist.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testFindPathNonExistant() {
 		$paths = App::path('plugins');

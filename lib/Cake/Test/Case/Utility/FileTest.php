@@ -146,7 +146,7 @@ class FileTest extends CakeTestCase {
 
 		umask(0002);
 		$file = $dir . 'permission_' . uniqid();
-		$expecting = decoct(0664 & ~umask());
+		$expecting = 0 . decoct(0664 & ~umask());
 		$File = new File($file, true);
 		$result = $File->perms();
 		$this->assertEquals($expecting, $result);
@@ -154,7 +154,7 @@ class FileTest extends CakeTestCase {
 
 		umask(0022);
 		$file = $dir . 'permission_' . uniqid();
-		$expecting = decoct(0644 & ~umask());
+		$expecting = 0 . decoct(0644 & ~umask());
 		$File = new File($file, true);
 		$result = $File->perms();
 		$this->assertEquals($expecting, $result);
@@ -162,7 +162,7 @@ class FileTest extends CakeTestCase {
 
 		umask(0422);
 		$file = $dir . 'permission_' . uniqid();
-		$expecting = decoct(0244 & ~umask());
+		$expecting = 0 . decoct(0244 & ~umask());
 		$File = new File($file, true);
 		$result = $File->perms();
 		$this->assertEquals($expecting, $result);
@@ -170,7 +170,7 @@ class FileTest extends CakeTestCase {
 
 		umask(0444);
 		$file = $dir . 'permission_' . uniqid();
-		$expecting = decoct(0222 & ~umask());
+		$expecting = 0 . decoct(0222 & ~umask());
 		$File = new File($file, true);
 		$result = $File->perms();
 		$this->assertEquals($expecting, $result);

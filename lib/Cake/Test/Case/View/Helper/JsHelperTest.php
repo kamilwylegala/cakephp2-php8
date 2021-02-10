@@ -319,7 +319,6 @@ class JsHelperTest extends CakeTestCase {
 	 * test that writing the buffer with inline = false includes a script tag.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testWriteBufferNotInline() {
 		$this->Js->set('foo', 1);
@@ -336,7 +335,6 @@ class JsHelperTest extends CakeTestCase {
 	 * Including a domReady() when in XHR can cause issues as events aren't triggered by some libraries
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testWriteBufferAndXhr() {
 		$this->_useMock();

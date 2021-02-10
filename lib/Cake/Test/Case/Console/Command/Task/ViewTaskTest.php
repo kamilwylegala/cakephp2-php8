@@ -286,7 +286,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test Bake method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeView() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -304,7 +303,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test baking an edit file
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeEdit() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -321,7 +319,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test baking an index
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeIndex() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -339,7 +336,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test that baking a view with no template doesn't make a file.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeWithNoTemplate() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -377,7 +373,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test bake actions baking multiple actions.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBakeActions() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -405,7 +400,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test baking a customAction (non crud)
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCustomAction() {
 		$this->Task->controllerName = 'ViewTaskComments';
@@ -426,7 +420,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * Test all()
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAll() {
 		$this->Task->args[0] = 'all';
@@ -453,7 +446,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * Test all() with action parameter
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteIntoAllWithActionName() {
 		$this->Task->args = array('all', 'index');
@@ -474,7 +466,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test `cake bake view $controller view`
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithActionParam() {
 		$this->Task->args[0] = 'ViewTaskComments';
@@ -493,7 +484,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * Ensure that views are only baked for actions that exist in the controller.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithController() {
 		$this->Task->args[0] = 'ViewTaskComments';
@@ -527,7 +517,6 @@ class ViewTaskTest extends CakeTestCase {
 	 *
 	 * @dataProvider nameVariations
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithControllerVariations($name) {
 		$this->Task->args = array($name);
@@ -550,7 +539,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * Which only bakes admin methods, not non-admin methods.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithControllerAndAdminFlag() {
 		$_back = Configure::read('Routing');
@@ -578,7 +566,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test execute into interactive.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteInteractive() {
 		$this->Task->connection = 'test';
@@ -623,7 +610,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test `cake bake view posts index list`
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteWithAlternateTemplates() {
 		$this->Task->connection = 'test';
@@ -642,7 +628,6 @@ class ViewTaskTest extends CakeTestCase {
 	 * test execute into interactive() with admin methods.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testExecuteInteractiveWithAdmin() {
 		Configure::write('Routing.prefixes', array('admin'));

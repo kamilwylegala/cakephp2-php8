@@ -76,7 +76,6 @@ class TextHelperTest extends CakeTestCase {
 	 * test String class methods are called correctly
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testTextHelperProxyMethodCalls() {
 		$methods = array(

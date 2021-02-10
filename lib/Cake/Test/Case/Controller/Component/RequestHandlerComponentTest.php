@@ -812,7 +812,6 @@ class RequestHandlerComponentTest extends CakeTestCase {
 	 * testClientProperties method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testClientProperties() {
 		$request = $this->getMock('CakeRequest');
@@ -916,7 +915,6 @@ class RequestHandlerComponentTest extends CakeTestCase {
 	 * assure that beforeRedirect with a status code will correctly set the status header
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testBeforeRedirectCallingHeader() {
 		$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';

@@ -304,7 +304,6 @@ class ShellTest extends CakeTestCase {
 	 * testOut method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testOut() {
 		$this->Shell->stdout->expects($this->at(0))
@@ -336,7 +335,6 @@ class ShellTest extends CakeTestCase {
 	 * test that verbose and quiet output levels work
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testVerboseOutput() {
 		$this->Shell->stdout->expects($this->at(0))->method('write')
@@ -358,7 +356,6 @@ class ShellTest extends CakeTestCase {
 	 * test that verbose and quiet output levels work
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testQuietOutput() {
 		$this->Shell->stdout->expects($this->once())->method('write')
@@ -376,7 +373,6 @@ class ShellTest extends CakeTestCase {
 	 * Test overwriting.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testOverwrite() {
 		$number = strlen('Some text I want to overwrite');
@@ -407,7 +403,6 @@ class ShellTest extends CakeTestCase {
 	 * testErr method
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testErr() {
 		$this->Shell->stderr->expects($this->at(0))
@@ -456,7 +451,6 @@ class ShellTest extends CakeTestCase {
 	 * testHr
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHr() {
 		$bar = '---------------------------------------------------------------';
@@ -751,7 +745,6 @@ class ShellTest extends CakeTestCase {
 	 * test run command causing exception on Shell method.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunCommandBaseclassMethod() {
 		$Mock = $this->getMock('Shell', array('startup', 'getOptionParser', 'out'), array(), '', false);
@@ -783,7 +776,6 @@ class ShellTest extends CakeTestCase {
 	 * test unknown option causes display of error and help.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunCommandUnknownOption() {
 		$output = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -810,7 +802,6 @@ class ShellTest extends CakeTestCase {
 	 * test that a --help causes help to show.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunCommandTriggeringHelp() {
 		$Parser = $this->getMock('ConsoleOptionParser', array(), array(), '', false);
@@ -831,7 +822,6 @@ class ShellTest extends CakeTestCase {
 	 * test that runCommand will call runCommand on the task.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testRunCommandHittingTask() {
 		$Shell = $this->getMock('Shell', array('hasTask', 'startup'), array(), '', false);
@@ -1001,7 +991,6 @@ TEXT;
 	 * Test file and console and logging quiet output
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testQuietLog() {
 		$output = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -1036,7 +1025,6 @@ TEXT;
 	 * Test that shell loggers do not get overridden in constructor if already configured
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testShellLoggersDoNotGetOverridden() {
 		$shell = $this->getMock(

@@ -51,7 +51,6 @@ class CakeFixtureManagerTest extends CakeTestCase {
 	 * testLoadTruncatesTable
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testLoadTruncatesTable() {
 		$MockFixture = $this->getMock('UuidFixture', array('truncate'));
@@ -79,7 +78,6 @@ class CakeFixtureManagerTest extends CakeTestCase {
 	 * testLoadSingleTruncatesTable
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testLoadSingleTruncatesTable() {
 		$MockFixture = $this->getMock('UuidFixture', array('truncate'));

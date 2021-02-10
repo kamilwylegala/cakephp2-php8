@@ -982,7 +982,6 @@ class SecurityComponentTest extends CakeTestCase {
 	 * test that missing 'debug' input is not the problem when debug mode disabled
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testValidatePostFailNoDebugMode() {
 		$this->Controller->Security->startup($this->Controller);
@@ -1488,8 +1487,8 @@ class SecurityComponentTest extends CakeTestCase {
 		));
 		$this->Security->startup($this->Controller);
 		$tokens = $this->Security->Session->read('_Token.csrfTokens');
-		$this->assertEquals(2, count($tokens), 'Too many tokens left behind');
-		$this->assertNotEmpty('valid', $tokens, 'Valid token was removed.');
+		self::assertEquals(2, count($tokens), 'Too many tokens left behind');
+		self::assertNotCount(0, $tokens, 'Valid token was removed.');
 	}
 
 /**

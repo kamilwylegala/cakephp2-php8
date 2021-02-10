@@ -16,6 +16,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\TestResult;
+
 App::uses('CakeFixtureManager', 'TestSuite/Fixture');
 App::uses('CakeTestFixture', 'TestSuite/Fixture');
 
@@ -71,11 +73,11 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * If no TestResult object is passed a new one will be created.
  * This method is run for each test method in this class
  *
- * @param \PHPUnit\Framework\TestResult $result The test result object
- * @return \PHPUnit\Framework\TestResult
+ * @param TestResult $result The test result object
+ * @return TestResult
  * @throws InvalidArgumentException
  */
-	public function run(\PHPUnit\Framework\TestResult $result = null) {
+	public function run(TestResult $result = null): TestResult {
 		$level = ob_get_level();
 
 		if (!empty($this->fixtureManager)) {
@@ -493,7 +495,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 				continue;
 			}
 
-			list($description, $expressions, $itemNum) = $assertion;
+			[$description, $expressions, $itemNum] = $assertion;
 			foreach ((array)$expressions as $expression) {
 				if (preg_match(sprintf('/^%s/s', $expression), $string, $match)) {
 					$matches = true;
@@ -653,20 +655,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	}
 
 /**
- * Compatibility wrapper function for setExpectedException
- *
- * @param mixed $name The name of the expected Exception.
- * @param string $message the text to display if the assertion is not correct
- * @return void
- */
-	public function expectException($name = 'Exception', $message = '') {
-		parent::expectException($name);
-		if ($message !== "") {
-			$this->expectExceptionMessage($message);
-		}
-	}
-
-/**
  * Compatibility wrapper function for assertSame
  *
  * @param mixed $first
@@ -745,7 +733,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @param bool $callAutoload The seventh (optional) parameter can be used to
  *   disable __autoload() during the generation of the test double class.
  * @return object
- * @deprecated Use `getMockBuilder()` or `createMock()` in new unit tests.
  * @see https://phpunit.de/manual/current/en/test-doubles.html
  */
 	protected function _buildMock(
@@ -806,7 +793,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @param string $proxyTarget Not supported.
  * @return object
  * @throws InvalidArgumentException When not supported parameters are set.
- * @deprecated Use `getMockBuilder()` or `createMock()` in new unit tests.
  * @see https://phpunit.de/manual/current/en/test-doubles.html
  */
 	public function getMock(
@@ -854,7 +840,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 		$defaults = ClassRegistry::config('Model');
 		unset($defaults['ds']);
 
-		list($plugin, $name) = pluginSplit($model, true);
+		[$plugin, $name] = pluginSplit($model, true);
 		App::uses($name, $plugin . 'Model');
 
 		$config = array_merge($defaults, (array)$config, array('name' => $name));

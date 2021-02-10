@@ -71,7 +71,6 @@ class NumberHelperTest extends CakeTestCase {
 	 * test CakeNumber class methods are called correctly
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testNumberHelperProxyMethodCalls() {
 		$methods = array(

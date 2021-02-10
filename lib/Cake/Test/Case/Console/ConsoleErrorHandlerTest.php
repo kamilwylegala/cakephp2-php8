@@ -50,7 +50,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test that the console error handler can deal with CakeExceptions.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHandleError() {
 		$content = "<error>Notice Error:</error> This is a notice error in [/some/file, line 275]\n";
@@ -64,7 +63,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test that the console error handler can deal with fatal errors.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testHandleFatalError() {
 		$content = "<error>Fatal Error Error:</error> This is a fatal error in [/some/file, line 275]\n";
@@ -82,7 +80,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test that the console error handler can deal with CakeExceptions.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testCakeErrors() {
 		$exception = new MissingActionException('Missing action');
@@ -100,7 +97,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test a non CakeException exception.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testNonCakeExceptions() {
 		$exception = new InvalidArgumentException('Too many parameters.');
@@ -119,7 +115,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test a Error404 exception.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testError404Exception() {
 		$exception = new NotFoundException('dont use me in cli.');
@@ -138,7 +133,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test a Error500 exception.
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testError500Exception() {
 		$exception = new InternalErrorException('dont use me in cli.');
@@ -157,7 +151,6 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	 * test a exception with non-integer code
 	 *
 	 * @return void
-	 * @doesNotPerformAssertions
 	 */
 	public function testNonIntegerExceptionCode() {
 		if (PHP_VERSION_ID < 50300) {

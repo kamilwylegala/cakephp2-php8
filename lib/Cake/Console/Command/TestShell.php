@@ -293,18 +293,9 @@ class TestShell extends Shell {
 	public function available() {
 		$params = $this->_parseArgs();
 		$testCases = CakeTestLoader::generateTestList($params);
-		$app = isset($params['app']) ? $params['app'] : null;
-		$plugin = isset($params['plugin']) ? $params['plugin'] : null;
 
 		$title = "Core Test Cases:";
 		$category = 'core';
-		if ($app) {
-			$title = "App Test Cases:";
-			$category = 'app';
-		} elseif ($plugin) {
-			$title = Inflector::humanize($plugin) . " Test Cases:";
-			$category = $plugin;
-		}
 
 		if (empty($testCases)) {
 			$this->out(__d('cake_console', "No test cases available \n\n"));
