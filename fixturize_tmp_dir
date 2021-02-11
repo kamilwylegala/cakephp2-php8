@@ -8,9 +8,3 @@ mkdir -p /home/vagrant/caketmp/sessions
 find /home/vagrant/caketmp/ -type f -delete
 chmod -R 777 /home/vagrant/caketmp
 rm -rf /home/vagrant/caketmp/tests
-DB="${DB:-sqlite}" php \
-	-d memory_limit=512M \
-	-d auto_prepend_file=test_bootstrap.php \
-	./lib/Cake/Console/cake.php test core \
-	$* \
-	--stderr --globals-backup

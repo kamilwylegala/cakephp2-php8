@@ -48,8 +48,12 @@ class TestMemcacheEngine extends MemcacheEngine {
  * @package       Cake.Test.Case.Cache.Engine
  */
 class MemcacheEngineTest extends CakeTestCase {
+	/**
+	 * @var array|int[]|mixed
+	 */
+	private $_cacheDisable;
 
-/**
+	/**
  * setUp method
  *
  * @return void
@@ -113,7 +117,7 @@ class MemcacheEngineTest extends CakeTestCase {
 		$Memcache = new Memcache();
 
 		foreach ($servers as $server) {
-			list($host, $port) = explode(':', $server);
+			[$host, $port] = explode(':', $server);
 			//@codingStandardsIgnoreStart
 			if (!@$Memcache->connect($host, $port)) {
 				$available = false;

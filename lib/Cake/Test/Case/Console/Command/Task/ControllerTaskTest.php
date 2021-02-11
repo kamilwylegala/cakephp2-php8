@@ -16,6 +16,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 App::uses('ConsoleOutput', 'Console');
 App::uses('ConsoleInput', 'Console');
 App::uses('ShellDispatcher', 'Console');
@@ -64,7 +66,12 @@ class ControllerTaskTest extends CakeTestCase {
  */
 	public $fixtures = array('core.bake_article', 'core.bake_articles_bake_tag', 'core.bake_comment', 'core.bake_tag');
 
-/**
+	/**
+	 * @var ControllerTask|MockObject
+	 */
+	private $Task;
+
+	/**
  * setUp method
  *
  * @return void

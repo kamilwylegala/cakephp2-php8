@@ -16,6 +16,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 App::uses('Model', 'Model');
 App::uses('DataSource', 'Model/Datasource');
 
@@ -101,30 +103,49 @@ class DataSourceTest extends CakeTestCase {
  * @var string
  */
 	public $sourceName = 'myapitest';
+	/**
+	 * @var TestSource|MockObject
+	 */
+	private $Source;
+	/**
+	 * @var Model|MockObject
+	 */
+	private $Model;
 
-/**
+	/**
  * setUp method
  *
  * @return void
  */
 	public function setUp() {
 		parent::setUp();
+
 		$this->Source = $this->getMock(
 			'TestSource',
 			array('create', 'read', 'update', 'delete')
 		);
+
+		// the subsequent call to ConnectionManager::create()
+		// results in a call to new {classname}
+		// so we need to tell the autoloader where it can find TestSource
+		App::build([
+			"Model/Datasource" => __DIR__,
+		]);
+		App::uses("TestSource", "Model/Datasource");
+
 		ConnectionManager::create($this->sourceName, array(
-			'datasource' => get_class($this->Source),
+			'datasource' => 'TestSource',
 			'apiKey' => '1234abcd',
 		));
+
 		$this->Model = $this->getMock(
 			'Model',
 			array('getDataSource'),
 			array(array('ds' => $this->sourceName))
 		);
-		$this->Model->expects($this->any())
+		$this->Model->expects(self::any())
 			->method('getDataSource')
-			->will($this->returnValue($this->Source));
+			->willReturn($this->Source);
 	}
 
 /**
@@ -138,7 +159,7 @@ class DataSourceTest extends CakeTestCase {
 		ConnectionManager::drop($this->sourceName);
 	}
 
-/**
+	/**
 	 * testCreate
 	 *
 	 * @return void
@@ -176,7 +197,7 @@ class DataSourceTest extends CakeTestCase {
 			'joins'			=> array(),
 			'limit'			=> 10,
 			'offset'		=> null,
-			'order'			=> array(array('status')),
+			'order'			=> array('status'),
 			'page'			=> 1,
 			'group'			=> null,
 			'callbacks'		=> true,
@@ -194,7 +215,7 @@ class DataSourceTest extends CakeTestCase {
 		));
 	}
 
-/**
+	/**
 	 * testUpdate
 	 *
 	 * @return void

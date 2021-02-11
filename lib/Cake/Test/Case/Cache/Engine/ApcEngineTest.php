@@ -31,8 +31,12 @@ class ApcEngineTest extends CakeTestCase {
  * @var string
  */
 	protected $_apcExtension = 'apc';
+	/**
+	 * @var array|int[]|mixed
+	 */
+	private $_cacheDisable;
 
-/**
+	/**
  * setUp method
  *
  * @return void

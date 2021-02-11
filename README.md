@@ -12,9 +12,10 @@ This repository is not intended to be used by developers from outside our team a
 - Updated PHPUnit to version 6
 - Updated PHPUnit to version 7
 - Removed ability to run app/plugin tests with Cake's test shell
+- Updated the core test suite so that it can be run using PHPUnit's standard test runner and doesn't require Cake's test shell
 
 # Roadmap
-- Update the core test suite so that it can be run using PHPUnit's standard test runner and doesn't require Cake's test shell. Some sticking points in updating PHPUnit have come about because of the unique way Cake's tests are run
+
 - Update PHPUnit to version 8
 - Update PHPUnit to version 9
 - Execute framework tests on PHP 7.4
@@ -30,13 +31,13 @@ There are currently `4035` tests in the suite. This is useful to know when upgra
 SQLite:
 ```
 OK, but incomplete, skipped, or risky tests!
-Tests: 4035, Assertions: 20487, Skipped: 319.
+Tests: 4028, Assertions: 20383, Skipped: 320.
 ```
 
 MYSQL:
 ```
 OK, but incomplete, skipped, or risky tests!
-Tests: 4035, Assertions: 20157, Skipped: 192.
+Tests: 4028, Assertions: 21228, Skipped: 193.
 ```
 
 Run the tests in a CentOS VM. You will need the following in addition to our basic PHP set-up.
@@ -48,12 +49,8 @@ sudo localedef -v -c -i de_DE -f UTF-8 de_DE
 ```
 
 Running tests:
-`./tests AllTests`
-
-To run a single test, you need to use the "Cake namespace" of the class under test. e.g. to run `lib/Cake/Model/Datasource/CakeSessionTest`, you would run:
-
-`./tests Model/Datasource/CakeSession`
+`vendors/bin/phpunit`
 
 By default, the tests run with an sqlite database, to run for MySQL, you need to configure a database connection in `app/Config/database.php` and make sure the following empty databases have been created:
 `cakephp_test`, `cakephp_test2`, `cakephp_test3`, and then set the env var `DB` to `mysql`, i.e.:
-`DB=mysql ./tests AllTests`
+`DB=mysql vendors/bin/phpunit`

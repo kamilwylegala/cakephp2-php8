@@ -25,8 +25,12 @@ App::uses('RedisEngine', 'Cache/Engine');
  * @package       Cake.Test.Case.Cache.Engine
  */
 class RedisEngineTest extends CakeTestCase {
+	/**
+	 * @var array|int[]|mixed
+	 */
+	private $_cacheDisable;
 
-/**
+	/**
  * setUp method
  *
  * @return void

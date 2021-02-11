@@ -80,8 +80,6 @@ class CommandTaskTest extends CakeTestCase {
 				'i18n',
 				'schema',
 				'server',
-				'test',
-				'testsuite',
 				'upgrade'
 			),
 			'TestPlugin' => array(
@@ -121,8 +119,6 @@ class CommandTaskTest extends CakeTestCase {
 			'i18n',
 			'schema',
 			'server',
-			'test',
-			'testsuite',
 			'upgrade',
 			'sample'
 		);

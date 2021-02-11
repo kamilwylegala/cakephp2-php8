@@ -272,7 +272,7 @@ class ClassRegistry {
 /**
  * Sets the default constructor parameter for an object type
  *
- * @param string $type Type of object. If this parameter is omitted, defaults to "Model"
+ * @param string|array $type Type of object. If this parameter is omitted, defaults to "Model"
  * @param array $param The parameter that will be passed to object constructors when objects
  *                      of $type are created
  * @return mixed Void if $param is being set. Otherwise, if only $type is passed, returns
