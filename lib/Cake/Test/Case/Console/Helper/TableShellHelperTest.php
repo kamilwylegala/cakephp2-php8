@@ -27,7 +27,7 @@ class TableShellHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->consoleOutput = new ConsoleOutputStub();

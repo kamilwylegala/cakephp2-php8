@@ -34,7 +34,7 @@ class ComponentCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->Components = new ComponentCollection();
 	}
@@ -44,7 +44,7 @@ class ComponentCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Components);
 	}

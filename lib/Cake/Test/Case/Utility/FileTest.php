@@ -39,7 +39,7 @@ class FileTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$file = __FILE__;
 		$this->File = new File($file);
@@ -50,7 +50,7 @@ class FileTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		$this->File->close();
 		unset($this->File);
@@ -631,7 +631,7 @@ class FileTest extends CakeTestCase {
 		// Double check
 		$expected = 'This is the welcome.tmp file in vendors directory';
 		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
+		$this->assertStringContainsString($expected, $contents);
 
 		$search = array('This is the', 'welcome.php file', 'in tmp directory');
 		$replace = array('This should be a', 'welcome.tmp file', 'in the Lib directory');
@@ -643,7 +643,7 @@ class FileTest extends CakeTestCase {
 		// Double check
 		$expected = 'This should be a welcome.tmp file in vendors directory';
 		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
+		$this->assertStringContainsString($expected, $contents);
 
 		$TmpFile->delete();
 	}

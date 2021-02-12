@@ -94,7 +94,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		if (!empty($this->fixtures)) {
@@ -119,7 +119,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		if (!empty($this->fixtureManager)) {
@@ -285,7 +285,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	public function assertTextContains($needle, $haystack, $message = '', $ignoreCase = false) {
 		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
 		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
-		return $this->assertContains($needle, $haystack, $message, $ignoreCase);
+		return $this->assertStringContainsString($needle, $haystack, $message, $ignoreCase);
 	}
 
 /**
@@ -301,7 +301,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	public function assertTextNotContains($needle, $haystack, $message = '', $ignoreCase = false) {
 		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
 		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
-		return $this->assertNotContains($needle, $haystack, $message, $ignoreCase);
+		return $this->assertStringNotContainsString($needle, $haystack, $message, $ignoreCase);
 	}
 
 /**
@@ -595,23 +595,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	protected function assertNoErrors() {
 	}
 
-/**
- * Compatibility wrapper function for setExpectedException
- *
- * @param mixed $expected the name of the Exception or error
- * @param string $message the text to display if the assertion is not correct
- * @deprecated 3.0.0 This is a compatibility wrapper for 1.x. It will be removed in 3.0
- * @return void
- */
-	protected function expectError($expected = false, $message = '') {
-		if (!$expected) {
-			$expected = 'Exception';
-		}
-		$this->expectException($expected);
-		if ($message !== "") {
-			$this->expectExceptionMessage($message);
-		}
-	}
 
 /**
  * Compatibility wrapper function for assertSame

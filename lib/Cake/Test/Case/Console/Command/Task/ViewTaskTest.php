@@ -184,7 +184,7 @@ class ViewTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -208,7 +208,7 @@ class ViewTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Task, $this->Dispatch);
 	}
@@ -359,7 +359,7 @@ class ViewTaskTest extends CakeTestCase {
 		$path = APP . 'Plugin' . DS . 'TestTest' . DS . 'View' . DS . 'ViewTaskComments' . DS . 'view.ctp';
 
 		$result = $this->Task->getContent('index');
-		$this->assertNotContains('List Test Test.view Task Articles', $result);
+		$this->assertStringNotContainsString('List Test Test.view Task Articles', $result);
 
 		$this->Task->expects($this->once())
 			->method('createFile')

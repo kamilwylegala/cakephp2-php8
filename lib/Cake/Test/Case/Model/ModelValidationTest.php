@@ -30,7 +30,7 @@ class ModelValidationTest extends BaseModelTest {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Config.language', 'eng');
 	}

@@ -137,7 +137,7 @@ class JsHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Configure::write('Asset.timestamp', false);
@@ -161,7 +161,7 @@ class JsHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Js);
 	}
@@ -749,7 +749,7 @@ class JsBaseEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$controller = null;
 		$this->View = $this->getMock('View', array('append'), array(&$controller));
@@ -761,7 +761,7 @@ class JsBaseEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->JsEngine);
 	}

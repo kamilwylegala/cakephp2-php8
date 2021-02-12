@@ -69,7 +69,7 @@ class CookieComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$_COOKIE = array();
 		$this->Controller = new CookieComponentTestController(new CakeRequest(), new CakeResponse());
@@ -91,7 +91,7 @@ class CookieComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		$this->Cookie->destroy();
 	}
@@ -304,7 +304,8 @@ class CookieComponentTest extends CakeTestCase {
 			'httpOnly' => false);
 		$result = $this->Controller->response->cookie($this->Cookie->name . '[Testing]');
 
-		$this->assertEquals($future->format('U'), $result['expire'], '', 3);
+		$this->assertEquals($future->format('U'), $result['expire'], '');
+		$this->assertEqualsWithDelta($future->format('U'), $result['expire'], 3, '');
 		unset($result['expire']);
 
 		$this->assertEquals($expected, $result);

@@ -32,7 +32,7 @@ class PhpAclTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Acl.classname', 'PhpAcl');
 		$Collection = new ComponentCollection();
@@ -342,7 +342,8 @@ class PhpAclTest extends CakeTestCase {
 			),
 		);
 
-		$this->expectError('\PHPUnit\Framework\Error\Error', 'cycle detected' /* ... */);
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
+		$this->expectExceptionMessage('cycle detected');
 		$this->PhpAcl->build($config);
 	}
 

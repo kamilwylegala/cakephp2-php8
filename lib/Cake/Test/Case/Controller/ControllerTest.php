@@ -390,7 +390,7 @@ class ControllerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		App::objects('plugin', null, false);
 		App::build();
@@ -402,7 +402,7 @@ class ControllerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		CakePlugin::unload();
 	}
@@ -1243,21 +1243,9 @@ class ControllerTest extends CakeTestCase {
 
 		$eventManager = $this->getMock('CakeEventManager');
 		$eventManager->expects($this->at(0))->method('dispatch')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.initialize'),
-					$this->attributeEqualTo('_subject', $Controller)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 		$eventManager->expects($this->at(1))->method('dispatch')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.startup'),
-					$this->attributeEqualTo('_subject', $Controller)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 		$Controller->expects($this->exactly(2))->method('getEventManager')
 			->will($this->returnValue($eventManager));
 		$Controller->startupProcess();
@@ -1290,13 +1278,7 @@ class ControllerTest extends CakeTestCase {
 
 		$eventManager = $this->getMock('CakeEventManager');
 		$eventManager->expects($this->once())->method('dispatch')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.shutdown'),
-					$this->attributeEqualTo('_subject', $Controller)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 		$Controller->expects($this->once())->method('getEventManager')
 			->will($this->returnValue($eventManager));
 		$Controller->shutdownProcess();

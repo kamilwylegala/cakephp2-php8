@@ -140,7 +140,7 @@ class EmailComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Configure::write('App.encoding', 'UTF-8');
@@ -900,8 +900,8 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->send('This is the body of the message'));
 		$result = DebugCompTransport::$lastEmail;
 
-		$this->assertContains('From: =?UTF-8?B?VGXDn3Qg?= <test@example.com>', $result);
-		$this->assertContains('To: =?UTF-8?B?VGXDn3Qg?= <test@example.com>', $result);
+		$this->assertStringContainsString('From: =?UTF-8?B?VGXDn3Qg?= <test@example.com>', $result);
+		$this->assertStringContainsString('To: =?UTF-8?B?VGXDn3Qg?= <test@example.com>', $result);
 	}
 
 }

@@ -38,7 +38,7 @@ class HelperCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->View = $this->getMock('View', array(), array(null));
 		$this->Helpers = new HelperCollection($this->View);
@@ -49,7 +49,7 @@ class HelperCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		CakePlugin::unload();
 		unset($this->Helpers, $this->View);
 		parent::tearDown();

@@ -42,7 +42,7 @@ class DigestAuthenticateTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->Collection = $this->getMock('ComponentCollection');
 		$this->server = $_SERVER;
@@ -67,7 +67,7 @@ class DigestAuthenticateTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		$_SERVER = $this->server;
 	}

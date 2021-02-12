@@ -378,7 +378,7 @@ class AuthComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Security.salt', 'YJfIxfs2guVoUubWDYhG93b0qyJfIxfs2guwvniR2G0FgaC9mi');
 		Configure::write('Security.cipherSeed', 770011223369876);
@@ -409,7 +409,7 @@ class AuthComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		TestAuthComponent::clearUser();

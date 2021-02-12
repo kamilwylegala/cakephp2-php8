@@ -34,7 +34,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->controller = $this->getMock('Controller', array(), array(), '', false);
 		$this->Acl = $this->getMock('AclComponent', array(), array(), '', false);

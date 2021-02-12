@@ -34,7 +34,7 @@ class WincacheEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->skipIf(!function_exists('wincache_ucache_set'), 'Wincache is not installed or configured properly.');
 		$this->_cacheDisable = Configure::read('Cache.disable');
@@ -47,7 +47,7 @@ class WincacheEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::write('Cache.disable', $this->_cacheDisable);
 		Cache::drop('wincache');

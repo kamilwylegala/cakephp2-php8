@@ -188,7 +188,7 @@ class DbAclTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Acl.classname', 'DbAclTwoTest');
 		Configure::write('Acl.database', 'test');
@@ -201,7 +201,7 @@ class DbAclTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Acl);
 	}

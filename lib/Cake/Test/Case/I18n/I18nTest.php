@@ -31,7 +31,7 @@ class I18nTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Cache::delete('object_map', '_cake_core_');
@@ -47,7 +47,7 @@ class I18nTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		Cache::delete('object_map', '_cake_core_');

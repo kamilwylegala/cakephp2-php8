@@ -298,7 +298,7 @@ class PaginatorComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->request = new CakeRequest('controller_posts/index');
 		$this->request->params['pass'] = $this->request->params['named'] = array();

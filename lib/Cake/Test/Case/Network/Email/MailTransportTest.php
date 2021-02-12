@@ -30,7 +30,7 @@ class MailTransportTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->MailTransport = $this->getMock('MailTransport', array('_mail'));
 		$this->MailTransport->config(array('additionalParameters' => '-f'));
@@ -86,8 +86,8 @@ class MailTransportTest extends CakeTestCase {
 
 		$result = $this->MailTransport->send($email);
 
-		$this->assertContains('Subject: ', $result['headers']);
-		$this->assertContains('To: ', $result['headers']);
+		$this->assertStringContainsString('Subject: ', $result['headers']);
+		$this->assertStringContainsString('To: ', $result['headers']);
 	}
 
 }

@@ -4,6 +4,7 @@
 		 colors="true"
 		 stderr="true"
 		 stopOnFailure="false"
+		 stopOnWarning="false"
 >
 	<testsuites>
 		<testsuite name="CakePHP test suite">

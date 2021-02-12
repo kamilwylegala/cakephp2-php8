@@ -179,12 +179,18 @@ class DboSourceTest extends CakeTestCase {
 		'core.sample', 'core.tag', 'core.user', 'core.post', 'core.author', 'core.data_test'
 	);
 
+	/**
+	 * @var DboSource
+	 */
+	public $db;
+
 /**
+ *
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->testDb = new DboTestSource();
@@ -200,7 +206,7 @@ class DboSourceTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Model);
 	}
@@ -1248,10 +1254,10 @@ class DboSourceTest extends CakeTestCase {
 		);
 
 		$result = $this->db->generateAssociationQuery($Article, null, null, null, null, $queryData, false);
-		$this->assertContains('SELECT', $result);
-		$this->assertContains('FROM', $result);
-		$this->assertContains('WHERE', $result);
-		$this->assertContains('ORDER', $result);
+		$this->assertStringContainsString('SELECT', $result);
+		$this->assertStringContainsString('FROM', $result);
+		$this->assertStringContainsString('WHERE', $result);
+		$this->assertStringContainsString('ORDER', $result);
 	}
 
 /**
@@ -1783,7 +1789,7 @@ class DboSourceTest extends CakeTestCase {
 
 		$result = $db->limit(10, 300000000000000000000000000000);
 		$scientificNotation = sprintf('%.1E', 300000000000000000000000000000);
-		$this->assertNotContains($scientificNotation, $result);
+		$this->assertStringNotContainsString($scientificNotation, $result);
 	}
 
 /**
@@ -2148,10 +2154,10 @@ class DboSourceTest extends CakeTestCase {
 		$this->db->query('SELECT 1');
 		$this->db->query('SELECT 1');
 		$this->db->query('SELECT 2');
-		$this->assertAttributeCount(2, '_queryCache', $this->db);
+		self::assertCount(2, $this->db->getAllCachedQueries());
 
 		$this->db->flushQueryCache();
-		$this->assertAttributeCount(0, '_queryCache', $this->db);
+		self::assertCount(0, $this->db->getAllCachedQueries());
 	}
 
 /**

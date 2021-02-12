@@ -37,7 +37,7 @@ class ExtractTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -56,7 +56,7 @@ class ExtractTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Task);
 
@@ -159,8 +159,8 @@ class ExtractTaskTest extends CakeTestCase {
 		$pattern .= '"\nmsgstr ""/';
 		$this->assertRegExp($pattern, $result);
 
-		$this->assertContains('msgid "double \\"quoted\\""', $result, 'Strings with quotes not handled correctly');
-		$this->assertContains("msgid \"single 'quoted'\"", $result, 'Strings with quotes not handled correctly');
+		$this->assertStringContainsString('msgid "double \\"quoted\\""', $result, 'Strings with quotes not handled correctly');
+		$this->assertStringContainsString("msgid \"single 'quoted'\"", $result, 'Strings with quotes not handled correctly');
 
 		$pattern = '/\#: extract\.ctp:36\nmsgid "letter"/';
 		$this->assertRegExp($pattern, $result, 'Strings with context should not overwrite strings without context');
@@ -349,9 +349,9 @@ class ExtractTaskTest extends CakeTestCase {
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'default.pot');
 		$this->assertNotRegExp('#Pages#', $result);
-		$this->assertContains('translate.ctp:1', $result);
-		$this->assertContains('This is a translatable string', $result);
-		$this->assertContains('I can haz plugin model validation message', $result);
+		$this->assertStringContainsString('translate.ctp:1', $result);
+		$this->assertStringContainsString('This is a translatable string', $result);
+		$this->assertStringContainsString('I can haz plugin model validation message', $result);
 	}
 
 /**
@@ -380,14 +380,14 @@ class ExtractTaskTest extends CakeTestCase {
 
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'default.pot');
-		$this->assertContains('Model/PersisterOne.php:validation for field title', $result);
-		$this->assertContains('Model/PersisterOne.php:validation for field body', $result);
-		$this->assertContains('msgid "Post title is required"', $result);
-		$this->assertContains('msgid "You may enter up to %s chars (minimum is %s chars)"', $result);
-		$this->assertContains('msgid "Post body is required"', $result);
-		$this->assertContains('msgid "Post body is super required"', $result);
-		$this->assertContains('msgid "double \\"quoted\\" validation"', $result, 'Strings with quotes not handled correctly');
-		$this->assertContains("msgid \"single 'quoted' validation\"", $result, 'Strings with quotes not handled correctly');
+		$this->assertStringContainsString('Model/PersisterOne.php:validation for field title', $result);
+		$this->assertStringContainsString('Model/PersisterOne.php:validation for field body', $result);
+		$this->assertStringContainsString('msgid "Post title is required"', $result);
+		$this->assertStringContainsString('msgid "You may enter up to %s chars (minimum is %s chars)"', $result);
+		$this->assertStringContainsString('msgid "Post body is required"', $result);
+		$this->assertStringContainsString('msgid "Post body is super required"', $result);
+		$this->assertStringContainsString('msgid "double \\"quoted\\" validation"', $result, 'Strings with quotes not handled correctly');
+		$this->assertStringContainsString("msgid \"single 'quoted' validation\"", $result, 'Strings with quotes not handled correctly');
 	}
 
 /**
@@ -416,11 +416,11 @@ class ExtractTaskTest extends CakeTestCase {
 
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'test_plugin.pot');
-		$this->assertContains('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
-		$this->assertContains('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field body', $result);
-		$this->assertContains('msgid "Post title is required"', $result);
-		$this->assertContains('msgid "Post body is required"', $result);
-		$this->assertContains('msgid "Post body is super required"', $result);
+		$this->assertStringContainsString('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
+		$this->assertStringContainsString('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field body', $result);
+		$this->assertStringContainsString('msgid "Post title is required"', $result);
+		$this->assertStringContainsString('msgid "Post body is required"', $result);
+		$this->assertStringContainsString('msgid "Post body is super required"', $result);
 	}
 
 /**
@@ -445,12 +445,12 @@ class ExtractTaskTest extends CakeTestCase {
 
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'test_plugin.pot');
-		$this->assertContains('Model/TestPluginPost.php:validation for field title', $result);
-		$this->assertContains('Model/TestPluginPost.php:validation for field body', $result);
-		$this->assertContains('msgid "Post title is required"', $result);
-		$this->assertContains('msgid "Post body is required"', $result);
-		$this->assertContains('msgid "Post body is super required"', $result);
-		$this->assertNotContains('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
+		$this->assertStringContainsString('Model/TestPluginPost.php:validation for field title', $result);
+		$this->assertStringContainsString('Model/TestPluginPost.php:validation for field body', $result);
+		$this->assertStringContainsString('msgid "Post title is required"', $result);
+		$this->assertStringContainsString('msgid "Post body is required"', $result);
+		$this->assertStringContainsString('msgid "Post body is super required"', $result);
+		$this->assertStringNotContainsString('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
 	}
 
 /**

@@ -543,7 +543,7 @@ class DispatcherTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->_get = $_GET;
 		$_GET = array();
@@ -571,7 +571,7 @@ class DispatcherTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		$_GET = $this->_get;
 		$_POST = $this->_post;

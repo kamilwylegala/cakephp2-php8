@@ -42,7 +42,7 @@ class AclShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Acl.database', 'test');
 		Configure::write('Acl.classname', 'DbAcl');

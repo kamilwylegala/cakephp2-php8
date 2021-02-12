@@ -1229,39 +1229,39 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel = new Apple();
 		$TestModel->setDataSource('database1');
-		$this->assertContains('aaa_apples', $this->db->fullTableName($TestModel));
-		$this->assertContains('aaa_apples', $db1->fullTableName($TestModel));
-		$this->assertContains('aaa_apples', $db2->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $this->db->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $db2->fullTableName($TestModel));
 
 		$TestModel->setDataSource('database2');
-		$this->assertContains('bbb_apples', $this->db->fullTableName($TestModel));
-		$this->assertContains('bbb_apples', $db1->fullTableName($TestModel));
-		$this->assertContains('bbb_apples', $db2->fullTableName($TestModel));
+		$this->assertStringContainsString('bbb_apples', $this->db->fullTableName($TestModel));
+		$this->assertStringContainsString('bbb_apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('bbb_apples', $db2->fullTableName($TestModel));
 
 		$TestModel = new Apple();
 		$TestModel->tablePrefix = 'custom_';
-		$this->assertContains('custom_apples', $this->db->fullTableName($TestModel));
+		$this->assertStringContainsString('custom_apples', $this->db->fullTableName($TestModel));
 		$TestModel->setDataSource('database1');
-		$this->assertContains('custom_apples', $this->db->fullTableName($TestModel));
-		$this->assertContains('custom_apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('custom_apples', $this->db->fullTableName($TestModel));
+		$this->assertStringContainsString('custom_apples', $db1->fullTableName($TestModel));
 
 		$TestModel = new Apple();
 		$TestModel->setDataSource('database1');
-		$this->assertContains('aaa_apples', $this->db->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $this->db->fullTableName($TestModel));
 		$TestModel->tablePrefix = '';
 		$TestModel->setDataSource('database2');
-		$this->assertContains('apples', $db2->fullTableName($TestModel));
-		$this->assertContains('apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('apples', $db2->fullTableName($TestModel));
+		$this->assertStringContainsString('apples', $db1->fullTableName($TestModel));
 
 		$TestModel->tablePrefix = null;
 		$TestModel->setDataSource('database1');
-		$this->assertContains('aaa_apples', $db2->fullTableName($TestModel));
-		$this->assertContains('aaa_apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $db2->fullTableName($TestModel));
+		$this->assertStringContainsString('aaa_apples', $db1->fullTableName($TestModel));
 
 		$TestModel->tablePrefix = false;
 		$TestModel->setDataSource('database2');
-		$this->assertContains('apples', $db2->fullTableName($TestModel));
-		$this->assertContains('apples', $db1->fullTableName($TestModel));
+		$this->assertStringContainsString('apples', $db2->fullTableName($TestModel));
+		$this->assertStringContainsString('apples', $db1->fullTableName($TestModel));
 	}
 
 /**

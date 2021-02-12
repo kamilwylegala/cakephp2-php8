@@ -13,11 +13,12 @@ This repository is not intended to be used by developers from outside our team a
 - Updated PHPUnit to version 7
 - Removed ability to run app/plugin tests with Cake's test shell
 - Updated the core test suite so that it can be run using PHPUnit's standard test runner and doesn't require Cake's test shell
+- Updated PHPUnit to version 8
 
 # Roadmap
 
-- Update PHPUnit to version 8
 - Update PHPUnit to version 9
+- Run Rector on test suite to remove calls to static PHPUnit methods (e.g. assertions) using `$this->`
 - Execute framework tests on PHP 7.4
 - Execute framework tests on PHP 8.0
 - (BREAKING) Add all framework classes to composer classmap and remove App::uses()
@@ -25,20 +26,6 @@ This repository is not intended to be used by developers from outside our team a
 - Delete parts of the framework that we do not use / are unlikely to ever use (e.g. Postgres DboSource)
 
 #Running tests
-
-There are currently `4035` tests in the suite. This is useful to know when upgrading PHPUnit as you can see easily if some tests are being missed or duped!
-
-SQLite:
-```
-OK, but incomplete, skipped, or risky tests!
-Tests: 4028, Assertions: 20383, Skipped: 320.
-```
-
-MYSQL:
-```
-OK, but incomplete, skipped, or risky tests!
-Tests: 4028, Assertions: 21228, Skipped: 193.
-```
 
 Run the tests in a CentOS VM. You will need the following in addition to our basic PHP set-up.
 
@@ -54,3 +41,17 @@ Running tests:
 By default, the tests run with an sqlite database, to run for MySQL, you need to configure a database connection in `app/Config/database.php` and make sure the following empty databases have been created:
 `cakephp_test`, `cakephp_test2`, `cakephp_test3`, and then set the env var `DB` to `mysql`, i.e.:
 `DB=mysql vendors/bin/phpunit`
+
+These numbers are useful to know when upgrading PHPUnit as you can see easily if some tests are being missed or duped!
+
+SQLite:
+```
+OK, but incomplete, skipped, or risky tests!
+Tests: 4028, Assertions: 18830, Skipped: 320.
+```
+
+MYSQL:
+```
+OK, but incomplete, skipped, or risky tests!
+Tests: 4028, Assertions: 19551, Skipped: 193.
+```

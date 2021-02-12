@@ -34,7 +34,7 @@ class CrudAuthorizeTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Routing.prefixes', array());
 		Router::reload();

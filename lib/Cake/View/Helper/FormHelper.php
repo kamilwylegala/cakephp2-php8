@@ -3167,4 +3167,7 @@ class FormHelper extends AppHelper {
 		return $this->_inputDefaults;
 	}
 
+	public function getLastAction() {
+		return $this->_lastAction;
+	}
 }

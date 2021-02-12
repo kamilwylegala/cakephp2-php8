@@ -33,7 +33,7 @@ class JsonViewTest extends CakeTestCase {
  *
  * @return void
  **/
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('debug', 0);
 	}

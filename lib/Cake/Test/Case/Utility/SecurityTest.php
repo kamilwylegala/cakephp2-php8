@@ -34,7 +34,7 @@ class SecurityTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::delete('Security.useOpenSsl');
 	}
@@ -44,7 +44,7 @@ class SecurityTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::delete('Security.useOpenSsl');
 	}

@@ -3750,4 +3750,8 @@ class DboSource extends DataSource {
 		parent::__destruct();
 	}
 
+	public function getAllCachedQueries(): array
+	{
+		return $this->_queryCache;
+	}
 }

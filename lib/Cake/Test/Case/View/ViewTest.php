@@ -314,7 +314,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$request = $this->getMock('CakeRequest');
@@ -346,7 +346,7 @@ class ViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		CakePlugin::unload();
 		unset($this->View);
@@ -987,74 +987,26 @@ class ViewTest extends CakeTestCase {
 		$View->Helpers = $this->getMock('HelperCollection', array('trigger'), array($View));
 
 		$View->Helpers->expects($this->at(0))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRender'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 		$View->Helpers->expects($this->at(1))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->Helpers->expects($this->at(2))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 		$View->Helpers->expects($this->at(3))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRender'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->Helpers->expects($this->at(4))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeLayout'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->Helpers->expects($this->at(5))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->Helpers->expects($this->at(6))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->Helpers->expects($this->at(7))->method('trigger')
-			->with(
-				$this->logicalAnd(
-					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterLayout'),
-					$this->attributeEqualTo('_subject', $View)
-				)
-			);
+			->with($this->isInstanceOf('CakeEvent'));
 
 		$View->render('index');
 	}
@@ -1668,7 +1620,7 @@ class ViewTest extends CakeTestCase {
 			$this->fail('No exception');
 		} catch (CakeException $e) {
 			ob_end_clean();
-			$this->assertContains('The "no_close" block was left open', $e->getMessage());
+			$this->assertStringContainsString('The "no_close" block was left open', $e->getMessage());
 		}
 	}
 
@@ -1701,7 +1653,7 @@ TEXT;
 			$this->fail('No exception');
 		} catch (LogicException $e) {
 			ob_end_clean();
-			$this->assertContains('cannot have views extend themselves', $e->getMessage());
+			$this->assertStringContainsString('cannot have views extend themselves', $e->getMessage());
 		}
 	}
 
@@ -1717,7 +1669,7 @@ TEXT;
 			$this->fail('No exception');
 		} catch (LogicException $e) {
 			ob_end_clean();
-			$this->assertContains('cannot have views extend in a loop', $e->getMessage());
+			$this->assertStringContainsString('cannot have views extend in a loop', $e->getMessage());
 		}
 	}
 
@@ -1752,7 +1704,7 @@ TEXT;
 		} catch (LogicException $e) {
 			ob_end_clean();
 			ob_end_clean();
-			$this->assertContains('element', $e->getMessage());
+			$this->assertStringContainsString('element', $e->getMessage());
 		}
 	}
 

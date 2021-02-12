@@ -74,7 +74,7 @@ class CacheHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$_GET = array();
 		$request = new CakeRequest();
@@ -93,7 +93,7 @@ class CacheHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		clearCache();
 		unset($this->Cache);
 		parent::tearDown();

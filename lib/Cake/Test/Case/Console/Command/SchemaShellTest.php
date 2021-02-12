@@ -102,7 +102,7 @@ class SchemaShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -119,7 +119,7 @@ class SchemaShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		if (!empty($this->file) && $this->file instanceof File) {
 			$this->file->delete();
@@ -419,9 +419,9 @@ class SchemaShellTest extends CakeTestCase {
 		$this->file = new File(TMP . 'tests' . DS . 'schema.php');
 		$contents = $this->file->read();
 
-		$this->assertNotContains('public $acos = array(', $contents);
-		$this->assertNotContains('public $aros = array(', $contents);
-		$this->assertContains('public $aros_acos = array(', $contents);
+		$this->assertStringNotContainsString('public $acos = array(', $contents);
+		$this->assertStringNotContainsString('public $aros = array(', $contents);
+		$this->assertStringContainsString('public $aros_acos = array(', $contents);
 	}
 
 /**
