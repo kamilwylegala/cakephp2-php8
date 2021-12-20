@@ -386,20 +386,20 @@ class HttpSocketResponse implements ArrayAccess {
 /**
  * ArrayAccess - Offset Exists
  *
- * @param string $offset Offset to check.
+ * @param mixed $offset Offset to check.
  * @return bool
  */
-	public function offsetExists($offset) {
+	public function offsetExists(mixed $offset) : bool {
 		return in_array($offset, array('raw', 'status', 'header', 'body', 'cookies'));
 	}
 
 /**
  * ArrayAccess - Offset Get
  *
- * @param string $offset Offset to get.
+ * @param mixed $offset Offset to get.
  * @return mixed
  */
-	public function offsetGet($offset) {
+	public function offsetGet(mixed $offset) : mixed {
 		switch ($offset) {
 			case 'raw':
 				$firstLineLength = strpos($this->raw, "\r\n") + 2;
@@ -433,11 +433,11 @@ class HttpSocketResponse implements ArrayAccess {
 /**
  * ArrayAccess - Offset Set
  *
- * @param string $offset Offset to set.
+ * @param mixed $offset Offset to set.
  * @param mixed $value Value.
  * @return void
  */
-	public function offsetSet($offset, $value) {
+	public function offsetSet(mixed $offset, mixed $value) : void {
 	}
 
 /**
@@ -446,7 +446,7 @@ class HttpSocketResponse implements ArrayAccess {
  * @param string $offset Offset to unset.
  * @return void
  */
-	public function offsetUnset($offset) {
+	public function offsetUnset(mixed $offset) : void {
 	}
 
 /**
@@ -454,7 +454,7 @@ class HttpSocketResponse implements ArrayAccess {
  *
  * @return string
  */
-	public function __toString() {
+	public function __tostring() {
 		return $this->body();
 	}
 
