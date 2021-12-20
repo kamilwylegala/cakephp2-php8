@@ -523,7 +523,7 @@ class ModelValidator implements ArrayAccess, IteratorAggregate, Countable {
  *
  * @return int
  */
-	public function count() {
+	public function count() : int {
 		$this->_parseRules();
 		return count($this->_fields);
 	}
