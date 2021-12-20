@@ -513,7 +513,7 @@ class ModelValidator implements ArrayAccess, IteratorAggregate, Countable {
  *
  * @return ArrayIterator
  */
-	public function getIterator() {
+	public function getIterator() : Traversable {
 		$this->_parseRules();
 		return new ArrayIterator($this->_fields);
 	}
