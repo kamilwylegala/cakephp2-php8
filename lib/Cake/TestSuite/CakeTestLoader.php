@@ -18,6 +18,9 @@
  * @package Cake.TestSuite
  */
 
+use PHPUnit\Runner\StandardTestSuiteLoader;
+use PHPUnit\Runner\TestSuiteLoader;
+
 /**
  * TestLoader for CakePHP Test suite.
  *
@@ -25,21 +28,34 @@
  *
  * @package Cake.TestSuite
  */
-class CakeTestLoader extends PHPUnit_Runner_StandardTestSuiteLoader {
+class CakeTestLoader implements TestSuiteLoader {
 
-/**
+
+	private TestSuiteLoader $testSuiteLoader;
+
+	public function __construct()
+	{
+		$this->testSuiteLoader = new StandardTestSuiteLoader();
+	}
+
+	/**
  * Load a file and find the first test case / suite in that file.
  *
  * @param string $filePath The file path to load
  * @param string $params Additional parameters
  * @return ReflectionClass
  */
-	public function load($filePath, $params = '') {
+	public function load(string $filePath, string  $params = '') : ReflectionClass {
 		$file = $this->_resolveTestFile($filePath, $params);
-		return parent::load('', $file);
+		return $this->testSuiteLoader->load('', $file);
 	}
 
-/**
+	public function reload(ReflectionClass $aClass) : ReflectionClass
+	{
+		return $this->testSuiteLoader->reload($aClass);
+	}
+
+	/**
  * Convert path fragments used by CakePHP's test runner to absolute paths that can be fed to PHPUnit.
  *
  * @param string $filePath The file path to load.

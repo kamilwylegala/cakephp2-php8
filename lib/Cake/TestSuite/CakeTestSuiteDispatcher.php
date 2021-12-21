@@ -19,6 +19,9 @@
 /**
  * Path to the tests directory of the app.
  */
+
+use PHPUnit\Framework\TestCase;
+
 if (!defined('TESTS')) {
 	define('TESTS', APP . 'Test' . DS);
 }
@@ -149,7 +152,7 @@ class CakeTestSuiteDispatcher {
  * @return bool true if found, false otherwise
  */
 	public function loadTestFramework() {
-		if (class_exists('PHPUnit_Framework_TestCase')) {
+		if (class_exists(TestCase::class)) {
 			return true;
 		}
 		$phpunitPath = 'phpunit' . DS . 'phpunit';
@@ -177,8 +180,11 @@ class CakeTestSuiteDispatcher {
 				return $included;
 			}
 		}
-		include 'PHPUnit' . DS . 'Autoload.php';
-		return class_exists('PHPUnit_Framework_TestCase');
+
+		//TODO: Remove code above. It should be enough to go directly to composer directory and get php unit.
+		include $vendor . DS . "autoload.php";
+
+ 		return class_exists(TestCase::class);
 	}
 
 /**

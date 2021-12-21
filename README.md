@@ -37,3 +37,12 @@ It means that composer will look at `master` branch of repository configured und
 ### 2021-02-24
 
 - Fixed ErrorHandler accordingly to PHP8 migration guide. Otherwise, error handler is logging too much and doesn't respect configured `error_reporting`.
+
+## Debugging cake console in PHPStorm
+
+Make sure PHP and XDebug extension are installed.
+
+1. Find `cake.php` in `lib/Cake/Console`.
+2. Click with right mouse button and choose "Debug".
+3. Go to debug configurations and edit this configuration.
+4. Add argument e.g. `test`.
