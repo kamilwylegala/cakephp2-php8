@@ -1,6 +1,18 @@
 # Fork of CakePHP 2 with support for PHP8
 
-For original README content please check original repository: https://github.com/cakephp/cakephp/tree/2.x
+~~For original README content please check original repository: https://github.com/cakephp/cakephp/tree/2.x~~
+
+Unfortunately branch 2.x in original repository was taken down.
+
+## Why I created this fork? 🤔 
+
+CakePHP 2 stopped getting updates in the end of 2019 (AFAIR). Unfortunately in my case it's too expensive to migrate to newer versions of CakePHP. I started migrating to Symfony framework but I still use ORM from CakePHP (and actually I like it). So in order to keep up with newest PHP versions I decided to create fork of the framework.
+
+## ⚠️ Before using this fork ⚠️
+
+- Tests of CakePHP framework aren't refactored yet to support PHP 8. Main issue is old version of PHPUnit that is tightly coupled to framework's tests. Issue for fixing this situation is here: https://github.com/kamilwylegala/cakephp2-php8/issues/7
+- Due to lack of tests ☝️ - **you need to rely** on tests in your application after integrating with this fork.
+- If after integration you spot any issues related to framework please let me know by creating an issue or pull request with fix.
 
 ## Installation
 
