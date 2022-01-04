@@ -361,7 +361,8 @@ class Mysql extends DboSource {
 				$fields[$column->Field]['unsigned'] = $this->_unsigned($column->Type);
 			}
 			if (in_array($fields[$column->Field]['type'], array('timestamp', 'datetime')) &&
-				in_array(strtoupper($column->Default), array('CURRENT_TIMESTAMP', 'CURRENT_TIMESTAMP()'))
+				//Falling back to default empty string due to PHP8.1 deprecation notice.
+				in_array(strtoupper($column->Default ?? ""), array('CURRENT_TIMESTAMP', 'CURRENT_TIMESTAMP()'))
 			) {
 				$fields[$column->Field]['default'] = null;
 			}
