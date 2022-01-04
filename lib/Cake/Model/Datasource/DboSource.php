@@ -2070,7 +2070,8 @@ class DboSource extends DataSource {
  * @return string
  */
 	public function renderJoinStatement($data) {
-		if (strtoupper($data['type']) === 'CROSS' || empty($data['conditions'])) {
+		//Fixed deprecation notice in PHP8.1 - fallback to empty string
+		if (strtoupper($data['type'] ?? "") === 'CROSS' || empty($data['conditions'])) {
 			return "{$data['type']} JOIN {$data['table']} {$data['alias']}";
 		}
 		return trim("{$data['type']} JOIN {$data['table']} {$data['alias']} ON ({$data['conditions']})");
