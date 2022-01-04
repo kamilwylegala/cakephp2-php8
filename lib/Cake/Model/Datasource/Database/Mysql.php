@@ -333,7 +333,7 @@ class Mysql extends DboSource {
  * Returns an array of the fields in given table name.
  *
  * @param Model|string $model Name of database table to inspect or model instance
- * @return array Fields in table. Keys are name and type
+ * @return array|bool Fields in table. Keys are name and type. Returns false if result is empty.
  * @throws CakeException
  */
 	public function describe($model) {
@@ -344,7 +344,7 @@ class Mysql extends DboSource {
 		}
 		$table = $this->fullTableName($model);
 
-		$fields = false;
+		$fields = array();
 		$cols = $this->_execute('SHOW FULL COLUMNS FROM ' . $table);
 		if (!$cols) {
 			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $table));
@@ -382,6 +382,12 @@ class Mysql extends DboSource {
 		}
 		$this->_cacheDescription($key, $fields);
 		$cols->closeCursor();
+
+		//Fields must be an array for compatibility with PHP8.1 (deprecation notice) but also let's keep backwards compatibility for method.
+		if (count($fields) === 0) {
+			return false;
+		}
+
 		return $fields;
 	}
 
