@@ -37,6 +37,15 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-01-04
+
+- Fixed more deprecation notices
+    - `strtoupper` + `converting false to array` in Mysql.php
+    - `preg_match` where `$subject = null` in CakeRoute.php
+    - `strtoupper` in DboSource.php
+    - Check history for details ☝️
+
+
 ### 2021-12-20
 
 - Fixed deprecation notices in PHP 8.1 for production code implementations:
