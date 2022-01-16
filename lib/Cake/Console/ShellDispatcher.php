@@ -212,7 +212,7 @@ class ShellDispatcher {
 
 		$Shell = $this->_getShell($shell);
 
-		$command = null;
+		$command = '';
 		if (isset($this->args[0])) {
 			$command = $this->args[0];
 		}

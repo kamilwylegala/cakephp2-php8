@@ -724,7 +724,7 @@ class ShellTest extends CakeTestCase {
 		$Mock = $this->getMock('Shell', array('main', 'startup'), array(), '', false);
 
 		$Mock->expects($this->once())->method('main')->will($this->returnValue(true));
-		$result = $Mock->runCommand(null, array());
+		$result = $Mock->runCommand('', array());
 		$this->assertTrue($result);
 	}
 
@@ -815,7 +815,7 @@ class ShellTest extends CakeTestCase {
 			->will($this->returnValue($Parser));
 		$Shell->expects($this->once())->method('out');
 
-		$Shell->runCommand(null, array('--help'));
+		$Shell->runCommand('', array('--help'));
 	}
 
 /**
