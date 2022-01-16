@@ -353,7 +353,7 @@ class Shell extends CakeObject {
  * @return bool
  * @link https://book.cakephp.org/2.0/en/console-and-shells.html#Shell::hasMethod
  */
-	public function hasMethod($name) {
+	public function hasMethod(string $name) {
 		try {
 			$method = new ReflectionMethod($this, $name);
 			if (!$method->isPublic() || substr($name, 0, 1) === '_') {
@@ -418,7 +418,7 @@ class Shell extends CakeObject {
  * @return int|bool
  * @link https://book.cakephp.org/2.0/en/console-and-shells.html#Shell::runCommand
  */
-	public function runCommand($command, $argv) {
+	public function runCommand(string $command, $argv) {
 		$isTask = $this->hasTask($command);
 		$isMethod = $this->hasMethod($command);
 		$isMain = $this->hasMethod('main');
