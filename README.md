@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-01-16
+
+- Fix Shell `ReflectionMethod::__construct` default null argument in hasMethod
+
 ### 2022-01-15
 
 - Readme file update - more explicit content.
