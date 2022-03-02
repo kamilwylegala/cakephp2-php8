@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-03-02
+
+- Fixed `ConsoleErrorHandler::handleError` to respect error suppression.
+
 ### 2022-01-31
 
 - Fixed `Folder->read`, `array_values` is used to remove keys to prevent usign named arguments in `call_user_func_array`
