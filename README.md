@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-03-03
+
+- Removed `String` class.
+
 ### 2022-03-02
 
 - Fixed `ConsoleErrorHandler::handleError` to respect error suppression.
