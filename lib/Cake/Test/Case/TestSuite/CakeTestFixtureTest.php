@@ -228,7 +228,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$methods = array_diff(get_class_methods('DboSource'), array('enabled'));
 
@@ -243,7 +243,7 @@ class CakeTestFixtureTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->criticDb);
 		$this->db->config = $this->_backupConfig;
@@ -526,12 +526,12 @@ class CakeTestFixtureTest extends CakeTestCase {
 	}
 
 /**
- * test the insert method with invalid fixture
- *
- * @expectedException CakeException
- * @return void
- */
+	 * test the insert method with invalid fixture
+	 *
+	 * @return void
+	 */
 	public function testInsertInvalid() {
+		$this->expectException(\CakeException::class);
 		$Fixture = new InvalidTestFixture();
 		$Fixture->insert($this->criticDb);
 	}

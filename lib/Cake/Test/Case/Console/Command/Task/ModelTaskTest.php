@@ -49,7 +49,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -99,7 +99,7 @@ class ModelTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Task);
 	}
@@ -138,10 +138,10 @@ class ModelTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test that getName interacts with the user and returns the model name.
- *
- * @return void
- */
+	 * Test that getName interacts with the user and returns the model name.
+	 *
+	 * @return void
+	 */
 	public function testGetNameQuit() {
 		$this->Task->expects($this->once())->method('in')->will($this->returnValue('q'));
 		$this->Task->expects($this->once())->method('_stop');
@@ -165,10 +165,10 @@ class ModelTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that an out of bounds option causes an error.
- *
- * @return void
- */
+	 * test that an out of bounds option causes an error.
+	 *
+	 * @return void
+	 */
 	public function testGetNameWithOutOfBoundsOption() {
 		$this->Task->expects($this->any())->method('in')->will($this->onConsecutiveCalls(99, 1));
 		$this->Task->expects($this->once())->method('err');
@@ -528,7 +528,7 @@ class ModelTaskTest extends CakeTestCase {
 			'two' => array(),
 			'key' => array('key' => 'primary')
 		);
-		$anything = new PHPUnit_Framework_Constraint_IsAnything();
+		$anything = new \PHPUnit\Framework\Constraint\IsAnything();
 		$this->Task->expects($this->once())->method('in')
 			->with($anything, null, 'key')
 			->will($this->returnValue('my_field'));
@@ -911,10 +911,10 @@ STRINGEND;
 			)
 		);
 		$result = $this->Task->bake('BakeArticle', compact('associations'));
-		$this->assertContains(' * @property BakeUser $BakeUser', $result);
-		$this->assertContains(' * @property OtherModel $OtherModel', $result);
-		$this->assertContains(' * @property BakeComment $BakeComment', $result);
-		$this->assertContains(' * @property BakeTag $BakeTag', $result);
+		$this->assertStringContainsString(' * @property BakeUser $BakeUser', $result);
+		$this->assertStringContainsString(' * @property OtherModel $OtherModel', $result);
+		$this->assertStringContainsString(' * @property BakeComment $BakeComment', $result);
+		$this->assertStringContainsString(' * @property BakeTag $BakeTag', $result);
 		$this->assertRegExp('/\$hasAndBelongsToMany \= array\(/', $result);
 		$this->assertRegExp('/\$hasMany \= array\(/', $result);
 		$this->assertRegExp('/\$belongsTo \= array\(/', $result);
@@ -940,7 +940,7 @@ STRINGEND;
 			->with($path, $this->stringContains('BakeArticle extends ControllerTestAppModel'));
 
 		$result = $this->Task->bake('BakeArticle', array(), array());
-		$this->assertContains("App::uses('ControllerTestAppModel', 'ControllerTest.Model');", $result);
+		$this->assertStringContainsString("App::uses('ControllerTestAppModel', 'ControllerTest.Model');", $result);
 
 		$this->assertEquals(count(ClassRegistry::keys()), 0);
 		$this->assertEquals(count(ClassRegistry::mapKeys()), 0);
@@ -1000,11 +1000,11 @@ TEXT;
 	}
 
 /**
- * test that execute passes with different inflections of the same name.
- *
- * @dataProvider nameVariations
- * @return void
- */
+	 * test that execute passes with different inflections of the same name.
+	 *
+	 * @dataProvider nameVariations
+	 * @return void
+	 */
 	public function testExecuteWithNamedModelVariations($name) {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1019,10 +1019,10 @@ TEXT;
 	}
 
 /**
- * test that execute with a model name picks up hasMany associations.
- *
- * @return void
- */
+	 * test that execute with a model name picks up hasMany associations.
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithNamedModelHasManyCreated() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1094,10 +1094,10 @@ TEXT;
 	}
 
 /**
- * test that odd tablenames aren't inflected back from modelname
- *
- * @return void
- */
+	 * test that odd tablenames aren't inflected back from modelname
+	 *
+	 * @return void
+	 */
 	public function testExecuteIntoAllOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -1150,10 +1150,10 @@ TEXT;
 	}
 
 /**
- * test that odd tablenames aren't inflected back from modelname
- *
- * @return void
- */
+	 * test that odd tablenames aren't inflected back from modelname
+	 *
+	 * @return void
+	 */
 	public function testExecuteIntoBakeOddTables() {
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -1206,10 +1206,10 @@ TEXT;
 	}
 
 /**
- * test that skipTables changes how all() works.
- *
- * @return void
- */
+	 * test that skipTables changes how all() works.
+	 *
+	 * @return void
+	 */
 	public function testSkipTablesAndAll() {
 		$count = count($this->Task->listAll('test'));
 		if ($count != count($this->fixtures)) {
@@ -1285,10 +1285,11 @@ TEXT;
 	}
 
 /**
- * test using bake interactively with a table that does not exist.
- *
- * @return void
- */
+	 * test using bake interactively with a table that does not exist.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testExecuteWithNonExistantTableName() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';
@@ -1304,10 +1305,11 @@ TEXT;
 	}
 
 /**
- * test using bake interactively with a table that does not exist.
- *
- * @return void
- */
+	 * test using bake interactively with a table that does not exist.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testForcedExecuteWithNonExistantTableName() {
 		$this->Task->connection = 'test';
 		$this->Task->path = '/my/path/';

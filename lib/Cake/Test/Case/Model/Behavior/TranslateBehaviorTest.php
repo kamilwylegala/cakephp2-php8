@@ -743,10 +743,10 @@ class TranslateBehaviorTest extends CakeTestCase {
 	}
 
 /**
- * testSaveAssociatedAtomic method
- *
- * @return void
- */
+	 * testSaveAssociatedAtomic method
+	 *
+	 * @return void
+	 */
 	public function testSaveAssociatedAtomic() {
 		$this->loadFixtures('Translate', 'TranslatedItem');
 
@@ -1387,12 +1387,12 @@ class TranslateBehaviorTest extends CakeTestCase {
 	}
 
 /**
- * Test that an exception is raised when you try to over-write the name attribute.
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test that an exception is raised when you try to over-write the name attribute.
+	 *
+	 * @return void
+	 */
 	public function testExceptionOnNameTranslation() {
+		$this->expectException(\CakeException::class);
 		$this->loadFixtures('Translate', 'TranslatedItem');
 		$TestModel = new TranslatedItem();
 		$TestModel->bindTranslation(array('name' => 'name'));

@@ -1047,10 +1047,11 @@ class TreeBehaviorNumberTest extends CakeTestCase {
 	}
 
 /**
- * Test deleting a record that doesn't exist.
- *
- * @return void
- */
+	 * Test deleting a record that doesn't exist.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testDeleteDoesNotExist() {
 		extract($this->settings);
 		$this->Tree = new $modelClass();

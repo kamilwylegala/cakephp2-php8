@@ -298,7 +298,7 @@ class PaginatorComponentTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->request = new CakeRequest('controller_posts/index');
 		$this->request->params['pass'] = $this->request->params['named'] = array();
@@ -817,12 +817,12 @@ class PaginatorComponentTest extends CakeTestCase {
 	}
 
 /**
- * Tests for missing models
- *
- * @expectedException MissingModelException
- * @return void
- */
+	 * Tests for missing models
+	 *
+	 * @return void
+	 */
 	public function testPaginateMissingModel() {
+		$this->expectException(\MissingModelException::class);
 		$Controller = new PaginatorTestController($this->request);
 		$Controller->constructClasses();
 		$Controller->Paginator->paginate('MissingModel');
@@ -1113,12 +1113,12 @@ class PaginatorComponentTest extends CakeTestCase {
 	}
 
 /**
- * Test that a really large page number gets clamped to the max page size.
- *
- * @expectedException NotFoundException
- * @return void
- */
+	 * Test that a really large page number gets clamped to the max page size.
+	 *
+	 * @return void
+	 */
 	public function testOutOfRangePageNumberGetsClamped() {
+		$this->expectException(\NotFoundException::class);
 		$Controller = new PaginatorTestController($this->request);
 		$Controller->uses = array('PaginatorControllerPost');
 		$Controller->params['named'] = array(
@@ -1130,12 +1130,12 @@ class PaginatorComponentTest extends CakeTestCase {
 	}
 
 /**
- * Test that a really REALLY large page number gets clamped to the max page size.
- *
- * @expectedException NotFoundException
- * @return void
- */
+	 * Test that a really REALLY large page number gets clamped to the max page size.
+	 *
+	 * @return void
+	 */
 	public function testOutOfVeryBigPageNumberGetsClamped() {
+		$this->expectException(\NotFoundException::class);
 		$Controller = new PaginatorTestController($this->request);
 		$Controller->uses = array('PaginatorControllerPost');
 		$Controller->params['named'] = array(

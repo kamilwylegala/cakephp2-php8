@@ -324,22 +324,22 @@ class ClassRegistryTest extends CakeTestCase {
 	}
 
 /**
- * Test that you cannot init() an abstract class. An exception will be raised.
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test that you cannot init() an abstract class. An exception will be raised.
+	 *
+	 * @return void
+	 */
 	public function testInitAbstractClass() {
+		$this->expectException(\CakeException::class);
 		ClassRegistry::init('ClassRegistryAbstractModel');
 	}
 
 /**
- * Test that you cannot init() an abstract class. A exception will be raised.
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test that you cannot init() an abstract class. A exception will be raised.
+	 *
+	 * @return void
+	 */
 	public function testInitInterface() {
+		$this->expectException(\CakeException::class);
 		ClassRegistry::init('ClassRegistryInterfaceTest');
 	}
 }

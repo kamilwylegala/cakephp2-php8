@@ -189,11 +189,11 @@ class CakeEventManagerTest extends CakeTestCase {
 	}
 
 /**
- * Tests event dispatching
- *
- * @return void
- * @triggers fake.event
- */
+	 * Tests event dispatching
+	 *
+	 * @return void
+	 * @triggers fake.event
+	 */
 	public function testDispatch() {
 		$manager = new CakeEventManager();
 		$listener = $this->getMock('CakeEventTestListener');
@@ -230,10 +230,6 @@ class CakeEventManagerTest extends CakeTestCase {
  * @triggers fake.event
  */
 	public function testDispatchReturnValue() {
-		$this->skipIf(
-			version_compare(PHPUnit_Runner_Version::id(), '3.7', '<'),
-			'These tests fail in PHPUnit 3.6'
-		);
 		$manager = new CakeEventManager();
 		$listener = $this->getMock('CakeEventTestListener');
 		$anotherListener = $this->getMock('CakeEventTestListener');
@@ -258,10 +254,6 @@ class CakeEventManagerTest extends CakeTestCase {
  * @triggers fake.event
  */
 	public function testDispatchFalseStopsEvent() {
-		$this->skipIf(
-			version_compare(PHPUnit_Runner_Version::id(), '3.7', '<'),
-			'These tests fail in PHPUnit 3.6'
-		);
 
 		$manager = new CakeEventManager();
 		$listener = $this->getMock('CakeEventTestListener');
@@ -298,11 +290,11 @@ class CakeEventManagerTest extends CakeTestCase {
 	}
 
 /**
- * Tests event dispatching with passed params
- *
- * @return void
- * @triggers fake.event $this, array('some' => 'data')
- */
+	 * Tests event dispatching with passed params
+	 *
+	 * @return void
+	 * @triggers fake.event $this, array('some' => 'data')
+	 */
 	public function testDispatchPassingParams() {
 		$manager = new CakeEventManager();
 		$listener = $this->getMock('CakeEventTestListener');
@@ -384,11 +376,11 @@ class CakeEventManagerTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the global event manager gets the event too from any other manager
- *
- * @return void
- * @triggers fake.event
- */
+	 * Tests that the global event manager gets the event too from any other manager
+	 *
+	 * @return void
+	 * @triggers fake.event
+	 */
 	public function testDispatchWithGlobal() {
 		$generalManager = $this->getMock('CakeEventManager', array('prioritisedListeners'));
 		$manager = new CakeEventManager();

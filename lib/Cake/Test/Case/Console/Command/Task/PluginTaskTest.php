@@ -39,7 +39,7 @@ class PluginTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$this->in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -67,7 +67,7 @@ class PluginTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		if (file_exists($this->Task->bootstrap)) {
 			unlink($this->Task->bootstrap);
 		}
@@ -92,12 +92,12 @@ class PluginTaskTest extends CakeTestCase {
 		$file = $path . DS . 'Controller' . DS . 'BakeTestPluginAppController.php';
 		$this->Task->expects($this->at(2))
 			->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$file = $path . DS . 'Model' . DS . 'BakeTestPluginAppModel.php';
 		$this->Task->expects($this->at(3))
 			->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$this->Task->bake('BakeTestPlugin');
 
@@ -135,10 +135,10 @@ class PluginTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute with no args, flowing into interactive,
- *
- * @return void
- */
+	 * test execute with no args, flowing into interactive,
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithNoArgs() {
 		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('TestPlugin'));
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue($this->_testPath));
@@ -148,11 +148,11 @@ class PluginTaskTest extends CakeTestCase {
 		$file = $path . DS . 'Controller' . DS . 'TestPluginAppController.php';
 
 		$this->Task->expects($this->at(3))->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$file = $path . DS . 'Model' . DS . 'TestPluginAppModel.php';
 		$this->Task->expects($this->at(4))->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$this->Task->args = array();
 		$this->Task->execute();
@@ -162,10 +162,10 @@ class PluginTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test Execute
- *
- * @return void
- */
+	 * Test Execute
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithOneArg() {
 		$this->Task->expects($this->at(0))->method('in')
 			->will($this->returnValue($this->_testPath));
@@ -175,12 +175,12 @@ class PluginTaskTest extends CakeTestCase {
 		$path = $this->Task->path . 'BakeTestPlugin';
 		$file = $path . DS . 'Controller' . DS . 'BakeTestPluginAppController.php';
 		$this->Task->expects($this->at(2))->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$path = $this->Task->path . 'BakeTestPlugin';
 		$file = $path . DS . 'Model' . DS . 'BakeTestPluginAppModel.php';
 		$this->Task->expects($this->at(3))->method('createFile')
-			->with($file, new PHPUnit_Framework_Constraint_IsAnything());
+			->with($file, new \PHPUnit\Framework\Constraint\IsAnything());
 
 		$this->Task->args = array('BakeTestPlugin');
 
@@ -191,10 +191,10 @@ class PluginTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test that findPath ignores paths that don't exist.
- *
- * @return void
- */
+	 * Test that findPath ignores paths that don't exist.
+	 *
+	 * @return void
+	 */
 	public function testFindPathNonExistant() {
 		$paths = App::path('plugins');
 		$last = count($paths);

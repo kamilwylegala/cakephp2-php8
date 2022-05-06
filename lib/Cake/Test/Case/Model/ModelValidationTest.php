@@ -30,7 +30,7 @@ class ModelValidationTest extends BaseModelTest {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Config.language', 'eng');
 	}
@@ -769,13 +769,13 @@ class ModelValidationTest extends BaseModelTest {
 	}
 
 /**
- * Test that missing validation methods trigger errors in development mode.
- * Helps to make development easier.
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * Test that missing validation methods trigger errors in development mode.
+	 * Helps to make development easier.
+	 *
+	 * @return void
+	 */
 	public function testMissingValidationErrorTriggering() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		Configure::write('debug', 2);
 
 		$TestModel = new ValidationTest1();
@@ -2013,10 +2013,10 @@ class ModelValidationTest extends BaseModelTest {
 	}
 
 /**
- * Tests validation callbacks are triggered
- *
- * @return void
- */
+	 * Tests validation callbacks are triggered
+	 *
+	 * @return void
+	 */
 	public function testValidateCallbacks() {
 		$TestModel = $this->getMock('Article', array('beforeValidate', 'afterValidate'));
 		$TestModel->expects($this->once())->method('beforeValidate');
@@ -2224,18 +2224,18 @@ class ModelValidationTest extends BaseModelTest {
 	}
 
 /**
- * Test that type hint exception is thrown
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- * @throws PHPUnit_Framework_Error
- */
+	 * Test that type hint exception is thrown
+	 *
+	 * @return void
+	 * @throws \PHPUnit\Framework\Error\Error
+	 */
 	public function testValidatorTypehintException() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		try {
 			new ModelValidator('asdasds');
 			$this->fail('No exeption raised');
 		} catch (TypeError $e) {
-			throw new PHPUnit_Framework_Error('Raised an error', 100, __FILE__, __LINE__);
+			throw new \PHPUnit\Framework\Error\Error('Raised an error', 100, __FILE__, __LINE__);
 		}
 	}
 

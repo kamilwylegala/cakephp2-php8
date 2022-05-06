@@ -37,7 +37,7 @@ class FileEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Cache.disable', false);
 		Cache::config('file_test', array('engine' => 'File', 'path' => CACHE));
@@ -48,7 +48,7 @@ class FileEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		// Cache::clear(false, 'file_test');
 		Cache::drop('file_test');
@@ -379,10 +379,11 @@ class FileEngineTest extends CakeTestCase {
 	}
 
 /**
- * check that FileEngine does not generate an error when a configured Path does not exist in debug mode.
- *
- * @return void
- */
+	 * check that FileEngine does not generate an error when a configured Path does not exist in debug mode.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testPathDoesNotExist() {
 		$this->skipIf(is_dir(TMP . 'tests' . DS . 'autocreate'), 'Cannot run if test directory exists.');
 

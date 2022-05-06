@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="test_bootstrap.php"
+		 backupGlobals="true"
+		 colors="true"
+		 stderr="true"
+		 stopOnFailure="false"
+		 stopOnWarning="false"
+>
+	<testsuites>
+		<testsuite name="CakePHP test suite">
+			<directory>./lib/Cake/Test/Case</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

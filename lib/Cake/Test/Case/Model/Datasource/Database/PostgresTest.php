@@ -214,7 +214,7 @@ class PostgresTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Cache.disable', true);
 		$this->Dbo = ConnectionManager::getDataSource('test');
@@ -228,7 +228,7 @@ class PostgresTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::write('Cache.disable', false);
 		unset($this->Dbo2);
@@ -1015,10 +1015,10 @@ class PostgresTest extends CakeTestCase {
 	}
 
 /**
- * Test truncate with a mock.
- *
- * @return void
- */
+	 * Test truncate with a mock.
+	 *
+	 * @return void
+	 */
 	public function testTruncateStatements() {
 		$this->loadFixtures('Article', 'User');
 		$db = ConnectionManager::getDatasource('test');
@@ -1141,7 +1141,7 @@ class PostgresTest extends CakeTestCase {
 
 		$result = $db->limit(10, 300000000000000000000000000000);
 		$scientificNotation = sprintf('%.1E', 300000000000000000000000000000);
-		$this->assertNotContains($scientificNotation, $result);
+		$this->assertStringNotContainsString($scientificNotation, $result);
 	}
 
 /**

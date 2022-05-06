@@ -115,7 +115,7 @@ class ModelWriteTest extends BaseModelTest {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Config.language', 'eng');
 	}
@@ -876,10 +876,10 @@ class ModelWriteTest extends BaseModelTest {
 	}
 
 /**
- * test save with transaction and ensure there is no missing rollback.
- *
- * @return void
- */
+	 * test save with transaction and ensure there is no missing rollback.
+	 *
+	 * @return void
+	 */
 	public function testSaveTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Article');
 
@@ -4562,10 +4562,10 @@ class ModelWriteTest extends BaseModelTest {
 	}
 
 /**
- * test saveAll with transactions and ensure there is no missing rollback.
- *
- * @return void
- */
+	 * test saveAll with transactions and ensure there is no missing rollback.
+	 *
+	 * @return void
+	 */
 	public function testSaveAllManyRowsTransactionNoRollback() {
 		$this->loadFixtures('Post');
 
@@ -4623,10 +4623,10 @@ class ModelWriteTest extends BaseModelTest {
 	}
 
 /**
- * test saveAll with transactions and ensure there is no missing rollback.
- *
- * @return void
- */
+	 * test saveAll with transactions and ensure there is no missing rollback.
+	 *
+	 * @return void
+	 */
 	public function testSaveAllAssociatedTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Author');
 
@@ -6071,10 +6071,10 @@ class ModelWriteTest extends BaseModelTest {
 	}
 
 /**
- * test saveMany with transactions and ensure there is no missing rollback.
- *
- * @return void
- */
+	 * test saveMany with transactions and ensure there is no missing rollback.
+	 *
+	 * @return void
+	 */
 	public function testSaveManyTransactionNoRollback() {
 		$this->loadFixtures('Post');
 
@@ -6132,10 +6132,10 @@ class ModelWriteTest extends BaseModelTest {
 	}
 
 /**
- * test saveAssociated with transactions and ensure there is no missing rollback.
- *
- * @return void
- */
+	 * test saveAssociated with transactions and ensure there is no missing rollback.
+	 *
+	 * @return void
+	 */
 	public function testSaveAssociatedTransactionNoRollback() {
 		$this->loadFixtures('Post', 'Author');
 

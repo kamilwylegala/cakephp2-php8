@@ -99,7 +99,7 @@ class XmlTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->_appEncoding = Configure::read('App.encoding');
 		Configure::write('App.encoding', 'UTF-8');
@@ -110,7 +110,7 @@ class XmlTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::write('App.encoding', $this->_appEncoding);
 	}
@@ -180,23 +180,23 @@ class XmlTest extends CakeTestCase {
 	}
 
 /**
- * Test that the readFile option disables local file parsing.
- *
- * @expectedException XmlException
- * @return void
- */
+	 * Test that the readFile option disables local file parsing.
+	 *
+	 * @return void
+	 */
 	public function testBuildFromFileWhenDisabled() {
+		$this->expectException(\XmlException::class);
 		$xml = CAKE . 'Test' . DS . 'Fixture' . DS . 'sample.xml';
 		Xml::build($xml, array('readFile' => false));
 	}
 
 /**
- * Test that the readFile option disables local file parsing.
- *
- * @expectedException XmlException
- * @return void
- */
+	 * Test that the readFile option disables local file parsing.
+	 *
+	 * @return void
+	 */
 	public function testBuildFromUrlWhenDisabled() {
+		$this->expectException(\XmlException::class);
 		$xml = 'http://www.google.com';
 		Xml::build($xml, array('readFile' => false));
 	}
@@ -216,23 +216,23 @@ class XmlTest extends CakeTestCase {
 	}
 
 /**
- * testBuildInvalidData
- *
- * @dataProvider invalidDataProvider
- * @expectedException XmlException
- * @return void
- */
+	 * testBuildInvalidData
+	 *
+	 * @dataProvider invalidDataProvider
+	 * @return void
+	 */
 	public function testBuildInvalidData($value) {
+		$this->expectException(\XmlException::class);
 		Xml::build($value);
 	}
 
 /**
- * Test that building SimpleXmlElement with invalid XML causes the right exception.
- *
- * @expectedException XmlException
- * @return void
- */
+	 * Test that building SimpleXmlElement with invalid XML causes the right exception.
+	 *
+	 * @return void
+	 */
 	public function testBuildInvalidDataSimpleXml() {
+		$this->expectException(\XmlException::class);
 		$input = '<derp';
 		Xml::build($input, array('return' => 'simplexml'));
 	}
@@ -1171,13 +1171,13 @@ XML;
 	}
 
 /**
- * testToArrayFail method
- *
- * @dataProvider invalidToArrayDataProvider
- * @expectedException XmlException
- * @return void
- */
+	 * testToArrayFail method
+	 *
+	 * @dataProvider invalidToArrayDataProvider
+	 * @return void
+	 */
 	public function testToArrayFail($value) {
+		$this->expectException(\XmlException::class);
 		Xml::toArray($value);
 	}
 
@@ -1240,7 +1240,7 @@ XML;
 		);
 		$obj = Xml::build($data);
 		$result = $obj->asXml();
-		$this->assertContains('mark &amp; mark', $result);
+		$this->assertStringContainsString('mark &amp; mark', $result);
 	}
 
 /**

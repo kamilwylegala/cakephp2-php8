@@ -74,7 +74,7 @@ class CacheHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$_GET = array();
 		$request = new CakeRequest();
@@ -93,7 +93,7 @@ class CacheHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		clearCache();
 		unset($this->Cache);
 		parent::tearDown();
@@ -544,10 +544,10 @@ class CacheHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that afterRender checks the conditions correctly.
- *
- * @return void
- */
+	 * test that afterRender checks the conditions correctly.
+	 *
+	 * @return void
+	 */
 	public function testAfterRenderConditions() {
 		Configure::write('Cache.check', true);
 		$View = new View($this->Controller);
@@ -571,10 +571,10 @@ class CacheHelperTest extends CakeTestCase {
 	}
 
 /**
- * test that afterRender checks the conditions correctly.
- *
- * @return void
- */
+	 * test that afterRender checks the conditions correctly.
+	 *
+	 * @return void
+	 */
 	public function testAfterLayoutConditions() {
 		Configure::write('Cache.check', true);
 		$View = new View($this->Controller);

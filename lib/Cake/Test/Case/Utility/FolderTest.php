@@ -33,7 +33,7 @@ class FolderTest extends CakeTestCase {
  *
  * @return void
  */
-	public static function setUpBeforeClass() {
+	public static function setUpBeforeClass(): void {
 		$dirs = array('cache', 'logs', 'sessions', 'tests');
 		foreach ($dirs as $dir) {
 			new Folder(TMP . $dir, true);
@@ -51,7 +51,7 @@ class FolderTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		clearstatcache();
 	}
@@ -61,7 +61,7 @@ class FolderTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		$exclude = array_merge(static::$_tmp, array('.', '..'));
 		foreach (scandir(TMP) as $dir) {
 			if (is_dir(TMP . $dir) && !in_array($dir, $exclude)) {
@@ -181,12 +181,12 @@ class FolderTest extends CakeTestCase {
 	}
 
 /**
- * @dataProvider inPathInvalidPathArgumentDataProvider
- * @param string $path
- * @expectedException \InvalidArgumentException
- * @expectedExceptionMessage The $path argument is expected to be an absolute path.
- */
+	 * @dataProvider inPathInvalidPathArgumentDataProvider
+	 * @param string $path
+	 */
 	public function testInPathInvalidPathArgument($path) {
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('The $path argument is expected to be an absolute path.');
 		$Folder = new Folder();
 		$Folder->inPath($path);
 	}
@@ -260,7 +260,7 @@ class FolderTest extends CakeTestCase {
 			$Folder = new Folder($path);
 			$result = $Folder->create($path . DS . 'two' . DS . 'three');
 			$this->assertFalse($result);
-		} catch (PHPUnit_Framework_Error $e) {
+		} catch (\PHPUnit\Framework\Error\Error $e) {
 			$this->assertTrue(true);
 		}
 

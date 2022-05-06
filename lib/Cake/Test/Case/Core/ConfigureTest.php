@@ -32,7 +32,7 @@ class ConfigureTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Cache.disable', true);
 		App::build();
@@ -44,7 +44,7 @@ class ConfigureTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		if (file_exists(TMP . 'cache' . DS . 'persistent' . DS . 'cake_core_core_paths')) {
 			unlink(TMP . 'cache' . DS . 'persistent' . DS . 'cake_core_core_paths');
@@ -284,12 +284,12 @@ class ConfigureTest extends CakeTestCase {
 	}
 
 /**
- * testLoad method
- *
- * @expectedException RuntimeException
- * @return void
- */
+	 * testLoad method
+	 *
+	 * @return void
+	 */
 	public function testLoadExceptionOnNonExistantFile() {
+		$this->expectException(\RuntimeException::class);
 		Configure::config('test', new PhpReader());
 		Configure::load('non_existing_configuration_file', 'test');
 	}
@@ -447,19 +447,19 @@ class ConfigureTest extends CakeTestCase {
 	}
 
 /**
- * test reader() throwing exceptions on missing interface.
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- * @throws PHPUnit_Framework_Error
- */
+	 * test reader() throwing exceptions on missing interface.
+	 *
+	 * @return void
+	 * @throws \PHPUnit\Framework\Error\Error
+	 */
 	public function testReaderExceptionOnIncorrectClass() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$reader = new StdClass();
 
 		try {
 			Configure::config('test', $reader);
 		} catch (TypeError $e) {
-			throw new PHPUnit_Framework_Error('Raised an error', 100, __FILE__, __LINE__);
+			throw new \PHPUnit\Framework\Error\Error('Raised an error', 100, __FILE__, __LINE__);
 		}
 	}
 
@@ -476,12 +476,12 @@ class ConfigureTest extends CakeTestCase {
 	}
 
 /**
- * testDumpNoAdapter
- *
- * @expectedException ConfigureException
- * @return void
- */
+	 * testDumpNoAdapter
+	 *
+	 * @return void
+	 */
 	public function testDumpNoAdapter() {
+		$this->expectException(\ConfigureException::class);
 		Configure::dump(TMP . 'test.php', 'does_not_exist');
 	}
 
@@ -496,8 +496,8 @@ class ConfigureTest extends CakeTestCase {
 		$result = Configure::dump('config_test.php', 'test_reader');
 		$this->assertTrue($result > 0);
 		$result = file_get_contents(TMP . 'config_test.php');
-		$this->assertContains('<?php', $result);
-		$this->assertContains('$config = ', $result);
+		$this->assertStringContainsString('<?php', $result);
+		$this->assertStringContainsString('$config = ', $result);
 		if (file_exists(TMP . 'config_test.php')) {
 			unlink(TMP . 'config_test.php');
 		}
@@ -514,10 +514,10 @@ class ConfigureTest extends CakeTestCase {
 		$result = Configure::dump('config_test.php', 'test_reader', array('Error'));
 		$this->assertTrue($result > 0);
 		$result = file_get_contents(TMP . 'config_test.php');
-		$this->assertContains('<?php', $result);
-		$this->assertContains('$config = ', $result);
-		$this->assertContains('Error', $result);
-		$this->assertNotContains('debug', $result);
+		$this->assertStringContainsString('<?php', $result);
+		$this->assertStringContainsString('$config = ', $result);
+		$this->assertStringContainsString('Error', $result);
+		$this->assertStringNotContainsString('debug', $result);
 
 		if (file_exists(TMP . 'config_test.php')) {
 			unlink(TMP . 'config_test.php');

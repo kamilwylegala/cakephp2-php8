@@ -51,7 +51,7 @@ class CompletionShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		App::build(array(
 			'Plugin' => array(
@@ -84,7 +84,7 @@ class CompletionShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Shell);
 		CakePlugin::unload();
@@ -125,7 +125,8 @@ class CompletionShellTest extends CakeTestCase {
 		$this->Shell->runCommand('commands', array());
 		$output = $this->Shell->stdout->output;
 
-		$expected = "TestPlugin.example TestPlugin.test_plugin TestPluginTwo.example TestPluginTwo.welcome acl api bake command_list completion console i18n schema server test testsuite upgrade sample\n";
+
+		$expected = "TestPlugin.example TestPlugin.test_plugin TestPluginTwo.example TestPluginTwo.welcome acl api bake command_list completion console i18n schema server upgrade sample\n";
 		$this->assertEquals($expected, $output);
 	}
 

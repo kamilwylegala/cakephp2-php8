@@ -89,7 +89,7 @@ class HttpResponseTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->HttpResponse = new TestHttpResponse();
 	}
@@ -359,13 +359,13 @@ class HttpResponseTest extends CakeTestCase {
 	}
 
 /**
- * testInvalidParseResponseData
- *
- * @dataProvider invalidParseResponseDataProvider
- * @expectedException SocketException
- * @return void
- */
+	 * testInvalidParseResponseData
+	 *
+	 * @dataProvider invalidParseResponseDataProvider
+	 * @return void
+	 */
 	public function testInvalidParseResponseData($value) {
+		$this->expectException(\SocketException::class);
 		$this->HttpResponse->parseResponse($value);
 	}
 

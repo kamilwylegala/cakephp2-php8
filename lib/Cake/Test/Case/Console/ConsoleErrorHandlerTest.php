@@ -30,7 +30,7 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
  *
  * @return Mock object
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->Error = $this->getMock('ConsoleErrorHandler', array('_stop'));
 		ConsoleErrorHandler::$stderr = $this->getMock('ConsoleOutput', array(), array(), '', false);
@@ -41,16 +41,16 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		unset($this->Error);
 		parent::tearDown();
 	}
 
 /**
- * test that the console error handler can deal with CakeExceptions.
- *
- * @return void
- */
+	 * test that the console error handler can deal with CakeExceptions.
+	 *
+	 * @return void
+	 */
 	public function testHandleError() {
 		$content = "<error>Notice Error:</error> This is a notice error in [/some/file, line 275]\n";
 		ConsoleErrorHandler::$stderr->expects($this->once())->method('write')
@@ -60,10 +60,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test that the console error handler can deal with fatal errors.
- *
- * @return void
- */
+	 * test that the console error handler can deal with fatal errors.
+	 *
+	 * @return void
+	 */
 	public function testHandleFatalError() {
 		$content = "<error>Fatal Error Error:</error> This is a fatal error in [/some/file, line 275]\n";
 		ConsoleErrorHandler::$stderr->expects($this->once())->method('write')
@@ -77,10 +77,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test that the console error handler can deal with CakeExceptions.
- *
- * @return void
- */
+	 * test that the console error handler can deal with CakeExceptions.
+	 *
+	 * @return void
+	 */
 	public function testCakeErrors() {
 		$exception = new MissingActionException('Missing action');
 		ConsoleErrorHandler::$stderr->expects($this->once())->method('write')
@@ -94,10 +94,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test a non CakeException exception.
- *
- * @return void
- */
+	 * test a non CakeException exception.
+	 *
+	 * @return void
+	 */
 	public function testNonCakeExceptions() {
 		$exception = new InvalidArgumentException('Too many parameters.');
 
@@ -112,10 +112,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test a Error404 exception.
- *
- * @return void
- */
+	 * test a Error404 exception.
+	 *
+	 * @return void
+	 */
 	public function testError404Exception() {
 		$exception = new NotFoundException('dont use me in cli.');
 
@@ -130,10 +130,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test a Error500 exception.
- *
- * @return void
- */
+	 * test a Error500 exception.
+	 *
+	 * @return void
+	 */
 	public function testError500Exception() {
 		$exception = new InternalErrorException('dont use me in cli.');
 
@@ -148,10 +148,10 @@ class ConsoleErrorHandlerTest extends CakeTestCase {
 	}
 
 /**
- * test a exception with non-integer code
- *
- * @return void
- */
+	 * test a exception with non-integer code
+	 *
+	 * @return void
+	 */
 	public function testNonIntegerExceptionCode() {
 		if (PHP_VERSION_ID < 50300) {
 			$this->markTestSkipped('ReflectionProperty::setAccessible() is available since 5.3');

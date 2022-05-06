@@ -16,6 +16,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 App::uses('Model', 'Model');
 App::uses('DataSource', 'Model/Datasource');
 
@@ -56,10 +58,10 @@ class TestSource extends DataSource {
 
 /**
  * listSources
- *
+ * @var mixed|null $data
  * @return bool
  */
-	public function listSources() {
+	public function listSources($data = null) {
 		return null;
 	}
 
@@ -69,7 +71,7 @@ class TestSource extends DataSource {
  * @param Model $Model
  * @return array
  */
-	public function describe(Model $Model) {
+	public function describe($Model) {
 		return $this->_schema;
 	}
 
@@ -101,30 +103,49 @@ class DataSourceTest extends CakeTestCase {
  * @var string
  */
 	public $sourceName = 'myapitest';
+	/**
+	 * @var TestSource|MockObject
+	 */
+	private $Source;
+	/**
+	 * @var Model|MockObject
+	 */
+	private $Model;
 
-/**
+	/**
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
+
 		$this->Source = $this->getMock(
 			'TestSource',
 			array('create', 'read', 'update', 'delete')
 		);
+
+		// the subsequent call to ConnectionManager::create()
+		// results in a call to new {classname}
+		// so we need to tell the autoloader where it can find TestSource
+		App::build([
+			"Model/Datasource" => __DIR__,
+		]);
+		App::uses("TestSource", "Model/Datasource");
+
 		ConnectionManager::create($this->sourceName, array(
-			'datasource' => get_class($this->Source),
+			'datasource' => 'TestSource',
 			'apiKey' => '1234abcd',
 		));
+
 		$this->Model = $this->getMock(
 			'Model',
 			array('getDataSource'),
 			array(array('ds' => $this->sourceName))
 		);
-		$this->Model->expects($this->any())
+		$this->Model->expects(self::any())
 			->method('getDataSource')
-			->will($this->returnValue($this->Source));
+			->willReturn($this->Source);
 	}
 
 /**
@@ -132,17 +153,17 @@ class DataSourceTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Model, $this->Source);
 		ConnectionManager::drop($this->sourceName);
 	}
 
-/**
- * testCreate
- *
- * @return void
- */
+	/**
+	 * testCreate
+	 *
+	 * @return void
+	 */
 	public function testCreate() {
 		$data = array(
 			$this->Model->alias => array(
@@ -165,10 +186,10 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testRead
- *
- * @return void
- */
+	 * testRead
+	 *
+	 * @return void
+	 */
 	public function testRead() {
 		$expected = array(
 			'conditions'	=> array('status' => 'test'),
@@ -176,7 +197,7 @@ class DataSourceTest extends CakeTestCase {
 			'joins'			=> array(),
 			'limit'			=> 10,
 			'offset'		=> null,
-			'order'			=> array(array('status')),
+			'order'			=> array('status'),
 			'page'			=> 1,
 			'group'			=> null,
 			'callbacks'		=> true,
@@ -194,11 +215,11 @@ class DataSourceTest extends CakeTestCase {
 		));
 	}
 
-/**
- * testUpdate
- *
- * @return void
- */
+	/**
+	 * testUpdate
+	 *
+	 * @return void
+	 */
 	public function testUpdate() {
 		$data = array(
 			$this->Model->alias => array(
@@ -227,10 +248,10 @@ class DataSourceTest extends CakeTestCase {
 	}
 
 /**
- * testDelete
- *
- * @return void
- */
+	 * testDelete
+	 *
+	 * @return void
+	 */
 	public function testDelete() {
 		$this->Source->expects($this->any())
 			->method('read')

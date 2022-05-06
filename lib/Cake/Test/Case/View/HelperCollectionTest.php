@@ -38,7 +38,7 @@ class HelperCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->View = $this->getMock('View', array(), array(null));
 		$this->Helpers = new HelperCollection($this->View);
@@ -49,7 +49,7 @@ class HelperCollectionTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		CakePlugin::unload();
 		unset($this->Helpers, $this->View);
 		parent::tearDown();
@@ -91,12 +91,12 @@ class HelperCollectionTest extends CakeTestCase {
 	}
 
 /**
- * test lazy loading of helpers
- *
- * @expectedException MissingHelperException
- * @return void
- */
+	 * test lazy loading of helpers
+	 *
+	 * @return void
+	 */
 	public function testLazyLoadException() {
+		$this->expectException(\MissingHelperException::class);
 		$this->Helpers->NotAHelper;
 	}
 
@@ -143,12 +143,12 @@ class HelperCollectionTest extends CakeTestCase {
 	}
 
 /**
- * test missinghelper exception
- *
- * @expectedException MissingHelperException
- * @return void
- */
+	 * test missinghelper exception
+	 *
+	 * @return void
+	 */
 	public function testLoadMissingHelper() {
+		$this->expectException(\MissingHelperException::class);
 		$this->Helpers->load('ThisHelperShouldAlwaysBeMissing');
 	}
 

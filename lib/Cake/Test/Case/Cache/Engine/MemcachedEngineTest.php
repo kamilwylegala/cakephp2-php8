@@ -60,7 +60,7 @@ class MemcachedEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->skipIf(!class_exists('Memcached'), 'Memcached is not installed or configured properly.');
 
@@ -82,7 +82,7 @@ class MemcachedEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Cache::drop('memcached');
 		Cache::drop('memcached_groups');
@@ -171,9 +171,8 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'invalid_serializer'
 		);
 
-		$this->setExpectedException(
-			'CacheException', 'invalid_serializer is not a valid serializer engine for Memcached'
-		);
+		$this->expectException('CacheException');
+		$this->expectExceptionMessage('invalid_serializer is not a valid serializer engine for Memcached');
 		$Memcached->init($settings);
 	}
 
@@ -283,9 +282,8 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'json'
 		);
 
-		$this->setExpectedException(
-			'CacheException', 'Memcached extension is not compiled with json support'
-		);
+		$this->expectException('CacheException');
+		$this->expectExceptionMessage('Memcached extension is not compiled with json support');
 		$Memcached->init($settings);
 	}
 
@@ -308,9 +306,8 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'msgpack'
 		);
 
-		$this->setExpectedException(
-			'CacheException', 'msgpack is not a valid serializer engine for Memcached'
-		);
+		$this->expectException('CacheException');
+		$this->expectExceptionMessage('msgpack is not a valid serializer engine for Memcached');
 		$Memcached->init($settings);
 	}
 
@@ -333,9 +330,8 @@ class MemcachedEngineTest extends CakeTestCase {
 			'serialize' => 'igbinary'
 		);
 
-		$this->setExpectedException(
-			'CacheException', 'Memcached extension is not compiled with igbinary support'
-		);
+		$this->expectException('CacheException');
+		$this->expectExceptionMessage('Memcached extension is not compiled with igbinary support');
 		$Memcached->init($settings);
 	}
 
@@ -356,7 +352,7 @@ class MemcachedEngineTest extends CakeTestCase {
 			'password' => 'password'
 		);
 
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning');
+		$this->expectException('\PHPUnit\Framework\Error\Warning');
 		$Memcached->init($settings);
 	}
 
@@ -713,10 +709,10 @@ class MemcachedEngineTest extends CakeTestCase {
 	}
 
 /**
- * test that durations greater than 30 days never expire
- *
- * @return void
- */
+	 * test that durations greater than 30 days never expire
+	 *
+	 * @return void
+	 */
 	public function testLongDurationEqualToZero() {
 		$this->markTestSkipped('Cannot run as Memcached cannot be reflected');
 

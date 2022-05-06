@@ -1,5 +1,5 @@
 {
-	"name": "fotografde/cakephp2",
+	"name": "cakephp/cakephp",
 	"description": "The CakePHP framework",
 	"type": "library",
 	"keywords": ["framework"],
@@ -18,7 +18,7 @@
 		"source": "https://github.com/cakephp/cakephp"
 	},
 	"require": {
-		"php": "^7.3 || ^7.4 || ^8.0"
+		"php": "^7.3 || ^7.4"
 	},
 	"suggest": {
 		"ext-openssl": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
@@ -26,7 +26,8 @@
 	},
 	"require-dev": {
 		"cakephp/cakephp-codesniffer": "^1.0.0",
-		"phpunit/phpunit": "5.7.19"
+		"rector/rector-prefixed": "^0.9.18",
+		"phpunit/phpunit": "8.5.14"
 	},
 	"config": {
 		"vendor-dir": "vendors/",

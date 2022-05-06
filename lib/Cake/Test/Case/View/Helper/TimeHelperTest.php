@@ -61,7 +61,7 @@ class TimeHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->View = new View(null);
 	}
@@ -71,16 +71,16 @@ class TimeHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		unset($this->View);
 		parent::tearDown();
 	}
 
 /**
- * test CakeTime class methods are called correctly
- *
- * @return void
- */
+	 * test CakeTime class methods are called correctly
+	 *
+	 * @return void
+	 */
 	public function testTimeHelperProxyMethodCalls() {
 		$methods = array(
 			'convertSpecifiers', 'convert', 'serverOffset', 'fromString',

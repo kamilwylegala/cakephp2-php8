@@ -34,7 +34,7 @@ class SecurityTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::delete('Security.useOpenSsl');
 	}
@@ -44,7 +44,7 @@ class SecurityTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::delete('Security.useOpenSsl');
 	}
@@ -85,42 +85,42 @@ class SecurityTest extends CakeTestCase {
 	}
 
 /**
- * testHashInvalidSalt method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testHashInvalidSalt method
+	 *
+	 * @return void
+	 */
 	public function testHashInvalidSalt() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		Security::hash('someKey', 'blowfish', true);
 	}
 
 /**
- * testHashAnotherInvalidSalt
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testHashAnotherInvalidSalt
+	 *
+	 * @return void
+	 */
 	public function testHashAnotherInvalidSalt() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		Security::hash('someKey', 'blowfish', '$1$lksdjoijfaoijs');
 	}
 
 /**
- * testHashYetAnotherInvalidSalt
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testHashYetAnotherInvalidSalt
+	 *
+	 * @return void
+	 */
 	public function testHashYetAnotherInvalidSalt() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		Security::hash('someKey', 'blowfish', '$2a$10$123');
 	}
 
 /**
- * testHashInvalidCost method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testHashInvalidCost method
+	 *
+	 * @return void
+	 */
 	public function testHashInvalidCost() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		Security::setCost(1000);
 	}
 /**
@@ -267,12 +267,12 @@ class SecurityTest extends CakeTestCase {
 	}
 
 /**
- * testCipherEmptyKey method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testCipherEmptyKey method
+	 *
+	 * @return void
+	 */
 	public function testCipherEmptyKey() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$txt = 'some_text';
 		$key = '';
 		Security::cipher($txt, $key);
@@ -319,24 +319,24 @@ class SecurityTest extends CakeTestCase {
 	}
 
 /**
- * testRijndaelInvalidOperation method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testRijndaelInvalidOperation method
+	 *
+	 * @return void
+	 */
 	public function testRijndaelInvalidOperation() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi';
 		Security::rijndael($txt, $key, 'foo');
 	}
 
 /**
- * testRijndaelInvalidKey method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testRijndaelInvalidKey method
+	 *
+	 * @return void
+	 */
 	public function testRijndaelInvalidKey() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'too small';
 		Security::rijndael($txt, $key, 'encrypt');
@@ -454,13 +454,13 @@ class SecurityTest extends CakeTestCase {
 	}
 
 /**
- * Test that short keys cause errors
- *
- * @expectedException CakeException
- * @expectedExceptionMessage Invalid key for encrypt(), key must be at least 256 bits (32 bytes) long.
- * @return void
- */
+	 * Test that short keys cause errors
+	 *
+	 * @return void
+	 */
 	public function testEncryptInvalidKey() {
+		$this->expectException(\CakeException::class);
+		$this->expectExceptionMessage('Invalid key for encrypt(), key must be at least 256 bits (32 bytes) long.');
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'this is too short';
 		Security::encrypt($txt, $key);
@@ -492,26 +492,26 @@ class SecurityTest extends CakeTestCase {
 	}
 
 /**
- * Test that short keys cause errors
- *
- * @expectedException CakeException
- * @expectedExceptionMessage Invalid key for decrypt(), key must be at least 256 bits (32 bytes) long.
- * @return void
- */
+	 * Test that short keys cause errors
+	 *
+	 * @return void
+	 */
 	public function testDecryptInvalidKey() {
+		$this->expectException(\CakeException::class);
+		$this->expectExceptionMessage('Invalid key for decrypt(), key must be at least 256 bits (32 bytes) long.');
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'this is too short';
 		Security::decrypt($txt, $key);
 	}
 
 /**
- * Test that empty data cause errors
- *
- * @expectedException CakeException
- * @expectedExceptionMessage The data to decrypt cannot be empty.
- * @return void
- */
+	 * Test that empty data cause errors
+	 *
+	 * @return void
+	 */
 	public function testDecryptInvalidData() {
+		$this->expectException(\CakeException::class);
+		$this->expectExceptionMessage('The data to decrypt cannot be empty.');
 		$txt = '';
 		$key = 'This is a key that is long enough to be ok.';
 		Security::decrypt($txt, $key);

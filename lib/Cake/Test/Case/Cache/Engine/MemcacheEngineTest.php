@@ -48,13 +48,17 @@ class TestMemcacheEngine extends MemcacheEngine {
  * @package       Cake.Test.Case.Cache.Engine
  */
 class MemcacheEngineTest extends CakeTestCase {
+	/**
+	 * @var array|int[]|mixed
+	 */
+	private $_cacheDisable;
 
-/**
+	/**
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->skipIf(!class_exists('Memcache'), 'Memcache is not installed or configured properly.');
 
@@ -72,7 +76,7 @@ class MemcacheEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::write('Cache.disable', $this->_cacheDisable);
 		Cache::drop('memcache');
@@ -113,7 +117,7 @@ class MemcacheEngineTest extends CakeTestCase {
 		$Memcache = new Memcache();
 
 		foreach ($servers as $server) {
-			list($host, $port) = explode(':', $server);
+			[$host, $port] = explode(':', $server);
 			//@codingStandardsIgnoreStart
 			if (!@$Memcache->connect($host, $port)) {
 				$available = false;
@@ -401,10 +405,10 @@ class MemcacheEngineTest extends CakeTestCase {
 	}
 
 /**
- * test that durations greater than 30 days never expire
- *
- * @return void
- */
+	 * test that durations greater than 30 days never expire
+	 *
+	 * @return void
+	 */
 	public function testLongDurationEqualToZero() {
 		$memcache = new TestMemcacheEngine();
 		$memcache->settings['compress'] = false;

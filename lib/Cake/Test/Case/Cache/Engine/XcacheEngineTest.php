@@ -24,13 +24,17 @@ App::uses('Cache', 'Cache');
  * @package       Cake.Test.Case.Cache.Engine
  */
 class XcacheEngineTest extends CakeTestCase {
+	/**
+	 * @var array|int[]|mixed
+	 */
+	private $_cacheDisable;
 
-/**
+	/**
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		if (!function_exists('xcache_set')) {
 			$this->markTestSkipped('Xcache is not installed or configured properly');
@@ -45,7 +49,7 @@ class XcacheEngineTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		Configure::write('Cache.disable', $this->_cacheDisable);
 		Cache::drop('xcache');

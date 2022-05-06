@@ -56,7 +56,7 @@ class TextHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->View = new View(null);
 		$this->Text = new TextHelper($this->View);
@@ -67,16 +67,16 @@ class TextHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		unset($this->View);
 		parent::tearDown();
 	}
 
 /**
- * test String class methods are called correctly
- *
- * @return void
- */
+	 * test String class methods are called correctly
+	 *
+	 * @return void
+	 */
 	public function testTextHelperProxyMethodCalls() {
 		$methods = array(
 			'highlight', 'stripLinks', 'truncate', 'tail', 'excerpt', 'toList',

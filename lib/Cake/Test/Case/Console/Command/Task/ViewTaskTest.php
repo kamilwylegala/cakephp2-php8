@@ -184,7 +184,7 @@ class ViewTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -208,7 +208,7 @@ class ViewTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Task, $this->Dispatch);
 	}
@@ -283,10 +283,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test Bake method
- *
- * @return void
- */
+	 * test Bake method
+	 *
+	 * @return void
+	 */
 	public function testBakeView() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
@@ -300,26 +300,26 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test baking an edit file
- *
- * @return void
- */
+	 * test baking an edit file
+	 *
+	 * @return void
+	 */
 	public function testBakeEdit() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
 		$this->Task->expects($this->at(0))->method('createFile')
 			->with(
 				TMP . 'ViewTaskComments' . DS . 'edit.ctp',
-				new PHPUnit_Framework_Constraint_IsAnything()
+				new \PHPUnit\Framework\Constraint\IsAnything()
 			);
 		$this->Task->bake('edit', true);
 	}
 
 /**
- * test baking an index
- *
- * @return void
- */
+	 * test baking an index
+	 *
+	 * @return void
+	 */
 	public function testBakeIndex() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
@@ -333,10 +333,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that baking a view with no template doesn't make a file.
- *
- * @return void
- */
+	 * test that baking a view with no template doesn't make a file.
+	 *
+	 * @return void
+	 */
 	public function testBakeWithNoTemplate() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
@@ -359,7 +359,7 @@ class ViewTaskTest extends CakeTestCase {
 		$path = APP . 'Plugin' . DS . 'TestTest' . DS . 'View' . DS . 'ViewTaskComments' . DS . 'view.ctp';
 
 		$result = $this->Task->getContent('index');
-		$this->assertNotContains('List Test Test.view Task Articles', $result);
+		$this->assertStringNotContainsString('List Test Test.view Task Articles', $result);
 
 		$this->Task->expects($this->once())
 			->method('createFile')
@@ -370,10 +370,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test bake actions baking multiple actions.
- *
- * @return void
- */
+	 * test bake actions baking multiple actions.
+	 *
+	 * @return void
+	 */
 	public function testBakeActions() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
@@ -397,10 +397,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test baking a customAction (non crud)
- *
- * @return void
- */
+	 * test baking a customAction (non crud)
+	 *
+	 * @return void
+	 */
 	public function testCustomAction() {
 		$this->Task->controllerName = 'ViewTaskComments';
 
@@ -417,10 +417,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test all()
- *
- * @return void
- */
+	 * Test all()
+	 *
+	 * @return void
+	 */
 	public function testExecuteIntoAll() {
 		$this->Task->args[0] = 'all';
 
@@ -443,10 +443,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * Test all() with action parameter
- *
- * @return void
- */
+	 * Test all() with action parameter
+	 *
+	 * @return void
+	 */
 	public function testExecuteIntoAllWithActionName() {
 		$this->Task->args = array('all', 'index');
 
@@ -463,10 +463,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test `cake bake view $controller view`
- *
- * @return void
- */
+	 * test `cake bake view $controller view`
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithActionParam() {
 		$this->Task->args[0] = 'ViewTaskComments';
 		$this->Task->args[1] = 'view';
@@ -480,11 +480,11 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test `cake bake view $controller`
- * Ensure that views are only baked for actions that exist in the controller.
- *
- * @return void
- */
+	 * test `cake bake view $controller`
+	 * Ensure that views are only baked for actions that exist in the controller.
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithController() {
 		$this->Task->args[0] = 'ViewTaskComments';
 
@@ -513,11 +513,11 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test that both plural and singular forms can be used for baking views.
- *
- * @dataProvider nameVariations
- * @return void
- */
+	 * test that both plural and singular forms can be used for baking views.
+	 *
+	 * @dataProvider nameVariations
+	 * @return void
+	 */
 	public function testExecuteWithControllerVariations($name) {
 		$this->Task->args = array($name);
 
@@ -535,11 +535,11 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test `cake bake view $controller --admin`
- * Which only bakes admin methods, not non-admin methods.
- *
- * @return void
- */
+	 * test `cake bake view $controller --admin`
+	 * Which only bakes admin methods, not non-admin methods.
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithControllerAndAdminFlag() {
 		$_back = Configure::read('Routing');
 		Configure::write('Routing.prefixes', array('admin'));
@@ -563,10 +563,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute into interactive.
- *
- * @return void
- */
+	 * test execute into interactive.
+	 *
+	 * @return void
+	 */
 	public function testExecuteInteractive() {
 		$this->Task->connection = 'test';
 		$this->Task->args = array();
@@ -607,10 +607,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test `cake bake view posts index list`
- *
- * @return void
- */
+	 * test `cake bake view posts index list`
+	 *
+	 * @return void
+	 */
 	public function testExecuteWithAlternateTemplates() {
 		$this->Task->connection = 'test';
 		$this->Task->args = array('ViewTaskComments', 'index', 'list');
@@ -625,10 +625,10 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test execute into interactive() with admin methods.
- *
- * @return void
- */
+	 * test execute into interactive() with admin methods.
+	 *
+	 * @return void
+	 */
 	public function testExecuteInteractiveWithAdmin() {
 		Configure::write('Routing.prefixes', array('admin'));
 		$this->Task->connection = 'test';

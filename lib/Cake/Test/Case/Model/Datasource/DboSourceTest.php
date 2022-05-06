@@ -179,12 +179,18 @@ class DboSourceTest extends CakeTestCase {
 		'core.sample', 'core.tag', 'core.user', 'core.post', 'core.author', 'core.data_test'
 	);
 
+	/**
+	 * @var DboSource
+	 */
+	public $db;
+
 /**
+ *
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->testDb = new DboTestSource();
@@ -200,7 +206,7 @@ class DboSourceTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Model);
 	}
@@ -679,10 +685,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException PDOException
- * @return void
- */
+	 * @return void
+	 */
 	public function testDirectCallThrowsException() {
+		$this->expectException(\PDOException::class);
 		$this->db->query('directCall', array(), $this->Model);
 	}
 
@@ -1248,10 +1254,10 @@ class DboSourceTest extends CakeTestCase {
 		);
 
 		$result = $this->db->generateAssociationQuery($Article, null, null, null, null, $queryData, false);
-		$this->assertContains('SELECT', $result);
-		$this->assertContains('FROM', $result);
-		$this->assertContains('WHERE', $result);
-		$this->assertContains('ORDER', $result);
+		$this->assertStringContainsString('SELECT', $result);
+		$this->assertStringContainsString('FROM', $result);
+		$this->assertStringContainsString('WHERE', $result);
+		$this->assertStringContainsString('ORDER', $result);
 	}
 
 /**
@@ -1412,10 +1418,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test nested transaction calls
- *
- * @return void
- */
+	 * Test nested transaction calls
+	 *
+	 * @return void
+	 */
 	public function testTransactionNested() {
 		$conn = $this->getMock('MockPDO');
 		$db = new DboTestSource();
@@ -1434,10 +1440,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test nested transaction calls without support
- *
- * @return void
- */
+	 * Test nested transaction calls without support
+	 *
+	 * @return void
+	 */
 	public function testTransactionNestedWithoutSupport() {
 		$conn = $this->getMock('MockPDO');
 		$db = new DboTestSource();
@@ -1453,10 +1459,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test nested transaction disabled
- *
- * @return void
- */
+	 * Test nested transaction disabled
+	 *
+	 * @return void
+	 */
 	public function testTransactionNestedDisabled() {
 		$conn = $this->getMock('MockPDO');
 		$db = new DboTestSource();
@@ -1783,7 +1789,7 @@ class DboSourceTest extends CakeTestCase {
 
 		$result = $db->limit(10, 300000000000000000000000000000);
 		$scientificNotation = sprintf('%.1E', 300000000000000000000000000000);
-		$this->assertNotContains($scientificNotation, $result);
+		$this->assertStringNotContainsString($scientificNotation, $result);
 	}
 
 /**
@@ -2025,10 +2031,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test that afterFind is called correctly for 'joins'
- *
- * @return void
- */
+	 * Test that afterFind is called correctly for 'joins'
+	 *
+	 * @return void
+	 */
 	public function testJoinsAfterFind() {
 		$this->loadFixtures('Article', 'User');
 
@@ -2084,10 +2090,10 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test that afterFind is called correctly for 'hasOne' association.
- *
- * @return void
- */
+	 * Test that afterFind is called correctly for 'hasOne' association.
+	 *
+	 * @return void
+	 */
 	public function testHasOneAfterFind() {
 		$this->loadFixtures('Article', 'User', 'Comment');
 
@@ -2148,10 +2154,10 @@ class DboSourceTest extends CakeTestCase {
 		$this->db->query('SELECT 1');
 		$this->db->query('SELECT 1');
 		$this->db->query('SELECT 2');
-		$this->assertAttributeCount(2, '_queryCache', $this->db);
+		self::assertCount(2, $this->db->getAllCachedQueries());
 
 		$this->db->flushQueryCache();
-		$this->assertAttributeCount(0, '_queryCache', $this->db);
+		self::assertCount(0, $this->db->getAllCachedQueries());
 	}
 
 /**
@@ -2193,8 +2199,8 @@ class DboSourceTest extends CakeTestCase {
 	}
 
 /**
- * Test find with locking hint
- */
+	 * Test find with locking hint
+	 */
 	public function testFindWithLockingHint() {
 		$db = $this->getMock('DboTestSource', array('connect', '_execute', 'execute', 'describ'));
 

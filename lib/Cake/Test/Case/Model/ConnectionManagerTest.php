@@ -29,7 +29,7 @@ class ConnectionManagerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		CakePlugin::unload();
 	}
@@ -72,12 +72,12 @@ class ConnectionManagerTest extends CakeTestCase {
 	}
 
 /**
- * testGetDataSourceException() method
- *
- * @return void
- * @expectedException MissingDatasourceConfigException
- */
+	 * testGetDataSourceException() method
+	 *
+	 * @return void
+	 */
 	public function testGetDataSourceException() {
+		$this->expectException(\MissingDatasourceConfigException::class);
 		ConnectionManager::getDataSource('non_existent_source');
 	}
 
@@ -220,12 +220,12 @@ class ConnectionManagerTest extends CakeTestCase {
 	}
 
 /**
- * testLoadDataSourceException() method
- *
- * @return void
- * @expectedException MissingDatasourceException
- */
+	 * testLoadDataSourceException() method
+	 *
+	 * @return void
+	 */
 	public function testLoadDataSourceException() {
+		$this->expectException(\MissingDatasourceException::class);
 		$connection = array('classname' => 'NonExistentDataSource', 'filename' => 'non_existent');
 		ConnectionManager::loadDataSource($connection);
 	}

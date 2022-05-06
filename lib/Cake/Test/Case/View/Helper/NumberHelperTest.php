@@ -52,7 +52,7 @@ class NumberHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->View = new View(null);
 	}
@@ -62,16 +62,16 @@ class NumberHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->View);
 	}
 
 /**
- * test CakeNumber class methods are called correctly
- *
- * @return void
- */
+	 * test CakeNumber class methods are called correctly
+	 *
+	 * @return void
+	 */
 	public function testNumberHelperProxyMethodCalls() {
 		$methods = array(
 			'precision', 'toReadableSize', 'toPercentage', 'format',

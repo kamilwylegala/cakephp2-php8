@@ -32,7 +32,7 @@ class MediaViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->MediaView = new MediaView();
 		$this->MediaView->response = $this->getMock('CakeResponse', array(
@@ -50,16 +50,16 @@ class MediaViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->MediaView);
 	}
 
 /**
- * testRender method
- *
- * @return void
- */
+	 * testRender method
+	 *
+	 * @return void
+	 */
 	public function testRender() {
 		$vars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'css' . DS,
@@ -81,10 +81,10 @@ class MediaViewTest extends CakeTestCase {
 	}
 
 /**
- * Test render() when caching is on.
- *
- * @return void
- */
+	 * Test render() when caching is on.
+	 *
+	 * @return void
+	 */
 	public function testRenderCachingAndName() {
 		$vars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'css' . DS,
@@ -116,10 +116,11 @@ class MediaViewTest extends CakeTestCase {
 	}
 
 /**
- * Test downloading files with UPPERCASE extensions.
- *
- * @return void
- */
+	 * Test downloading files with UPPERCASE extensions.
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testRenderUpperExtension() {
 		$this->MediaView->viewVars = array(
 			'path' => CAKE . 'Test' . DS . 'test_app' . DS . 'Vendor' . DS . 'img' . DS,

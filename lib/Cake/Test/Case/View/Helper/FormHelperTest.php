@@ -525,7 +525,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Configure::write('Config.language', 'eng');
@@ -570,7 +570,7 @@ class FormHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Form->Html, $this->Form, $this->Controller, $this->View);
 		Configure::write('Security.salt', $this->oldSalt);
@@ -614,10 +614,10 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$encoding = strtolower(Configure::read('App.encoding'));
 		$result = $this->Form->create('Contact', array('type' => 'get', 'url' => '/contacts/add'));
-		$this->assertNotContains('Token', $result);
+		$this->assertStringNotContainsString('Token', $result);
 
 		$result = $this->Form->end('Save');
-		$this->assertNotContains('Token', $result);
+		$this->assertStringNotContainsString('Token', $result);
 	}
 
 /**
@@ -1825,19 +1825,19 @@ class FormHelperTest extends CakeTestCase {
 			'url' => array('controller' => 'articles', 'action' => 'view', 1, '?' => array('page' => 1))
 		));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result);
+		$this->assertStringContainsString($expected, $result);
 
 		$this->Form->create('Address', array('url' => 'http://localhost/articles/view/1?page=1'));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result, 'Full URL should only use path and query.');
+		$this->assertStringContainsString($expected, $result, 'Full URL should only use path and query.');
 
 		$this->Form->create('Address', array('url' => '/articles/view/1?page=1'));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result, 'URL path + query should work.');
+		$this->assertStringContainsString($expected, $result, 'URL path + query should work.');
 
 		$this->Form->create('Address', array('url' => '/articles/view/1'));
 		$result = $this->Form->secure();
-		$this->assertNotContains($expected, $result, 'URL is different');
+		$this->assertStringNotContainsString($expected, $result, 'URL is different');
 	}
 
 /**
@@ -1853,7 +1853,7 @@ class FormHelperTest extends CakeTestCase {
 			'url' => array('controller' => 'articles', 'action' => 'view', 1, 'type' => 'red')
 		));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result);
+		$this->assertStringContainsString($expected, $result);
 	}
 
 /**
@@ -1878,15 +1878,15 @@ class FormHelperTest extends CakeTestCase {
 			),
 		));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result);
+		$this->assertStringContainsString($expected, $result);
 
 		$this->Form->create('Address', array('url' => 'http://localhost/articles/view?page=1&limit=10&html=%3C%3E%22#result'));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result, 'Full URL should only use path and query.');
+		$this->assertStringContainsString($expected, $result, 'Full URL should only use path and query.');
 
 		$this->Form->create('Address', array('url' => '/articles/view?page=1&limit=10&html=%3C%3E%22#result'));
 		$result = $this->Form->secure();
-		$this->assertContains($expected, $result, 'URL path + query should work.');
+		$this->assertStringContainsString($expected, $result, 'URL path + query should work.');
 	}
 
 /**
@@ -2946,18 +2946,18 @@ class FormHelperTest extends CakeTestCase {
 			'type' => 'time',
 			'selected' => '18:15'
 		));
-		$this->assertContains('<option value="06" selected="selected">6</option>', $result);
-		$this->assertContains('<option value="15" selected="selected">15</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="06" selected="selected">6</option>', $result);
+		$this->assertStringContainsString('<option value="15" selected="selected">15</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('published', array('type' => 'time'));
 		$now = strtotime('now');
-		$this->assertContains('<option value="' . date('h', $now) . '" selected="selected">' . date('g', $now) . '</option>', $result);
+		$this->assertStringContainsString('<option value="' . date('h', $now) . '" selected="selected">' . date('g', $now) . '</option>', $result);
 
 		$now = strtotime('2013-03-09 00:42:21');
 		$result = $this->Form->input('published', array('type' => 'time', 'selected' => $now));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="42" selected="selected">42</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="42" selected="selected">42</option>', $result);
 	}
 
 /**
@@ -2971,18 +2971,18 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => array('hour' => '3', 'min' => '57', 'meridian' => 'pm')
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
 			'interval' => 15,
 			'selected' => '2012-10-23 15:57:00'
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'timeFormat' => 24,
@@ -2990,8 +2990,8 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '15:57'
 		));
-		$this->assertContains('<option value="16" selected="selected">16</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="16" selected="selected">16</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'timeFormat' => 24,
@@ -2999,8 +2999,8 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '23:57'
 		));
-		$this->assertContains('<option value="00" selected="selected">0</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">0</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 
 		$result = $this->Form->input('Model.created', array(
 			'timeFormat' => 24,
@@ -3008,11 +3008,11 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '2012-09-30 23:56'
 		));
-		$this->assertContains('<option value="2012" selected="selected">2012</option>', $result);
-		$this->assertContains('<option value="10" selected="selected">October</option>', $result);
-		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">0</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="2012" selected="selected">2012</option>', $result);
+		$this->assertStringContainsString('<option value="10" selected="selected">October</option>', $result);
+		$this->assertStringContainsString('<option value="01" selected="selected">1</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">0</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 	}
 
 /**
@@ -3026,18 +3026,18 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => array('hour' => '3', 'min' => '57', 'meridian' => 'pm')
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
 			'interval' => 15,
 			'value' => '2012-10-23 15:57:00'
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'timeFormat' => 24,
@@ -3045,8 +3045,8 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '15:57'
 		));
-		$this->assertContains('<option value="16" selected="selected">16</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="16" selected="selected">16</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'timeFormat' => 24,
@@ -3054,8 +3054,8 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '23:57'
 		));
-		$this->assertContains('<option value="00" selected="selected">0</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">0</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 
 		$result = $this->Form->input('Model.created', array(
 			'timeFormat' => 24,
@@ -3063,11 +3063,11 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '2012-09-30 23:56'
 		));
-		$this->assertContains('<option value="2012" selected="selected">2012</option>', $result);
-		$this->assertContains('<option value="10" selected="selected">October</option>', $result);
-		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">0</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="2012" selected="selected">2012</option>', $result);
+		$this->assertStringContainsString('<option value="10" selected="selected">October</option>', $result);
+		$this->assertStringContainsString('<option value="01" selected="selected">1</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">0</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
 	}
 
 /**
@@ -3082,9 +3082,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '00:00:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="am" selected="selected">am</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3092,9 +3092,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '12:00:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3102,9 +3102,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'selected' => '12:15:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="15" selected="selected">15</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="15" selected="selected">15</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 	}
 
 /**
@@ -3119,9 +3119,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '00:00:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="am" selected="selected">am</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3129,9 +3129,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '12:00:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="00" selected="selected">00</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3139,9 +3139,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 15,
 			'value' => '12:15:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="15" selected="selected">15</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="15" selected="selected">15</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 	}
 
 /**
@@ -3156,9 +3156,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 5,
 			'selected' => array('hour' => '4', 'min' => '30', 'meridian' => 'pm')
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="30" selected="selected">30</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3166,9 +3166,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 5,
 			'selected' => '2013-04-19 16:30:00'
 		));
-		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
-		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="04" selected="selected">4</option>', $result);
+		$this->assertStringContainsString('<option value="30" selected="selected">30</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3176,9 +3176,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 10,
 			'selected' => '2013-05-19 00:33:00'
 		));
-		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
-		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
-		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
+		$this->assertStringContainsString('<option value="12" selected="selected">12</option>', $result);
+		$this->assertStringContainsString('<option value="30" selected="selected">30</option>', $result);
+		$this->assertStringContainsString('<option value="am" selected="selected">am</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3186,9 +3186,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 10,
 			'selected' => '2013-05-19 13:33:00'
 		));
-		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
-		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
-		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+		$this->assertStringContainsString('<option value="01" selected="selected">1</option>', $result);
+		$this->assertStringContainsString('<option value="30" selected="selected">30</option>', $result);
+		$this->assertStringContainsString('<option value="pm" selected="selected">pm</option>', $result);
 
 		$result = $this->Form->input('Model.start_time', array(
 			'type' => 'time',
@@ -3196,9 +3196,9 @@ class FormHelperTest extends CakeTestCase {
 			'interval' => 10,
 			'selected' => '2013-05-19 01:33:00'
 		));
-		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
-		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
-		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
+		$this->assertStringContainsString('<option value="01" selected="selected">1</option>', $result);
+		$this->assertStringContainsString('<option value="30" selected="selected">30</option>', $result);
+		$this->assertStringContainsString('<option value="am" selected="selected">am</option>', $result);
 	}
 
 /**
@@ -4027,9 +4027,9 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->create('TestPlugin.TestPluginPost');
 		$result = $this->Form->inputs();
 
-		$this->assertContains('data[TestPluginPost][id]', $result);
-		$this->assertContains('data[TestPluginPost][author_id]', $result);
-		$this->assertContains('data[TestPluginPost][title]', $result);
+		$this->assertStringContainsString('data[TestPluginPost][id]', $result);
+		$this->assertStringContainsString('data[TestPluginPost][author_id]', $result);
+		$this->assertStringContainsString('data[TestPluginPost][title]', $result);
 		$this->assertTrue(ClassRegistry::isKeySet('TestPluginPost'));
 		$this->assertFalse(ClassRegistry::isKeySet('TestPlugin'));
 		$this->assertEquals('TestPluginPost', $this->Form->model());
@@ -7474,13 +7474,13 @@ class FormHelperTest extends CakeTestCase {
  */
 	public function testDateTimeLabelIdMatchesFirstInput() {
 		$result = $this->Form->input('Model.date', array('type' => 'date'));
-		$this->assertContains('label for="ModelDateMonth"', $result);
+		$this->assertStringContainsString('label for="ModelDateMonth"', $result);
 
 		$result = $this->Form->input('Model.date', array('type' => 'date', 'dateFormat' => 'DMY'));
-		$this->assertContains('label for="ModelDateDay"', $result);
+		$this->assertStringContainsString('label for="ModelDateDay"', $result);
 
 		$result = $this->Form->input('Model.date', array('type' => 'date', 'dateFormat' => 'YMD'));
-		$this->assertContains('label for="ModelDateYear"', $result);
+		$this->assertStringContainsString('label for="ModelDateYear"', $result);
 	}
 
 /**
@@ -7870,10 +7870,10 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->Form->request->data['Model']['field'] = '';
 		$result = $this->Form->hour('Model.field', true, array('value' => '23'));
-		$this->assertContains('<option value="23" selected="selected">23</option>', $result);
+		$this->assertStringContainsString('<option value="23" selected="selected">23</option>', $result);
 
 		$result = $this->Form->hour('Model.field', false, array('value' => '23'));
-		$this->assertContains('<option value="11" selected="selected">11</option>', $result);
+		$this->assertStringContainsString('<option value="11" selected="selected">11</option>', $result);
 
 		$this->Form->request->data['Model']['field'] = '2006-10-10 00:12:32';
 		$result = $this->Form->hour('Model.field', true);
@@ -8118,7 +8118,7 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertTags($result, $expected);
 
 		$result = $this->Form->year('published', array(), array(), array('empty' => false));
-		$this->assertContains('data[Contact][published][year]', $result);
+		$this->assertStringContainsString('data[Contact][published][year]', $result);
 
 		$this->Form->request->data['Contact']['published'] = '2014ee';
 		$result = $this->Form->year('Contact.published', 2010, 2011);
@@ -8197,8 +8197,8 @@ class FormHelperTest extends CakeTestCase {
 					'maxYear' => 2008
 				)
 		);
-		$this->assertContains('value="' . date('m') . '" selected="selected"', $result);
-		$this->assertNotContains('value="2008" selected="selected"', $result);
+		$this->assertStringContainsString('value="' . date('m') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="2008" selected="selected"', $result);
 
 		$result = $this->Form->input('just_year',
 			array(
@@ -8209,7 +8209,7 @@ class FormHelperTest extends CakeTestCase {
 				'maxYear' => date('Y', strtotime('+20 years'))
 			)
 		);
-		$this->assertNotContains('value="' . date('Y') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('Y') . '" selected="selected"', $result);
 
 		$result = $this->Form->input('just_month',
 			array(
@@ -8219,7 +8219,7 @@ class FormHelperTest extends CakeTestCase {
 				'empty' => false,
 			)
 		);
-		$this->assertNotContains('value="' . date('m') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('m') . '" selected="selected"', $result);
 
 		$result = $this->Form->input('just_day',
 			array(
@@ -8229,7 +8229,7 @@ class FormHelperTest extends CakeTestCase {
 				'empty' => false,
 			)
 		);
-		$this->assertNotContains('value="' . date('d') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('d') . '" selected="selected"', $result);
 	}
 
 /**
@@ -8249,7 +8249,7 @@ class FormHelperTest extends CakeTestCase {
 				'class' => 'form-control'
 			)
 		);
-		$this->assertContains('class="form-control"', $result);
+		$this->assertStringContainsString('class="form-control"', $result);
 
 		$result = $this->Form->input('date',
 			array(
@@ -8258,7 +8258,7 @@ class FormHelperTest extends CakeTestCase {
 				'class' => 'form-control'
 			)
 		);
-		$this->assertContains('class="form-control"', $result);
+		$this->assertStringContainsString('class="form-control"', $result);
 
 		$result = $this->Form->input('date',
 			array(
@@ -8267,7 +8267,7 @@ class FormHelperTest extends CakeTestCase {
 				'class' => 'form-control'
 			)
 		);
-		$this->assertContains('class="form-control"', $result);
+		$this->assertStringContainsString('class="form-control"', $result);
 
 		$result = $this->Form->input('date',
 			array(
@@ -8276,7 +8276,7 @@ class FormHelperTest extends CakeTestCase {
 				'class' => 'form-control'
 			)
 		);
-		$this->assertContains('class="form-control"', $result);
+		$this->assertStringContainsString('class="form-control"', $result);
 	}
 
 /**
@@ -8300,7 +8300,7 @@ class FormHelperTest extends CakeTestCase {
 					'maxYear' => 2008
 				)
 		);
-		$this->assertContains('value="2008" selected="selected"', $result);
+		$this->assertStringContainsString('value="2008" selected="selected"', $result);
 	}
 
 /**
@@ -8317,11 +8317,11 @@ class FormHelperTest extends CakeTestCase {
 		$result = $this->Form->input('lap_time', array(
 			'type' => 'text',
 		));
-		$this->assertNotContains('maxlength=', $result);
+		$this->assertStringNotContainsString('maxlength=', $result);
 		$result = $this->Form->input('last_seen', array(
 			'type' => 'text',
 		));
-		$this->assertNotContains('maxlength=', $result);
+		$this->assertStringNotContainsString('maxlength=', $result);
 	}
 
 /**
@@ -8559,9 +8559,9 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 		$result = $this->Form->postButton('Send', '/', array('data' => $data));
-		$this->assertContains('<input type="hidden" name="data[one][two][0]" value="3"', $result);
-		$this->assertContains('<input type="hidden" name="data[one][two][1]" value="4"', $result);
-		$this->assertContains('<input type="hidden" name="data[one][two][2]" value="5"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][0]" value="3"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][1]" value="4"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][2]" value="5"', $result);
 	}
 
 /**
@@ -8662,7 +8662,7 @@ class FormHelperTest extends CakeTestCase {
 		));
 
 		$result = $this->Form->postLink('Delete', '/posts/delete', array('data' => array('id' => 1)));
-		$this->assertContains('<input type="hidden" name="data[id]" value="1"/>', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[id]" value="1"/>', $result);
 
 		$result = $this->Form->postLink('Delete', '/posts/delete/1', array('target' => '_blank'));
 		$this->assertTags($result, array(
@@ -8764,11 +8764,10 @@ class FormHelperTest extends CakeTestCase {
 		$result = $this->View->fetch('postLink');
 
 		$this->assertEquals(array('Post.title'), $this->Form->fields);
-		$this->assertContains($hash, $result, 'Should contain the correct hash.');
-		$this->assertAttributeEquals(
+		$this->assertStringContainsString($hash, $result, 'Should contain the correct hash.');
+		$this->assertEquals(
 			'/basedir/posts/add',
-			'_lastAction',
-			$this->Form,
+			$this->Form->getLastAction(),
 			'lastAction was should be restored.');
 	}
 
@@ -8786,9 +8785,9 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 		$result = $this->Form->postLink('Send', '/', array('data' => $data));
-		$this->assertContains('<input type="hidden" name="data[one][two][0]" value="3"', $result);
-		$this->assertContains('<input type="hidden" name="data[one][two][1]" value="4"', $result);
-		$this->assertContains('<input type="hidden" name="data[one][two][2]" value="5"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][0]" value="3"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][1]" value="4"', $result);
+		$this->assertStringContainsString('<input type="hidden" name="data[one][two][2]" value="5"', $result);
 	}
 
 /**
@@ -9687,9 +9686,7 @@ class FormHelperTest extends CakeTestCase {
  */
 	public function testCreateNoErrorsWithMockModel() {
 		$encoding = strtolower(Configure::read('App.encoding'));
-		$ContactMock = $this->getMockBuilder('Contact')
-			->disableOriginalConstructor()
-			->getMock();
+		$ContactMock = $this->createMock('Contact');
 		ClassRegistry::removeObject('Contact');
 		ClassRegistry::addObject('Contact', $ContactMock);
 		$result = $this->Form->create('Contact', array('type' => 'GET'));
@@ -10918,10 +10915,10 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
- * @return void
- */
+	 * @return void
+	 */
 	public function testHtml5InputException() {
+		$this->expectException(\CakeException::class);
 		$this->Form->email();
 	}
 
@@ -11188,7 +11185,7 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request->here = $here;
 		$this->Form->create('User');
 
-		$this->assertAttributeEquals($here, '_lastAction', $this->Form, "_lastAction shouldn't be empty.");
+		$this->assertEquals($here, $this->Form->getLastAction(), "_lastAction shouldn't be empty.");
 	}
 
 /**
@@ -11204,7 +11201,7 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request->here = $here;
 		$this->Form->create('User');
 
-		$this->assertAttributeEquals($here, '_lastAction', $this->Form, "_lastAction shouldn't be empty.");
+		$this->assertEquals($here, $this->Form->getLastAction(), "_lastAction shouldn't be empty.");
 	}
 
 /**

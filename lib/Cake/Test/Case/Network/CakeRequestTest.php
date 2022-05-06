@@ -64,7 +64,7 @@ class CakeRequestTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->_app = Configure::read('App');
 		$this->_case = null;
@@ -81,7 +81,7 @@ class CakeRequestTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		if (!empty($this->_case)) {
 			$_GET['case'] = $this->_case;
@@ -976,12 +976,12 @@ class CakeRequestTest extends CakeTestCase {
 	}
 
 /**
- * Test __call exceptions
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test __call exceptions
+	 *
+	 * @return void
+	 */
 	public function testMagicCallExceptionOnUnknownMethod() {
+		$this->expectException(\CakeException::class);
 		$request = new CakeRequest('some/path');
 		$request->IamABanana();
 	}
@@ -2482,7 +2482,7 @@ XML;
 			$this->assertEquals(array('Allow' => 'POST, DELETE'), $e->responseHeader());
 		}
 
-		$this->setExpectedException('MethodNotAllowedException');
+		$this->expectException('MethodNotAllowedException');
 		$request->allowMethod('POST');
 	}
 

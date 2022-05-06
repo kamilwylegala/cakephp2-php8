@@ -45,7 +45,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->User = ClassRegistry::init('User');
 		$this->Article = ClassRegistry::init('Article');
@@ -71,7 +71,7 @@ class ContainableBehaviorTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		unset($this->Article);
 		unset($this->User);
 		unset($this->Tag);
@@ -148,20 +148,21 @@ class ContainableBehaviorTest extends CakeTestCase {
 	}
 
 /**
- * testInvalidContainments method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testInvalidContainments method
+	 *
+	 * @return void
+	 */
 	public function testInvalidContainments() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$this->_containments($this->Article, array('Comment', 'InvalidBinding'));
 	}
 
 /**
- * testInvalidContainments method with suppressing error notices
- *
- * @return void
- */
+	 * testInvalidContainments method with suppressing error notices
+	 *
+	 * @return void
+	 * @doesNotPerformAssertions
+	 */
 	public function testInvalidContainmentsNoNotices() {
 		$this->Article->Behaviors->load('Containable', array('notices' => false));
 		$this->_containments($this->Article, array('Comment', 'InvalidBinding'));
@@ -239,12 +240,12 @@ class ContainableBehaviorTest extends CakeTestCase {
 	}
 
 /**
- * testBeforeFindWithNonExistingBinding method
- *
- * @expectedException PHPUnit_Framework_Error
- * @return void
- */
+	 * testBeforeFindWithNonExistingBinding method
+	 *
+	 * @return void
+	 */
 	public function testBeforeFindWithNonExistingBinding() {
+		$this->expectException(\PHPUnit\Framework\Error\Error::class);
 		$this->Article->find('all', array('contain' => array('Comment' => 'NonExistingBinding')));
 	}
 

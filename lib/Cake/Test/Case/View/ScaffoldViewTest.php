@@ -83,7 +83,7 @@ class ScaffoldViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$this->request = new CakeRequest(null, false);
 		$this->Controller = new ScaffoldViewMockController($this->request);
@@ -101,7 +101,7 @@ class ScaffoldViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		unset($this->Controller, $this->request);
 		parent::tearDown();
 	}
@@ -320,14 +320,14 @@ class ScaffoldViewTest extends CakeTestCase {
 		$this->Controller->response->send();
 		$result = ob_get_clean();
 
-		$this->assertContains('<form action="/scaffold_mock/edit/1" id="ScaffoldMockEditForm" method="post"', $result);
-		$this->assertContains('<legend>Edit Scaffold Mock</legend>', $result);
+		$this->assertStringContainsString('<form action="/scaffold_mock/edit/1" id="ScaffoldMockEditForm" method="post"', $result);
+		$this->assertStringContainsString('<legend>Edit Scaffold Mock</legend>', $result);
 
-		$this->assertContains('input type="hidden" name="data[ScaffoldMock][id]" value="1" id="ScaffoldMockId"', $result);
-		$this->assertContains('select name="data[ScaffoldMock][user_id]" id="ScaffoldMockUserId"', $result);
-		$this->assertContains('input name="data[ScaffoldMock][title]" maxlength="255" type="text" value="First Article" id="ScaffoldMockTitle"', $result);
-		$this->assertContains('input name="data[ScaffoldMock][published]" maxlength="1" type="text" value="Y" id="ScaffoldMockPublished"', $result);
-		$this->assertContains('textarea name="data[ScaffoldMock][body]" cols="30" rows="6" id="ScaffoldMockBody"', $result);
+		$this->assertStringContainsString('input type="hidden" name="data[ScaffoldMock][id]" value="1" id="ScaffoldMockId"', $result);
+		$this->assertStringContainsString('select name="data[ScaffoldMock][user_id]" id="ScaffoldMockUserId"', $result);
+		$this->assertStringContainsString('input name="data[ScaffoldMock][title]" maxlength="255" type="text" value="First Article" id="ScaffoldMockTitle"', $result);
+		$this->assertStringContainsString('input name="data[ScaffoldMock][published]" maxlength="1" type="text" value="Y" id="ScaffoldMockPublished"', $result);
+		$this->assertStringContainsString('textarea name="data[ScaffoldMock][body]" cols="30" rows="6" id="ScaffoldMockBody"', $result);
 		$this->assertRegExp('/<a href="\#" onclick="if[^>]*>Delete<\/a><\/li>/', $result);
 	}
 

@@ -34,7 +34,7 @@ class ApiShellTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
@@ -47,10 +47,10 @@ class ApiShellTest extends CakeTestCase {
 	}
 
 /**
- * Test that method names are detected properly including those with no arguments.
- *
- * @return void
- */
+	 * Test that method names are detected properly including those with no arguments.
+	 *
+	 * @return void
+	 */
 	public function testMethodNameDetection() {
 		$this->Shell->expects($this->any())->method('in')->will($this->returnValue('q'));
 		$this->Shell->expects($this->at(0))->method('out')->with('Controller');

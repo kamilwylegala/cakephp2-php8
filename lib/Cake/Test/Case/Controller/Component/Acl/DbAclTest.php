@@ -188,7 +188,7 @@ class DbAclTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 		Configure::write('Acl.classname', 'DbAclTwoTest');
 		Configure::write('Acl.database', 'test');
@@ -201,7 +201,7 @@ class DbAclTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Acl);
 	}
@@ -289,12 +289,12 @@ class DbAclTest extends CakeTestCase {
 	}
 
 /**
- * Test that allow() with an invalid permission name triggers an error.
- *
- * @expectedException CakeException
- * @return void
- */
+	 * Test that allow() with an invalid permission name triggers an error.
+	 *
+	 * @return void
+	 */
 	public function testAllowInvalidPermission() {
+		$this->expectException(\CakeException::class);
 		$this->assertFalse($this->Acl->allow('Micheal', 'tpsReports', 'derp'));
 	}
 
