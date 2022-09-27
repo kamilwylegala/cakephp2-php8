@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-09-27
+
+- Fixed multiple `CREATE UNIQUE INDEX` statements from schema shell that did not work on PostgreSQL.
+
 ### 2022-03-08
 
 - Fixed passing `params["pass"]` argument to `invokeArgs` when resolving controller action - `array_values` used to avoid problems with named parameters.
