@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2022-10-08
+
+- Support for `full_path` when uploading a file, PHP 8.1 only.
+
 ### 2022-09-27
 
 - Fixed multiple `CREATE UNIQUE INDEX` statements from schema shell that did not work on PostgreSQL.
