@@ -32,7 +32,10 @@ class MailTransport extends AbstractTransport {
  * @throws SocketException When mail cannot be sent.
  */
 	public function send(CakeEmail $email) {
-		$eol = PHP_EOL;
+
+		// https://github.com/cakephp/cakephp/issues/2209
+		// https://bugs.php.net/bug.php?id=47983
+		$eol = "\r\n";
 		if (isset($this->_config['eol'])) {
 			$eol = $this->_config['eol'];
 		}
@@ -40,11 +43,11 @@ class MailTransport extends AbstractTransport {
 		$to = $headers['To'];
 		unset($headers['To']);
 		foreach ($headers as $key => $header) {
-			$headers[$key] = str_replace(array("\r", "\n"), '', $header);
+			$headers[$key] = str_replace("\r\n", '', $header);
 		}
 		$headers = $this->_headersToString($headers, $eol);
-		$subject = str_replace(array("\r", "\n"), '', $email->subject());
-		$to = str_replace(array("\r", "\n"), '', $to);
+		$subject = str_replace("\r\n", '', $email->subject());
+		$to = str_replace("\r\n", '', $to);
 
 		$message = implode($eol, $email->message());
 
