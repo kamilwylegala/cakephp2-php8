@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllDatabaseTest extends PHPUnit_Framework_TestSuite {
+class AllDatabaseTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.
@@ -31,7 +31,7 @@ class AllDatabaseTest extends PHPUnit_Framework_TestSuite {
  * @return void
  */
 	public static function suite() {
-		$suite = new PHPUnit_Framework_TestSuite('Datasources, Schema and DbAcl tests');
+		$suite = new \PHPUnit\Framework\TestSuite('Datasources, Schema and DbAcl tests');
 
 		$path = CORE_TEST_CASES . DS . 'Model' . DS;
 		$tasks = array(

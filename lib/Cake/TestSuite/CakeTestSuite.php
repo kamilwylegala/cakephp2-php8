@@ -23,7 +23,7 @@ App::uses('Folder', 'Utility');
  *
  * @package       Cake.TestSuite
  */
-class CakeTestSuite extends PHPUnit_Framework_TestSuite {
+class CakeTestSuite extends \PHPUnit\Framework\TestSuite {
 
 /**
  * Adds all the files in a directory to the test suite. Does not recurse through directories.
