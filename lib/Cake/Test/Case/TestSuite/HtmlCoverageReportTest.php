@@ -33,7 +33,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		App::build(array(
 			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
@@ -229,7 +229,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		CakePlugin::unload();
 		unset($this->Coverage);
 		parent::tearDown();

@@ -39,7 +39,7 @@ class FileTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		$file = __FILE__;
 		$this->File = new File($file);
@@ -50,7 +50,7 @@ class FileTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		$this->File->close();
 		unset($this->File);

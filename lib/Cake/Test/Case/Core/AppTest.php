@@ -28,7 +28,7 @@ class AppTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		CakePlugin::unload();
 	}
@@ -848,7 +848,7 @@ class AppTest extends CakeTestCase {
 	}
 
 /**
- * Data provider function for testIncreaseMemoryLimit 
+ * Data provider function for testIncreaseMemoryLimit
  *
  * @return void
  */
