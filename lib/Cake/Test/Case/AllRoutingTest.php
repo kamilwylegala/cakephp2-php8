@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllRoutingTest extends PHPUnit_Framework_TestSuite {
+class AllRoutingTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.
