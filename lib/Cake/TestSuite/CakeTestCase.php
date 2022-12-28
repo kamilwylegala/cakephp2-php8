@@ -761,12 +761,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 		$callOriginalMethods = false,
 		$proxyTarget = null
 	) {
-		$phpUnitVersion = PHPUnit_Runner_Version::id();
-		if (version_compare($phpUnitVersion, '5.7.0', '<')) {
-			return parent::getMock($originalClassName, $methods, $arguments,
-					$mockClassName, $callOriginalConstructor, $callOriginalClone,
-					$callAutoload, $cloneArguments, $callOriginalMethods, $proxyTarget);
-		}
 		if ($cloneArguments) {
 			throw new InvalidArgumentException('$cloneArguments parameter is not supported');
 		}
