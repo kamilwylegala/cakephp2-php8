@@ -7,4 +7,7 @@
 	<php>
 		<ini name="memory_limit" value="-1"/>
 	</php>
+	<listeners>
+		<listener class="CakeFixtureInjector" file="./lib/Cake/TestSuite/Fixture/CakeFixtureInjector.php"/>
+	</listeners>
 </phpunit>
