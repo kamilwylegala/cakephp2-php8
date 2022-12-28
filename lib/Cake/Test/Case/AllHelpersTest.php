@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case
  */
-class AllHelpersTest extends PHPUnit_Framework_TestSuite {
+class AllHelpersTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite declares tests to run

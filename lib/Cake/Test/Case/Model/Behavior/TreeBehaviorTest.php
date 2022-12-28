@@ -23,7 +23,7 @@
  *
  * @package       Cake.Test.Case.Model.Behavior
  */
-class TreeBehaviorTest extends PHPUnit_Framework_TestSuite {
+class TreeBehaviorTest extends \PHPUnit\Framework\TestSuite {
 
 /**
  * suite method, defines tests for this suite.
