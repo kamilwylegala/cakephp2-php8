@@ -24,7 +24,7 @@ App::uses('CakeTestFixture', 'TestSuite/Fixture');
  *
  * @package       Cake.TestSuite
  */
-abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
+abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 
 /**
  * The class responsible for managing the creation, loading and removing of fixtures
@@ -133,7 +133,7 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 
 		if (empty($this->_configure)) {
@@ -152,7 +152,7 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		App::build($this->_pathRestore, App::RESET);
 		if (class_exists('ClassRegistry', false)) {
@@ -185,7 +185,7 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  *
  * @return void
  */
-	protected function assertPreConditions() {
+	protected function assertPreConditions(): void {
 		parent::assertPreConditions();
 		$this->startTest($this->getName());
 	}
@@ -195,7 +195,7 @@ abstract class CakeTestCase extends PHPUnit_Framework_TestCase {
  *
  * @return void
  */
-	protected function assertPostConditions() {
+	protected function assertPostConditions(): void {
 		parent::assertPostConditions();
 		$this->endTest($this->getName());
 	}

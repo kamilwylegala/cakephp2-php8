@@ -34,7 +34,7 @@ class FlashHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public static function setupBeforeClass() {
+	public static function setupBeforeClass() : void {
 		App::build(array(
 			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS)
 		));
@@ -45,7 +45,7 @@ class FlashHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		$controller = null;
 		$this->View = new View($controller);
@@ -106,7 +106,7 @@ class FlashHelperTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		unset($this->View, $this->Flash);
 		CakeSession::destroy();

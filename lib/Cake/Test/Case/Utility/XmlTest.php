@@ -99,7 +99,7 @@ class XmlTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		$this->_appEncoding = Configure::read('App.encoding');
 		Configure::write('App.encoding', 'UTF-8');
@@ -110,7 +110,7 @@ class XmlTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		Configure::write('App.encoding', $this->_appEncoding);
 	}

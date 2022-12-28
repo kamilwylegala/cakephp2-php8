@@ -30,7 +30,7 @@ class ConsoleOutputTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		$this->output = $this->getMock('ConsoleOutput', array('_write'));
 		$this->output->outputAs(ConsoleOutput::COLOR);
@@ -41,7 +41,7 @@ class ConsoleOutputTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		unset($this->output);
 	}

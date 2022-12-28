@@ -40,7 +40,7 @@ class DebuggerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		Configure::write('debug', 2);
 		Configure::write('log', false);
@@ -51,7 +51,7 @@ class DebuggerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		Configure::write('log', true);
 		if ($this->_restoreError) {
