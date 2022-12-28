@@ -67,34 +67,6 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	protected $_pathRestore = array();
 
 /**
- * Runs the test case and collects the results in a TestResult object.
- * If no TestResult object is passed a new one will be created.
- * This method is run for each test method in this class
- *
- * @param PHPUnit_Framework_TestResult $result The test result object
- * @return PHPUnit_Framework_TestResult
- * @throws InvalidArgumentException
- */
-	public function run(PHPUnit_Framework_TestResult $result = null) {
-		$level = ob_get_level();
-
-		if (!empty($this->fixtureManager)) {
-			$this->fixtureManager->load($this);
-		}
-		$result = parent::run($result);
-		if (!empty($this->fixtureManager)) {
-			$this->fixtureManager->unload($this);
-			unset($this->fixtureManager, $this->db);
-		}
-
-		for ($i = ob_get_level(); $i < $level; ++$i) {
-			ob_start();
-		}
-
-		return $result;
-	}
-
-/**
  * Called when a test case method is about to start (to be overridden when needed.)
  *
  * @param string $method Test method about to get executed.
