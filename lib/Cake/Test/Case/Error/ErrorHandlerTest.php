@@ -52,7 +52,7 @@ class ErrorHandlerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		App::build(array(
 			'View' => array(
@@ -75,7 +75,7 @@ class ErrorHandlerTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		if ($this->_restoreError) {
 			restore_error_handler();

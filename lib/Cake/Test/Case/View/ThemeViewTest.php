@@ -103,7 +103,7 @@ class ThemeViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 		$request = new CakeRequest('posts/index');
 		$this->Controller = new Controller($request);
@@ -124,7 +124,7 @@ class ThemeViewTest extends CakeTestCase {
  *
  * @return void
  */
-	public function tearDown() {
+	public function tearDown() : void {
 		parent::tearDown();
 		unset($this->ThemeView);
 		unset($this->PostsController);
