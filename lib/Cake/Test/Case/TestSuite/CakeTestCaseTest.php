@@ -234,8 +234,8 @@ class CakeTestCaseTest extends CakeTestCase {
 		$manager = $this->getMock('CakeFixtureManager');
 		$manager->fixturize($test);
 		$test->fixtureManager = $manager;
-		$manager->expects($this->once())->method('load');
-		$manager->expects($this->once())->method('unload');
+		$manager->expects($this->never())->method('load');
+		$manager->expects($this->never())->method('unload');
 		$result = $test->run();
 		$this->assertEquals(0, $result->errorCount());
 		$this->assertTrue($result->wasSuccessful());
@@ -269,6 +269,7 @@ class CakeTestCaseTest extends CakeTestCase {
 		$manager = $this->getMock('CakeFixtureManager');
 		$manager->fixturize($test);
 		$test->fixtureManager = $manager;
+		$manager->expects($this->never())->method('unload');
 		$manager->expects($this->once())->method('loadSingle');
 		$result = $test->run();
 		$this->assertEquals(0, $result->errorCount());
@@ -285,7 +286,6 @@ class CakeTestCaseTest extends CakeTestCase {
 		$manager = $this->getMock('CakeFixtureManager');
 		$manager->fixturize($test);
 		$test->fixtureManager = $manager;
-		$manager->expects($this->once())->method('unload');
 		$result = $test->run();
 		$this->assertEquals(1, $result->errorCount());
 	}
