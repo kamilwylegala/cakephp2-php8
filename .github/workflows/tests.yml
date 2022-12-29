@@ -1,0 +1,122 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: read
+
+jobs:
+  linux-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.0'
+        db-type:
+          - mysql
+        include:
+          - php-version: '8.0'
+            db-type: pgsql
+          - php-version: '8.0'
+            db-type: sqlite
+          - php-version: '8.1'
+            db-type: mysql
+
+    services:
+      mysql:
+        image: mysql:5.6
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: cakephp_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres:9.4
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cakephp_test
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      memcached:
+        image: memcached
+        ports:
+          - 11211:11211
+
+    env:
+      DB: ${{ matrix.db-type }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install PHP with extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: apcu, memcache, memcached, redis, mcrypt, pdo_mysql, pdo_pgsql, pdo_sqlite
+          ini-values: |
+            assert.exception=1,
+            zend.assertions=1,
+            error_reporting=-1,
+            log_errors_max_len=0,
+            display_errors=On,
+            apc.enable_cli=1
+          tools: composer
+
+      - name: Enable Autoload
+        run: echo "require_once dirname(__DIR__, 2) . DS . 'vendors/autoload.php';" >> app/Config/bootstrap.php
+
+      - name: locale-gen
+        run: |
+          sudo locale-gen de_DE;
+          sudo locale-gen es_ES;
+
+      - name: Create Another Databases for MySQL
+        if: matrix.db-type == 'mysql'
+        run: |
+          env MYSQL_PWD=root mysql -h 127.0.0.1 -u root -e 'CREATE DATABASE cakephp_test2;';
+          env MYSQL_PWD=root mysql -h 127.0.0.1 -u root -e 'CREATE DATABASE cakephp_test3;';
+
+      - name: Create Another Databases for PostgreSQL
+        if: matrix.db-type == 'pgsql'
+        run: |
+          env PGPASSWORD=postgres psql -c 'CREATE SCHEMA test2;' -h 127.0.0.1 -U postgres -d cakephp_test;
+          env PGPASSWORD=postgres psql -c 'CREATE SCHEMA test3;' -h 127.0.0.1 -U postgres -d cakephp_test;
+
+      - name: Make temporary directories writable
+        run: chmod -R 777 ./app/tmp
+
+      - name: Composer get cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{ matrix.php-version }}-composer-
+
+      - name: Install Composer Packages
+        run: composer install --no-ansi --no-interaction --no-progress
+
+      - name: Copy database.php
+        run: cp ./.github/workflows/configs/database.php ./app/Config/
+
+      - name: Run Tests
+        run: ./vendors/bin/phpunit --stderr --verbose lib/Cake/Test/Case/AllTestsTest.php
