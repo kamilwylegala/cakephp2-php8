@@ -4,12 +4,14 @@ class DATABASE_CONFIG {
 		'mysql' => array(
 			'datasource' => 'Database/Mysql',
 			'host' => '127.0.0.1',
-			'login' => 'root'
+			'login' => 'root',
+			'password' => 'root'
 		),
 		'pgsql' => array(
 			'datasource' => 'Database/Postgres',
 			'host' => '127.0.0.1',
 			'login' => 'postgres',
+			'password' => 'postgres',
 			'database' => 'cakephp_test',
 			'schema' => array(
 				'default' => 'public',
