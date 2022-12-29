@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="CakePHP2PHP8">
+	<!-- Include CakePHP 2 Coding standard rules -->
+	<rule ref="CakePHP" />
+
+	<!-- Defined public method with underscore: __tostring(). -->
+	<rule ref="CakePHP.NamingConventions.ValidFunctionName.PublicWithUnderscore">
+		<exclude-pattern>lib/Cake/Network/Http/HttpSocketResponse.php</exclude-pattern>
+	</rule>
+
+	<rule ref="Generic.PHP.DeprecatedFunctions.Deprecated">
+		<!-- Using the deprecated get_magic_quotes_gpc function. -->
+		<exclude-pattern>lib/Cake/View/Helper.php</exclude-pattern>
+		<!-- Using the deprecated mcrypt_* functions. -->
+		<exclude-pattern>lib/Cake/Utility/Security.php</exclude-pattern>
+	</rule>
+
+	<rule ref="CakePHP.Commenting.FunctionComment.Missing">
+		<exclude-pattern>lib/Cake/TestSuite/Fixture/CakeFixtureInjector.php</exclude-pattern>
+	</rule>
+</ruleset>
