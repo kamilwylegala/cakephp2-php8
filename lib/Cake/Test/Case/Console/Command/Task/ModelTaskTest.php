@@ -911,10 +911,10 @@ STRINGEND;
 			)
 		);
 		$result = $this->Task->bake('BakeArticle', compact('associations'));
-		$this->assertContains(' * @property BakeUser $BakeUser', $result);
-		$this->assertContains(' * @property OtherModel $OtherModel', $result);
-		$this->assertContains(' * @property BakeComment $BakeComment', $result);
-		$this->assertContains(' * @property BakeTag $BakeTag', $result);
+		$this->assertStringContainsString(' * @property BakeUser $BakeUser', $result);
+		$this->assertStringContainsString(' * @property OtherModel $OtherModel', $result);
+		$this->assertStringContainsString(' * @property BakeComment $BakeComment', $result);
+		$this->assertStringContainsString(' * @property BakeTag $BakeTag', $result);
 		$this->assertMatchesRegularExpression('/\$hasAndBelongsToMany \= array\(/', $result);
 		$this->assertMatchesRegularExpression('/\$hasMany \= array\(/', $result);
 		$this->assertMatchesRegularExpression('/\$belongsTo \= array\(/', $result);
@@ -940,7 +940,7 @@ STRINGEND;
 			->with($path, $this->stringContains('BakeArticle extends ControllerTestAppModel'));
 
 		$result = $this->Task->bake('BakeArticle', array(), array());
-		$this->assertContains("App::uses('ControllerTestAppModel', 'ControllerTest.Model');", $result);
+		$this->assertStringContainsString("App::uses('ControllerTestAppModel', 'ControllerTest.Model');", $result);
 
 		$this->assertEquals(count(ClassRegistry::keys()), 0);
 		$this->assertEquals(count(ClassRegistry::mapKeys()), 0);

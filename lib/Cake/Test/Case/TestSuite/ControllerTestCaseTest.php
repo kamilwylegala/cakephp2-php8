@@ -602,24 +602,24 @@ class ControllerTestCaseTest extends CakeTestCase {
 			'method' => 'get',
 			'return' => 'contents',
 		));
-		$this->assertContains('<html', $result);
-		$this->assertContains('This is the TestsAppsController index view', $result);
-		$this->assertContains('first call', $result);
-		$this->assertContains('</html>', $result);
+		$this->assertStringContainsString('<html', $result);
+		$this->assertStringContainsString('This is the TestsAppsController index view', $result);
+		$this->assertStringContainsString('first call', $result);
+		$this->assertStringContainsString('</html>', $result);
 
 		$result = $this->Case->testAction('/tests_apps/index', array(
 			'data' => array('var' => 'second call'),
 			'method' => 'get',
 			'return' => 'contents'
 		));
-		$this->assertContains('second call', $result);
+		$this->assertStringContainsString('second call', $result);
 
 		$result = $this->Case->testAction('/tests_apps/index', array(
 			'data' => array('var' => 'third call'),
 			'method' => 'get',
 			'return' => 'contents'
 		));
-		$this->assertContains('third call', $result);
+		$this->assertStringContainsString('third call', $result);
 	}
 
 /**

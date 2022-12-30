@@ -240,8 +240,8 @@ class ErrorHandlerTest extends CakeTestCase {
 		$this->assertMatchesRegularExpression('/Kaboom!/', $result, 'message missing.');
 
 		$log = file(LOGS . 'error.log');
-		$this->assertContains('[NotFoundException] Kaboom!', $log[0], 'message missing.');
-		$this->assertContains('ErrorHandlerTest->testHandleExceptionLog', $log[2], 'Stack trace missing.');
+		$this->assertStringContainsString('[NotFoundException] Kaboom!', $log[0], 'message missing.');
+		$this->assertStringContainsString('ErrorHandlerTest->testHandleExceptionLog', $log[2], 'Stack trace missing.');
 	}
 
 /**
@@ -270,7 +270,7 @@ class ErrorHandlerTest extends CakeTestCase {
 
 		$log = file(LOGS . 'error.log');
 		$this->assertNotContains('[NotFoundException] Kaboom!', $log[0], 'message should not be logged.');
-		$this->assertContains('[ForbiddenException] Fooled you!', $log[0], 'message missing.');
+		$this->assertStringContainsString('[ForbiddenException] Fooled you!', $log[0], 'message missing.');
 	}
 
 /**
@@ -309,9 +309,9 @@ class ErrorHandlerTest extends CakeTestCase {
 		Configure::write('debug', 1);
 		ErrorHandler::handleFatalError(E_ERROR, 'Something wrong', __FILE__, $line);
 		$result = ob_get_clean();
-		$this->assertContains('Something wrong', $result, 'message missing.');
-		$this->assertContains(__FILE__, $result, 'filename missing.');
-		$this->assertContains((string)$line, $result, 'line missing.');
+		$this->assertStringContainsString('Something wrong', $result, 'message missing.');
+		$this->assertStringContainsString(__FILE__, $result, 'filename missing.');
+		$this->assertStringContainsString((string)$line, $result, 'line missing.');
 
 		ob_start();
 		ob_start();
@@ -320,7 +320,7 @@ class ErrorHandlerTest extends CakeTestCase {
 		$result = ob_get_clean();
 		$this->assertNotContains('Something wrong', $result, 'message must not appear.');
 		$this->assertNotContains(__FILE__, $result, 'filename must not appear.');
-		$this->assertContains('An Internal Error Has Occurred', $result);
+		$this->assertStringContainsString('An Internal Error Has Occurred', $result);
 	}
 
 /**
@@ -338,8 +338,8 @@ class ErrorHandlerTest extends CakeTestCase {
 		ob_clean();
 
 		$log = file(LOGS . 'error.log');
-		$this->assertContains(__FILE__, $log[0], 'missing filename');
-		$this->assertContains('[FatalErrorException] Something wrong', $log[1], 'message missing.');
+		$this->assertStringContainsString(__FILE__, $log[0], 'missing filename');
+		$this->assertStringContainsString('[FatalErrorException] Something wrong', $log[1], 'message missing.');
 	}
 
 /**

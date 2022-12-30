@@ -421,7 +421,7 @@ class SchemaShellTest extends CakeTestCase {
 
 		$this->assertNotContains('public $acos = array(', $contents);
 		$this->assertNotContains('public $aros = array(', $contents);
-		$this->assertContains('public $aros_acos = array(', $contents);
+		$this->assertStringContainsString('public $aros_acos = array(', $contents);
 	}
 
 /**

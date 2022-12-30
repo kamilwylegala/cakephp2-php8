@@ -631,7 +631,7 @@ class FileTest extends CakeTestCase {
 		// Double check
 		$expected = 'This is the welcome.tmp file in vendors directory';
 		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
+		$this->assertStringContainsString($expected, $contents);
 
 		$search = array('This is the', 'welcome.php file', 'in tmp directory');
 		$replace = array('This should be a', 'welcome.tmp file', 'in the Lib directory');
@@ -643,7 +643,7 @@ class FileTest extends CakeTestCase {
 		// Double check
 		$expected = 'This should be a welcome.tmp file in vendors directory';
 		$contents = $TmpFile->read();
-		$this->assertContains($expected, $contents);
+		$this->assertStringContainsString($expected, $contents);
 
 		$TmpFile->delete();
 	}

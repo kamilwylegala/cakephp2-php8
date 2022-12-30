@@ -1668,7 +1668,7 @@ class ViewTest extends CakeTestCase {
 			$this->fail('No exception');
 		} catch (CakeException $e) {
 			ob_end_clean();
-			$this->assertContains('The "no_close" block was left open', $e->getMessage());
+			$this->assertStringContainsString('The "no_close" block was left open', $e->getMessage());
 		}
 	}
 
@@ -1701,7 +1701,7 @@ TEXT;
 			$this->fail('No exception');
 		} catch (LogicException $e) {
 			ob_end_clean();
-			$this->assertContains('cannot have views extend themselves', $e->getMessage());
+			$this->assertStringContainsString('cannot have views extend themselves', $e->getMessage());
 		}
 	}
 
@@ -1717,7 +1717,7 @@ TEXT;
 			$this->fail('No exception');
 		} catch (LogicException $e) {
 			ob_end_clean();
-			$this->assertContains('cannot have views extend in a loop', $e->getMessage());
+			$this->assertStringContainsString('cannot have views extend in a loop', $e->getMessage());
 		}
 	}
 
@@ -1752,7 +1752,7 @@ TEXT;
 		} catch (LogicException $e) {
 			ob_end_clean();
 			ob_end_clean();
-			$this->assertContains('element', $e->getMessage());
+			$this->assertStringContainsString('element', $e->getMessage());
 		}
 	}
 

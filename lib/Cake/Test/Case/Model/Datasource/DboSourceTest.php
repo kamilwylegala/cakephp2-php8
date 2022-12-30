@@ -1248,10 +1248,10 @@ class DboSourceTest extends CakeTestCase {
 		);
 
 		$result = $this->db->generateAssociationQuery($Article, null, null, null, null, $queryData, false);
-		$this->assertContains('SELECT', $result);
-		$this->assertContains('FROM', $result);
-		$this->assertContains('WHERE', $result);
-		$this->assertContains('ORDER', $result);
+		$this->assertStringContainsString('SELECT', $result);
+		$this->assertStringContainsString('FROM', $result);
+		$this->assertStringContainsString('WHERE', $result);
+		$this->assertStringContainsString('ORDER', $result);
 	}
 
 /**

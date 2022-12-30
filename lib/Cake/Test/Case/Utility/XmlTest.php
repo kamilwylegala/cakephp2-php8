@@ -1240,7 +1240,7 @@ XML;
 		);
 		$obj = Xml::build($data);
 		$result = $obj->asXml();
-		$this->assertContains('mark &amp; mark', $result);
+		$this->assertStringContainsString('mark &amp; mark', $result);
 	}
 
 /**
