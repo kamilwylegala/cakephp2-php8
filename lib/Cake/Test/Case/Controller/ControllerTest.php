@@ -573,7 +573,7 @@ class ControllerTest extends CakeTestCase {
 		$Controller->response = $this->getMock('CakeResponse', array('_sendHeader'));
 		$Controller->flash('this should work', '/flash', 1, 'ajax2');
 		$result = $Controller->response->body();
-		$this->assertRegExp('/Ajax!/', $result);
+		$this->assertMatchesRegularExpression('/Ajax!/', $result);
 		App::build();
 	}
 
@@ -635,14 +635,14 @@ class ControllerTest extends CakeTestCase {
 		$Controller->viewPath = 'Posts';
 
 		$result = $Controller->render('index');
-		$this->assertRegExp('/posts index/', (string)$result);
+		$this->assertMatchesRegularExpression('/posts index/', (string)$result);
 
 		$Controller->view = 'index';
 		$result = $Controller->render();
-		$this->assertRegExp('/posts index/', (string)$result);
+		$this->assertMatchesRegularExpression('/posts index/', (string)$result);
 
 		$result = $Controller->render('/Elements/test_element');
-		$this->assertRegExp('/this is the test element/', (string)$result);
+		$this->assertMatchesRegularExpression('/this is the test element/', (string)$result);
 		$Controller->view = null;
 
 		$Controller = new TestController($request, new CakeResponse());
@@ -688,7 +688,7 @@ class ControllerTest extends CakeTestCase {
 		$Controller->viewPath = 'Posts';
 		$Controller->theme = 'TestTheme';
 		$result = $Controller->render('index');
-		$this->assertRegExp('/default test_theme layout/', (string)$result);
+		$this->assertMatchesRegularExpression('/default test_theme layout/', (string)$result);
 		App::build();
 	}
 

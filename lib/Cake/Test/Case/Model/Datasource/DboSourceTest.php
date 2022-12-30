@@ -955,15 +955,15 @@ class DboSourceTest extends CakeTestCase {
 		$this->testDb->showLog();
 		$contents = ob_get_clean();
 
-		$this->assertRegExp('/Query 1/s', $contents);
-		$this->assertRegExp('/Query 2/s', $contents);
+		$this->assertMatchesRegularExpression('/Query 1/s', $contents);
+		$this->assertMatchesRegularExpression('/Query 2/s', $contents);
 
 		ob_start();
 		$this->testDb->showLog(true);
 		$contents = ob_get_clean();
 
-		$this->assertRegExp('/Query 1/s', $contents);
-		$this->assertRegExp('/Query 2/s', $contents);
+		$this->assertMatchesRegularExpression('/Query 1/s', $contents);
+		$this->assertMatchesRegularExpression('/Query 2/s', $contents);
 
 		Configure::write('debug', $oldDebug);
 	}

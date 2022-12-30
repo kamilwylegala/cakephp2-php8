@@ -635,7 +635,7 @@ class DispatcherTest extends CakeTestCase {
 		$this->assertSame($test['controller'], 'testcontroller');
 		$this->assertSame($test['action'], 'testaction');
 		$this->assertSame($test['pass'][0], '1');
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][1]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][1]);
 		$this->assertSame($test['pass'][2], '23');
 	}
 
@@ -651,12 +651,12 @@ class DispatcherTest extends CakeTestCase {
 		$event = new CakeEvent('DispatcherTest', $Dispatcher, array('request' => $test));
 		$Dispatcher->parseParams($event);
 
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][0]);
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][1]);
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][2]);
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][3]);
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][4]);
-		$this->assertRegExp('/\\A(?:0)\\z/', $test['pass'][5]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][0]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][1]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][2]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][3]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][4]);
+		$this->assertMatchesRegularExpression('/\\A(?:0)\\z/', $test['pass'][5]);
 	}
 
 /**
@@ -671,12 +671,12 @@ class DispatcherTest extends CakeTestCase {
 		$event = new CakeEvent('DispatcherTest', $Dispatcher, array('request' => $test));
 		$Dispatcher->parseParams($event);
 
-		$this->assertRegExp('/\\A(?:000)\\z/', $test['pass'][0]);
-		$this->assertRegExp('/\\A(?:0000)\\z/', $test['pass'][1]);
-		$this->assertRegExp('/\\A(?:00000)\\z/', $test['pass'][2]);
-		$this->assertRegExp('/\\A(?:000000)\\z/', $test['pass'][3]);
-		$this->assertRegExp('/\\A(?:000000)\\z/', $test['pass'][4]);
-		$this->assertRegExp('/\\A(?:0000000)\\z/', $test['pass'][5]);
+		$this->assertMatchesRegularExpression('/\\A(?:000)\\z/', $test['pass'][0]);
+		$this->assertMatchesRegularExpression('/\\A(?:0000)\\z/', $test['pass'][1]);
+		$this->assertMatchesRegularExpression('/\\A(?:00000)\\z/', $test['pass'][2]);
+		$this->assertMatchesRegularExpression('/\\A(?:000000)\\z/', $test['pass'][3]);
+		$this->assertMatchesRegularExpression('/\\A(?:000000)\\z/', $test['pass'][4]);
+		$this->assertMatchesRegularExpression('/\\A(?:0000000)\\z/', $test['pass'][5]);
 	}
 
 /**
@@ -691,12 +691,12 @@ class DispatcherTest extends CakeTestCase {
 		$event = new CakeEvent('DispatcherTest', $Dispatcher, array('request' => $test));
 		$Dispatcher->parseParams($event);
 
-		$this->assertRegExp('/\\A(?:01)\\z/', $test['pass'][0]);
-		$this->assertRegExp('/\\A(?:0403)\\z/', $test['pass'][1]);
-		$this->assertRegExp('/\\A(?:04010)\\z/', $test['pass'][2]);
-		$this->assertRegExp('/\\A(?:000002)\\z/', $test['pass'][3]);
-		$this->assertRegExp('/\\A(?:000030)\\z/', $test['pass'][4]);
-		$this->assertRegExp('/\\A(?:0000400)\\z/', $test['pass'][5]);
+		$this->assertMatchesRegularExpression('/\\A(?:01)\\z/', $test['pass'][0]);
+		$this->assertMatchesRegularExpression('/\\A(?:0403)\\z/', $test['pass'][1]);
+		$this->assertMatchesRegularExpression('/\\A(?:04010)\\z/', $test['pass'][2]);
+		$this->assertMatchesRegularExpression('/\\A(?:000002)\\z/', $test['pass'][3]);
+		$this->assertMatchesRegularExpression('/\\A(?:000030)\\z/', $test['pass'][4]);
+		$this->assertMatchesRegularExpression('/\\A(?:0000400)\\z/', $test['pass'][5]);
 	}
 
 /**
@@ -718,8 +718,8 @@ class DispatcherTest extends CakeTestCase {
 		$event = new CakeEvent('DispatcherTest', $Dispatcher, array('request' => $request));
 		$Dispatcher->parseParams($event);
 
-		$this->assertRegExp('/posts/', $request['controller']);
-		$this->assertRegExp('/home/', $request['action']);
+		$this->assertMatchesRegularExpression('/posts/', $request['controller']);
+		$this->assertMatchesRegularExpression('/home/', $request['action']);
 		$this->assertTrue(isset($request['url']['sleep']));
 		$this->assertTrue(isset($request['url']['coffee']));
 
@@ -728,8 +728,8 @@ class DispatcherTest extends CakeTestCase {
 
 		$event = new CakeEvent('DispatcherTest', $Dispatcher, array('request' => $request));
 		$Dispatcher->parseParams($event);
-		$this->assertRegExp('/pages/', $request['controller']);
-		$this->assertRegExp('/display/', $request['action']);
+		$this->assertMatchesRegularExpression('/pages/', $request['controller']);
+		$this->assertMatchesRegularExpression('/display/', $request['action']);
 		$this->assertTrue(isset($request['url']['sleep']));
 		$this->assertTrue(isset($request['url']['coffee']));
 		$this->assertEquals('life', $request['url']['coffee']);

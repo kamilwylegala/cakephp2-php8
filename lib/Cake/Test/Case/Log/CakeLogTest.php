@@ -160,7 +160,7 @@ class CakeLogTest extends CakeTestCase {
 		$this->assertTrue(file_exists(LOGS . 'error.log'));
 
 		$result = file_get_contents(LOGS . 'error.log');
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning/', $result);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning/', $result);
 		unlink(LOGS . 'error.log');
 	}
 
@@ -203,8 +203,8 @@ class CakeLogTest extends CakeTestCase {
 		CakeLog::write(LOG_WARNING, 'Test warning 1');
 		CakeLog::write(LOG_WARNING, 'Test warning 2');
 		$result = file_get_contents(LOGS . 'error.log');
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 1/', $result);
-		$this->assertRegExp('/2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 2$/', $result);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 1/', $result);
+		$this->assertMatchesRegularExpression('/2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 2$/', $result);
 		unlink(LOGS . 'error.log');
 	}
 
@@ -607,14 +607,14 @@ class CakeLogTest extends CakeTestCase {
 		$testMessage = 'emergency message';
 		CakeLog::emergency($testMessage);
 		$contents = file_get_contents(LOGS . 'error.log');
-		$this->assertRegExp('/(Emergency|Critical): ' . $testMessage . '/', $contents);
+		$this->assertMatchesRegularExpression('/(Emergency|Critical): ' . $testMessage . '/', $contents);
 		$this->assertFalse(file_exists(LOGS . 'debug.log'));
 		$this->_deleteLogs();
 
 		$testMessage = 'alert message';
 		CakeLog::alert($testMessage);
 		$contents = file_get_contents(LOGS . 'error.log');
-		$this->assertRegExp('/(Alert|Critical): ' . $testMessage . '/', $contents);
+		$this->assertMatchesRegularExpression('/(Alert|Critical): ' . $testMessage . '/', $contents);
 		$this->assertFalse(file_exists(LOGS . 'debug.log'));
 		$this->_deleteLogs();
 
@@ -642,14 +642,14 @@ class CakeLogTest extends CakeTestCase {
 		$testMessage = 'notice message';
 		CakeLog::notice($testMessage);
 		$contents = file_get_contents(LOGS . 'debug.log');
-		$this->assertRegExp('/(Notice|Debug): ' . $testMessage . '/', $contents);
+		$this->assertMatchesRegularExpression('/(Notice|Debug): ' . $testMessage . '/', $contents);
 		$this->assertFalse(file_exists(LOGS . 'error.log'));
 		$this->_deleteLogs();
 
 		$testMessage = 'info message';
 		CakeLog::info($testMessage);
 		$contents = file_get_contents(LOGS . 'debug.log');
-		$this->assertRegExp('/(Info|Debug): ' . $testMessage . '/', $contents);
+		$this->assertMatchesRegularExpression('/(Info|Debug): ' . $testMessage . '/', $contents);
 		$this->assertFalse(file_exists(LOGS . 'error.log'));
 		$this->_deleteLogs();
 

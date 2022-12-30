@@ -121,7 +121,7 @@ class DigestAuthenticationTest extends CakeTestCase {
 		$auth = array('user' => 'admin', 'pass' => '1234');
 		DigestAuthentication::authentication($this->HttpSocket, $auth);
 		$expected = '@Digest username="admin", realm="The batcave", nonce="4cded326c6c51", uri="/", response="[a-z0-9]{32}", qop="auth", nc=00000001, cnonce="[a-z0-9]+"@';
-		$this->assertRegExp($expected, $this->HttpSocket->request['header']['Authorization']);
+		$this->assertMatchesRegularExpression($expected, $this->HttpSocket->request['header']['Authorization']);
 		$this->assertEquals('auth', $auth['qop']);
 		$this->assertEquals(2, $auth['nc']);
 	}

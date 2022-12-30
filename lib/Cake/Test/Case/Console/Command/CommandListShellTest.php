@@ -98,16 +98,16 @@ class CommandListShellTest extends CakeTestCase {
 		$output = $this->Shell->stdout->output;
 
 		$expected = "/\[.*TestPlugin.*\] example/";
-		$this->assertRegExp($expected, $output);
+		$this->assertMatchesRegularExpression($expected, $output);
 
 		$expected = "/\[.*TestPluginTwo.*\] example, welcome/";
-		$this->assertRegExp($expected, $output);
+		$this->assertMatchesRegularExpression($expected, $output);
 
 		$expected = "/\[.*CORE.*\] acl, api, bake, command_list, completion, console, i18n, schema, server, test, testsuite, upgrade/";
-		$this->assertRegExp($expected, $output);
+		$this->assertMatchesRegularExpression($expected, $output);
 
 		$expected = "/\[.*app.*\] sample/";
-		$this->assertRegExp($expected, $output);
+		$this->assertMatchesRegularExpression($expected, $output);
 	}
 
 /**

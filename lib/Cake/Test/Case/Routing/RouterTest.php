@@ -58,9 +58,9 @@ class RouterTest extends CakeTestCase {
  * @return void
  */
 	public function testFullBaseUrl() {
-		$this->assertRegExp('/^http(s)?:\/\//', Router::url('/', true));
-		$this->assertRegExp('/^http(s)?:\/\//', Router::url(null, true));
-		$this->assertRegExp('/^http(s)?:\/\//', Router::url(array('full_base' => true)));
+		$this->assertMatchesRegularExpression('/^http(s)?:\/\//', Router::url('/', true));
+		$this->assertMatchesRegularExpression('/^http(s)?:\/\//', Router::url(null, true));
+		$this->assertMatchesRegularExpression('/^http(s)?:\/\//', Router::url(array('full_base' => true)));
 		$this->assertSame(FULL_BASE_URL . '/', Router::url(array('full_base' => true)));
 	}
 
@@ -2551,7 +2551,7 @@ class RouterTest extends CakeTestCase {
 			'url' => array('url' => 'eng/posts/view/1'),
 		);
 		$result = Router::reverse($params, true);
-		$this->assertRegExp('/^http(s)?:\/\//', $result);
+		$this->assertMatchesRegularExpression('/^http(s)?:\/\//', $result);
 	}
 
 	public function testReverseToArrayNamed() {

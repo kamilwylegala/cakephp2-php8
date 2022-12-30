@@ -233,14 +233,14 @@ class ViewTaskTest extends CakeTestCase {
 		);
 		$result = $this->Task->getContent('view', $vars);
 
-		$this->assertRegExp('/Delete Test View Model/', $result);
-		$this->assertRegExp('/Edit Test View Model/', $result);
-		$this->assertRegExp('/List Test View Models/', $result);
-		$this->assertRegExp('/New Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/Delete Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/Edit Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/List Test View Models/', $result);
+		$this->assertMatchesRegularExpression('/New Test View Model/', $result);
 
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
 	}
 
 /**
@@ -265,19 +265,19 @@ class ViewTaskTest extends CakeTestCase {
 		);
 		$result = $this->Task->getContent('admin_view', $vars);
 
-		$this->assertRegExp('/Delete Test View Model/', $result);
-		$this->assertRegExp('/Edit Test View Model/', $result);
-		$this->assertRegExp('/List Test View Models/', $result);
-		$this->assertRegExp('/New Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/Delete Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/Edit Test View Model/', $result);
+		$this->assertMatchesRegularExpression('/List Test View Models/', $result);
+		$this->assertMatchesRegularExpression('/New Test View Model/', $result);
 
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
-		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
+		$this->assertMatchesRegularExpression('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
 
 		$result = $this->Task->getContent('admin_add', $vars);
-		$this->assertRegExp("/input\('name'\)/", $result);
-		$this->assertRegExp("/input\('body'\)/", $result);
-		$this->assertRegExp('/List Test View Models/', $result);
+		$this->assertMatchesRegularExpression("/input\('name'\)/", $result);
+		$this->assertMatchesRegularExpression("/input\('body'\)/", $result);
+		$this->assertMatchesRegularExpression('/List Test View Models/', $result);
 
 		Configure::write('Routing', $_back);
 	}

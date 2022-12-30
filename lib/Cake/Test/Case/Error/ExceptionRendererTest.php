@@ -237,7 +237,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/Not Found/', $result, 'Method declared in error handler not converted to error400. %s');
+		$this->assertMatchesRegularExpression('/Not Found/', $result, 'Method declared in error handler not converted to error400. %s');
 	}
 
 /**
@@ -405,8 +405,8 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>Custom message<\/h2>/', $result);
-		$this->assertRegExp("/<strong>'.*?\/posts\/view\/1000'<\/strong>/", $result);
+		$this->assertMatchesRegularExpression('/<h2>Custom message<\/h2>/', $result);
+		$this->assertMatchesRegularExpression("/<strong>'.*?\/posts\/view\/1000'<\/strong>/", $result);
 	}
 
 /**
@@ -471,7 +471,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>An Internal Error Has Occurred<\/h2>/', $result);
+		$this->assertMatchesRegularExpression('/<h2>An Internal Error Has Occurred<\/h2>/', $result);
 	}
 
 /**
@@ -508,8 +508,8 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>Missing Controller<\/h2>/', $result);
-		$this->assertRegExp('/<em>PostsController<\/em>/', $result);
+		$this->assertMatchesRegularExpression('/<h2>Missing Controller<\/h2>/', $result);
+		$this->assertMatchesRegularExpression('/<em>PostsController<\/em>/', $result);
 	}
 
 /**
@@ -672,7 +672,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		foreach ($patterns as $pattern) {
-			$this->assertRegExp($pattern, $result);
+			$this->assertMatchesRegularExpression($pattern, $result);
 		}
 	}
 

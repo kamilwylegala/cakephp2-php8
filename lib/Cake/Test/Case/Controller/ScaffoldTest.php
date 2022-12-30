@@ -303,7 +303,7 @@ class ScaffoldTest extends CakeTestCase {
 		new Scaffold($this->Controller, $this->Controller->request);
 		$this->Controller->response->send();
 		$result = ob_get_clean();
-		$this->assertRegExp('/Scaffold Mock has been updated/', $result);
+		$this->assertMatchesRegularExpression('/Scaffold Mock has been updated/', $result);
 	}
 
 /**
@@ -336,7 +336,7 @@ class ScaffoldTest extends CakeTestCase {
 		$Scaffold = new Scaffold($this->Controller, $this->Controller->request);
 		$this->Controller->response->send();
 		$result = ob_get_clean();
-		$this->assertRegExp('/name="data\[ScaffoldTag\]\[ScaffoldTag\]"/', $result);
+		$this->assertMatchesRegularExpression('/name="data\[ScaffoldTag\]\[ScaffoldTag\]"/', $result);
 
 		$result = $Scaffold->controller->viewVars;
 		$this->assertEquals(array('id', 'user_id', 'title', 'body', 'published', 'created', 'updated', 'ScaffoldTag'), $result['scaffoldFields']);
@@ -413,6 +413,6 @@ class ScaffoldTest extends CakeTestCase {
 		$this->Controller->response->send();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/Scaffold Error/', $result);
+		$this->assertMatchesRegularExpression('/Scaffold Error/', $result);
 	}
 }

@@ -65,16 +65,16 @@ class CakeRouteTest extends CakeTestCase {
 		$route = new CakeRoute('/:controller/:action', array('controller' => 'posts'));
 		$result = $route->compile();
 
-		$this->assertRegExp($result, '/posts/edit');
-		$this->assertRegExp($result, '/posts/super_delete');
+		$this->assertMatchesRegularExpression($result, '/posts/edit');
+		$this->assertMatchesRegularExpression($result, '/posts/super_delete');
 		$this->assertNotRegExp($result, '/posts');
 		$this->assertNotRegExp($result, '/posts/super_delete/1');
 
 		$route = new CakeRoute('/posts/foo:id', array('controller' => 'posts', 'action' => 'view'));
 		$result = $route->compile();
 
-		$this->assertRegExp($result, '/posts/foo:1');
-		$this->assertRegExp($result, '/posts/foo:param');
+		$this->assertMatchesRegularExpression($result, '/posts/foo:1');
+		$this->assertMatchesRegularExpression($result, '/posts/foo:param');
 		$this->assertNotRegExp($result, '/posts');
 		$this->assertNotRegExp($result, '/posts/');
 
@@ -82,9 +82,9 @@ class CakeRouteTest extends CakeTestCase {
 
 		$route = new CakeRoute('/:plugin/:controller/:action/*', array('plugin' => 'test_plugin', 'action' => 'index'));
 		$result = $route->compile();
-		$this->assertRegExp($result, '/test_plugin/posts/index');
-		$this->assertRegExp($result, '/test_plugin/posts/edit/5');
-		$this->assertRegExp($result, '/test_plugin/posts/edit/5/name:value/nick:name');
+		$this->assertMatchesRegularExpression($result, '/test_plugin/posts/index');
+		$this->assertMatchesRegularExpression($result, '/test_plugin/posts/edit/5');
+		$this->assertMatchesRegularExpression($result, '/test_plugin/posts/edit/5/name:value/nick:name');
 	}
 
 /**
@@ -95,11 +95,11 @@ class CakeRouteTest extends CakeTestCase {
 	public function testRouteParameterOverlap() {
 		$route = new CakeRoute('/invoices/add/:idd/:id', array('controller' => 'invoices', 'action' => 'add'));
 		$result = $route->compile();
-		$this->assertRegExp($result, '/invoices/add/1/3');
+		$this->assertMatchesRegularExpression($result, '/invoices/add/1/3');
 
 		$route = new CakeRoute('/invoices/add/:id/:idd', array('controller' => 'invoices', 'action' => 'add'));
 		$result = $route->compile();
-		$this->assertRegExp($result, '/invoices/add/1/3');
+		$this->assertMatchesRegularExpression($result, '/invoices/add/1/3');
 	}
 
 /**
@@ -114,8 +114,8 @@ class CakeRouteTest extends CakeTestCase {
 			array('id' => Router::ID)
 		);
 		$result = $route->compile();
-		$this->assertRegExp($result, '/posts/edit/1');
-		$this->assertRegExp($result, '/posts/view/518098');
+		$this->assertMatchesRegularExpression($result, '/posts/edit/1');
+		$this->assertMatchesRegularExpression($result, '/posts/view/518098');
 		$this->assertNotRegExp($result, '/posts/edit/name-of-post');
 		$this->assertNotRegExp($result, '/posts/edit/4/other:param');
 		$this->assertEquals(array('id', 'controller', 'action'), $route->keys);
@@ -126,8 +126,8 @@ class CakeRouteTest extends CakeTestCase {
 			array('id' => Router::ID, 'lang' => '[a-z]{3}')
 		);
 		$result = $route->compile();
-		$this->assertRegExp($result, '/eng/posts/edit/1');
-		$this->assertRegExp($result, '/cze/articles/view/1');
+		$this->assertMatchesRegularExpression($result, '/eng/posts/edit/1');
+		$this->assertMatchesRegularExpression($result, '/cze/articles/view/1');
 		$this->assertNotRegExp($result, '/language/articles/view/2');
 		$this->assertNotRegExp($result, '/eng/articles/view/name-of-article');
 		$this->assertEquals(array('lang', 'id', 'controller', 'action'), $route->keys);
@@ -136,8 +136,8 @@ class CakeRouteTest extends CakeTestCase {
 			$route = new CakeRoute('/posts/:id' . $delim . ':title');
 			$result = $route->compile();
 
-			$this->assertRegExp($result, '/posts/1' . $delim . 'name-of-article');
-			$this->assertRegExp($result, '/posts/13244' . $delim . 'name-of_Article[]');
+			$this->assertMatchesRegularExpression($result, '/posts/1' . $delim . 'name-of-article');
+			$this->assertMatchesRegularExpression($result, '/posts/13244' . $delim . 'name-of_Article[]');
 			$this->assertNotRegExp($result, '/posts/11!nameofarticle');
 			$this->assertNotRegExp($result, '/posts/11');
 
@@ -150,8 +150,8 @@ class CakeRouteTest extends CakeTestCase {
 			array('id' => Router::ID, 'year' => Router::YEAR, 'title' => '[a-z-_]+')
 		);
 		$result = $route->compile();
-		$this->assertRegExp($result, '/posts/1:name-of-article/2009/');
-		$this->assertRegExp($result, '/posts/13244:name-of-article/1999');
+		$this->assertMatchesRegularExpression($result, '/posts/1:name-of-article/2009/');
+		$this->assertMatchesRegularExpression($result, '/posts/13244:name-of-article/1999');
 		$this->assertNotRegExp($result, '/posts/hey_now:nameofarticle');
 		$this->assertNotRegExp($result, '/posts/:nameofarticle/2009');
 		$this->assertNotRegExp($result, '/posts/:nameofarticle/01');
@@ -163,8 +163,8 @@ class CakeRouteTest extends CakeTestCase {
 			array('pass' => array('id', 'url_title'), 'id' => Router::ID)
 		);
 		$result = $route->compile();
-		$this->assertRegExp($result, '/posts/some_title_for_article-(uuid:12534)/');
-		$this->assertRegExp($result, '/posts/some_title_for_article-(uuid:12534)');
+		$this->assertMatchesRegularExpression($result, '/posts/some_title_for_article-(uuid:12534)/');
+		$this->assertMatchesRegularExpression($result, '/posts/some_title_for_article-(uuid:12534)');
 		$this->assertNotRegExp($result, '/posts/');
 		$this->assertNotRegExp($result, '/posts/nameofarticle');
 		$this->assertNotRegExp($result, '/posts/nameofarticle-12347');
@@ -184,7 +184,7 @@ class CakeRouteTest extends CakeTestCase {
 			array('year' => Router::YEAR, 'month' => Router::MONTH, 'day' => Router::DAY)
 		);
 		$result = $route->compile();
-		$this->assertRegExp($result, '/posts/08/01/2007/title-of-post');
+		$this->assertMatchesRegularExpression($result, '/posts/08/01/2007/title-of-post');
 		$result = $route->parse('/posts/08/01/2007/title-of-post');
 
 		$this->assertEquals(7, count($result));
@@ -202,8 +202,8 @@ class CakeRouteTest extends CakeTestCase {
 		);
 		$result = $route->compile();
 
-		$this->assertRegExp($result, '/some_extra/page/this_is_the_slug');
-		$this->assertRegExp($result, '/page/this_is_the_slug');
+		$this->assertMatchesRegularExpression($result, '/some_extra/page/this_is_the_slug');
+		$this->assertMatchesRegularExpression($result, '/page/this_is_the_slug');
 		$this->assertEquals(array('slug', 'extra'), $route->keys);
 		$this->assertEquals(array('extra' => '[a-z1-9_]*', 'slug' => '[a-z1-9_]+', 'action' => 'view'), $route->options);
 		$expected = array(
@@ -224,8 +224,8 @@ class CakeRouteTest extends CakeTestCase {
 
 		$result = $route->compile();
 		$this->assertNotRegExp($result, '/some_project/source');
-		$this->assertRegExp($result, '/source/view');
-		$this->assertRegExp($result, '/source/view/other/params');
+		$this->assertMatchesRegularExpression($result, '/source/view');
+		$this->assertMatchesRegularExpression($result, '/source/view/other/params');
 		$this->assertNotRegExp($result, '/chaw_test/wiki');
 		$this->assertNotRegExp($result, '/source/wierd_action');
 	}
