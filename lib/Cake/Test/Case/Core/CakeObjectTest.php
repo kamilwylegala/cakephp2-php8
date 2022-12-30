@@ -321,21 +321,21 @@ class ObjectTest extends CakeTestCase {
 		$this->assertTrue($this->object->log('Test warning 1'));
 		$this->assertTrue($this->object->log(array('Test' => 'warning 2')));
 		$result = file(LOGS . 'error.log');
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Error: Test warning 1$/', $result[0]);
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Error: Array$/', $result[1]);
-		$this->assertRegExp('/^\($/', $result[2]);
-		$this->assertRegExp('/\[Test\] => warning 2$/', $result[3]);
-		$this->assertRegExp('/^\)$/', $result[4]);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Error: Test warning 1$/', $result[0]);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Error: Array$/', $result[1]);
+		$this->assertMatchesRegularExpression('/^\($/', $result[2]);
+		$this->assertMatchesRegularExpression('/\[Test\] => warning 2$/', $result[3]);
+		$this->assertMatchesRegularExpression('/^\)$/', $result[4]);
 		unlink(LOGS . 'error.log');
 
 		$this->assertTrue($this->object->log('Test warning 1', LOG_WARNING));
 		$this->assertTrue($this->object->log(array('Test' => 'warning 2'), LOG_WARNING));
 		$result = file(LOGS . 'error.log');
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 1$/', $result[0]);
-		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Array$/', $result[1]);
-		$this->assertRegExp('/^\($/', $result[2]);
-		$this->assertRegExp('/\[Test\] => warning 2$/', $result[3]);
-		$this->assertRegExp('/^\)$/', $result[4]);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Test warning 1$/', $result[0]);
+		$this->assertMatchesRegularExpression('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ Warning: Array$/', $result[1]);
+		$this->assertMatchesRegularExpression('/^\($/', $result[2]);
+		$this->assertMatchesRegularExpression('/\[Test\] => warning 2$/', $result[3]);
+		$this->assertMatchesRegularExpression('/^\)$/', $result[4]);
 		unlink(LOGS . 'error.log');
 	}
 

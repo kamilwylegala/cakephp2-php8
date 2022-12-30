@@ -332,7 +332,7 @@ class ControllerTestCaseTest extends CakeTestCase {
 		$this->assertEquals($expected, $results);
 
 		$result = $this->Case->controller->response->body();
-		$this->assertRegExp('/This is the TestsAppsController index view/', $result);
+		$this->assertMatchesRegularExpression('/This is the TestsAppsController index view/', $result);
 
 		$Controller = $this->Case->generate('TestsApps');
 		$this->Case->testAction('/tests_apps/redirect_to');
@@ -439,9 +439,9 @@ class ControllerTestCaseTest extends CakeTestCase {
 		$result = $this->Case->testAction('/tests_apps/set_action', array(
 			'return' => 'contents'
 		));
-		$this->assertRegExp('/<html/', $result);
-		$this->assertRegExp('/This is the TestsAppsController index view/', $result);
-		$this->assertRegExp('/<\/html>/', $result);
+		$this->assertMatchesRegularExpression('/<html/', $result);
+		$this->assertMatchesRegularExpression('/This is the TestsAppsController index view/', $result);
+		$this->assertMatchesRegularExpression('/<\/html>/', $result);
 	}
 
 /**
@@ -585,9 +585,9 @@ class ControllerTestCaseTest extends CakeTestCase {
 		$result = $this->Case->testAction('/tests_apps/set_action', array(
 			'return' => 'contents'
 		));
-		$this->assertRegExp('/<html/', $result);
-		$this->assertRegExp('/This is the TestsAppsController index view/', $result);
-		$this->assertRegExp('/<\/html>/', $result);
+		$this->assertMatchesRegularExpression('/<html/', $result);
+		$this->assertMatchesRegularExpression('/This is the TestsAppsController index view/', $result);
+		$this->assertMatchesRegularExpression('/<\/html>/', $result);
 	}
 
 /**

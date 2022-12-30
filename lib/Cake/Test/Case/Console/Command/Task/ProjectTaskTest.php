@@ -142,10 +142,10 @@ class ProjectTaskTest extends CakeTestCase {
 		$this->assertTrue(is_dir($this->Task->args[0]), 'No project dir');
 		$File = new File($path . DS . 'webroot' . DS . 'index.php');
 		$contents = $File->read();
-		$this->assertRegExp('/define\(\'CAKE_CORE_INCLUDE_PATH\', .*?DS/', $contents);
+		$this->assertMatchesRegularExpression('/define\(\'CAKE_CORE_INCLUDE_PATH\', .*?DS/', $contents);
 		$File = new File($path . DS . 'webroot' . DS . 'test.php');
 		$contents = $File->read();
-		$this->assertRegExp('/define\(\'CAKE_CORE_INCLUDE_PATH\', .*?DS/', $contents);
+		$this->assertMatchesRegularExpression('/define\(\'CAKE_CORE_INCLUDE_PATH\', .*?DS/', $contents);
 	}
 
 /**
@@ -167,10 +167,10 @@ class ProjectTaskTest extends CakeTestCase {
 
 		$this->assertTrue(is_dir($this->Task->args[0]), 'No project dir');
 		$contents = file_get_contents($path . DS . 'webroot' . DS . 'index.php');
-		$this->assertRegExp('#//define\(\'CAKE_CORE_INCLUDE_PATH#', $contents);
+		$this->assertMatchesRegularExpression('#//define\(\'CAKE_CORE_INCLUDE_PATH#', $contents);
 
 		$contents = file_get_contents($path . DS . 'webroot' . DS . 'test.php');
-		$this->assertRegExp('#//define\(\'CAKE_CORE_INCLUDE_PATH#', $contents);
+		$this->assertMatchesRegularExpression('#//define\(\'CAKE_CORE_INCLUDE_PATH#', $contents);
 
 		ini_set('include_path', $restore);
 	}
@@ -261,7 +261,7 @@ class ProjectTaskTest extends CakeTestCase {
 
 		$File = new File($path . 'Config' . DS . 'core.php');
 		$contents = $File->read();
-		$this->assertRegExp('/\$prefix = \'.+\';/', $contents, '$prefix is not defined');
+		$this->assertMatchesRegularExpression('/\$prefix = \'.+\';/', $contents, '$prefix is not defined');
 		$this->assertNotRegExp('/\$prefix = \'myapp_\';/', $contents, 'Default cache prefix left behind. %s');
 	}
 

@@ -159,6 +159,6 @@ class TemplateTaskTest extends CakeTestCase {
 			'schema' => ''
 		));
 		$result = $this->Task->generate('classes', 'fixture');
-		$this->assertRegExp('/ArticleFixture extends CakeTestFixture/', $result);
+		$this->assertMatchesRegularExpression('/ArticleFixture extends CakeTestFixture/', $result);
 	}
 }

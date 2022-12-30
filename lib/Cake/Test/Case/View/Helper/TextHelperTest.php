@@ -129,7 +129,7 @@ class TextHelperTest extends CakeTestCase {
 		$text = 'Text with a partial www.cakephp.org URL and test@cakephp.org email address';
 		$result = $this->Text->autoLink($text);
 		$expected = 'Text with a partial <a href="http://www.cakephp.org">www.cakephp.org</a> URL and <a href="mailto:test@cakephp\.org">test@cakephp\.org</a> email address';
-		$this->assertRegExp('#^' . $expected . '$#', $result);
+		$this->assertMatchesRegularExpression('#^' . $expected . '$#', $result);
 
 		$text = 'Text with a partial <a href="//www.cakephp.org">link</a> link';
 		$result = $this->Text->autoLink($text, array('escape' => false));
@@ -333,12 +333,12 @@ class TextHelperTest extends CakeTestCase {
 		$text = 'Text with a partial www.cakephp.org URL';
 		$expected = 'Text with a partial <a href="http://www.cakephp.org" \s*class="link">www.cakephp.org</a> URL';
 		$result = $this->Text->autoLinkUrls($text, array('class' => 'link'));
-		$this->assertRegExp('#^' . $expected . '$#', $result);
+		$this->assertMatchesRegularExpression('#^' . $expected . '$#', $result);
 
 		$text = 'Text with a partial WWW.cakephp.org &copy; URL';
 		$expected = 'Text with a partial <a href="http://WWW.cakephp.org"\s*>WWW.cakephp.org</a> &copy; URL';
 		$result = $this->Text->autoLinkUrls($text, array('escape' => false));
-		$this->assertRegExp('#^' . $expected . '$#', $result);
+		$this->assertMatchesRegularExpression('#^' . $expected . '$#', $result);
 	}
 
 /**

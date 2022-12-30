@@ -567,7 +567,7 @@ class PostgresTest extends CakeTestCase {
 		$result = $db1->createSchema($schema, 'datatype_tests');
 
 		$this->assertNotRegExp('/timestamp DEFAULT/', $result);
-		$this->assertRegExp('/\"full_length\"\s*text\s.*,/', $result);
+		$this->assertMatchesRegularExpression('/\"full_length\"\s*text\s.*,/', $result);
 		$this->assertContains('timestamp ,', $result);
 		$this->assertContains('"huge_int" bigint NOT NULL,', $result);
 

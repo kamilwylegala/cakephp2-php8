@@ -639,7 +639,7 @@ class FormHelperTest extends CakeTestCase {
 	public function testValidateHashNoModel() {
 		$this->Form->request['_Token'] = array('key' => 'foo');
 		$result = $this->Form->secure(array('anything'));
-		$this->assertRegExp('/540ac9c60d323c22bafe997b72c0790f39a8bdef/', $result);
+		$this->assertMatchesRegularExpression('/540ac9c60d323c22bafe997b72c0790f39a8bdef/', $result);
 	}
 
 /**
@@ -656,18 +656,18 @@ class FormHelperTest extends CakeTestCase {
 
 		$result = $this->Form->input('ValidateUser.name');
 		$this->assertEquals(array('ValidateUser', 'name'), $this->Form->entity());
-		$this->assertRegExp('/name="data\[ValidateUser\]\[name\]"/', $result);
-		$this->assertRegExp('/type="text"/', $result);
+		$this->assertMatchesRegularExpression('/name="data\[ValidateUser\]\[name\]"/', $result);
+		$this->assertMatchesRegularExpression('/type="text"/', $result);
 
 		$result = $this->Form->input('ValidateItem.name');
 		$this->assertEquals(array('ValidateItem', 'name'), $this->Form->entity());
-		$this->assertRegExp('/name="data\[ValidateItem\]\[name\]"/', $result);
-		$this->assertRegExp('/<textarea/', $result);
+		$this->assertMatchesRegularExpression('/name="data\[ValidateItem\]\[name\]"/', $result);
+		$this->assertMatchesRegularExpression('/<textarea/', $result);
 
 		$result = $this->Form->input('name');
 		$this->assertEquals(array('ValidateUser', 'name'), $this->Form->entity());
-		$this->assertRegExp('/name="data\[ValidateUser\]\[name\]"/', $result);
-		$this->assertRegExp('/type="text"/', $result);
+		$this->assertMatchesRegularExpression('/name="data\[ValidateUser\]\[name\]"/', $result);
+		$this->assertMatchesRegularExpression('/type="text"/', $result);
 	}
 
 /**
@@ -2908,12 +2908,12 @@ class FormHelperTest extends CakeTestCase {
 		extract($this->dateRegex);
 		$result = $this->Form->input('Contact.created', array('type' => 'time', 'timeFormat' => 24));
 		$result = explode(':', $result);
-		$this->assertRegExp('/option value="23"/', $result[0]);
+		$this->assertMatchesRegularExpression('/option value="23"/', $result[0]);
 		$this->assertNotRegExp('/option value="24"/', $result[0]);
 
 		$result = $this->Form->input('Contact.created', array('type' => 'time', 'timeFormat' => 24));
 		$result = explode(':', $result);
-		$this->assertRegExp('/option value="23"/', $result[0]);
+		$this->assertMatchesRegularExpression('/option value="23"/', $result[0]);
 		$this->assertNotRegExp('/option value="24"/', $result[0]);
 
 		$result = $this->Form->input('Model.field', array(
@@ -2922,7 +2922,7 @@ class FormHelperTest extends CakeTestCase {
 		$result = explode(':', $result);
 		$this->assertNotRegExp('#<option value="12"[^>]*>12</option>#', $result[1]);
 		$this->assertNotRegExp('#<option value="50"[^>]*>50</option>#', $result[1]);
-		$this->assertRegExp('#<option value="15"[^>]*>15</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="15"[^>]*>15</option>#', $result[1]);
 
 		$result = $this->Form->input('Model.field', array(
 			'type' => 'time', 'timeFormat' => 12, 'interval' => 15
@@ -2930,7 +2930,7 @@ class FormHelperTest extends CakeTestCase {
 		$result = explode(':', $result);
 		$this->assertNotRegExp('#<option value="12"[^>]*>12</option>#', $result[1]);
 		$this->assertNotRegExp('#<option value="50"[^>]*>50</option>#', $result[1]);
-		$this->assertRegExp('#<option value="15"[^>]*>15</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="15"[^>]*>15</option>#', $result[1]);
 
 		$result = $this->Form->input('prueba', array(
 			'type' => 'time', 'timeFormat' => 24, 'dateFormat' => 'DMY', 'minYear' => 2008,
@@ -2939,8 +2939,8 @@ class FormHelperTest extends CakeTestCase {
 		$result = explode(':', $result);
 		$this->assertNotRegExp('#<option value="12"[^>]*>12</option>#', $result[1]);
 		$this->assertNotRegExp('#<option value="50"[^>]*>50</option>#', $result[1]);
-		$this->assertRegExp('#<option value="15"[^>]*>15</option>#', $result[1]);
-		$this->assertRegExp('#<option value="30"[^>]*>30</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="15"[^>]*>15</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="30"[^>]*>30</option>#', $result[1]);
 
 		$result = $this->Form->input('Random.start_time', array(
 			'type' => 'time',
@@ -3215,31 +3215,31 @@ class FormHelperTest extends CakeTestCase {
 		$result = explode(':', $result);
 		$this->assertNotRegExp('#<option value="12"[^>]*>12</option>#', $result[1]);
 		$this->assertNotRegExp('#<option value="50"[^>]*>50</option>#', $result[1]);
-		$this->assertRegExp('#<option value="15"[^>]*>15</option>#', $result[1]);
-		$this->assertRegExp('#<option value="30"[^>]*>30</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="15"[^>]*>15</option>#', $result[1]);
+		$this->assertMatchesRegularExpression('#<option value="30"[^>]*>30</option>#', $result[1]);
 
 		//related to ticket #5013
 		$result = $this->Form->input('Contact.date', array(
 			'type' => 'date', 'class' => 'customClass', 'onChange' => 'function(){}'
 		));
-		$this->assertRegExp('/class="customClass"/', $result);
-		$this->assertRegExp('/onChange="function\(\)\{\}"/', $result);
+		$this->assertMatchesRegularExpression('/class="customClass"/', $result);
+		$this->assertMatchesRegularExpression('/onChange="function\(\)\{\}"/', $result);
 
 		$result = $this->Form->input('Contact.date', array(
 			'type' => 'date', 'id' => 'customId', 'onChange' => 'function(){}'
 		));
-		$this->assertRegExp('/id="customIdDay"/', $result);
-		$this->assertRegExp('/id="customIdMonth"/', $result);
-		$this->assertRegExp('/onChange="function\(\)\{\}"/', $result);
+		$this->assertMatchesRegularExpression('/id="customIdDay"/', $result);
+		$this->assertMatchesRegularExpression('/id="customIdMonth"/', $result);
+		$this->assertMatchesRegularExpression('/onChange="function\(\)\{\}"/', $result);
 
 		$result = $this->Form->input('Model.field', array(
 			'type' => 'datetime', 'timeFormat' => 24, 'id' => 'customID'
 		));
-		$this->assertRegExp('/id="customIDDay"/', $result);
-		$this->assertRegExp('/id="customIDHour"/', $result);
+		$this->assertMatchesRegularExpression('/id="customIDDay"/', $result);
+		$this->assertMatchesRegularExpression('/id="customIDHour"/', $result);
 		$result = explode('</select><select', $result);
 		$result = explode(':', $result[1]);
-		$this->assertRegExp('/option value="23"/', $result[0]);
+		$this->assertMatchesRegularExpression('/option value="23"/', $result[0]);
 		$this->assertNotRegExp('/option value="24"/', $result[0]);
 
 		$result = $this->Form->input('Model.field', array(
@@ -3247,7 +3247,7 @@ class FormHelperTest extends CakeTestCase {
 		));
 		$result = explode('</select><select', $result);
 		$result = explode(':', $result[1]);
-		$this->assertRegExp('/option value="12"/', $result[0]);
+		$this->assertMatchesRegularExpression('/option value="12"/', $result[0]);
 		$this->assertNotRegExp('/option value="13"/', $result[0]);
 
 		$this->Form->request->data = array('Contact' => array('created' => null));
@@ -3275,18 +3275,18 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->Form->request->data = array('Contact' => array('created' => null));
 		$result = $this->Form->input('Contact.created', array('type' => 'datetime', 'dateFormat' => 'NONE'));
-		$this->assertRegExp('/for\="ContactCreatedHour"/', $result);
+		$this->assertMatchesRegularExpression('/for\="ContactCreatedHour"/', $result);
 
 		$this->Form->request->data = array('Contact' => array('created' => null));
 		$result = $this->Form->input('Contact.created', array('type' => 'datetime', 'timeFormat' => 'NONE'));
-		$this->assertRegExp('/for\="ContactCreatedMonth"/', $result);
+		$this->assertMatchesRegularExpression('/for\="ContactCreatedMonth"/', $result);
 
 		$result = $this->Form->input('Contact.created', array(
 			'type' => 'date',
 			'id' => array('day' => 'created-day', 'month' => 'created-month', 'year' => 'created-year'),
 			'timeFormat' => 'NONE'
 		));
-		$this->assertRegExp('/for\="created-month"/', $result);
+		$this->assertMatchesRegularExpression('/for\="created-month"/', $result);
 	}
 
 /**
@@ -3714,7 +3714,7 @@ class FormHelperTest extends CakeTestCase {
 	public function testInputMagicSelectChangeToRadio() {
 		$this->View->viewVars['users'] = array('value' => 'good', 'other' => 'bad');
 		$result = $this->Form->input('Model.user_id', array('type' => 'radio'));
-		$this->assertRegExp('/input type="radio"/', $result);
+		$this->assertMatchesRegularExpression('/input type="radio"/', $result);
 	}
 
 /**
@@ -4307,10 +4307,10 @@ class FormHelperTest extends CakeTestCase {
 		$ValidateProfile = ClassRegistry::getObject('ValidateProfile');
 		$ValidateProfile->validationErrors['city'] = array('required<br>');
 		$result = $this->Form->input('city', array('error' => array('attributes' => array('escape' => true))));
-		$this->assertRegExp('/required&lt;br&gt;/', $result);
+		$this->assertMatchesRegularExpression('/required&lt;br&gt;/', $result);
 
 		$result = $this->Form->input('city', array('error' => array('attributes' => array('escape' => false))));
-		$this->assertRegExp('/required<br>/', $result);
+		$this->assertMatchesRegularExpression('/required<br>/', $result);
 	}
 
 /**
@@ -6357,7 +6357,7 @@ class FormHelperTest extends CakeTestCase {
 
 		$result = $this->Form->secure($this->Form->fields);
 		$key = 'f7d573650a295b94e0938d32b323fde775e5f32b%3A';
-		$this->assertRegExp('/"' . $key . '"/', $result);
+		$this->assertMatchesRegularExpression('/"' . $key . '"/', $result);
 	}
 
 /**
@@ -7128,12 +7128,12 @@ class FormHelperTest extends CakeTestCase {
 
 		$selected = strtotime('2008-10-26 12:33:00');
 		$result = $this->Form->dateTime('Model.field', 'DMY', '12', array('value' => $selected));
-		$this->assertRegExp('/<option[^<>]+value="2008"[^<>]+selected="selected"[^>]*>2008<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="10"[^<>]+selected="selected"[^>]*>October<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="26"[^<>]+selected="selected"[^>]*>26<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="12"[^<>]+selected="selected"[^>]*>12<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="33"[^<>]+selected="selected"[^>]*>33<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="pm"[^<>]+selected="selected"[^>]*>pm<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="2008"[^<>]+selected="selected"[^>]*>2008<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="10"[^<>]+selected="selected"[^>]*>October<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="26"[^<>]+selected="selected"[^>]*>26<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="12"[^<>]+selected="selected"[^>]*>12<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="33"[^<>]+selected="selected"[^>]*>33<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="pm"[^<>]+selected="selected"[^>]*>pm<\/option>/', $result);
 
 		$this->Form->create('Contact');
 		$result = $this->Form->input('published');
@@ -7236,11 +7236,11 @@ class FormHelperTest extends CakeTestCase {
 			'selected' => strtotime('2009-09-03 13:37:00'),
 			'type' => 'datetime'
 		));
-		$this->assertRegExp('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="09"[^<>]+selected="selected"[^>]*>September<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="03"[^<>]+selected="selected"[^>]*>3<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="13"[^<>]+selected="selected"[^>]*>13<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="35"[^<>]+selected="selected"[^>]*>35<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="09"[^<>]+selected="selected"[^>]*>September<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="03"[^<>]+selected="selected"[^>]*>3<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="13"[^<>]+selected="selected"[^>]*>13<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="35"[^<>]+selected="selected"[^>]*>35<\/option>/', $result);
 	}
 
 /**
@@ -7297,16 +7297,16 @@ class FormHelperTest extends CakeTestCase {
  */
 	public function testDatetimeWithDefault() {
 		$result = $this->Form->dateTime('Contact.updated', 'DMY', '12', array('value' => '2009-06-01 11:15:30'));
-		$this->assertRegExp('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="01"[^<>]+selected="selected"[^>]*>1<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="06"[^<>]+selected="selected"[^>]*>June<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="01"[^<>]+selected="selected"[^>]*>1<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="06"[^<>]+selected="selected"[^>]*>June<\/option>/', $result);
 
 		$result = $this->Form->dateTime('Contact.updated', 'DMY', '12', array(
 			'default' => '2009-06-01 11:15:30'
 		));
-		$this->assertRegExp('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="01"[^<>]+selected="selected"[^>]*>1<\/option>/', $result);
-		$this->assertRegExp('/<option[^<>]+value="06"[^<>]+selected="selected"[^>]*>June<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="2009"[^<>]+selected="selected"[^>]*>2009<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="01"[^<>]+selected="selected"[^>]*>1<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option[^<>]+value="06"[^<>]+selected="selected"[^>]*>June<\/option>/', $result);
 	}
 
 /**
@@ -7334,7 +7334,7 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 
-		$this->assertRegExp('/<option value="">-<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">-<\/option>/', $result);
 		$this->assertNotRegExp('/<option value="0" selected="selected">0<\/option>/', $result);
 	}
 
@@ -7354,11 +7354,11 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 
-		$this->assertRegExp('/<option value="">DAY<\/option>/', $result);
-		$this->assertRegExp('/<option value="">MONTH<\/option>/', $result);
-		$this->assertRegExp('/<option value="">YEAR<\/option>/', $result);
-		$this->assertRegExp('/<option value="">HOUR<\/option>/', $result);
-		$this->assertRegExp('/<option value="">MINUTE<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">DAY<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">MONTH<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">YEAR<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">HOUR<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">MINUTE<\/option>/', $result);
 		$this->assertNotRegExp('/<option value=""><\/option>/', $result);
 
 		$result = $this->Form->dateTime('Contact.date',
@@ -7369,12 +7369,12 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 
-		$this->assertRegExp('/<option value="">DAY<\/option>/', $result);
-		$this->assertRegExp('/<option value="">MONTH<\/option>/', $result);
-		$this->assertRegExp('/<option value="">YEAR<\/option>/', $result);
-		$this->assertRegExp('/<select[^<>]+id="ContactDateHour">\s<option value=""><\/option>/', $result);
-		$this->assertRegExp('/<select[^<>]+id="ContactDateMin">\s<option value=""><\/option>/', $result);
-		$this->assertRegExp('/<select[^<>]+id="ContactDateMeridian">\s<option value=""><\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">DAY<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">MONTH<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="">YEAR<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<select[^<>]+id="ContactDateHour">\s<option value=""><\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<select[^<>]+id="ContactDateMin">\s<option value=""><\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<select[^<>]+id="ContactDateMeridian">\s<option value=""><\/option>/', $result);
 	}
 
 /**
@@ -7899,7 +7899,7 @@ class FormHelperTest extends CakeTestCase {
 		$result = $this->Form->hour('Model.field', true, array('value' => 'now'));
 		$thisHour = date('H');
 		$optValue = date('G');
-		$this->assertRegExp('/<option value="' . $thisHour . '" selected="selected">' . $optValue . '<\/option>/', $result);
+		$this->assertMatchesRegularExpression('/<option value="' . $thisHour . '" selected="selected">' . $optValue . '<\/option>/', $result);
 
 		$this->Form->request->data['Model']['field'] = '2050-10-10 01:12:32';
 		$result = $this->Form->hour('Model.field', true);
@@ -9763,12 +9763,12 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->create('Contact', array('type' => 'get'));
 		$result = $this->Form->datetime('created');
 
-		$this->assertRegExp('/name="created\[year\]"/', $result, 'year name attribute is wrong.');
-		$this->assertRegExp('/name="created\[month\]"/', $result, 'month name attribute is wrong.');
-		$this->assertRegExp('/name="created\[day\]"/', $result, 'day name attribute is wrong.');
-		$this->assertRegExp('/name="created\[hour\]"/', $result, 'hour name attribute is wrong.');
-		$this->assertRegExp('/name="created\[min\]"/', $result, 'min name attribute is wrong.');
-		$this->assertRegExp('/name="created\[meridian\]"/', $result, 'meridian name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[year\]"/', $result, 'year name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[month\]"/', $result, 'month name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[day\]"/', $result, 'day name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[hour\]"/', $result, 'hour name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[min\]"/', $result, 'min name attribute is wrong.');
+		$this->assertMatchesRegularExpression('/name="created\[meridian\]"/', $result, 'meridian name attribute is wrong.');
 	}
 
 /**
