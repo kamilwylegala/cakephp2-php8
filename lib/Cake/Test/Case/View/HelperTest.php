@@ -839,10 +839,10 @@ class HelperTest extends CakeTestCase {
 		$this->assertEquals('with something', $result);
 
 		$result = $this->Helper->clean('<script type="text/javascript">alert("ruined");</script>');
-		$this->assertNotRegExp('#</*script#', $result);
+		$this->assertDoesNotMatchRegularExpression('#</*script#', $result);
 
 		$result = $this->Helper->clean("<script \ntype=\"text/javascript\">\n\talert('ruined');\n\n\t\t</script>");
-		$this->assertNotRegExp('#</*script#', $result);
+		$this->assertDoesNotMatchRegularExpression('#</*script#', $result);
 
 		$result = $this->Helper->clean('<body/onload=do(/something/)>');
 		$this->assertEquals('<body/>', $result);

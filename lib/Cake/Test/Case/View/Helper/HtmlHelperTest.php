@@ -1088,7 +1088,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$this->assertNull($result, 'Script returned upon duplicate inclusion %s');
 
 		$result = $this->Html->script(array('foo', 'bar', 'baz'));
-		$this->assertNotRegExp('/foo.js/', $result);
+		$this->assertDoesNotMatchRegularExpression('/foo.js/', $result);
 
 		$result = $this->Html->script('foo', array('inline' => true, 'once' => false));
 		$this->assertNotNull($result);
@@ -1152,7 +1152,7 @@ class HtmlHelperTest extends CakeTestCase {
 		$this->assertNull($result, 'Script returned upon duplicate inclusion %s');
 
 		$result = $this->Html->script(array('TestPlugin.foo', 'TestPlugin.bar', 'TestPlugin.baz'));
-		$this->assertNotRegExp('/test_plugin\/js\/foo.js/', $result);
+		$this->assertDoesNotMatchRegularExpression('/test_plugin\/js\/foo.js/', $result);
 
 		$result = $this->Html->script('TestPlugin.foo', array('inline' => true, 'once' => false));
 		$this->assertNotNull($result);

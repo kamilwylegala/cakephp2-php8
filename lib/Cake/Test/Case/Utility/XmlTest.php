@@ -164,7 +164,7 @@ class XmlTest extends CakeTestCase {
 		$this->assertEquals('value', $obj->firstChild->nodeValue);
 
 		$obj = Xml::build($xml, array('return' => 'domdocument', 'encoding' => null));
-		$this->assertNotRegExp('/encoding/', $obj->saveXML());
+		$this->assertDoesNotMatchRegularExpression('/encoding/', $obj->saveXML());
 	}
 
 /**

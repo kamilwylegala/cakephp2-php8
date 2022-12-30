@@ -7351,7 +7351,7 @@ class ModelReadTest extends BaseModelTest {
 
 		$log = $this->db->getLog();
 		$this->assertTrue(isset($log['log'][0]['query']));
-		$this->assertNotRegExp('/ORDER\s+BY/', $log['log'][0]['query']);
+		$this->assertDoesNotMatchRegularExpression('/ORDER\s+BY/', $log['log'][0]['query']);
 
 		$Article = new Article();
 		$Article->order = null;

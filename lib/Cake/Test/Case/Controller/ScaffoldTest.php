@@ -376,7 +376,7 @@ class ScaffoldTest extends CakeTestCase {
 		$this->Controller->response->send();
 		$result = ob_get_clean();
 
-		$this->assertNotRegExp('/textarea name="data\[ScaffoldMock\]\[body\]" cols="30" rows="6" id="ScaffoldMockBody"/', $result);
+		$this->assertDoesNotMatchRegularExpression('/textarea name="data\[ScaffoldMock\]\[body\]" cols="30" rows="6" id="ScaffoldMockBody"/', $result);
 	}
 
 /**

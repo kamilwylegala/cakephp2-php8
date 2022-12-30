@@ -904,8 +904,8 @@ class JsBaseEngineTest extends CakeTestCase {
 		$result = $this->JsEngine->object($object, array('prefix' => 'PREFIX', 'postfix' => 'POSTFIX'));
 		$this->assertMatchesRegularExpression('/^PREFIX/', $result);
 		$this->assertMatchesRegularExpression('/POSTFIX$/', $result);
-		$this->assertNotRegExp('/.PREFIX./', $result);
-		$this->assertNotRegExp('/.POSTFIX./', $result);
+		$this->assertDoesNotMatchRegularExpression('/.PREFIX./', $result);
+		$this->assertDoesNotMatchRegularExpression('/.POSTFIX./', $result);
 	}
 
 /**

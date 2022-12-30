@@ -140,7 +140,7 @@ class ExtractTaskTest extends CakeTestCase {
 		$this->assertMatchesRegularExpression($pattern, $result);
 
 		$pattern = '/msgid "You have %d new message."\nmsgstr ""/';
-		$this->assertNotRegExp($pattern, $result, 'No duplicate msgid');
+		$this->assertDoesNotMatchRegularExpression($pattern, $result, 'No duplicate msgid');
 
 		$pattern = '/\#: extract\.ctp:7\n';
 		$pattern .= 'msgid "You deleted %d message."\nmsgid_plural "You deleted %d messages."/';
@@ -181,9 +181,9 @@ class ExtractTaskTest extends CakeTestCase {
 		$result = file_get_contents($this->path . DS . 'domain.pot');
 
 		$pattern = '/msgid "You have %d new message."\nmsgid_plural "You have %d new messages."/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 		$pattern = '/msgid "You deleted %d message."\nmsgid_plural "You deleted %d messages."/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 
 		$pattern = '/msgid "You have %d new message \(domain\)."\nmsgid_plural "You have %d new messages \(domain\)."/';
 		$this->assertMatchesRegularExpression($pattern, $result);
@@ -215,10 +215,10 @@ class ExtractTaskTest extends CakeTestCase {
 		$result = file_get_contents($this->path . DS . 'default.pot');
 
 		$pattern = '/\#: .*extract\.ctp:31\n/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 
 		$pattern = '/\#: .*extract\.ctp:33\n/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 	}
 
 /**
@@ -246,7 +246,7 @@ class ExtractTaskTest extends CakeTestCase {
 		$result = file_get_contents($this->path . DS . 'default.pot');
 
 		$pattern = '/\n\#: .*\n/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 	}
 
 /**
@@ -270,10 +270,10 @@ class ExtractTaskTest extends CakeTestCase {
 		$result = file_get_contents($this->path . DS . 'default.pot');
 
 		$pattern = '/\#: .*extract\.ctp:6\n/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 
 		$pattern = '/\#: .*default\.ctp:26\n/';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 	}
 
 /**
@@ -323,7 +323,7 @@ class ExtractTaskTest extends CakeTestCase {
 
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'default.pot');
-		$this->assertNotRegExp('#TestPlugin#', $result);
+		$this->assertDoesNotMatchRegularExpression('#TestPlugin#', $result);
 	}
 
 /**
@@ -348,7 +348,7 @@ class ExtractTaskTest extends CakeTestCase {
 
 		$this->Task->execute();
 		$result = file_get_contents($this->path . DS . 'default.pot');
-		$this->assertNotRegExp('#Pages#', $result);
+		$this->assertDoesNotMatchRegularExpression('#Pages#', $result);
 		$this->assertContains('translate.ctp:1', $result);
 		$this->assertContains('This is a translatable string', $result);
 		$this->assertContains('I can haz plugin model validation message', $result);
@@ -498,9 +498,9 @@ class ExtractTaskTest extends CakeTestCase {
 		$result = file_get_contents($this->path . DS . 'cake_dev.pot');
 
 		$pattern = '/#: Console\/Templates\//';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 
 		$pattern = '/#: Test\//';
-		$this->assertNotRegExp($pattern, $result);
+		$this->assertDoesNotMatchRegularExpression($pattern, $result);
 	}
 }
