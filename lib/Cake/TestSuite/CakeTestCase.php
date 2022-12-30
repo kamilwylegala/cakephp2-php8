@@ -552,7 +552,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	}
 
 /**
- * Compatibility wrapper function for assertRegexp
+ * Compatibility wrapper function for assertMatchesRegularExpression
  *
  * @param mixed $pattern a regular expression
  * @param string $string the text to be matched
@@ -561,7 +561,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return void
  */
 	protected static function assertPattern($pattern, $string, $message = '') {
-		return static::assertRegExp($pattern, $string, $message);
+		return static::assertMatchesRegularExpression($pattern, $string, $message);
 	}
 
 /**
@@ -591,7 +591,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	}
 
 /**
- * Compatibility wrapper function for assertNotRegExp
+ * Compatibility wrapper function for assertDoesNotMatchRegularExpression
  *
  * @param mixed $pattern a regular expression
  * @param string $string the text to be matched
@@ -600,7 +600,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return void
  */
 	protected static function assertNoPattern($pattern, $string, $message = '') {
-		return static::assertNotRegExp($pattern, $string, $message);
+		return static::assertDoesNotMatchRegularExpression($pattern, $string, $message);
 	}
 
 /**
