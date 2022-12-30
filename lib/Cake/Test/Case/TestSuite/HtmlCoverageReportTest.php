@@ -118,9 +118,9 @@ class HtmlCoverageReportTest extends CakeTestCase {
 			10 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff'))
 		);
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
-		$this->assertRegExp('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
-		$this->assertRegExp('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
-		$this->assertRegExp('/<pre>/', $result);
+		$this->assertMatchesRegularExpression('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
+		$this->assertMatchesRegularExpression('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
+		$this->assertMatchesRegularExpression('/<pre>/', $result);
 		foreach ($file as $i => $line) {
 			$this->assertTrue(strpos($line, $result) !== 0, 'Content is missing ' . $i);
 			$class = 'covered';
@@ -166,9 +166,9 @@ class HtmlCoverageReportTest extends CakeTestCase {
 		);
 
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
-		$this->assertRegExp('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
-		$this->assertRegExp('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
-		$this->assertRegExp('/<pre>/', $result);
+		$this->assertMatchesRegularExpression('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
+		$this->assertMatchesRegularExpression('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
+		$this->assertMatchesRegularExpression('/<pre>/', $result);
 		foreach ($file as $i => $line) {
 			$this->assertTrue(strpos($line, $result) !== 0, 'Content is missing ' . $i);
 			$class = 'covered';

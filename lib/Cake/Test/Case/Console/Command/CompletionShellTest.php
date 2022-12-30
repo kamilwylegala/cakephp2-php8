@@ -113,7 +113,7 @@ class CompletionShellTest extends CakeTestCase {
 		$output = $this->Shell->stdout->output;
 
 		$expected = "/This command is not intended to be called manually/";
-		$this->assertRegExp($expected, $output);
+		$this->assertMatchesRegularExpression($expected, $output);
 	}
 
 /**

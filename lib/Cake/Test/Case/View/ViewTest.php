@@ -1085,8 +1085,8 @@ class ViewTest extends CakeTestCase {
 
 		$content = 'This is my view output';
 		$result = $View->renderLayout($content, 'default');
-		$this->assertRegExp('/modified in the afterlife/', $result);
-		$this->assertRegExp('/This is my view output/', $result);
+		$this->assertMatchesRegularExpression('/modified in the afterlife/', $result);
+		$this->assertMatchesRegularExpression('/This is my view output/', $result);
 	}
 
 /**
@@ -1124,9 +1124,9 @@ class ViewTest extends CakeTestCase {
 		$View = new TestView($this->PostsController);
 		$result = $View->render('index');
 
-		$this->assertRegExp("/<meta http-equiv=\"Content-Type\" content=\"text\/html; charset=utf-8\" \/>\s*<title>/", $result);
-		$this->assertRegExp("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
-		$this->assertRegExp("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
+		$this->assertMatchesRegularExpression("/<meta http-equiv=\"Content-Type\" content=\"text\/html; charset=utf-8\" \/>\s*<title>/", $result);
+		$this->assertMatchesRegularExpression("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
+		$this->assertMatchesRegularExpression("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
 
 		$this->assertTrue(isset($View->viewVars['content_for_layout']), 'content_for_layout should be a view var');
 		$this->assertTrue(isset($View->viewVars['scripts_for_layout']), 'scripts_for_layout should be a view var');
@@ -1139,8 +1139,8 @@ class ViewTest extends CakeTestCase {
 		$View = new TestView($this->PostsController);
 		$result = $View->render(false, 'flash');
 
-		$this->assertRegExp("/<title>yo what up<\/title>/", $result);
-		$this->assertRegExp("/<p><a href=\"flash\">yo what up<\/a><\/p>/", $result);
+		$this->assertMatchesRegularExpression("/<title>yo what up<\/title>/", $result);
+		$this->assertMatchesRegularExpression("/<p><a href=\"flash\">yo what up<\/a><\/p>/", $result);
 
 		$this->assertNull($View->render(false, 'flash'));
 
@@ -1153,9 +1153,9 @@ class ViewTest extends CakeTestCase {
 		$View = new TestView($this->PostsController);
 		$result = $View->render('index');
 
-		$this->assertRegExp("/<meta http-equiv=\"Content-Type\" content=\"text\/html; charset=utf-8\" \/>\s*<title>/", $result);
-		$this->assertRegExp("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
-		$this->assertRegExp("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
+		$this->assertMatchesRegularExpression("/<meta http-equiv=\"Content-Type\" content=\"text\/html; charset=utf-8\" \/>\s*<title>/", $result);
+		$this->assertMatchesRegularExpression("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
+		$this->assertMatchesRegularExpression("/<div id=\"content\">\s*posts index\s*<\/div>/", $result);
 	}
 
 /**
@@ -1169,7 +1169,7 @@ class ViewTest extends CakeTestCase {
 
 		$this->assertEquals('cache_form', $View->view);
 		$result = $View->render();
-		$this->assertRegExp('/Add User/', $result);
+		$this->assertMatchesRegularExpression('/Add User/', $result);
 	}
 
 /**
@@ -1202,8 +1202,8 @@ class ViewTest extends CakeTestCase {
 		$View = new View($Controller);
 		$result = $View->render('helper_overwrite', false);
 
-		$this->assertRegExp('/I am some test html/', $result);
-		$this->assertRegExp('/Test link/', $result);
+		$this->assertMatchesRegularExpression('/I am some test html/', $result);
+		$this->assertMatchesRegularExpression('/Test link/', $result);
 	}
 
 /**
@@ -1215,19 +1215,19 @@ class ViewTest extends CakeTestCase {
 		$View = new TestView($this->PostsController);
 
 		$result = $View->getViewFileName('index');
-		$this->assertRegExp('/Posts(\/|\\\)index.ctp/', $result);
+		$this->assertMatchesRegularExpression('/Posts(\/|\\\)index.ctp/', $result);
 
 		$result = $View->getViewFileName('TestPlugin.index');
-		$this->assertRegExp('/Posts(\/|\\\)index.ctp/', $result);
+		$this->assertMatchesRegularExpression('/Posts(\/|\\\)index.ctp/', $result);
 
 		$result = $View->getViewFileName('/Pages/home');
-		$this->assertRegExp('/Pages(\/|\\\)home.ctp/', $result);
+		$this->assertMatchesRegularExpression('/Pages(\/|\\\)home.ctp/', $result);
 
 		$result = $View->getViewFileName('../Elements/test_element');
-		$this->assertRegExp('/Elements(\/|\\\)test_element.ctp/', $result);
+		$this->assertMatchesRegularExpression('/Elements(\/|\\\)test_element.ctp/', $result);
 
 		$result = $View->getViewFileName('../Themed/TestTheme/Posts/index');
-		$this->assertRegExp('/Themed(\/|\\\)TestTheme(\/|\\\)Posts(\/|\\\)index.ctp/', $result);
+		$this->assertMatchesRegularExpression('/Themed(\/|\\\)TestTheme(\/|\\\)Posts(\/|\\\)index.ctp/', $result);
 
 		$expected = CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Posts' . DS . 'index.ctp';
 		$result = $View->getViewFileName('../Posts/index');
@@ -1263,7 +1263,7 @@ class ViewTest extends CakeTestCase {
 		fclose($f);
 		$result = $View->renderCache($path, '+1 second');
 
-		$this->assertRegExp('/^some cacheText/', $result);
+		$this->assertMatchesRegularExpression('/^some cacheText/', $result);
 
 		if (file_exists($path)) {
 			unlink($path);

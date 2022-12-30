@@ -125,9 +125,9 @@ class CacheHelperTest extends CakeTestCase {
 		$this->assertTrue(file_exists($filename));
 
 		$contents = file_get_contents($filename);
-		$this->assertRegExp('/php echo \$variable/', $contents);
-		$this->assertRegExp('/php echo microtime()/', $contents);
-		$this->assertRegExp('/clark kent/', $result);
+		$this->assertMatchesRegularExpression('/php echo \$variable/', $contents);
+		$this->assertMatchesRegularExpression('/php echo microtime()/', $contents);
+		$this->assertMatchesRegularExpression('/clark kent/', $result);
 
 		unlink($filename);
 	}
@@ -184,9 +184,9 @@ class CacheHelperTest extends CakeTestCase {
 		$this->assertTrue(file_exists($filename));
 
 		$contents = file_get_contents($filename);
-		$this->assertRegExp('/if \(is_writable\(TMP\)\)\:/', $contents);
-		$this->assertRegExp('/php echo \$variable/', $contents);
-		$this->assertRegExp('/php echo microtime()/', $contents);
+		$this->assertMatchesRegularExpression('/if \(is_writable\(TMP\)\)\:/', $contents);
+		$this->assertMatchesRegularExpression('/php echo \$variable/', $contents);
+		$this->assertMatchesRegularExpression('/php echo microtime()/', $contents);
 		$this->assertNotRegExp('/cake:nocache/', $contents);
 
 		unlink($filename);
@@ -247,13 +247,13 @@ class CacheHelperTest extends CakeTestCase {
 
 		$this->assertNotRegExp('/cake:nocache/', $result);
 		$this->assertNotRegExp('/php echo/', $result);
-		$this->assertRegExp('/A\. Layout Before Content/', $result);
-		$this->assertRegExp('/B\. In Plain Element/', $result);
-		$this->assertRegExp('/C\. Layout After Test Element/', $result);
-		$this->assertRegExp('/D\. In View File/', $result);
-		$this->assertRegExp('/E\. Layout After Content/', $result);
-		$this->assertRegExp('/F\. In Element With No Cache Tags/', $result);
-		$this->assertRegExp('/G\. Layout After Content And After Element With No Cache Tags/', $result);
+		$this->assertMatchesRegularExpression('/A\. Layout Before Content/', $result);
+		$this->assertMatchesRegularExpression('/B\. In Plain Element/', $result);
+		$this->assertMatchesRegularExpression('/C\. Layout After Test Element/', $result);
+		$this->assertMatchesRegularExpression('/D\. In View File/', $result);
+		$this->assertMatchesRegularExpression('/E\. Layout After Content/', $result);
+		$this->assertMatchesRegularExpression('/F\. In Element With No Cache Tags/', $result);
+		$this->assertMatchesRegularExpression('/G\. Layout After Content And After Element With No Cache Tags/', $result);
 		$this->assertNotRegExp('/1\. layout before content/', $result);
 		$this->assertNotRegExp('/2\. in plain element/', $result);
 		$this->assertNotRegExp('/3\. layout after test element/', $result);
@@ -267,20 +267,20 @@ class CacheHelperTest extends CakeTestCase {
 		$contents = file_get_contents($filename);
 		unlink($filename);
 
-		$this->assertRegExp('/A\. Layout Before Content/', $contents);
+		$this->assertMatchesRegularExpression('/A\. Layout Before Content/', $contents);
 		$this->assertNotRegExp('/B\. In Plain Element/', $contents);
-		$this->assertRegExp('/C\. Layout After Test Element/', $contents);
-		$this->assertRegExp('/D\. In View File/', $contents);
-		$this->assertRegExp('/E\. Layout After Content/', $contents);
-		$this->assertRegExp('/F\. In Element With No Cache Tags/', $contents);
-		$this->assertRegExp('/G\. Layout After Content And After Element With No Cache Tags/', $contents);
-		$this->assertRegExp('/1\. layout before content/', $contents);
+		$this->assertMatchesRegularExpression('/C\. Layout After Test Element/', $contents);
+		$this->assertMatchesRegularExpression('/D\. In View File/', $contents);
+		$this->assertMatchesRegularExpression('/E\. Layout After Content/', $contents);
+		$this->assertMatchesRegularExpression('/F\. In Element With No Cache Tags/', $contents);
+		$this->assertMatchesRegularExpression('/G\. Layout After Content And After Element With No Cache Tags/', $contents);
+		$this->assertMatchesRegularExpression('/1\. layout before content/', $contents);
 		$this->assertNotRegExp('/2\. in plain element/', $contents);
-		$this->assertRegExp('/3\. layout after test element/', $contents);
-		$this->assertRegExp('/4\. in view file/', $contents);
-		$this->assertRegExp('/5\. layout after content/', $contents);
-		$this->assertRegExp('/6\. in element with no cache tags/', $contents);
-		$this->assertRegExp('/7\. layout after content and after element with no cache tags/', $contents);
+		$this->assertMatchesRegularExpression('/3\. layout after test element/', $contents);
+		$this->assertMatchesRegularExpression('/4\. in view file/', $contents);
+		$this->assertMatchesRegularExpression('/5\. layout after content/', $contents);
+		$this->assertMatchesRegularExpression('/6\. in element with no cache tags/', $contents);
+		$this->assertMatchesRegularExpression('/7\. layout after content and after element with no cache tags/', $contents);
 	}
 
 /**
@@ -308,9 +308,9 @@ class CacheHelperTest extends CakeTestCase {
 		$this->assertTrue(file_exists($filename));
 
 		$contents = file_get_contents($filename);
-		$this->assertRegExp('/\$this\-\>viewVars/', $contents);
-		$this->assertRegExp('/extract\(\$this\-\>viewVars, EXTR_SKIP\);/', $contents);
-		$this->assertRegExp('/php echo \$variable/', $contents);
+		$this->assertMatchesRegularExpression('/\$this\-\>viewVars/', $contents);
+		$this->assertMatchesRegularExpression('/extract\(\$this\-\>viewVars, EXTR_SKIP\);/', $contents);
+		$this->assertMatchesRegularExpression('/php echo \$variable/', $contents);
 
 		unlink($filename);
 	}
@@ -344,7 +344,7 @@ class CacheHelperTest extends CakeTestCase {
 
 		$contents = file_get_contents($filename);
 
-		$this->assertRegExp('/\$controller->startupProcess\(\);/', $contents);
+		$this->assertMatchesRegularExpression('/\$controller->startupProcess\(\);/', $contents);
 
 		unlink($filename);
 	}
@@ -622,7 +622,7 @@ class CacheHelperTest extends CakeTestCase {
 		$result = $View->render('cache_empty_sections');
 		$this->assertNotRegExp('/nocache/', $result);
 		$this->assertNotRegExp('/php echo/', $result);
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			'@</title>\s*</head>\s*' .
 			'<body>\s*' .
 			'View Content\s*' .
@@ -633,7 +633,7 @@ class CacheHelperTest extends CakeTestCase {
 		$this->assertTrue(file_exists($filename));
 		$contents = file_get_contents($filename);
 		$this->assertNotRegExp('/nocache/', $contents);
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			'@<head>\s*<title>Posts</title>\s*' .
 			'<\?php \$x \= 1; \?>\s*' .
 			'</head>\s*' .

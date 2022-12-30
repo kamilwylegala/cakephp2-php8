@@ -736,7 +736,7 @@ class CakeSchemaTest extends CakeTestCase {
 			'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => true)),
 		);
 		$result = $this->Schema->generateTable('posts', $posts);
-		$this->assertRegExp('/public \$posts/', $result);
+		$this->assertMatchesRegularExpression('/public \$posts/', $result);
 
 		$posts = array(
 			'id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'key' => 'primary'),
@@ -752,8 +752,8 @@ class CakeSchemaTest extends CakeTestCase {
 			)
 		);
 		$result = $this->Schema->generateTable('fields', $posts);
-		$this->assertRegExp('/public \$fields/', $result);
-		$this->assertRegExp('/\'type\' \=\> \'fulltext\'/', $result);
+		$this->assertMatchesRegularExpression('/public \$fields/', $result);
+		$this->assertMatchesRegularExpression('/\'type\' \=\> \'fulltext\'/', $result);
 	}
 
 /**
@@ -1154,11 +1154,11 @@ class CakeSchemaTest extends CakeTestCase {
 		$col = $Schema->tables['testdescribes']['int_null'];
 		$col['name'] = 'int_null';
 		$column = $this->db->buildColumn($col);
-		$this->assertRegExp('/' . preg_quote($column, '/') . '/', $sql);
+		$this->assertMatchesRegularExpression('/' . preg_quote($column, '/') . '/', $sql);
 
 		$col = $Schema->tables['testdescribes']['int_not_null'];
 		$col['name'] = 'int_not_null';
 		$column = $this->db->buildColumn($col);
-		$this->assertRegExp('/' . preg_quote($column, '/') . '/', $sql);
+		$this->assertMatchesRegularExpression('/' . preg_quote($column, '/') . '/', $sql);
 	}
 }

@@ -1211,7 +1211,7 @@ SQL;
 		}
 
 		$query = $this->Dbo->buildAssociationQuery($this->Model->Category2, $queryData);
-		$this->assertRegExp('/^SELECT\s+(.+)FROM(.+)`Category2`\.`group_id`\s+=\s+`Group`\.`id`\)\s+LEFT JOIN(.+)WHERE\s+1 = 1\s*$/', $query);
+		$this->assertMatchesRegularExpression('/^SELECT\s+(.+)FROM(.+)`Category2`\.`group_id`\s+=\s+`Group`\.`id`\)\s+LEFT JOIN(.+)WHERE\s+1 = 1\s*$/', $query);
 
 		$this->Model = new TestModel4();
 		$this->Model->schema();
@@ -1258,10 +1258,10 @@ SQL;
 		$this->assertEquals($expected, $queryData);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel4Parent`\.`id`, `TestModel4Parent`\.`name`, `TestModel4Parent`\.`created`, `TestModel4Parent`\.`updated`\s+/', $result);
-		$this->assertRegExp('/FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4Parent`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4`.`parent_id` = `TestModel4Parent`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+1 = 1$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel4Parent`\.`id`, `TestModel4Parent`\.`name`, `TestModel4Parent`\.`created`, `TestModel4Parent`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4Parent`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4`.`parent_id` = `TestModel4Parent`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+1 = 1$/', $result);
 
 		$params['assocData']['type'] = 'INNER';
 		$this->Model->belongsTo['TestModel4Parent']['type'] = 'INNER';
@@ -1421,10 +1421,10 @@ SQL;
 		$this->assertTrue($result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel8`\.`id`, `TestModel8`\.`test_model9_id`, `TestModel8`\.`name`, `TestModel8`\.`created`, `TestModel8`\.`updated`, `TestModel9`\.`id`, `TestModel9`\.`test_model8_id`, `TestModel9`\.`name`, `TestModel9`\.`created`, `TestModel9`\.`updated`\s+/', $result);
-		$this->assertRegExp('/FROM\s+\S+`test_model8` AS `TestModel8`\s+LEFT JOIN\s+\S+`test_model9` AS `TestModel9`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel9`\.`name` != \'mariano\'\s+AND\s+`TestModel9`.`test_model8_id` = `TestModel8`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel8`\.`id`, `TestModel8`\.`test_model9_id`, `TestModel8`\.`name`, `TestModel8`\.`created`, `TestModel8`\.`updated`, `TestModel9`\.`id`, `TestModel9`\.`test_model8_id`, `TestModel9`\.`name`, `TestModel9`\.`created`, `TestModel9`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/FROM\s+\S+`test_model8` AS `TestModel8`\s+LEFT JOIN\s+\S+`test_model9` AS `TestModel9`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel9`\.`name` != \'mariano\'\s+AND\s+`TestModel9`.`test_model8_id` = `TestModel8`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1445,10 +1445,10 @@ SQL;
 		$this->assertTrue($result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel9`\.`id`, `TestModel9`\.`test_model8_id`, `TestModel9`\.`name`, `TestModel9`\.`created`, `TestModel9`\.`updated`, `TestModel8`\.`id`, `TestModel8`\.`test_model9_id`, `TestModel8`\.`name`, `TestModel8`\.`created`, `TestModel8`\.`updated`\s+/', $result);
-		$this->assertRegExp('/FROM\s+\S+`test_model9` AS `TestModel9`\s+LEFT JOIN\s+\S+`test_model8` AS `TestModel8`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel8`\.`name` != \'larry\'\s+AND\s+`TestModel9`.`test_model8_id` = `TestModel8`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel9`\.`id`, `TestModel9`\.`test_model8_id`, `TestModel9`\.`name`, `TestModel9`\.`created`, `TestModel9`\.`updated`, `TestModel8`\.`id`, `TestModel8`\.`test_model9_id`, `TestModel8`\.`name`, `TestModel8`\.`created`, `TestModel8`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/FROM\s+\S+`test_model9` AS `TestModel9`\s+LEFT JOIN\s+\S+`test_model8` AS `TestModel8`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel8`\.`name` != \'larry\'\s+AND\s+`TestModel9`.`test_model8_id` = `TestModel8`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1470,10 +1470,10 @@ SQL;
 		$this->assertTrue($result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel4Parent`\.`id`, `TestModel4Parent`\.`name`, `TestModel4Parent`\.`created`, `TestModel4Parent`\.`updated`\s+/', $result);
-		$this->assertRegExp('/FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4Parent`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4`.`parent_id` = `TestModel4Parent`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?`TestModel4Parent`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel4Parent`\.`id`, `TestModel4Parent`\.`name`, `TestModel4Parent`\.`created`, `TestModel4Parent`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4Parent`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4`.`parent_id` = `TestModel4Parent`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?`TestModel4Parent`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
 
 		$this->Featured2 = new Featured2();
 		$this->Featured2->schema();
@@ -1498,7 +1498,7 @@ SQL;
 		$this->assertTrue($result);
 		$result = $this->Dbo->buildAssociationQuery($this->Featured2, $queryData);
 
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			'/^SELECT\s+`Featured2`\.`id`, `Featured2`\.`article_id`, `Featured2`\.`category_id`, `Featured2`\.`name`,\s+' .
 			'`ArticleFeatured2`\.`id`, `ArticleFeatured2`\.`title`, `ArticleFeatured2`\.`user_id`, `ArticleFeatured2`\.`published`\s+' .
 			'FROM\s+\S+`featured2` AS `Featured2`\s+LEFT JOIN\s+\S+`article_featured` AS `ArticleFeatured2`' .
@@ -1533,10 +1533,10 @@ SQL;
 		$this->assertEquals(trim($expected), trim($result));
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+/', $result);
-		$this->assertRegExp('/`test_model5` AS `TestModel5`\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+/', $result);
+		$this->assertMatchesRegularExpression('/`test_model5` AS `TestModel5`\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1560,10 +1560,10 @@ SQL;
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
 
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model5` AS `TestModel5`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel5`.`test_model4_id`\s+=\s+`TestModel4`.`id`\)\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?\s*`TestModel5`.`name`\s+!=\s+\'mariano\'\s*(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`, `TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+LEFT JOIN\s+\S+`test_model5` AS `TestModel5`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel5`.`test_model4_id`\s+=\s+`TestModel4`.`id`\)\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?\s*`TestModel5`.`name`\s+!=\s+\'mariano\'\s*(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1590,10 +1590,10 @@ SQL;
 		$this->assertEquals(trim($expected), trim($result));
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`, `TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`, `TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1620,10 +1620,10 @@ SQL;
 		$this->assertEquals(trim($expected), trim($result));
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`, `TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+`TestModel5`.`name` != \'mariano\'\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`, `TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+LEFT JOIN\s+\S+`test_model4` AS `TestModel4`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel5`.`test_model4_id` = `TestModel4`.`id`\)\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+`TestModel5`.`name` != \'mariano\'\s*$/', $result);
 	}
 
 /**
@@ -1643,14 +1643,14 @@ SQL;
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
 
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+`TestModel6`.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+`TestModel6`.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?\s*1 = 1\s*(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1671,7 +1671,7 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			'/^SELECT\s+' .
 			'`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+' .
 			'FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+' .
@@ -1681,7 +1681,7 @@ SQL;
 		);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp(
+		$this->assertMatchesRegularExpression(
 			'/^SELECT\s+' .
 			'`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+' .
 			'FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+' .
@@ -1706,14 +1706,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?`TestModel5`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?`TestModel5`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1738,15 +1738,15 @@ SQL;
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
 
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
-		$this->assertRegExp('/\s+LIMIT 2,\s*5\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/\s+LIMIT 2,\s*5\s*$/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$this->Model->hasMany['TestModel6'] = $backup;
 	}
@@ -1771,15 +1771,15 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
-		$this->assertRegExp('/\s+LIMIT 5,\s*5\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/\s+LIMIT 5,\s*5\s*$/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`test_model4_id`, `TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$this->Model->hasMany['TestModel6'] = $backup;
 	}
@@ -1800,14 +1800,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`name`, `TestModel5`\.`id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`name`, `TestModel5`\.`id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$binding = array('type' => 'hasMany', 'model' => 'TestModel6');
 		$queryData = array('fields' => array('`TestModel5`.`id`, `TestModel5`.`name`'));
@@ -1815,14 +1815,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$binding = array('type' => 'hasMany', 'model' => 'TestModel6');
 		$queryData = array('fields' => array('`TestModel5`.`name`', '`TestModel5`.`created`'));
@@ -1830,14 +1830,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`test_model5_id`, `TestModel6`\.`name`, `TestModel6`\.`created`, `TestModel6`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`name`, `TestModel5`\.`created`, `TestModel5`\.`id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$this->Model->hasMany['TestModel6']['fields'] = array('name');
 
@@ -1847,14 +1847,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`name`, `TestModel6`\.`test_model5_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`name`, `TestModel6`\.`test_model5_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		unset($this->Model->hasMany['TestModel6']['fields']);
 
@@ -1866,14 +1866,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`name`, `TestModel6`\.`test_model5_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`id`, `TestModel6`\.`name`, `TestModel6`\.`test_model5_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		unset($this->Model->hasMany['TestModel6']['fields']);
 
@@ -1885,14 +1885,14 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel6`\.`test_model5_id`, `TestModel6`\.`name`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel6`\.`test_model5_id`, `TestModel6`\.`name`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model6` AS `TestModel6`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?`TestModel6`\.`test_model5_id`\s+=\s+\({\$__cakeID__\$}\)(?:\))?/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel5`\.`id`, `TestModel5`\.`name`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model5` AS `TestModel5`\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		unset($this->Model->hasMany['TestModel6']['fields']);
 	}
@@ -1913,7 +1913,7 @@ SQL;
 		$this->Model->recursive = 0;
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+MIN\(`TestModel5`\.`test_model4_id`\)\s+FROM/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+MIN\(`TestModel5`\.`test_model4_id`\)\s+FROM/', $result);
 	}
 
 /**
@@ -1933,16 +1933,16 @@ SQL;
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
 		$assocTable = $this->Dbo->fullTableName($this->Model->TestModel4TestModel7, true, true);
-		$this->assertRegExp('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model7` AS `TestModel7`\s+JOIN\s+' . $assocTable . '/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}\s+AND/', $result);
-		$this->assertRegExp('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)/', $result);
-		$this->assertRegExp('/WHERE\s+(?:\()?1 = 1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model7` AS `TestModel7`\s+JOIN\s+' . $assocTable . '/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}\s+AND/', $result);
+		$this->assertMatchesRegularExpression('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)/', $result);
+		$this->assertMatchesRegularExpression('/WHERE\s+(?:\()?1 = 1(?:\))?\s*$/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE/', $result);
-		$this->assertRegExp('/\s+WHERE\s+(?:\()?1 = 1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE/', $result);
+		$this->assertMatchesRegularExpression('/\s+WHERE\s+(?:\()?1 = 1(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1961,14 +1961,14 @@ SQL;
 		$params = $this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}/', $result);
-		$this->assertRegExp('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}/', $result);
+		$this->assertMatchesRegularExpression('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?`TestModel4`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?`TestModel4`.`name`\s+!=\s+\'mariano\'(?:\))?\s*$/', $result);
 	}
 
 /**
@@ -1992,15 +1992,15 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}\s+/', $result);
-		$this->assertRegExp('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+(?:\()?1\s+=\s+1(?:\))?\s*\s+LIMIT 2,\s*5\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+(?:\()?1\s+=\s+1(?:\))?\s*\s+LIMIT 2,\s*5\s*$/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$this->Model->hasAndBelongsToMany['TestModel7'] = $backup;
 	}
@@ -2026,15 +2026,15 @@ SQL;
 		$params = &$this->_prepareAssociationQuery($this->Model, $queryData, $binding);
 
 		$result = $this->Dbo->generateAssociationQuery($this->Model, $params['linkModel'], $params['type'], $params['assoc'], $params['assocData'], $queryData, $params['external']);
-		$this->assertRegExp('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
-		$this->assertRegExp('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}/', $result);
-		$this->assertRegExp('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
-		$this->assertRegExp('/\s+(?:\()?1\s+=\s+1(?:\))?\s*\s+LIMIT 5,\s*5\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel7`\.`id`, `TestModel7`\.`name`, `TestModel7`\.`created`, `TestModel7`\.`updated`, `TestModel4TestModel7`\.`test_model4_id`, `TestModel4TestModel7`\.`test_model7_id`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model7`\s+AS\s+`TestModel7`\s+JOIN\s+\S+`test_model4_test_model7`\s+AS\s+`TestModel4TestModel7`/', $result);
+		$this->assertMatchesRegularExpression('/\s+ON\s+\(`TestModel4TestModel7`\.`test_model4_id`\s+=\s+{\$__cakeID__\$}/', $result);
+		$this->assertMatchesRegularExpression('/\s+AND\s+`TestModel4TestModel7`\.`test_model7_id`\s+=\s+`TestModel7`\.`id`\)\s+WHERE\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+(?:\()?1\s+=\s+1(?:\))?\s*\s+LIMIT 5,\s*5\s*$/', $result);
 
 		$result = $this->Dbo->buildAssociationQuery($this->Model, $queryData);
-		$this->assertRegExp('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
-		$this->assertRegExp('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^SELECT\s+`TestModel4`\.`id`, `TestModel4`\.`name`, `TestModel4`\.`created`, `TestModel4`\.`updated`\s+/', $result);
+		$this->assertMatchesRegularExpression('/\s+FROM\s+\S+`test_model4` AS `TestModel4`\s+WHERE\s+(?:\()?1\s+=\s+1(?:\))?\s*$/', $result);
 
 		$this->Model->hasAndBelongsToMany['TestModel7'] = $backup;
 	}
@@ -2105,7 +2105,7 @@ SQL;
 
 		$result = $this->Dbo->conditions('Sportstaette.sportstaette LIKE "%ru%" AND Sportstaette.sportstaettenart_id = 2');
 		$expected = ' WHERE `Sportstaette`.`sportstaette` LIKE "%ru%" AND `Sportstaette`.`sportstaettenart_id` = 2';
-		$this->assertRegExp('/\s*WHERE\s+`Sportstaette`\.`sportstaette`\s+LIKE\s+"%ru%"\s+AND\s+`Sports/', $result);
+		$this->assertMatchesRegularExpression('/\s*WHERE\s+`Sportstaette`\.`sportstaette`\s+LIKE\s+"%ru%"\s+AND\s+`Sports/', $result);
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Dbo->conditions('Sportstaette.sportstaettenart_id = 2 AND Sportstaette.sportstaette LIKE "%ru%"');
@@ -2223,46 +2223,46 @@ SQL;
  */
 	public function testParenthesisInStringConditions() {
 		$result = $this->Dbo->conditions('Member.name = \'(lu\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(lu\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \')lu\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\)lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\)lu\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'va(lu\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'va)lu\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\)lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\)lu\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'va(lu)\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'va(lu)e\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)e\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)e\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano)\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano)iglesias\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano) iglesias\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\) iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\) iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano word) iglesias\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano word\) iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano word\) iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano.iglesias)\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\)\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'Mariano Iglesias (mariano.iglesias)\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\)\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'Mariano Iglesias (mariano.iglesias) CakePHP\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\) CakePHP\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\) CakePHP\'$/', $result);
 
 		$result = $this->Dbo->conditions('Member.name = \'(mariano.iglesias) CakePHP\'');
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\) CakePHP\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\) CakePHP\'$/', $result);
 	}
 
 /**
@@ -2272,46 +2272,46 @@ SQL;
  */
 	public function testParenthesisInArrayConditions() {
 		$result = $this->Dbo->conditions(array('Member.name' => '(lu'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(lu\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => ')lu'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\)lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\)lu\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'va(lu'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'va)lu'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\)lu\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\)lu\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'va(lu)'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'va(lu)e'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)e\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'va\(lu\)e\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano)'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano)iglesias'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\)iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano) iglesias'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\) iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano\) iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano word) iglesias'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano word\) iglesias\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano word\) iglesias\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano.iglesias)'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\)\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'Mariano Iglesias (mariano.iglesias)'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\)\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\)\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => 'Mariano Iglesias (mariano.iglesias) CakePHP'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\) CakePHP\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'Mariano Iglesias \(mariano.iglesias\) CakePHP\'$/', $result);
 
 		$result = $this->Dbo->conditions(array('Member.name' => '(mariano.iglesias) CakePHP'));
-		$this->assertRegExp('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\) CakePHP\'$/', $result);
+		$this->assertMatchesRegularExpression('/^\s+WHERE\s+`Member`.`name`\s+=\s+\'\(mariano.iglesias\) CakePHP\'$/', $result);
 	}
 
 /**
@@ -2322,10 +2322,10 @@ SQL;
 	public function testArrayConditionsParsing() {
 		$this->loadFixtures('Post', 'Author');
 		$result = $this->Dbo->conditions(array('Stereo.type' => 'in dash speakers'));
-		$this->assertRegExp("/^\s+WHERE\s+`Stereo`.`type`\s+=\s+'in dash speakers'/", $result);
+		$this->assertMatchesRegularExpression("/^\s+WHERE\s+`Stereo`.`type`\s+=\s+'in dash speakers'/", $result);
 
 		$result = $this->Dbo->conditions(array('Candy.name LIKE' => 'a', 'HardCandy.name LIKE' => 'c'));
-		$this->assertRegExp("/^\s+WHERE\s+`Candy`.`name` LIKE\s+'a'\s+AND\s+`HardCandy`.`name`\s+LIKE\s+'c'/", $result);
+		$this->assertMatchesRegularExpression("/^\s+WHERE\s+`Candy`.`name` LIKE\s+'a'\s+AND\s+`HardCandy`.`name`\s+LIKE\s+'c'/", $result);
 
 		$result = $this->Dbo->conditions(array('HardCandy.name LIKE' => 'a', 'Candy.name LIKE' => 'c'));
 		$expected = " WHERE `HardCandy`.`name` LIKE 'a' AND `Candy`.`name` LIKE 'c'";
@@ -2473,10 +2473,10 @@ SQL;
 			'NOT' => array('Course.id' => null, 'Course.vet' => 'N', 'level_of_education_id' => array(912, 999)),
 			'Enrollment.yearcompleted >' => '0')
 		);
-		$this->assertRegExp('/^\s*WHERE\s+\(NOT\s+\(`Course`\.`id` IS NULL\)\s+AND NOT\s+\(`Course`\.`vet`\s+=\s+\'N\'\)\s+AND NOT\s+\(`level_of_education_id` IN \(912, 999\)\)\)\s+AND\s+`Enrollment`\.`yearcompleted`\s+>\s+\'0\'\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*WHERE\s+\(NOT\s+\(`Course`\.`id` IS NULL\)\s+AND NOT\s+\(`Course`\.`vet`\s+=\s+\'N\'\)\s+AND NOT\s+\(`level_of_education_id` IN \(912, 999\)\)\)\s+AND\s+`Enrollment`\.`yearcompleted`\s+>\s+\'0\'\s*$/', $result);
 
 		$result = $this->Dbo->conditions(array('id <>' => '8'));
-		$this->assertRegExp('/^\s*WHERE\s+`id`\s+<>\s+\'8\'\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*WHERE\s+`id`\s+<>\s+\'8\'\s*$/', $result);
 
 		$result = $this->Dbo->conditions(array('TestModel.field =' => 'gribe$@()lu'));
 		$expected = " WHERE `TestModel`.`field` = 'gribe$@()lu'";
@@ -2649,7 +2649,7 @@ SQL;
 			'1=1 GROUP BY Thread.project_id'
 		);
 		$result = $this->Dbo->conditions($conditions);
-		$this->assertRegExp('/^\s*WHERE\s+`Thread`.`project_id`\s*=\s*5\s+AND\s+`Thread`.`buyer_id`\s*=\s*14\s+AND\s+1\s*=\s*1\s+GROUP BY `Thread`.`project_id`$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*WHERE\s+`Thread`.`project_id`\s*=\s*5\s+AND\s+`Thread`.`buyer_id`\s*=\s*14\s+AND\s+1\s*=\s*1\s+GROUP BY `Thread`.`project_id`$/', $result);
 	}
 
 /**
@@ -2659,10 +2659,10 @@ SQL;
  */
 	public function testConditionsOptionalArguments() {
 		$result = $this->Dbo->conditions(array('Member.name' => 'Mariano'), true, false);
-		$this->assertRegExp('/^\s*`Member`.`name`\s*=\s*\'Mariano\'\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*`Member`.`name`\s*=\s*\'Mariano\'\s*$/', $result);
 
 		$result = $this->Dbo->conditions(array(), true, false);
-		$this->assertRegExp('/^\s*1\s*=\s*1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*1\s*=\s*1\s*$/', $result);
 	}
 
 /**
@@ -2849,19 +2849,19 @@ SQL;
 			'fields' => 'id', 'table' => 'table', 'conditions' => 'WHERE 1=1',
 			'alias' => '', 'joins' => '', 'order' => '', 'limit' => '', 'group' => ''
 		));
-		$this->assertRegExp('/^\s*SELECT\s+id\s+FROM\s+table\s+WHERE\s+1=1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*SELECT\s+id\s+FROM\s+table\s+WHERE\s+1=1\s*$/', $result);
 
 		$result = $this->Dbo->renderStatement('update', array('fields' => 'value=2', 'table' => 'table', 'conditions' => 'WHERE 1=1', 'alias' => ''));
-		$this->assertRegExp('/^\s*UPDATE\s+table\s+SET\s+value=2\s+WHERE\s+1=1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*UPDATE\s+table\s+SET\s+value=2\s+WHERE\s+1=1\s*$/', $result);
 
 		$result = $this->Dbo->renderStatement('update', array('fields' => 'value=2', 'table' => 'table', 'conditions' => 'WHERE 1=1', 'alias' => 'alias', 'joins' => ''));
-		$this->assertRegExp('/^\s*UPDATE\s+table\s+AS\s+alias\s+SET\s+value=2\s+WHERE\s+1=1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*UPDATE\s+table\s+AS\s+alias\s+SET\s+value=2\s+WHERE\s+1=1\s*$/', $result);
 
 		$result = $this->Dbo->renderStatement('delete', array('fields' => 'value=2', 'table' => 'table', 'conditions' => 'WHERE 1=1', 'alias' => ''));
-		$this->assertRegExp('/^\s*DELETE\s+FROM\s+table\s+WHERE\s+1=1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*DELETE\s+FROM\s+table\s+WHERE\s+1=1\s*$/', $result);
 
 		$result = $this->Dbo->renderStatement('delete', array('fields' => 'value=2', 'table' => 'table', 'conditions' => 'WHERE 1=1', 'alias' => 'alias', 'joins' => ''));
-		$this->assertRegExp('/^\s*DELETE\s+alias\s+FROM\s+table\s+AS\s+alias\s+WHERE\s+1=1\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*DELETE\s+alias\s+FROM\s+table\s+AS\s+alias\s+WHERE\s+1=1\s*$/', $result);
 	}
 
 /**
@@ -2877,7 +2877,7 @@ SQL;
 		$this->assertTrue(empty($result));
 
 		$result = $this->Dbo->dropSchema($Schema, 'table');
-		$this->assertRegExp('/^\s*DROP TABLE IF EXISTS\s+' . $this->Dbo->fullTableName('table') . ';\s*$/s', $result);
+		$this->assertMatchesRegularExpression('/^\s*DROP TABLE IF EXISTS\s+' . $this->Dbo->fullTableName('table') . ';\s*$/s', $result);
 	}
 
 /**
@@ -2907,56 +2907,56 @@ SQL;
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Dbo->order("title, id");
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
 
 		$result = $this->Dbo->order("title desc, id desc");
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+desc,\s+`id`\s+desc\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+desc,\s+`id`\s+desc\s*$/', $result);
 
 		$result = $this->Dbo->order(array("title desc, id desc"));
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+desc,\s+`id`\s+desc\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+desc,\s+`id`\s+desc\s*$/', $result);
 
 		$result = $this->Dbo->order(array("title", "id"));
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
 
 		$result = $this->Dbo->order(array(array('title'), array('id')));
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+ASC,\s+`id`\s+ASC\s*$/', $result);
 
 		$result = $this->Dbo->order(array("Post.title" => 'asc', "Post.id" => 'desc'));
-		$this->assertRegExp('/^\s*ORDER BY\s+`Post`.`title`\s+asc,\s+`Post`.`id`\s+desc\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`Post`.`title`\s+asc,\s+`Post`.`id`\s+desc\s*$/', $result);
 
 		$result = $this->Dbo->order(array(array("Post.title" => 'asc', "Post.id" => 'desc')));
-		$this->assertRegExp('/^\s*ORDER BY\s+`Post`.`title`\s+asc,\s+`Post`.`id`\s+desc\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`Post`.`title`\s+asc,\s+`Post`.`id`\s+desc\s*$/', $result);
 
 		$result = $this->Dbo->order(array("title"));
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+ASC\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+ASC\s*$/', $result);
 
 		$result = $this->Dbo->order(array(array("title")));
-		$this->assertRegExp('/^\s*ORDER BY\s+`title`\s+ASC\s*$/', $result);
+		$this->assertMatchesRegularExpression('/^\s*ORDER BY\s+`title`\s+ASC\s*$/', $result);
 
 		$result = $this->Dbo->order("Dealer.id = 7 desc, Dealer.id = 3 desc, Dealer.title asc");
 		$expected = " ORDER BY `Dealer`.`id` = 7 desc, `Dealer`.`id` = 3 desc, `Dealer`.`title` asc";
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Dbo->order(array("Page.name" => "='test' DESC"));
-		$this->assertRegExp("/^\s*ORDER BY\s+`Page`\.`name`\s*='test'\s+DESC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+`Page`\.`name`\s*='test'\s+DESC\s*$/", $result);
 
 		$result = $this->Dbo->order("Page.name = 'view' DESC");
-		$this->assertRegExp("/^\s*ORDER BY\s+`Page`\.`name`\s*=\s*'view'\s+DESC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+`Page`\.`name`\s*=\s*'view'\s+DESC\s*$/", $result);
 
 		$result = $this->Dbo->order("(Post.views)");
-		$this->assertRegExp("/^\s*ORDER BY\s+\(`Post`\.`views`\)\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+\(`Post`\.`views`\)\s+ASC\s*$/", $result);
 
 		$result = $this->Dbo->order("(Post.views)*Post.views");
-		$this->assertRegExp("/^\s*ORDER BY\s+\(`Post`\.`views`\)\*`Post`\.`views`\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+\(`Post`\.`views`\)\*`Post`\.`views`\s+ASC\s*$/", $result);
 
 		$result = $this->Dbo->order("(Post.views) * Post.views");
-		$this->assertRegExp("/^\s*ORDER BY\s+\(`Post`\.`views`\) \* `Post`\.`views`\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+\(`Post`\.`views`\) \* `Post`\.`views`\s+ASC\s*$/", $result);
 
 		$result = $this->Dbo->order("(Model.field1 + Model.field2) * Model.field3");
-		$this->assertRegExp("/^\s*ORDER BY\s+\(`Model`\.`field1` \+ `Model`\.`field2`\) \* `Model`\.`field3`\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+\(`Model`\.`field1` \+ `Model`\.`field2`\) \* `Model`\.`field3`\s+ASC\s*$/", $result);
 
 		$result = $this->Dbo->order("Model.name+0 ASC");
-		$this->assertRegExp("/^\s*ORDER BY\s+`Model`\.`name`\+0\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+`Model`\.`name`\+0\s+ASC\s*$/", $result);
 
 		$result = $this->Dbo->order("Anuncio.destaque & 2 DESC");
 		$expected = ' ORDER BY `Anuncio`.`destaque` & 2 DESC';
@@ -2978,7 +2978,7 @@ SQL;
  */
 	public function testComplexSortExpression() {
 		$result = $this->Dbo->order(array('(Model.field > 100) DESC', 'Model.field ASC'));
-		$this->assertRegExp("/^\s*ORDER BY\s+\(`Model`\.`field`\s+>\s+100\)\s+DESC,\s+`Model`\.`field`\s+ASC\s*$/", $result);
+		$this->assertMatchesRegularExpression("/^\s*ORDER BY\s+\(`Model`\.`field`\s+>\s+100\)\s+DESC,\s+`Model`\.`field`\s+ASC\s*$/", $result);
 	}
 
 /**
@@ -3581,9 +3581,9 @@ SQL;
 		$conditions = array('distance >=' => 20);
 		$result = $this->Dbo->conditions($conditions, true, true, $Article);
 
-		$this->assertRegExp('/\) >= 20/', $result);
-		$this->assertRegExp('/[`\'"]Article[`\'"].[`\'"]latitude[`\'"]/', $result);
-		$this->assertRegExp('/[`\'"]Article[`\'"].[`\'"]longitude[`\'"]/', $result);
+		$this->assertMatchesRegularExpression('/\) >= 20/', $result);
+		$this->assertMatchesRegularExpression('/[`\'"]Article[`\'"].[`\'"]latitude[`\'"]/', $result);
+		$this->assertMatchesRegularExpression('/[`\'"]Article[`\'"].[`\'"]longitude[`\'"]/', $result);
 	}
 
 /**
@@ -3625,7 +3625,7 @@ SQL;
 		);
 		$result = $this->Dbo->fields($Article, null, array());
 		$result = $this->Dbo->fields($Article, $Article->alias, $result);
-		$this->assertRegExp('/[`\"]User[`\"]\.[`\"]id[`\"] \+ [`\"]User[`\"]\.[`\"]id[`\"]/', $result[7]);
+		$this->assertMatchesRegularExpression('/[`\"]User[`\"]\.[`\"]id[`\"] \+ [`\"]User[`\"]\.[`\"]id[`\"]/', $result[7]);
 	}
 
 /**
@@ -3667,9 +3667,9 @@ SQL;
 		$qe = $this->Dbo->endQuote;
 
 		$this->assertEquals("{$qs}Article{$qe}.{$qs}id{$qe}", $result[0]);
-		$this->assertRegExp('/Article__distance/', $result[1]);
-		$this->assertRegExp('/[`\'"]Article[`\'"].[`\'"]latitude[`\'"]/', $result[1]);
-		$this->assertRegExp('/[`\'"]Article[`\'"].[`\'"]longitude[`\'"]/', $result[1]);
+		$this->assertMatchesRegularExpression('/Article__distance/', $result[1]);
+		$this->assertMatchesRegularExpression('/[`\'"]Article[`\'"].[`\'"]latitude[`\'"]/', $result[1]);
+		$this->assertMatchesRegularExpression('/[`\'"]Article[`\'"].[`\'"]longitude[`\'"]/', $result[1]);
 	}
 
 /**

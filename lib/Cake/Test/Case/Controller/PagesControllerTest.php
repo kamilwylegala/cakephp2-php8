@@ -41,12 +41,12 @@ class PagesControllerTest extends CakeTestCase {
 
 		$Pages->viewPath = 'Posts';
 		$Pages->display('index');
-		$this->assertRegExp('/posts index/', $Pages->response->body());
+		$this->assertMatchesRegularExpression('/posts index/', $Pages->response->body());
 		$this->assertEquals('index', $Pages->viewVars['page']);
 
 		$Pages->viewPath = 'Themed';
 		$Pages->display('TestTheme', 'Posts', 'index');
-		$this->assertRegExp('/posts index themed view/', $Pages->response->body());
+		$this->assertMatchesRegularExpression('/posts index themed view/', $Pages->response->body());
 		$this->assertEquals('TestTheme', $Pages->viewVars['page']);
 		$this->assertEquals('Posts', $Pages->viewVars['subpage']);
 	}

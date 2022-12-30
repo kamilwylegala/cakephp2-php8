@@ -448,7 +448,7 @@ class ControllerTaskTest extends CakeTestCase {
 		)->will($this->returnValue(true));
 
 		$result = $this->Task->execute();
-		$this->assertRegExp('/admin_index/', $result);
+		$this->assertMatchesRegularExpression('/admin_index/', $result);
 	}
 
 /**
