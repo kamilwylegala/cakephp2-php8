@@ -1027,7 +1027,7 @@ SQL;
 		);
 		$result = $this->Dbo->createSchema($schema, 'no_indexes');
 		$this->assertStringContainsString('PRIMARY KEY  (`id`)', $result);
-		$this->assertNotContains('UNIQUE KEY', $result);
+		$this->assertStringNotContainsString('UNIQUE KEY', $result);
 
 		$schema->tables = array(
 			'primary_index' => array(

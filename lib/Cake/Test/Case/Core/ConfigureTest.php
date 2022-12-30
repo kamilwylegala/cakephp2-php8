@@ -524,7 +524,7 @@ class ConfigureTest extends CakeTestCase {
 		$this->assertStringContainsString('<?php', $result);
 		$this->assertStringContainsString('$config = ', $result);
 		$this->assertStringContainsString('Error', $result);
-		$this->assertNotContains('debug', $result);
+		$this->assertStringNotContainsString('debug', $result);
 
 		if (file_exists(TMP . 'config_test.php')) {
 			unlink(TMP . 'config_test.php');

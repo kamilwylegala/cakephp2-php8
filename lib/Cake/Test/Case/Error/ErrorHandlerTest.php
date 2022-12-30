@@ -269,7 +269,7 @@ class ErrorHandlerTest extends CakeTestCase {
 		$this->assertMatchesRegularExpression('/Fooled you!/', $result, 'message missing.');
 
 		$log = file(LOGS . 'error.log');
-		$this->assertNotContains('[NotFoundException] Kaboom!', $log[0], 'message should not be logged.');
+		$this->assertStringNotContainsString('[NotFoundException] Kaboom!', $log[0], 'message should not be logged.');
 		$this->assertStringContainsString('[ForbiddenException] Fooled you!', $log[0], 'message missing.');
 	}
 
@@ -318,8 +318,8 @@ class ErrorHandlerTest extends CakeTestCase {
 		Configure::write('debug', 0);
 		ErrorHandler::handleFatalError(E_ERROR, 'Something wrong', __FILE__, $line);
 		$result = ob_get_clean();
-		$this->assertNotContains('Something wrong', $result, 'message must not appear.');
-		$this->assertNotContains(__FILE__, $result, 'filename must not appear.');
+		$this->assertStringNotContainsString('Something wrong', $result, 'message must not appear.');
+		$this->assertStringNotContainsString(__FILE__, $result, 'filename must not appear.');
 		$this->assertStringContainsString('An Internal Error Has Occurred', $result);
 	}
 

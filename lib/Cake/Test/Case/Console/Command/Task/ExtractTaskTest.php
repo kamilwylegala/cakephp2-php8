@@ -450,7 +450,7 @@ class ExtractTaskTest extends CakeTestCase {
 		$this->assertStringContainsString('msgid "Post title is required"', $result);
 		$this->assertStringContainsString('msgid "Post body is required"', $result);
 		$this->assertStringContainsString('msgid "Post body is super required"', $result);
-		$this->assertNotContains('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
+		$this->assertStringNotContainsString('Plugin/TestPlugin/Model/TestPluginPost.php:validation for field title', $result);
 	}
 
 /**

@@ -359,7 +359,7 @@ class ViewTaskTest extends CakeTestCase {
 		$path = APP . 'Plugin' . DS . 'TestTest' . DS . 'View' . DS . 'ViewTaskComments' . DS . 'view.ctp';
 
 		$result = $this->Task->getContent('index');
-		$this->assertNotContains('List Test Test.view Task Articles', $result);
+		$this->assertStringNotContainsString('List Test Test.view Task Articles', $result);
 
 		$this->Task->expects($this->once())
 			->method('createFile')
