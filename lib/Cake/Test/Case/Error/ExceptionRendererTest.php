@@ -452,8 +452,8 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertNotRegExp('#<script>document#', $result);
-		$this->assertNotRegExp('#alert\(t\);</script>#', $result);
+		$this->assertDoesNotMatchRegularExpression('#<script>document#', $result);
+		$this->assertDoesNotMatchRegularExpression('#alert\(t\);</script>#', $result);
 	}
 
 /**

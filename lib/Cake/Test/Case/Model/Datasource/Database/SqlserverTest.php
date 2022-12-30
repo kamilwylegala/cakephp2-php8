@@ -645,7 +645,7 @@ class SqlserverTest extends CakeTestCase {
 		$this->db->update($this->model, $fields, null, $conditions);
 
 		$result = $this->db->getLastQuery();
-		$this->assertNotRegExp('/SqlserverTestModel/', $result);
+		$this->assertDoesNotMatchRegularExpression('/SqlserverTestModel/', $result);
 		$this->assertMatchesRegularExpression('/^UPDATE \[sqlserver_test_models\]/', $result);
 		$this->assertMatchesRegularExpression('/SET \[client_id\] = \[client_id\] \+ 1/', $result);
 	}

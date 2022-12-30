@@ -807,7 +807,7 @@ class BasicsTest extends CakeTestCase {
 
 		$result = file_get_contents(LOGS . 'error.log');
 		$this->assertMatchesRegularExpression('/Error: Testing LogError\(\) basic function/', $result);
-		$this->assertNotRegExp("/Error: Testing with\nmulti-line\nstring/", $result);
+		$this->assertDoesNotMatchRegularExpression("/Error: Testing with\nmulti-line\nstring/", $result);
 		$this->assertMatchesRegularExpression('/Error: Testing with multi-line string/', $result);
 	}
 

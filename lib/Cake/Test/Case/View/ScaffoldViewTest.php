@@ -286,7 +286,7 @@ class ScaffoldViewTest extends CakeTestCase {
 		//check related table
 		$this->assertMatchesRegularExpression('/<div class="related">\s*<h3>Related Scaffold Comments<\/h3>\s*<table cellpadding="0" cellspacing="0">/', $result);
 		$this->assertMatchesRegularExpression('/<li><a href="\/scaffold_comments\/add">New Comment<\/a><\/li>/', $result);
-		$this->assertNotRegExp('/<th>JoinThing<\/th>/', $result);
+		$this->assertDoesNotMatchRegularExpression('/<th>JoinThing<\/th>/', $result);
 	}
 
 /**
