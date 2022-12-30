@@ -182,7 +182,7 @@ class HelperCollectionTest extends CakeTestCase {
 		$this->assertEquals(array('Form', 'Html'), $result, 'loaded helpers is wrong');
 
 		$this->Helpers->unload('Html');
-		$this->assertNotContains('Html', $this->Helpers->loaded());
+		$this->assertNotContains( 'Html', $this->Helpers->loaded());
 		$this->assertContains('Form', $this->Helpers->loaded());
 
 		$result = $this->Helpers->loaded();

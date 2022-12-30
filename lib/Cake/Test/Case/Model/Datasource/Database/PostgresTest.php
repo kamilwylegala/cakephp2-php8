@@ -866,8 +866,8 @@ class PostgresTest extends CakeTestCase {
 		));
 		$this->assertStringContainsString('RENAME "title" TO "subject";', $query);
 		$this->assertStringContainsString('ALTER COLUMN "subject" TYPE', $query);
-		$this->assertNotContains(";\n\tALTER COLUMN \"subject\" TYPE", $query);
-		$this->assertNotContains('ALTER COLUMN "title" TYPE "subject"', $query);
+		$this->assertStringNotContainsString(";\n\tALTER COLUMN \"subject\" TYPE", $query);
+		$this->assertStringNotContainsString('ALTER COLUMN "title" TYPE "subject"', $query);
 	}
 
 /**
@@ -1141,7 +1141,7 @@ class PostgresTest extends CakeTestCase {
 
 		$result = $db->limit(10, 300000000000000000000000000000);
 		$scientificNotation = sprintf('%.1E', 300000000000000000000000000000);
-		$this->assertNotContains($scientificNotation, $result);
+		$this->assertStringNotContainsString($scientificNotation, $result);
 	}
 
 /**

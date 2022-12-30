@@ -169,7 +169,7 @@ class DebuggerTest extends CakeTestCase {
 		$b = $a['<script>alert(1)</script>'];
 		$result = ob_get_clean();
 
-		$this->assertNotContains('<script>alert(1)', $result);
+		$this->assertStringNotContainsString('<script>alert(1)', $result);
 		$this->assertStringContainsString('&lt;script&gt;alert(1)', $result);
 	}
 
@@ -507,7 +507,7 @@ TEXT;
 		Debugger::log($val, LOG_DEBUG, 0);
 		$result = file_get_contents(LOGS . 'debug.log');
 		$this->assertStringContainsString('DebuggerTest::testLog', $result);
-		$this->assertNotContains("/'val'/", $result);
+		$this->assertStringNotContainsString("/'val'/", $result);
 
 		unlink(LOGS . 'debug.log');
 	}

@@ -734,7 +734,7 @@ class CakeLogTest extends CakeTestCase {
 		CakeLog::write('eggs', $testMessage);
 		CakeLog::defaultLevels();
 		$contents = file_get_contents(LOGS . 'spam.log');
-		$this->assertNotContains('Eggs: ' . $testMessage, $contents);
+		$this->assertStringNotContainsString('Eggs: ' . $testMessage, $contents);
 		$contents = file_get_contents(LOGS . 'eggs.log');
 		$this->assertStringContainsString('Eggs: ' . $testMessage, $contents);
 
