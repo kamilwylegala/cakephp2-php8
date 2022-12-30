@@ -298,7 +298,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		ob_start();
 		$renderer->render();
 		$result = ob_get_clean();
-		$this->assertContains('<b>peeled</b>', $result);
+		$this->assertStringContainsString('<b>peeled</b>', $result);
 	}
 
 /**
@@ -318,7 +318,7 @@ class ExceptionRendererTest extends CakeTestCase {
 
 		$this->assertFalse(method_exists($ExceptionRenderer, 'missingWidgetThing'), 'no method should exist.');
 		$this->assertEquals('error400', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('coding fail', $result, 'Text should show up.');
+		$this->assertStringContainsString('coding fail', $result, 'Text should show up.');
 	}
 
 /**
@@ -339,7 +339,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('foul ball.', $result, 'Text should show up as its debug mode.');
+		$this->assertStringContainsString('foul ball.', $result, 'Text should show up as its debug mode.');
 	}
 
 /**
@@ -363,7 +363,7 @@ class ExceptionRendererTest extends CakeTestCase {
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
 		$this->assertNotContains('foul ball.', $result, 'Text should no show up.');
-		$this->assertContains('Internal Error', $result, 'Generic message only.');
+		$this->assertStringContainsString('Internal Error', $result, 'Generic message only.');
 	}
 
 /**
@@ -382,7 +382,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('foul ball.', $result, 'Text should show up as its debug mode.');
+		$this->assertStringContainsString('foul ball.', $result, 'Text should show up as its debug mode.');
 	}
 
 /**
@@ -423,7 +423,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		ob_start();
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
-		$this->assertContains('Custom message', $result);
+		$this->assertStringContainsString('Custom message', $result);
 
 		$exception = new MissingActionException(array('controller' => 'PostsController', 'action' => 'index'));
 		$ExceptionRenderer = $this->_mockResponse(new ExceptionRenderer($exception));
@@ -431,7 +431,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		ob_start();
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
-		$this->assertContains('Not Found', $result);
+		$this->assertStringContainsString('Not Found', $result);
 	}
 
 /**
@@ -853,7 +853,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertContains('Internal Error', $result);
+		$this->assertStringContainsString('Internal Error', $result);
 	}
 
 /**
@@ -873,10 +873,10 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertContains('<h2>Database Error</h2>', $result);
-		$this->assertContains('There was an error in the SQL query', $result);
-		$this->assertContains(h('SELECT * from poo_query < 5 and :seven'), $result);
-		$this->assertContains("'seven' => (int) 7", $result);
+		$this->assertStringContainsString('<h2>Database Error</h2>', $result);
+		$this->assertStringContainsString('There was an error in the SQL query', $result);
+		$this->assertStringContainsString(h('SELECT * from poo_query < 5 and :seven'), $result);
+		$this->assertStringContainsString("'seven' => (int) 7", $result);
 	}
 
 /**

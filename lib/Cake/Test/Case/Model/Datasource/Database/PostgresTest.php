@@ -568,8 +568,8 @@ class PostgresTest extends CakeTestCase {
 
 		$this->assertDoesNotMatchRegularExpression('/timestamp DEFAULT/', $result);
 		$this->assertMatchesRegularExpression('/\"full_length\"\s*text\s.*,/', $result);
-		$this->assertContains('timestamp ,', $result);
-		$this->assertContains('"huge_int" bigint NOT NULL,', $result);
+		$this->assertStringContainsString('timestamp ,', $result);
+		$this->assertStringContainsString('"huge_int" bigint NOT NULL,', $result);
 
 		$db1->query('DROP TABLE ' . $db1->fullTableName('datatype_tests'));
 
@@ -612,7 +612,7 @@ class PostgresTest extends CakeTestCase {
 		);
 		$result = $db1->createSchema($schema, 'bigserial_tests');
 
-		$this->assertContains('"id" bigserial NOT NULL,', $result);
+		$this->assertStringContainsString('"id" bigserial NOT NULL,', $result);
 
 		$db1->query('DROP TABLE ' . $db1->fullTableName('bigserial_tests'));
 	}
@@ -864,8 +864,8 @@ class PostgresTest extends CakeTestCase {
 				)
 			)
 		));
-		$this->assertContains('RENAME "title" TO "subject";', $query);
-		$this->assertContains('ALTER COLUMN "subject" TYPE', $query);
+		$this->assertStringContainsString('RENAME "title" TO "subject";', $query);
+		$this->assertStringContainsString('ALTER COLUMN "subject" TYPE', $query);
 		$this->assertNotContains(";\n\tALTER COLUMN \"subject\" TYPE", $query);
 		$this->assertNotContains('ALTER COLUMN "title" TYPE "subject"', $query);
 	}

@@ -86,8 +86,8 @@ class MailTransportTest extends CakeTestCase {
 
 		$result = $this->MailTransport->send($email);
 
-		$this->assertContains('Subject: ', $result['headers']);
-		$this->assertContains('To: ', $result['headers']);
+		$this->assertStringContainsString('Subject: ', $result['headers']);
+		$this->assertStringContainsString('To: ', $result['headers']);
 	}
 
 }
