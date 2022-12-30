@@ -614,10 +614,10 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$encoding = strtolower(Configure::read('App.encoding'));
 		$result = $this->Form->create('Contact', array('type' => 'get', 'url' => '/contacts/add'));
-		$this->assertNotContains('Token', $result);
+		$this->assertStringNotContainsString('Token', $result);
 
 		$result = $this->Form->end('Save');
-		$this->assertNotContains('Token', $result);
+		$this->assertStringNotContainsString('Token', $result);
 	}
 
 /**
@@ -1837,7 +1837,7 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->Form->create('Address', array('url' => '/articles/view/1'));
 		$result = $this->Form->secure();
-		$this->assertNotContains($expected, $result, 'URL is different');
+		$this->assertStringNotContainsString($expected, $result, 'URL is different');
 	}
 
 /**
@@ -8198,7 +8198,7 @@ class FormHelperTest extends CakeTestCase {
 				)
 		);
 		$this->assertStringContainsString('value="' . date('m') . '" selected="selected"', $result);
-		$this->assertNotContains('value="2008" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="2008" selected="selected"', $result);
 
 		$result = $this->Form->input('just_year',
 			array(
@@ -8209,7 +8209,7 @@ class FormHelperTest extends CakeTestCase {
 				'maxYear' => date('Y', strtotime('+20 years'))
 			)
 		);
-		$this->assertNotContains('value="' . date('Y') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('Y') . '" selected="selected"', $result);
 
 		$result = $this->Form->input('just_month',
 			array(
@@ -8219,7 +8219,7 @@ class FormHelperTest extends CakeTestCase {
 				'empty' => false,
 			)
 		);
-		$this->assertNotContains('value="' . date('m') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('m') . '" selected="selected"', $result);
 
 		$result = $this->Form->input('just_day',
 			array(
@@ -8229,7 +8229,7 @@ class FormHelperTest extends CakeTestCase {
 				'empty' => false,
 			)
 		);
-		$this->assertNotContains('value="' . date('d') . '" selected="selected"', $result);
+		$this->assertStringNotContainsString('value="' . date('d') . '" selected="selected"', $result);
 	}
 
 /**
@@ -8317,11 +8317,11 @@ class FormHelperTest extends CakeTestCase {
 		$result = $this->Form->input('lap_time', array(
 			'type' => 'text',
 		));
-		$this->assertNotContains('maxlength=', $result);
+		$this->assertStringNotContainsString('maxlength=', $result);
 		$result = $this->Form->input('last_seen', array(
 			'type' => 'text',
 		));
-		$this->assertNotContains('maxlength=', $result);
+		$this->assertStringNotContainsString('maxlength=', $result);
 	}
 
 /**

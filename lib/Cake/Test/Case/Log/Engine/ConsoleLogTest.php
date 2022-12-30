@@ -125,7 +125,7 @@ class ConsoleLogTest extends CakeTestCase {
 		$this->assertTrue(file_exists(LOGS . 'error.log'), 'error.log missing');
 		$this->assertTrue(file_exists(LOGS . 'debug.log'), 'debug.log missing');
 		$logOutput = file_get_contents(LOGS . 'error.log');
-		$this->assertNotContains($message, $logOutput);
+		$this->assertStringNotContainsString($message, $logOutput);
 		$logOutput = file_get_contents(LOGS . 'debug.log');
 		$this->assertStringContainsString($message, $logOutput);
 	}

@@ -448,7 +448,7 @@ class FixtureTaskTest extends CakeTestCase {
 		$this->assertStringContainsString('class ArticleFixture extends CakeTestFixture', $result);
 		$this->assertStringContainsString('public $fields', $result);
 		$this->assertStringContainsString('public $records', $result);
-		$this->assertNotContains('public $import', $result);
+		$this->assertStringNotContainsString('public $import', $result);
 
 		$result = $this->Task->bake('Article', 'comments');
 		$this->assertStringContainsString('class ArticleFixture extends CakeTestFixture', $result);
@@ -457,16 +457,16 @@ class FixtureTaskTest extends CakeTestCase {
 
 		$result = $this->Task->bake('Article', 'comments', array('records' => true));
 		$this->assertStringContainsString("public \$import = array('records' => true, 'connection' => 'test');", $result);
-		$this->assertNotContains('public $records', $result);
+		$this->assertStringNotContainsString('public $records', $result);
 
 		$result = $this->Task->bake('Article', 'comments', array('schema' => 'Article'));
 		$this->assertStringContainsString("public \$import = array('model' => 'Article', 'connection' => 'test');", $result);
-		$this->assertNotContains('public $fields', $result);
+		$this->assertStringNotContainsString('public $fields', $result);
 
 		$result = $this->Task->bake('Article', 'comments', array('schema' => 'Article', 'records' => true));
 		$this->assertStringContainsString("public \$import = array('model' => 'Article', 'records' => true, 'connection' => 'test');", $result);
-		$this->assertNotContains('public $fields', $result);
-		$this->assertNotContains('public $records', $result);
+		$this->assertStringNotContainsString('public $fields', $result);
+		$this->assertStringNotContainsString('public $records', $result);
 	}
 
 /**

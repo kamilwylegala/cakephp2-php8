@@ -436,12 +436,12 @@ class TestTaskTest extends CakeTestCase {
 		$this->assertStringContainsString("App::uses('TestTaskCommentsController', 'Controller')", $result);
 		$this->assertStringContainsString('class TestTaskCommentsControllerTest extends ControllerTestCase', $result);
 
-		$this->assertNotContains('function setUp()', $result);
-		$this->assertNotContains("\$this->TestTaskComments = new TestTaskCommentsController()", $result);
-		$this->assertNotContains("\$this->TestTaskComments->constructClasses()", $result);
+		$this->assertStringNotContainsString('function setUp()', $result);
+		$this->assertStringNotContainsString("\$this->TestTaskComments = new TestTaskCommentsController()", $result);
+		$this->assertStringNotContainsString("\$this->TestTaskComments->constructClasses()", $result);
 
-		$this->assertNotContains('function tearDown()', $result);
-		$this->assertNotContains('unset($this->TestTaskComments)', $result);
+		$this->assertStringNotContainsString('function tearDown()', $result);
+		$this->assertStringNotContainsString('unset($this->TestTaskComments)', $result);
 
 		$this->assertStringContainsString("'app.test_task_article'", $result);
 		$this->assertStringContainsString("'app.test_task_comment'", $result);

@@ -362,7 +362,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertNotContains('foul ball.', $result, 'Text should no show up.');
+		$this->assertStringNotContainsString('foul ball.', $result, 'Text should no show up.');
 		$this->assertStringContainsString('Internal Error', $result, 'Generic message only.');
 	}
 

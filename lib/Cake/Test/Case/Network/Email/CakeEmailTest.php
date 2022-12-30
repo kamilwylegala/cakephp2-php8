@@ -1462,7 +1462,7 @@ class CakeEmailTest extends CakeTestCase {
 		$result = $this->CakeEmail->send('message body.');
 
 		$this->assertStringContainsString('message body.', $result['message']);
-		$this->assertNotContains('This email was sent using the CakePHP Framework', $result['message']);
+		$this->assertStringNotContainsString('This email was sent using the CakePHP Framework', $result['message']);
 	}
 
 /**
