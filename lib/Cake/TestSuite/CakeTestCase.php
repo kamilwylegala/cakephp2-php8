@@ -296,7 +296,10 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	public function assertTextContains($needle, $haystack, $message = '', $ignoreCase = false) {
 		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
 		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
-		return $this->assertContains($needle, $haystack, $message, $ignoreCase);
+		if ($ignoreCase) {
+			return $this->assertStringContainsStringIgnoringCase($needle, $haystack, $message);
+		}
+		return $this->assertStringContainsString($needle, $haystack, $message);
 	}
 
 /**
@@ -312,7 +315,10 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 	public function assertTextNotContains($needle, $haystack, $message = '', $ignoreCase = false) {
 		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
 		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
-		return $this->assertNotContains($needle, $haystack, $message, $ignoreCase);
+		if ($ignoreCase) {
+			return $this->assertStringNotContainsStringIgnoringCase($needle, $haystack, $message);
+		}
+		return $this->assertStringNotContainsString($needle, $haystack, $message);
 	}
 
 /**
