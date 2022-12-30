@@ -499,7 +499,7 @@ SQL;
 			'testdescribes' => $result
 		));
 		$result = $this->Dbo->createSchema($schema);
-		$this->assertContains('"limit_date" timestamp NOT NULL', $result);
+		$this->assertStringContainsString('"limit_date" timestamp NOT NULL', $result);
 	}
 
 /**

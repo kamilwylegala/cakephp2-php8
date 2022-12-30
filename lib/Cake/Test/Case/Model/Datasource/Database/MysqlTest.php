@@ -166,7 +166,7 @@ class MysqlTest extends CakeTestCase {
 		$this->assertEquals('1234567.11', $result);
 
 		$result = $this->db->value(123456.45464748, 'float');
-		$this->assertContains('123456.454647', $result);
+		$this->assertStringContainsString('123456.454647', $result);
 
 		$result = $this->db->value(0.987654321, 'float');
 		$this->assertEquals('0.987654321', (string)$result);
@@ -552,10 +552,10 @@ class MysqlTest extends CakeTestCase {
 				'group2' => array('type' => 'integer', 'null' => true)
 		)));
 		$result = $this->Dbo->createSchema($schemaA);
-		$this->assertContains('`id` int(11) DEFAULT 0 NOT NULL,', $result);
-		$this->assertContains('`name` varchar(50) NOT NULL,', $result);
-		$this->assertContains('`group1` int(11) DEFAULT NULL', $result);
-		$this->assertContains('`group2` int(11) DEFAULT NULL', $result);
+		$this->assertStringContainsString('`id` int(11) DEFAULT 0 NOT NULL,', $result);
+		$this->assertStringContainsString('`name` varchar(50) NOT NULL,', $result);
+		$this->assertStringContainsString('`group1` int(11) DEFAULT NULL', $result);
+		$this->assertStringContainsString('`group2` int(11) DEFAULT NULL', $result);
 
 		//Test that the string is syntactically correct
 		$query = $this->Dbo->getConnection()->prepare($result);
@@ -577,11 +577,11 @@ class MysqlTest extends CakeTestCase {
 		)));
 
 		$result = $this->Dbo->alterSchema($schemaB->compare($schemaA));
-		$this->assertContains("ALTER TABLE $table", $result);
-		$this->assertContains('ADD KEY `name_idx` (`name`),', $result);
-		$this->assertContains('ADD KEY `group_idx` (`group1`),', $result);
-		$this->assertContains('ADD KEY `compound_idx` (`group1`, `group2`),', $result);
-		$this->assertContains('ADD PRIMARY KEY  (`id`);', $result);
+		$this->assertStringContainsString("ALTER TABLE $table", $result);
+		$this->assertStringContainsString('ADD KEY `name_idx` (`name`),', $result);
+		$this->assertStringContainsString('ADD KEY `group_idx` (`group1`),', $result);
+		$this->assertStringContainsString('ADD KEY `compound_idx` (`group1`, `group2`),', $result);
+		$this->assertStringContainsString('ADD PRIMARY KEY  (`id`);', $result);
 
 		//Test that the string is syntactically correct
 		$query = $this->Dbo->getConnection()->prepare($result);
@@ -604,15 +604,15 @@ class MysqlTest extends CakeTestCase {
 		)));
 
 		$result = $this->Dbo->alterSchema($schemaC->compare($schemaB));
-		$this->assertContains("ALTER TABLE $table", $result);
-		$this->assertContains('DROP PRIMARY KEY,', $result);
-		$this->assertContains('DROP KEY `name_idx`,', $result);
-		$this->assertContains('DROP KEY `group_idx`,', $result);
-		$this->assertContains('DROP KEY `compound_idx`,', $result);
-		$this->assertContains('ADD KEY `id_name_idx` (`id`, `name`),', $result);
-		$this->assertContains('ADD UNIQUE KEY `name_idx` (`name`),', $result);
-		$this->assertContains('ADD KEY `group_idx` (`group2`),', $result);
-		$this->assertContains('ADD KEY `compound_idx` (`group2`, `group1`);', $result);
+		$this->assertStringContainsString("ALTER TABLE $table", $result);
+		$this->assertStringContainsString('DROP PRIMARY KEY,', $result);
+		$this->assertStringContainsString('DROP KEY `name_idx`,', $result);
+		$this->assertStringContainsString('DROP KEY `group_idx`,', $result);
+		$this->assertStringContainsString('DROP KEY `compound_idx`,', $result);
+		$this->assertStringContainsString('ADD KEY `id_name_idx` (`id`, `name`),', $result);
+		$this->assertStringContainsString('ADD UNIQUE KEY `name_idx` (`name`),', $result);
+		$this->assertStringContainsString('ADD KEY `group_idx` (`group2`),', $result);
+		$this->assertStringContainsString('ADD KEY `compound_idx` (`group2`, `group1`);', $result);
 
 		$query = $this->Dbo->getConnection()->prepare($result);
 		$this->assertEquals($query->queryString, $result);
@@ -623,11 +623,11 @@ class MysqlTest extends CakeTestCase {
 		// Drop the indexes
 		$result = $this->Dbo->alterSchema($schemaA->compare($schemaC));
 
-		$this->assertContains("ALTER TABLE $table", $result);
-		$this->assertContains('DROP KEY `name_idx`,', $result);
-		$this->assertContains('DROP KEY `group_idx`,', $result);
-		$this->assertContains('DROP KEY `compound_idx`,', $result);
-		$this->assertContains('DROP KEY `id_name_idx`;', $result);
+		$this->assertStringContainsString("ALTER TABLE $table", $result);
+		$this->assertStringContainsString('DROP KEY `name_idx`,', $result);
+		$this->assertStringContainsString('DROP KEY `group_idx`,', $result);
+		$this->assertStringContainsString('DROP KEY `compound_idx`,', $result);
+		$this->assertStringContainsString('DROP KEY `id_name_idx`;', $result);
 
 		$query = $this->Dbo->getConnection()->prepare($result);
 		$this->assertEquals($query->queryString, $result);
@@ -687,10 +687,10 @@ class MysqlTest extends CakeTestCase {
 			)
 		));
 		$result = $this->Dbo->alterSchema($schemaB->compare($schemaA));
-		$this->assertContains('DEFAULT CHARSET=utf8', $result);
-		$this->assertContains('ENGINE=InnoDB', $result);
-		$this->assertContains('COLLATE=utf8_general_ci', $result);
-		$this->assertContains('COMMENT=\'Newly table added comment.\'', $result);
+		$this->assertStringContainsString('DEFAULT CHARSET=utf8', $result);
+		$this->assertStringContainsString('ENGINE=InnoDB', $result);
+		$this->assertStringContainsString('COLLATE=utf8_general_ci', $result);
+		$this->assertStringContainsString('COMMENT=\'Newly table added comment.\'', $result);
 
 		$this->Dbo->rawQuery($result);
 		$result = $this->Dbo->listDetailedSources($this->Dbo->fullTableName('altertest', false, false));
@@ -896,7 +896,7 @@ SQL;
 			'testdescribes' => $result
 		));
 		$result = $this->Dbo->createSchema($schema);
-		$this->assertContains('`limit_date` timestamp NOT NULL,', $result);
+		$this->assertStringContainsString('`limit_date` timestamp NOT NULL,', $result);
 	}
 
 /**
@@ -934,7 +934,7 @@ SQL;
 			'testdescribes' => $result
 		));
 		$result = $this->Dbo->createSchema($schema);
-		$this->assertContains('`limit_date` datetime NOT NULL,', $result);
+		$this->assertStringContainsString('`limit_date` datetime NOT NULL,', $result);
 	}
 
 /**
@@ -1007,8 +1007,8 @@ SQL;
 		));
 
 		$result = $this->Dbo->createSchema($schema);
-		$this->assertContains('`role_id` int(11) NOT NULL,', $result);
-		$this->assertContains('`user_id` int(11) NOT NULL,', $result);
+		$this->assertStringContainsString('`role_id` int(11) NOT NULL,', $result);
+		$this->assertStringContainsString('`user_id` int(11) NOT NULL,', $result);
 	}
 
 /**
@@ -1026,7 +1026,7 @@ SQL;
 			)
 		);
 		$result = $this->Dbo->createSchema($schema, 'no_indexes');
-		$this->assertContains('PRIMARY KEY  (`id`)', $result);
+		$this->assertStringContainsString('PRIMARY KEY  (`id`)', $result);
 		$this->assertNotContains('UNIQUE KEY', $result);
 
 		$schema->tables = array(
@@ -1040,8 +1040,8 @@ SQL;
 			)
 		);
 		$result = $this->Dbo->createSchema($schema, 'primary_index');
-		$this->assertContains('PRIMARY KEY  (`id`)', $result);
-		$this->assertContains('UNIQUE KEY `some_index` (`data`)', $result);
+		$this->assertStringContainsString('PRIMARY KEY  (`id`)', $result);
+		$this->assertStringContainsString('UNIQUE KEY `some_index` (`data`)', $result);
 
 		$schema->tables = array(
 			'primary_flag_has_index' => array(
@@ -1053,8 +1053,8 @@ SQL;
 			)
 		);
 		$result = $this->Dbo->createSchema($schema, 'primary_flag_has_index');
-		$this->assertContains('PRIMARY KEY  (`id`)', $result);
-		$this->assertContains('UNIQUE KEY `some_index` (`data`)', $result);
+		$this->assertStringContainsString('PRIMARY KEY  (`id`)', $result);
+		$this->assertStringContainsString('UNIQUE KEY `some_index` (`data`)', $result);
 	}
 
 /**

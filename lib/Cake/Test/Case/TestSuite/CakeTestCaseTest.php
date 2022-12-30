@@ -380,7 +380,7 @@ class CakeTestCaseTest extends CakeTestCase {
  */
 	public function testAssertTextContains() {
 		$stringDirty = "some\nstring\r\nwith\rdifferent\nline endings!";
-		$this->assertContains("different", $stringDirty);
+		$this->assertStringContainsString("different", $stringDirty);
 		$this->assertNotContains("different\rline", $stringDirty);
 		$this->assertTextContains("different\rline", $stringDirty);
 	}
