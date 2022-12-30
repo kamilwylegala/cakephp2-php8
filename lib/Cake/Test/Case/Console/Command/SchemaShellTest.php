@@ -358,8 +358,8 @@ class SchemaShellTest extends CakeTestCase {
 		$this->assertMatchesRegularExpression('/public \$auth_users/', $contents);
 		$this->assertMatchesRegularExpression('/public \$authors/', $contents);
 		$this->assertMatchesRegularExpression('/public \$test_plugin_comments/', $contents);
-		$this->assertNotRegExp('/public \$users/', $contents);
-		$this->assertNotRegExp('/public \$articles/', $contents);
+		$this->assertDoesNotMatchRegularExpression('/public \$users/', $contents);
+		$this->assertDoesNotMatchRegularExpression('/public \$articles/', $contents);
 		CakePlugin::unload();
 	}
 
@@ -391,9 +391,9 @@ class SchemaShellTest extends CakeTestCase {
 
 		$this->assertMatchesRegularExpression('/class TestPluginSchema/', $contents);
 		$this->assertMatchesRegularExpression('/public \$test_plugin_comments/', $contents);
-		$this->assertNotRegExp('/public \$authors/', $contents);
-		$this->assertNotRegExp('/public \$auth_users/', $contents);
-		$this->assertNotRegExp('/public \$posts/', $contents);
+		$this->assertDoesNotMatchRegularExpression('/public \$authors/', $contents);
+		$this->assertDoesNotMatchRegularExpression('/public \$auth_users/', $contents);
+		$this->assertDoesNotMatchRegularExpression('/public \$posts/', $contents);
 		CakePlugin::unload();
 	}
 

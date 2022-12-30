@@ -530,7 +530,7 @@ class PostgresTest extends CakeTestCase {
 		));
 
 		$result = $this->Dbo->createSchema($schema);
-		$this->assertNotRegExp('/^CREATE INDEX(.+);,$/', $result);
+		$this->assertDoesNotMatchRegularExpression('/^CREATE INDEX(.+);,$/', $result);
 	}
 
 /**
@@ -566,7 +566,7 @@ class PostgresTest extends CakeTestCase {
 		);
 		$result = $db1->createSchema($schema, 'datatype_tests');
 
-		$this->assertNotRegExp('/timestamp DEFAULT/', $result);
+		$this->assertDoesNotMatchRegularExpression('/timestamp DEFAULT/', $result);
 		$this->assertMatchesRegularExpression('/\"full_length\"\s*text\s.*,/', $result);
 		$this->assertContains('timestamp ,', $result);
 		$this->assertContains('"huge_int" bigint NOT NULL,', $result);
@@ -709,7 +709,7 @@ class PostgresTest extends CakeTestCase {
 			)
 		));
 		$result = $this->Dbo->alterSchema($New->compare($Old), 'alter_posts');
-		$this->assertNotRegExp('/varchar\(36\) NOT NULL/i', $result);
+		$this->assertDoesNotMatchRegularExpression('/varchar\(36\) NOT NULL/i', $result);
 	}
 
 /**

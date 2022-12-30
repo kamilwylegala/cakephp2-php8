@@ -731,14 +731,14 @@ HTMLBLOC;
 		$this->Controller->EmailTest->sendAs = 'html';
 		$this->assertTrue($this->Controller->EmailTest->send($body));
 		$msg = DebugCompTransport::$lastEmail;
-		$this->assertNotRegExp('/text\/plain/', $msg);
+		$this->assertDoesNotMatchRegularExpression('/text\/plain/', $msg);
 		$this->assertMatchesRegularExpression('/text\/html/', $msg);
 
 		$this->Controller->EmailTest->sendAs = 'text';
 		$this->assertTrue($this->Controller->EmailTest->send($body));
 		$msg = DebugCompTransport::$lastEmail;
 		$this->assertMatchesRegularExpression('/text\/plain/', $msg);
-		$this->assertNotRegExp('/text\/html/', $msg);
+		$this->assertDoesNotMatchRegularExpression('/text\/html/', $msg);
 
 		$this->Controller->EmailTest->sendAs = 'both';
 		$this->assertTrue($this->Controller->EmailTest->send($body));
@@ -767,7 +767,7 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->send($body));
 		$msg = DebugCompTransport::$lastEmail;
 
-		$this->assertNotRegExp('/\n\nContent-Transfer-Encoding/', $msg);
+		$this->assertDoesNotMatchRegularExpression('/\n\nContent-Transfer-Encoding/', $msg);
 		$this->assertMatchesRegularExpression('/\nContent-Transfer-Encoding/', $msg);
 	}
 
@@ -881,7 +881,7 @@ HTMLBLOC;
 		$this->assertTrue($this->Controller->EmailTest->send('This is the body of the message'));
 		$result = DebugCompTransport::$lastEmail;
 
-		$this->assertNotRegExp('/Message-ID:/', $result);
+		$this->assertDoesNotMatchRegularExpression('/Message-ID:/', $result);
 	}
 
 /**

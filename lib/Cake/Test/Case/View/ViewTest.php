@@ -1282,7 +1282,7 @@ class ViewTest extends CakeTestCase {
 		$View->helpers = array('Html', 'Form', 'Cache');
 		$View->layout = 'cache_layout';
 		$result = $View->render('index');
-		$this->assertNotRegExp('/cake:nocache/', $result);
+		$this->assertDoesNotMatchRegularExpression('/cake:nocache/', $result);
 	}
 
 /**
@@ -1297,7 +1297,7 @@ class ViewTest extends CakeTestCase {
 		$View->helpers = array('Html', 'Form');
 		$View->layout = 'cache_layout';
 		$result = $View->render('index');
-		$this->assertNotRegExp('/cake:nocache/', $result);
+		$this->assertDoesNotMatchRegularExpression('/cake:nocache/', $result);
 	}
 
 /**
