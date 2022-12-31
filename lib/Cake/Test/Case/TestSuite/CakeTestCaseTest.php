@@ -19,7 +19,6 @@
  */
 App::uses('CakePlugin', 'Core');
 App::uses('Controller', 'Controller');
-App::uses('CakeHtmlReporter', 'TestSuite/Reporter');
 App::uses('Model', 'Model');
 
 /**
@@ -81,16 +80,6 @@ class CakeTestCaseTest extends CakeTestCase {
 	}
 
 /**
- * setUp
- *
- * @return void
- */
-	public function setUp() : void {
-		parent::setUp();
-		$this->Reporter = $this->getMock('CakeHtmlReporter');
-	}
-
-/**
  * tearDown
  *
  * @return void
@@ -98,7 +87,6 @@ class CakeTestCaseTest extends CakeTestCase {
 	public function tearDown() : void {
 		parent::tearDown();
 		unset($this->Result);
-		unset($this->Reporter);
 	}
 
 /**
