@@ -2450,10 +2450,10 @@ class RouterTest extends CakeTestCase {
 /**
  * test that route classes must extend CakeRoute
  *
- * @expectedException RouterException
  * @return void
  */
 	public function testCustomRouteException() {
+		$this->expectException(RouterException::class);
 		Router::connect('/:controller', array(), array('routeClass' => 'CakeObject'));
 	}
 
@@ -2840,10 +2840,10 @@ class RouterTest extends CakeTestCase {
 /**
  * Test that route classes must extend CakeRoute
  *
- * @expectedException RouterException
  * @return void
  */
 	public function testDefaultRouteException() {
+		$this->expectException(RouterException::class);
 		Router::defaultRouteClass('');
 		Router::connect('/:controller', array());
 	}
@@ -2851,20 +2851,20 @@ class RouterTest extends CakeTestCase {
 /**
  * Test that route classes must extend CakeRoute
  *
- * @expectedException RouterException
  * @return void
  */
 	public function testSettingInvalidDefaultRouteException() {
+		$this->expectException(RouterException::class);
 		Router::defaultRouteClass('CakeObject');
 	}
 
 /**
  * Test that class must exist
  *
- * @expectedException RouterException
  * @return void
  */
 	public function testSettingNonExistentDefaultRouteException() {
+		$this->expectException(RouterException::class);
 		Router::defaultRouteClass('NonExistentClass');
 	}
 

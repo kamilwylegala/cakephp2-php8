@@ -438,10 +438,10 @@ class ModelDeleteTest extends BaseModelTest {
 /**
  * testDeleteAllUnknownColumn method
  *
- * @expectedException PDOException
  * @return void
  */
 	public function testDeleteAllUnknownColumn() {
+		$this->expectException(PDOException::class);
 		$this->loadFixtures('Article');
 		$TestModel = new Article();
 		$result = $TestModel->deleteAll(array('Article.non_existent_field' => 999));

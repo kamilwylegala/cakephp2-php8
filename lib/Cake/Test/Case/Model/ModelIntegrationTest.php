@@ -140,10 +140,10 @@ class ModelIntegrationTest extends BaseModelTest {
 /**
  * Tests that creating a model with no existent database table associated will throw an exception
  *
- * @expectedException MissingTableException
  * @return void
  */
 	public function testMissingTable() {
+		$this->expectException(MissingTableException::class);
 		$Article = new ArticleB(false, uniqid());
 		$Article->schema();
 	}

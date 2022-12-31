@@ -225,10 +225,10 @@ class DebuggerTest extends CakeTestCase {
 /**
  * Test that choosing a non-existent format causes an exception
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testOutputAsException() {
+		$this->expectException(CakeException::class);
 		Debugger::outputAs('Invalid junk');
 	}
 

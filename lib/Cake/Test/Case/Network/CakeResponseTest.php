@@ -113,10 +113,10 @@ class CakeResponseTest extends CakeTestCase {
 /**
  * Tests the statusCode method
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testStatusCode() {
+		$this->expectException(CakeException::class);
 		$response = new CakeResponse();
 		$this->assertEquals(200, $response->statusCode());
 		$response->statusCode(404);
@@ -402,10 +402,10 @@ class CakeResponseTest extends CakeTestCase {
 /**
  * Tests the httpCodes method
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testHttpCodes() {
+		$this->expectException(CakeException::class);
 		$response = new CakeResponse();
 		$result = $response->httpCodes();
 		$this->assertEquals(41, count($result));
@@ -1162,10 +1162,10 @@ class CakeResponseTest extends CakeTestCase {
 /**
  * testFileNotFound
  *
- * @expectedException NotFoundException
  * @return void
  */
 	public function testFileNotFound() {
+		$this->expectException(NotFoundException::class);
 		$response = new CakeResponse();
 		$response->file('/some/missing/folder/file.jpg');
 	}
@@ -1173,11 +1173,11 @@ class CakeResponseTest extends CakeTestCase {
 /**
  * test file with ../
  *
- * @expectedException NotFoundException
- * @expectedExceptionMessage The requested file contains `..` and will not be read.
  * @return void
  */
 	public function testFileWithForwardSlashPathTraversal() {
+		$this->expectException(NotFoundException::class);
+		$this->expectExceptionMessage("The requested file contains `..` and will not be read.");
 		$response = new CakeResponse();
 		$response->file('my/../cat.gif');
 	}
@@ -1185,11 +1185,11 @@ class CakeResponseTest extends CakeTestCase {
 /**
  * test file with ..\
  *
- * @expectedException NotFoundException
- * @expectedExceptionMessage The requested file contains `..` and will not be read.
  * @return void
  */
 	public function testFileWithBackwardSlashPathTraversal() {
+		$this->expectException(NotFoundException::class);
+		$this->expectExceptionMessage("The requested file contains `..` and will not be read.");
 		$response = new CakeResponse();
 		$response->file('my\..\cat.gif');
 	}
@@ -1198,11 +1198,11 @@ class CakeResponseTest extends CakeTestCase {
  * Although unlikely, a file may contain dots in its filename.
  * This should be allowed, as long as the dots doesn't specify a path (../ or ..\)
  *
- * @expectedException NotFoundException
- * @execptedExceptionMessageRegExp #The requested file .+my/Some..cat.gif was not found or not readable#
  * @return void
  */
 	public function testFileWithDotsInFilename() {
+		$this->expectException(NotFoundException::class);
+		$this->expectExceptionMessageMatches('#The requested file .+my/Some..cat.gif was not found or not readable#');
 		$response = new CakeResponse();
 		$response->file('my/Some..cat.gif');
 	}

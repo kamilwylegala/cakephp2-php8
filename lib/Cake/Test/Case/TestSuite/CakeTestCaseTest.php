@@ -508,11 +508,11 @@ class CakeTestCaseTest extends CakeTestCase {
 /**
  * testGetMockForModelDoesNotExist
  *
- * @expectedException MissingModelException
- * @expectedExceptionMessage Model IDoNotExist could not be found
  * @return void
  */
 	public function testGetMockForModelDoesNotExist() {
+		$this->expectException(MissingModelException::class);
+		$this->expectExceptionMessage("Model IDoNotExist could not be found");
 		$this->getMockForModel('IDoNotExist');
 	}
 }

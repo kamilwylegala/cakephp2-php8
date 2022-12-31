@@ -10918,10 +10918,10 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
- * @expectedException CakeException
  * @return void
  */
 	public function testHtml5InputException() {
+		$this->expectException(CakeException::class);
 		$this->Form->email();
 	}
 

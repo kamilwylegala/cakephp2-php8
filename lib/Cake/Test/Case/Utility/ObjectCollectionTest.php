@@ -342,10 +342,10 @@ class ObjectCollectionTest extends CakeTestCase {
 /**
  * test that setting modParams to an index that doesn't exist doesn't cause errors.
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testTriggerModParamsInvalidIndex() {
+		$this->expectException(CakeException::class);
 		$this->_makeMockClasses();
 		$this->Objects->setObject('TriggerMockFirst', $this->FirstGenericObject);
 		$this->Objects->setObject('TriggerMockSecond', $this->SecondGenericObject);

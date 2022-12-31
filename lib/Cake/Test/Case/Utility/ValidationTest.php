@@ -2405,10 +2405,10 @@ class ValidationTest extends CakeTestCase {
 /**
  * testMimeTypeFalse method
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testMimeTypeFalse() {
+		$this->expectException(CakeException::class);
 		$image = CORE_PATH . 'Cake' . DS . 'Test' . DS . 'test_app' . DS . 'webroot' . DS . 'img' . DS . 'cake.power.gif';
 		$File = new File($image, false);
 		$this->skipIf($File->mime(), 'mimeType can be determined, no Exception will be thrown');

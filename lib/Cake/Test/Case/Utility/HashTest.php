@@ -248,10 +248,10 @@ class HashTest extends CakeTestCase {
 /**
  * Test get() with an invalid path
  *
- * @expectedException InvalidArgumentException
  * @return void
  */
 	public function testGetInvalidPath() {
+		$this->expectException(InvalidArgumentException::class);
 		Hash::get(array('one' => 'two'), new StdClass());
 	}
 
@@ -1900,10 +1900,10 @@ class HashTest extends CakeTestCase {
 /**
  * test combine() giving errors on key/value length mismatches.
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testCombineErrorMissingValue() {
+		$this->expectException(CakeException::class);
 		$data = array(
 			array('User' => array('id' => 1, 'name' => 'mark')),
 			array('User' => array('name' => 'jose')),
@@ -1914,10 +1914,10 @@ class HashTest extends CakeTestCase {
 /**
  * test combine() giving errors on key/value length mismatches.
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testCombineErrorMissingKey() {
+		$this->expectException(CakeException::class);
 		$data = array(
 			array('User' => array('id' => 1, 'name' => 'mark')),
 			array('User' => array('id' => 2)),
@@ -2585,10 +2585,10 @@ class HashTest extends CakeTestCase {
 /**
  * Tests that nest() throws an InvalidArgumentException when providing an invalid input.
  *
- * @expectedException InvalidArgumentException
  * @return void
  */
 	public function testNestInvalid() {
+		$this->expectException(InvalidArgumentException::class);
 		$input = array(
 			array(
 				'ParentCategory' => array(
