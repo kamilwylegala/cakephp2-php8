@@ -170,9 +170,9 @@ class CakePluginTest extends CakeTestCase {
  * Tests that loading a missing routes file throws a warning
  *
  * @return void
- * @expectedException PHPUNIT_FRAMEWORK_ERROR_WARNING
  */
 	public function testLoadMultipleWithDefaultsMissingFile() {
+		$this->expectWarning();
 		CakePlugin::load(array('TestPlugin', 'TestPluginTwo'), array('bootstrap' => true, 'routes' => true));
 		CakePlugin::routes();
 	}
