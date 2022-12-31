@@ -128,10 +128,10 @@ class CacheTest extends CakeTestCase {
  *
  * Test that the cache class doesn't cause fatal errors with a partial path
  *
- * @expectedException PHPUnit_Framework_Error_Warning
  * @return void
  */
 	public function testInvalidConfig() {
+		$this->expectWarning();
 		// In debug mode it would auto create the folder.
 		$debug = Configure::read('debug');
 		Configure::write('debug', 0);
