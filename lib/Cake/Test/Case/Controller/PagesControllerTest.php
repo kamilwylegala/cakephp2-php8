@@ -17,6 +17,7 @@
  */
 
 App::uses('PagesController', 'Controller');
+App::uses('CakeRequest', 'Network');
 
 /**
  * PagesControllerTest class
