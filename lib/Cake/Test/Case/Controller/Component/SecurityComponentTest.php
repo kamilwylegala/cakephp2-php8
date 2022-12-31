@@ -18,6 +18,7 @@
 
 App::uses('SecurityComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
+App::uses('CakeRequest', 'Network');
 
 /**
  * TestSecurityComponent
