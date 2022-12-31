@@ -159,10 +159,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
  * Test that adding an option using a two letter short value causes an exception.
  * As they will not parse correctly.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testAddOptionShortOneLetter() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('test', array('short' => 'te'));
 	}
@@ -257,10 +257,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test parsing options that do not exist.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testOptionThatDoesNotExist() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('no-commit', array('boolean' => true));
 
@@ -270,10 +270,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test parsing short options that do not exist.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testShortOptionThatDoesNotExist() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('no-commit', array('boolean' => true));
 
@@ -283,10 +283,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test that options with choices enforce them.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testOptionWithChoices() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('name', array('choices' => array('mark', 'jose')));
 
@@ -372,10 +372,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test parsing arguments.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testParseArgumentTooMany() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addArgument('name', array('help' => 'An argument'))
 			->addArgument('other');
@@ -403,10 +403,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test that when there are not enough arguments an exception is raised
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testPositionalArgNotEnough() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addArgument('name', array('required' => true))
 			->addArgument('other', array('required' => true));
@@ -417,10 +417,10 @@ class ConsoleOptionParserTest extends CakeTestCase {
 /**
  * test that arguments with choices enforce them.
  *
- * @expectedException ConsoleException
  * @return void
  */
 	public function testPositionalArgWithChoices() {
+		$this->expectException(ConsoleException::class);
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addArgument('name', array('choices' => array('mark', 'jose')))
 			->addArgument('alias', array('choices' => array('cowboy', 'samurai')))

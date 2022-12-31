@@ -71,10 +71,10 @@ class CacheTest extends CakeTestCase {
 /**
  * testConfigInvalidEngine method
  *
- * @expectedException CacheException
  * @return void
  */
 	public function testConfigInvalidEngine() {
+		$this->expectException(CacheException::class);
 		$settings = array('engine' => 'Imaginary');
 		Cache::config('imaginary', $settings);
 	}
@@ -164,10 +164,10 @@ class CacheTest extends CakeTestCase {
 /**
  * test that trying to configure classes that don't extend CacheEngine fail.
  *
- * @expectedException CacheException
  * @return void
  */
 	public function testAttemptingToConfigureANonCacheEngineClass() {
+		$this->expectException(CacheException::class);
 		$this->getMock('StdClass', array(), array(), 'RubbishEngine');
 		Cache::config('Garbage', array(
 			'engine' => 'Rubbish'
@@ -308,10 +308,10 @@ class CacheTest extends CakeTestCase {
 /**
  * testGroupConfigsThrowsException method
  *
- * @expectedException CacheException
  * @return void
  */
 	public function testGroupConfigsThrowsException() {
+		$this->expectException(CacheException::class);
 		Cache::groupConfigs('bogus');
 	}
 

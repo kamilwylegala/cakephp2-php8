@@ -182,10 +182,10 @@ class XmlTest extends CakeTestCase {
 /**
  * Test that the readFile option disables local file parsing.
  *
- * @expectedException XmlException
  * @return void
  */
 	public function testBuildFromFileWhenDisabled() {
+		$this->expectException(XmlException::class);
 		$xml = CAKE . 'Test' . DS . 'Fixture' . DS . 'sample.xml';
 		Xml::build($xml, array('readFile' => false));
 	}
@@ -193,10 +193,10 @@ class XmlTest extends CakeTestCase {
 /**
  * Test that the readFile option disables local file parsing.
  *
- * @expectedException XmlException
  * @return void
  */
 	public function testBuildFromUrlWhenDisabled() {
+		$this->expectException(XmlException::class);
 		$xml = 'http://www.google.com';
 		Xml::build($xml, array('readFile' => false));
 	}
@@ -219,20 +219,20 @@ class XmlTest extends CakeTestCase {
  * testBuildInvalidData
  *
  * @dataProvider invalidDataProvider
- * @expectedException XmlException
  * @return void
  */
 	public function testBuildInvalidData($value) {
+		$this->expectException(XmlException::class);
 		Xml::build($value);
 	}
 
 /**
  * Test that building SimpleXmlElement with invalid XML causes the right exception.
  *
- * @expectedException XmlException
  * @return void
  */
 	public function testBuildInvalidDataSimpleXml() {
+		$this->expectException(XmlException::class);
 		$input = '<derp';
 		Xml::build($input, array('return' => 'simplexml'));
 	}
@@ -1174,10 +1174,10 @@ XML;
  * testToArrayFail method
  *
  * @dataProvider invalidToArrayDataProvider
- * @expectedException XmlException
  * @return void
  */
 	public function testToArrayFail($value) {
+		$this->expectException(XmlException::class);
 		Xml::toArray($value);
 	}
 

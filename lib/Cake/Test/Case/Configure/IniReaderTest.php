@@ -166,10 +166,10 @@ class IniReaderTest extends CakeTestCase {
 /**
  * Test an exception is thrown by reading files that exist without .ini extension.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithExistentFileWithoutExtension() {
+		$this->expectException(ConfigureException::class);
 		$reader = new IniReader($this->path);
 		$reader->read('no_ini_extension');
 	}
@@ -177,10 +177,10 @@ class IniReaderTest extends CakeTestCase {
 /**
  * Test an exception is thrown by reading files that don't exist.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithNonExistentFile() {
+		$this->expectException(ConfigureException::class);
 		$reader = new IniReader($this->path);
 		$reader->read('fake_values');
 	}
@@ -199,10 +199,10 @@ class IniReaderTest extends CakeTestCase {
 /**
  * Test reading keys with ../ doesn't work.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithDots() {
+		$this->expectException(ConfigureException::class);
 		$reader = new IniReader($this->path);
 		$reader->read('../empty');
 	}

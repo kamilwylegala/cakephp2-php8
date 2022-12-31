@@ -93,10 +93,10 @@ class HelperCollectionTest extends CakeTestCase {
 /**
  * test lazy loading of helpers
  *
- * @expectedException MissingHelperException
  * @return void
  */
 	public function testLazyLoadException() {
+		$this->expectException(MissingHelperException::class);
 		$this->Helpers->NotAHelper;
 	}
 
@@ -145,10 +145,10 @@ class HelperCollectionTest extends CakeTestCase {
 /**
  * test missinghelper exception
  *
- * @expectedException MissingHelperException
  * @return void
  */
 	public function testLoadMissingHelper() {
+		$this->expectException(MissingHelperException::class);
 		$this->Helpers->load('ThisHelperShouldAlwaysBeMissing');
 	}
 

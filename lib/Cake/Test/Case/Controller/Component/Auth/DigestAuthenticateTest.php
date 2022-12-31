@@ -106,11 +106,11 @@ class DigestAuthenticateTest extends CakeTestCase {
 /**
  * test the authenticate method
  *
- * @expectedException UnauthorizedException
- * @expectedExceptionCode 401
  * @return void
  */
 	public function testAuthenticateWrongUsername() {
+		$this->expectException(UnauthorizedException::class);
+		$this->expectExceptionCode(401);
 		$request = new CakeRequest('posts/index', false);
 		$request->addParams(array('pass' => array(), 'named' => array()));
 
@@ -183,11 +183,11 @@ DIGEST;
 /**
  * test scope failure.
  *
- * @expectedException UnauthorizedException
- * @expectedExceptionCode 401
  * @return void
  */
 	public function testAuthenticateFailReChallenge() {
+		$this->expectException(UnauthorizedException::class);
+		$this->expectExceptionCode(401);
 		$this->auth->settings['scope'] = array('user' => 'nate');
 		$request = new CakeRequest('posts/index', false);
 		$request->addParams(array('pass' => array(), 'named' => array()));

@@ -54,11 +54,11 @@ class PagesControllerTest extends CakeTestCase {
 /**
  * Test that missing view renders 404 page in production
  *
- * @expectedException NotFoundException
- * @expectedExceptionCode 404
  * @return void
  */
 	public function testMissingView() {
+		$this->expectException(NotFoundException::class);
+		$this->expectExceptionCode(404);
 		Configure::write('debug', 0);
 		$Pages = new PagesController(new CakeRequest(null, false), new CakeResponse());
 		$Pages->display('non_existing_page');
@@ -67,11 +67,11 @@ class PagesControllerTest extends CakeTestCase {
 /**
  * Test that missing view in debug mode renders missing_view error page
  *
- * @expectedException MissingViewException
- * @expectedExceptionCode 500
  * @return void
  */
 	public function testMissingViewInDebug() {
+		$this->expectException(MissingViewException::class);
+		$this->expectExceptionCode(500);
 		Configure::write('debug', 1);
 		$Pages = new PagesController(new CakeRequest(null, false), new CakeResponse());
 		$Pages->display('non_existing_page');
@@ -80,11 +80,11 @@ class PagesControllerTest extends CakeTestCase {
 /**
  * Test directory traversal protection
  *
- * @expectedException ForbiddenException
- * @expectedExceptionCode 403
  * @return void
  */
 	public function testDirectoryTraversalProtection() {
+		$this->expectException(ForbiddenException::class);
+		$this->expectExceptionCode(403);
 		App::build(array(
 			'View' => array(
 				CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS

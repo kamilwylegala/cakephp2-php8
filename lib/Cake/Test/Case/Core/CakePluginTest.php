@@ -195,9 +195,9 @@ class CakePluginTest extends CakeTestCase {
  * Tests that CakePlugin::load() throws an exception on unknown plugin
  *
  * @return void
- * @expectedException MissingPluginException
  */
 	public function testLoadNotFound() {
+		$this->expectException(MissingPluginException::class);
 		CakePlugin::load('MissingPlugin');
 	}
 
@@ -219,9 +219,9 @@ class CakePluginTest extends CakeTestCase {
  * Tests that CakePlugin::path() throws an exception on unknown plugin
  *
  * @return void
- * @expectedException MissingPluginException
  */
 	public function testPathNotFound() {
+		$this->expectException(MissingPluginException::class);
 		CakePlugin::path('TestPlugin');
 	}
 

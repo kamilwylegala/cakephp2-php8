@@ -79,9 +79,9 @@ class LogEngineCollectionTest extends CakeTestCase {
  * test load with invalid Log
  *
  * @return void
- * @expectedException CakeLogException
  */
 	public function testLoadInvalid() {
+		$this->expectException(CakeLogException::class);
 		$result = $this->Collection->load('key', array('engine' => 'ImaginaryFile'));
 		$this->assertInstanceOf('CakeLogInterface', $result);
 	}

@@ -73,10 +73,10 @@ class PhpReaderTest extends CakeTestCase {
 /**
  * Test an exception is thrown by reading files that exist without .php extension.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithExistentFileWithoutExtension() {
+		$this->expectException(ConfigureException::class);
 		$reader = new PhpReader($this->path);
 		$reader->read('no_php_extension');
 	}
@@ -84,10 +84,10 @@ class PhpReaderTest extends CakeTestCase {
 /**
  * Test an exception is thrown by reading files that don't exist.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithNonExistentFile() {
+		$this->expectException(ConfigureException::class);
 		$reader = new PhpReader($this->path);
 		$reader->read('fake_values');
 	}
@@ -95,10 +95,10 @@ class PhpReaderTest extends CakeTestCase {
 /**
  * Test reading an empty file.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadEmptyFile() {
+		$this->expectException(ConfigureException::class);
 		$reader = new PhpReader($this->path);
 		$reader->read('empty');
 	}
@@ -106,10 +106,10 @@ class PhpReaderTest extends CakeTestCase {
 /**
  * Test reading keys with ../ doesn't work.
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testReadWithDots() {
+		$this->expectException(ConfigureException::class);
 		$reader = new PhpReader($this->path);
 		$reader->read('../empty');
 	}

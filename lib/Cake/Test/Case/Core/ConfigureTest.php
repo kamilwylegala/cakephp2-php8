@@ -293,10 +293,10 @@ class ConfigureTest extends CakeTestCase {
 /**
  * testLoad method
  *
- * @expectedException RuntimeException
  * @return void
  */
 	public function testLoadExceptionOnNonExistantFile() {
+		$this->expectException(RuntimeException::class);
 		Configure::config('test', new PhpReader());
 		Configure::load('non_existing_configuration_file', 'test');
 	}
@@ -485,10 +485,10 @@ class ConfigureTest extends CakeTestCase {
 /**
  * testDumpNoAdapter
  *
- * @expectedException ConfigureException
  * @return void
  */
 	public function testDumpNoAdapter() {
+		$this->expectException(ConfigureException::class);
 		Configure::dump(TMP . 'test.php', 'does_not_exist');
 	}
 
