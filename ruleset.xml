@@ -15,6 +15,11 @@
 		<exclude-pattern>lib/Cake/Utility/Security.php</exclude-pattern>
 	</rule>
 
+	<rule ref="CakePHP.NamingConventions.UpperCaseConstantName.ConstantNotUpperCase">
+		<!-- Want to use Type::class syntax a lot in unit tests, but cakephp-codesniffer is giving false positives. -->
+		<exclude-pattern>lib/Cake/Test/Case/*</exclude-pattern>
+	</rule>
+
 	<rule ref="CakePHP.Commenting.FunctionComment.Missing">
 		<exclude-pattern>lib/Cake/TestSuite/Fixture/CakeFixtureInjector.php</exclude-pattern>
 	</rule>
