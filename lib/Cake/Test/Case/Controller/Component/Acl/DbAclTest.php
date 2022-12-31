@@ -291,10 +291,10 @@ class DbAclTest extends CakeTestCase {
 /**
  * Test that allow() with an invalid permission name triggers an error.
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testAllowInvalidPermission() {
+		$this->expectException(CakeException::class);
 		$this->assertFalse($this->Acl->allow('Micheal', 'tpsReports', 'derp'));
 	}
 

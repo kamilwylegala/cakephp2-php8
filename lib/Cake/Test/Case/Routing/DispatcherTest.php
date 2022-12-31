@@ -738,11 +738,11 @@ class DispatcherTest extends CakeTestCase {
 /**
  * testMissingController method
  *
- * @expectedException MissingControllerException
- * @expectedExceptionMessage Controller class SomeControllerController could not be found.
  * @return void
  */
 	public function testMissingController() {
+		$this->expectException(MissingControllerException::class);
+		$this->expectExceptionMessage("Controller class SomeControllerController could not be found.");
 		Router::connect('/:controller/:action/*');
 
 		$Dispatcher = new TestDispatcher();
@@ -756,11 +756,11 @@ class DispatcherTest extends CakeTestCase {
 /**
  * testMissingControllerInterface method
  *
- * @expectedException MissingControllerException
- * @expectedExceptionMessage Controller class DispatcherTestInterfaceController could not be found.
  * @return void
  */
 	public function testMissingControllerInterface() {
+		$this->expectException(MissingControllerException::class);
+		$this->expectExceptionMessage("Controller class DispatcherTestInterfaceController could not be found.");
 		Router::connect('/:controller/:action/*');
 
 		$Dispatcher = new TestDispatcher();
@@ -774,11 +774,11 @@ class DispatcherTest extends CakeTestCase {
 /**
  * testMissingControllerInterface method
  *
- * @expectedException MissingControllerException
- * @expectedExceptionMessage Controller class DispatcherTestAbstractController could not be found.
  * @return void
  */
 	public function testMissingControllerAbstract() {
+		$this->expectException(MissingControllerException::class);
+		$this->expectExceptionMessage("Controller class DispatcherTestAbstractController could not be found.");
 		Router::connect('/:controller/:action/*');
 
 		$Dispatcher = new TestDispatcher();
@@ -1164,11 +1164,11 @@ class DispatcherTest extends CakeTestCase {
 /**
  * testAutomaticPluginControllerMissingActionDispatch method
  *
- * @expectedException MissingActionException
- * @expectedExceptionMessage Action MyPluginController::not_here() could not be found.
  * @return void
  */
 	public function testAutomaticPluginControllerMissingActionDispatch() {
+		$this->expectException(MissingActionException::class);
+		$this->expectExceptionMessage("Action MyPluginController::not_here() could not be found.");
 		Router::reload();
 		$Dispatcher = new TestDispatcher();
 
@@ -1181,12 +1181,12 @@ class DispatcherTest extends CakeTestCase {
 /**
  * testAutomaticPluginControllerMissingActionDispatch method
  *
- * @expectedException MissingActionException
- * @expectedExceptionMessage Action MyPluginController::param:value() could not be found.
  * @return void
  */
 
 	public function testAutomaticPluginControllerIndexMissingAction() {
+		$this->expectException(MissingActionException::class);
+		$this->expectExceptionMessage("Action MyPluginController::param:value() could not be found.");
 		Router::reload();
 		$Dispatcher = new TestDispatcher();
 
@@ -1283,10 +1283,10 @@ class DispatcherTest extends CakeTestCase {
 /**
  * Tests that attaching an inexistent class as filter will throw an exception
  *
- * @expectedException MissingDispatcherFilterException
  * @return void
  */
 	public function testDispatcherFilterSuscriberMissing() {
+		$this->expectException(MissingDispatcherFilterException::class);
 		App::build(array(
 			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		), App::RESET);

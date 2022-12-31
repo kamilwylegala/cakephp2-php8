@@ -3977,10 +3977,10 @@ SQL;
 	}
 
 /**
- * @expectedException MissingConnectionException
  * @return void
  */
 	public function testExceptionOnBrokenConnection() {
+		$this->expectException(MissingConnectionException::class);
 		new Mysql(array(
 			'driver' => 'mysql',
 			'host' => 'imaginary_host',

@@ -2006,10 +2006,10 @@ class I18nTest extends CakeTestCase {
 /**
  * Test that the '' domain causes exceptions.
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testTranslateEmptyDomain() {
+		$this->expectException(CakeException::class);
 		I18n::translate('Plural Rule 1', null, '');
 	}
 

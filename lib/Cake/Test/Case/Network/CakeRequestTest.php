@@ -978,10 +978,10 @@ class CakeRequestTest extends CakeTestCase {
 /**
  * Test __call exceptions
  *
- * @expectedException CakeException
  * @return void
  */
 	public function testMagicCallExceptionOnUnknownMethod() {
+		$this->expectException(CakeException::class);
 		$request = new CakeRequest('some/path');
 		$request->IamABanana();
 	}

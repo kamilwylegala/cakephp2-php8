@@ -136,9 +136,9 @@ class FlashHelperTest extends CakeTestCase {
 /**
  * testFlashThrowsException
  *
- * @expectedException UnexpectedValueException
  */
 	public function testFlashThrowsException() {
+		$this->expectException(UnexpectedValueException::class);
 		CakeSession::write('Message.foo', 'bar');
 		$this->Flash->render('foo');
 	}

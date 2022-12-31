@@ -580,9 +580,9 @@ class HtmlHelperTest extends CakeTestCase {
  * testLoadConfigWrongFile method
  *
  * @return void
- * @expectedException InvalidArgumentException
  */
 	public function testBase64InvalidArgumentException() {
+		$this->expectException(InvalidArgumentException::class);
 		$this->Html->request->webroot = '';
 		$this->Html->image('non-existent-image.png', array('base64' => true));
 	}
@@ -2321,9 +2321,9 @@ class HtmlHelperTest extends CakeTestCase {
  * testLoadConfigWrongFile method
  *
  * @return void
- * @expectedException ConfigureException
  */
 	public function testLoadConfigWrongFile() {
+		$this->expectException(ConfigureException::class);
 		$this->Html->loadConfig('wrong_file');
 	}
 
@@ -2331,9 +2331,9 @@ class HtmlHelperTest extends CakeTestCase {
  * testLoadConfigWrongReader method
  *
  * @return void
- * @expectedException ConfigureException
  */
 	public function testLoadConfigWrongReader() {
+		$this->expectException(ConfigureException::class);
 		$path = CAKE . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
 		$this->Html->loadConfig(array('htmlhelper_tags', 'wrong_reader'), $path);
 	}
