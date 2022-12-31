@@ -767,30 +767,30 @@ class ViewTest extends CakeTestCase {
 /**
  * Test elementInexistent method
  *
- * @expectedException PHPUnit_Framework_Error_Notice
  * @return void
  */
 	public function testElementInexistent() {
+		$this->expectNotice();
 		$this->View->element('non_existent_element');
 	}
 
 /**
  * Test elementInexistent2 method
  *
- * @expectedException PHPUnit_Framework_Error_Notice
  * @return void
  */
 	public function testElementInexistent2() {
+		$this->expectNotice();
 		$this->View->element('TestPlugin.plugin_element', array(), array('plugin' => 'test_plugin'));
 	}
 
 /**
  * Test elementInexistent3 method
  *
- * @expectedException PHPUnit_Framework_Error_Notice
  * @return void
  */
 	public function testElementInexistent3() {
+		$this->expectNotice();
 		$this->View->element('test_plugin.plugin_element');
 	}
 

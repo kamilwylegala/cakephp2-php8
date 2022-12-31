@@ -101,11 +101,11 @@ class CakeValidationRuleTest extends CakeTestCase {
 /**
  * Make sure errors are triggered when validation is missing.
  *
- * @expectedException PHPUnit_Framework_Error_Warning
- * @expectedExceptionMessage Could not find validation handler totallyMissing for fieldName
  * @return void
  */
 	public function testCustomMethodMissingError() {
+		$this->expectWarning();
+		$this->expectWarningMessage('Could not find validation handler totallyMissing for fieldName');
 		$def = array('rule' => array('totallyMissing'));
 		$data = array(
 			'fieldName' => 'some data'
