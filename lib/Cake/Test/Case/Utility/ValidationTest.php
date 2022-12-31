@@ -2294,20 +2294,20 @@ class ValidationTest extends CakeTestCase {
 /**
  * test pass through failure on postal
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testPassThroughMethodFailure() {
+		$this->expectWarning();
 		Validation::phone('text', null, 'testNl');
 	}
 
 /**
  * test the pass through calling of an alternate locale with postal()
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testPassThroughClassFailure() {
+		$this->expectWarning();
 		Validation::postal('text', null, 'AUTOFAIL');
 	}
 

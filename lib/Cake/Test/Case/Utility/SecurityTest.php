@@ -87,40 +87,40 @@ class SecurityTest extends CakeTestCase {
 /**
  * testHashInvalidSalt method
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testHashInvalidSalt() {
+		$this->expectWarning();
 		Security::hash('someKey', 'blowfish', true);
 	}
 
 /**
  * testHashAnotherInvalidSalt
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testHashAnotherInvalidSalt() {
+		$this->expectWarning();
 		Security::hash('someKey', 'blowfish', '$1$lksdjoijfaoijs');
 	}
 
 /**
  * testHashYetAnotherInvalidSalt
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testHashYetAnotherInvalidSalt() {
+		$this->expectWarning();
 		Security::hash('someKey', 'blowfish', '$2a$10$123');
 	}
 
 /**
  * testHashInvalidCost method
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testHashInvalidCost() {
+		$this->expectWarning();
 		Security::setCost(1000);
 	}
 /**
@@ -269,10 +269,10 @@ class SecurityTest extends CakeTestCase {
 /**
  * testCipherEmptyKey method
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testCipherEmptyKey() {
+		$this->expectWarning();
 		$txt = 'some_text';
 		$key = '';
 		Security::cipher($txt, $key);
@@ -321,10 +321,10 @@ class SecurityTest extends CakeTestCase {
 /**
  * testRijndaelInvalidOperation method
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testRijndaelInvalidOperation() {
+		$this->expectWarning();
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi';
 		Security::rijndael($txt, $key, 'foo');
@@ -333,10 +333,10 @@ class SecurityTest extends CakeTestCase {
 /**
  * testRijndaelInvalidKey method
  *
- * @expectedException PHPUnit_Framework_Error
  * @return void
  */
 	public function testRijndaelInvalidKey() {
+		$this->expectWarning();
 		$txt = 'The quick brown fox jumped over the lazy dog.';
 		$key = 'too small';
 		Security::rijndael($txt, $key, 'encrypt');
