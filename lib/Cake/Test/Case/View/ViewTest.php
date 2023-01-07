@@ -990,16 +990,24 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRender'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.beforeRender';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 		$View->Helpers->expects($this->at(1))->method('trigger')
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.beforeRenderFile';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 
@@ -1007,16 +1015,24 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.afterRenderFile';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 		$View->Helpers->expects($this->at(3))->method('trigger')
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRender'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.afterRender';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 
@@ -1024,8 +1040,12 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeLayout'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.beforeLayout';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 
@@ -1033,8 +1053,12 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.beforeRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.beforeRenderFile';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 
@@ -1042,8 +1066,12 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterRenderFile'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.afterRenderFile';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 
@@ -1051,8 +1079,12 @@ class ViewTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'View.afterLayout'),
-					$this->attributeEqualTo('_subject', $View)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'View.afterLayout';
+					}),
+					$this->callback(function (CakeEvent $event) use ($View) {
+						return $event->subject() === $View;
+					}),
 				)
 			);
 

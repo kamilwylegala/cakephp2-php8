@@ -1246,16 +1246,24 @@ class ControllerTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.initialize'),
-					$this->attributeEqualTo('_subject', $Controller)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'Controller.initialize';
+					}),
+					$this->callback(function (CakeEvent $event) use ($Controller) {
+						return $event->subject() === $Controller;
+					}),
 				)
 			);
 		$eventManager->expects($this->at(1))->method('dispatch')
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.startup'),
-					$this->attributeEqualTo('_subject', $Controller)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'Controller.startup';
+					}),
+					$this->callback(function (CakeEvent $event) use ($Controller) {
+						return $event->subject() === $Controller;
+					}),
 				)
 			);
 		$Controller->expects($this->exactly(2))->method('getEventManager')
@@ -1293,8 +1301,12 @@ class ControllerTest extends CakeTestCase {
 			->with(
 				$this->logicalAnd(
 					$this->isInstanceOf('CakeEvent'),
-					$this->attributeEqualTo('_name', 'Controller.shutdown'),
-					$this->attributeEqualTo('_subject', $Controller)
+					$this->callback(function (CakeEvent $event) {
+						return $event->name() === 'Controller.shutdown';
+					}),
+					$this->callback(function (CakeEvent $event) use ($Controller) {
+						return $event->subject() === $Controller;
+					}),
 				)
 			);
 		$Controller->expects($this->once())->method('getEventManager')
