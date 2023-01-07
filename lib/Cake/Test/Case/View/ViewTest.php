@@ -1842,9 +1842,11 @@ TEXT;
 
 	protected function _checkException($message) {
 		if (version_compare(PHP_VERSION, '7.4', '>=')) {
-			$this->setExpectedException('Error', $message);
+			$this->expectException(Error::class);
+			$this->expectExceptionMessage($message);
 		} else {
-			$this->setExpectedException('PHPUnit_Framework_Error', $message);
+			$this->expectError();
+			$this->expectErrorMessage($message);
 		}
 	}
 }
