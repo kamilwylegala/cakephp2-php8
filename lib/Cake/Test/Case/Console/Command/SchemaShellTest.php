@@ -313,7 +313,7 @@ class SchemaShellTest extends CakeTestCase {
 		$this->Shell->expects($this->once())->method('in')->will($this->returnValue('o'));
 
 		$this->Shell->expects($this->at(2))->method('out')
-			->with(new PHPUnit_Framework_Constraint_PCREMatch('/Schema file:\s[a-z\.]+\sgenerated/'));
+			->with(new PHPUnit\Framework\Constraint\RegularExpression('/Schema file:\s[a-z\.]+\sgenerated/'));
 
 		$this->Shell->Schema = $this->getMock('CakeSchema');
 		$this->Shell->Schema->path = TMP;

@@ -410,7 +410,7 @@ class CacheTest extends CakeTestCase {
 		try {
 			Cache::write('fail', 'value', 'test_trigger');
 			$this->fail('No exception thrown');
-		} catch (PHPUnit_Framework_Error $e) {
+		} catch (PHPUnit\Framework\Error\Error $e) {
 			$this->assertTrue(true);
 		}
 		Cache::drop('test_trigger');

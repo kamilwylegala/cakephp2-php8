@@ -260,7 +260,7 @@ class FolderTest extends CakeTestCase {
 			$Folder = new Folder($path);
 			$result = $Folder->create($path . DS . 'two' . DS . 'three');
 			$this->assertFalse($result);
-		} catch (PHPUnit_Framework_Error $e) {
+		} catch (\PHPUnit\Framework\Error\Error $e) {
 			$this->assertTrue(true);
 		}
 
