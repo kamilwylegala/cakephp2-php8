@@ -34,6 +34,11 @@ class HtmlCoverageReportTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() : void {
+		// This test can not be run with PHPUnit 9+.
+		// Because CakeBaseReporter depend on PHPUnit_TextUI_ResultPrinter.
+		// If run the test with the phpunit command, Result Printer is also PHPUnit's to be used.
+		// Therefore, CakeBaseReporter are unnecessary.
+		$this->skipIf(version_compare(\PHPUnit\Runner\Version::id(), '9.0.0', '>='), 'This test can not be run with PHPUnit 9+');
 		parent::setUp();
 		App::build(array(
 			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)

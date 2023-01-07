@@ -49,6 +49,11 @@ class TestShellTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() : void {
+		// This test can not be run with PHPUnit 9+.
+		// Because TestShell and CakeTestLoader depend on PHPUnit_Runner_StandardTestSuiteLoader.
+		// If run the test with the phpunit command, TestSuite Loader is also PHPUnit's to be used.
+		// Therefore, TestShell and CakeTestLoader are unnecessary.
+		$this->skipIf(version_compare(\PHPUnit\Runner\Version::id(), '9.0.0', '>='), 'This test can not be run with PHPUnit 9+');
 		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
