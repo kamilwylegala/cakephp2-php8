@@ -109,8 +109,8 @@ class ErrorHandlerTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		$this->assertMatchesRegularExpression('/<pre class="cake-error">/', $result);
-		$this->assertMatchesRegularExpression('/<b>Notice<\/b>/', $result);
-		$this->assertMatchesRegularExpression('/variable:\s+wrong/', $result);
+		$this->assertMatchesRegularExpression('/<b>Warning<\/b>/', $result);
+		$this->assertMatchesRegularExpression('/variable\s+\$wrong/', $result);
 	}
 
 /**
@@ -169,8 +169,8 @@ class ErrorHandlerTest extends CakeTestCase {
 	public function testHandleErrorDebugOff() {
 		Configure::write('debug', 0);
 		Configure::write('Error.trace', false);
-		if (file_exists(LOGS . 'debug.log')) {
-			unlink(LOGS . 'debug.log');
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
 		}
 
 		set_error_handler('ErrorHandler::handleError');
@@ -178,10 +178,10 @@ class ErrorHandlerTest extends CakeTestCase {
 
 		$out .= '';
 
-		$result = file(LOGS . 'debug.log');
+		$result = file(LOGS . 'error.log');
 		$this->assertEquals(1, count($result));
 		$this->assertMatchesRegularExpression(
-			'/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} (Notice|Debug): Notice \(8\): Undefined variable:\s+out in \[.+ line \d+\]$/',
+			'/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} Warning: Warning \(2\): Undefined variable\s+\$out in \[.+ line \d+\]$/',
 			$result[0]
 		);
 		if (file_exists(LOGS . 'debug.log')) {
@@ -197,8 +197,8 @@ class ErrorHandlerTest extends CakeTestCase {
 	public function testHandleErrorLoggingTrace() {
 		Configure::write('debug', 0);
 		Configure::write('Error.trace', true);
-		if (file_exists(LOGS . 'debug.log')) {
-			unlink(LOGS . 'debug.log');
+		if (file_exists(LOGS . 'error.log')) {
+			unlink(LOGS . 'error.log');
 		}
 
 		set_error_handler('ErrorHandler::handleError');
@@ -206,9 +206,9 @@ class ErrorHandlerTest extends CakeTestCase {
 
 		$out .= '';
 
-		$result = file(LOGS . 'debug.log');
+		$result = file(LOGS . 'error.log');
 		$this->assertMatchesRegularExpression(
-			'/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} (Notice|Debug): Notice \(8\): Undefined variable:\s+out in \[.+ line \d+\]$/',
+			'/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} Warning: Warning \(2\): Undefined variable\s+\$out in \[.+ line \d+\]$/',
 			$result[0]
 		);
 		$this->assertMatchesRegularExpression('/^Trace:/', $result[1]);
