@@ -8765,11 +8765,15 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->assertEquals(array('Post.title'), $this->Form->fields);
 		$this->assertStringContainsString($hash, $result, 'Should contain the correct hash.');
-		$this->assertAttributeEquals(
+
+		$property = new ReflectionProperty($this->Form, '_lastAction');
+		$property->setAccessible(true);
+
+		$this->assertSame(
 			'/basedir/posts/add',
-			'_lastAction',
-			$this->Form,
-			'lastAction was should be restored.');
+			$property->getValue($this->Form),
+			'lastAction was should be restored.'
+		);
 	}
 
 /**
@@ -11188,7 +11192,10 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request->here = $here;
 		$this->Form->create('User');
 
-		$this->assertAttributeEquals($here, '_lastAction', $this->Form, "_lastAction shouldn't be empty.");
+		$property = new ReflectionProperty($this->Form, '_lastAction');
+		$property->setAccessible(true);
+
+		$this->assertSame($here, $property->getValue($this->Form), "_lastAction shouldn't be empty.");
 	}
 
 /**
@@ -11204,7 +11211,10 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->request->here = $here;
 		$this->Form->create('User');
 
-		$this->assertAttributeEquals($here, '_lastAction', $this->Form, "_lastAction shouldn't be empty.");
+		$property = new ReflectionProperty($this->Form, '_lastAction');
+		$property->setAccessible(true);
+
+		$this->assertSame($here, $property->getValue($this->Form), "_lastAction shouldn't be empty.");
 	}
 
 /**
