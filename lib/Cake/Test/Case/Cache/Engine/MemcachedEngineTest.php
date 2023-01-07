@@ -686,6 +686,10 @@ class MemcachedEngineTest extends CakeTestCase {
 		$this->assertEquals('cache1', Cache::read('some_value', 'memcached'));
 
 		Cache::write('some_value', 'cache2', 'memcached2');
+
+		// Wait until the written key can be retrieved with Memcached::getAllKeys(), as there may be a delay.
+		sleep(1);
+
 		$result = Cache::clear(false, 'memcached');
 		$this->assertTrue($result);
 		$this->assertFalse(Cache::read('some_value', 'memcached'));
