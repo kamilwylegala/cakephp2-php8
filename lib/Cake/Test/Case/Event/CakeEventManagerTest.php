@@ -41,7 +41,7 @@ class CakeEventTestListener {
  *
  * @return void
  */
-	public function secondListenerFunction() {
+	public function secondListenerFunction($some) {
 		$this->callStack[] = __FUNCTION__;
 	}
 
