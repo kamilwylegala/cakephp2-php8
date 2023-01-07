@@ -958,7 +958,7 @@ class Helper extends CakeObject {
  * @return void
  */
 	protected function _clean() {
-		if (get_magic_quotes_gpc()) {
+		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
 			$this->_cleaned = stripslashes($this->_tainted);
 		} else {
 			$this->_cleaned = $this->_tainted;
