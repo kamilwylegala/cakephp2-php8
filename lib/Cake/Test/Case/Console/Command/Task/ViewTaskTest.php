@@ -310,7 +310,7 @@ class ViewTaskTest extends CakeTestCase {
 		$this->Task->expects($this->at(0))->method('createFile')
 			->with(
 				TMP . 'ViewTaskComments' . DS . 'edit.ctp',
-				new PHPUnit_Framework_Constraint_IsAnything()
+				new \PHPUnit\Framework\Constraint\IsAnything()
 			);
 		$this->Task->bake('edit', true);
 	}
