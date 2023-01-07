@@ -441,7 +441,7 @@ class MysqlTest extends CakeTestCase {
 		);
 
 		$mockDbo->expects($this->once())->method('getVersion')->will($this->returnValue('4.1'));
-		$resultMock = $this->getMock('PDOStatement', array('fetch'));
+		$resultMock = $this->getMock('PDOStatement', array('fetch', 'closeCursor'));
 		$mockDbo->expects($this->once())
 			->method('_execute')
 			->with('SHOW INDEX FROM ' . $name)
@@ -906,7 +906,7 @@ SQL;
  * @return void
  */
 	public function testDescribeHandleCurrentTimestampDatetime() {
-		$mysqlVersion = $this->Dbo->query('SELECT VERSION() as version', array('log' => false));
+		$mysqlVersion = $this->Dbo->query('SELECT VERSION() as version');
 		$this->skipIf(version_compare($mysqlVersion[0][0]['version'], '5.6.0', '<'));
 
 		$name = $this->Dbo->fullTableName('timestamp_default_values');
