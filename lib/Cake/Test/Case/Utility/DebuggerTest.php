@@ -105,6 +105,16 @@ class DebuggerTest extends CakeTestCase {
  * @return void
  */
 	public function testOutput() {
+		// In PHP8.0+,
+		// the errcontext argument will no longer be passed to custom error handlers set with set_error_handler().
+		// see: https://www.php.net/manual/en/migration80.incompatible.php
+		// Therefore, the contents of the Context (variables that existed in the scope the error was triggered in)
+		// are not output when a PHP error occurs.
+		// Except for the above, Debugger::output() works.
+		// However, it is incomplete, so marked.
+		if (PHP_MAJOR_VERSION >= 8) {
+			$this->markTestIncomplete('Context output no longer works in PHP 8.0+.');
+		}
 		set_error_handler('Debugger::showError');
 		$this->_restoreError = true;
 
