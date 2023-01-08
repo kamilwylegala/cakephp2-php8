@@ -27,6 +27,8 @@ App::uses('PhpReader', 'Configure');
  */
 class ConfigureTest extends CakeTestCase {
 
+	protected $_restoreError = false;
+
 /**
  * setUp method
  *
@@ -65,6 +67,10 @@ class ConfigureTest extends CakeTestCase {
 			unlink(TMP . 'cache' . DS . 'persistent' . DS . 'test.php');
 		}
 		Configure::drop('test');
+
+		if ($this->_restoreError) {
+			restore_error_handler();
+		}
 	}
 
 /**
@@ -79,6 +85,7 @@ class ConfigureTest extends CakeTestCase {
 		Configure::write('App', $expected);
 
 		Configure::bootstrap(true);
+		$this->_restoreError = true;
 		$result = Configure::read('App');
 
 		$this->assertEquals($expected['foo'], $result['foo']);
