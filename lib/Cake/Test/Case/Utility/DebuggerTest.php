@@ -165,6 +165,7 @@ class DebuggerTest extends CakeTestCase {
 		$this->_restoreError = true;
 
 		ob_start();
+		Debugger::output('js');
 		$a = array();
 		$b = $a['<script>alert(1)</script>'];
 		$result = ob_get_clean();
@@ -186,6 +187,7 @@ class DebuggerTest extends CakeTestCase {
 			'traceLine' => '{:reference} - <a href="txmt://open?url=file://{:file}' .
 				'&line={:line}">{:path}</a>, line {:line}'
 		));
+		Debugger::output('js');
 		$result = Debugger::trace();
 		$this->assertMatchesRegularExpression('/' . preg_quote('txmt://open?url=file://', '/') . '(\/|[A-Z]:\\\\)' . '/', $result);
 
