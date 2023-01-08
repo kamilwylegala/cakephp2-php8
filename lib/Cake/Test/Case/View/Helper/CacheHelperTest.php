@@ -20,6 +20,7 @@ App::uses('Controller', 'Controller');
 App::uses('Model', 'Model');
 App::uses('View', 'View');
 App::uses('CacheHelper', 'View/Helper');
+App::uses('CakeRequest', 'Network');
 
 /**
  * CacheTestController class
@@ -113,6 +114,44 @@ class CacheHelperTest extends CakeTestCase {
 			'named' => array()
 		));
 		$this->Controller->cacheAction = 21600;
+		$this->Controller->request->here = '/cacheTest/cache_parsing';
+		$this->Controller->request->action = 'cache_parsing';
+
+		$View = new View($this->Controller);
+		$result = $View->render('index');
+		$this->assertDoesNotMatchRegularExpression('/cake:nocache/', $result);
+		$this->assertDoesNotMatchRegularExpression('/php echo/', $result);
+
+		$filename = CACHE . 'views' . DS . 'cachetest_cache_parsing.php';
+		$this->assertTrue(file_exists($filename));
+
+		$contents = file_get_contents($filename);
+		$this->assertMatchesRegularExpression('/php echo \$variable/', $contents);
+		$this->assertMatchesRegularExpression('/php echo microtime()/', $contents);
+		$this->assertMatchesRegularExpression('/clark kent/', $result);
+
+		unlink($filename);
+	}
+
+/**
+ * test cache parsing with relative duration
+ *
+ * @return void
+ */
+	public function testLayoutCacheParsingNoTagsInViewWithRelativeDuration() {
+		// PHP 8.0+ has a bug in which the expiration date is not cached
+		// if the expiration date is specified as a relative time.
+		if (PHP_MAJOR_VERSION >= 8) {
+			$this->markTestIncomplete('If an expiration date is specified as a relative time, it cannot be cached.');
+		}
+		$this->Controller->cache_parsing();
+		$this->Controller->request->addParams(array(
+			'controller' => 'cache_test',
+			'action' => 'cache_parsing',
+			'pass' => array(),
+			'named' => array()
+		));
+		$this->Controller->cacheAction = '+2 hours';
 		$this->Controller->request->here = '/cacheTest/cache_parsing';
 		$this->Controller->request->action = 'cache_parsing';
 
