@@ -958,11 +958,7 @@ class Helper extends CakeObject {
  * @return void
  */
 	protected function _clean() {
-		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-			$this->_cleaned = stripslashes($this->_tainted);
-		} else {
-			$this->_cleaned = $this->_tainted;
-		}
+		$this->_cleaned = $this->_tainted;
 
 		$this->_cleaned = str_replace(array("&amp;", "&lt;", "&gt;"), array("&amp;amp;", "&amp;lt;", "&amp;gt;"), $this->_cleaned);
 		$this->_cleaned = preg_replace('#(&\#*\w+)[\x00-\x20]+;#u', "$1;", $this->_cleaned);
