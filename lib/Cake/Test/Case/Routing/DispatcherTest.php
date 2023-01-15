@@ -1605,12 +1605,6 @@ class DispatcherTest extends CakeTestCase {
  * @return void
  */
 	public function testFullPageCachingDispatch($url) {
-		// PHP 8.0+ has a bug in which the expiration date is not cached
-		// if the expiration date is specified as a relative time.
-		if (PHP_MAJOR_VERSION >= 8) {
-			$this->markTestIncomplete('If an expiration date is specified as a relative time, it cannot be cached.');
-		}
-
 		Configure::write('Cache.disable', false);
 		Configure::write('Cache.check', true);
 		Configure::write('debug', 2);
