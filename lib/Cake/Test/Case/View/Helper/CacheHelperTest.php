@@ -139,11 +139,6 @@ class CacheHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testLayoutCacheParsingNoTagsInViewWithRelativeDuration() {
-		// PHP 8.0+ has a bug in which the expiration date is not cached
-		// if the expiration date is specified as a relative time.
-		if (PHP_MAJOR_VERSION >= 8) {
-			$this->markTestIncomplete('If an expiration date is specified as a relative time, it cannot be cached.');
-		}
 		$this->Controller->cache_parsing();
 		$this->Controller->request->addParams(array(
 			'controller' => 'cache_test',
