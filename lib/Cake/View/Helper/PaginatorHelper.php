@@ -822,7 +822,8 @@ class PaginatorHelper extends AppHelper {
 			if ($last && $end < $params['pageCount']) {
 				$lastPage = is_int($last) ? $last : 0;
 				$offset = ($params['pageCount'] < $end + $lastPage) ? $params['pageCount'] - $end : $last;
-				if ($offset <= $lastPage && $params['pageCount'] - $end > $lastPage) {
+				$offsetIsLabel = (!is_int($offset) && !ctype_digit($offset));
+				if (($offsetIsLabel || $offset <= $lastPage) && $params['pageCount'] - $end > $lastPage) {
 					$out .= $this->last($offset, compact('tag', 'separator', 'ellipsis', 'class'));
 				} else {
 					$out .= $this->last($offset, compact('tag', 'separator', 'class', 'ellipsis') + array('before' => $separator));
