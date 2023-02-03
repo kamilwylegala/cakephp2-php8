@@ -2,6 +2,7 @@
 #################################################
 /app/Config/database.php
 /app/tmp
+/composer.lock
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
 /vendors
