@@ -327,7 +327,7 @@ class PostgresTest extends CakeTestCase {
  * @return void
  */
 	public function testValueQuoting() {
-		$this->assertEquals("1.200000", $this->Dbo->value(1.2, 'float'));
+		$this->assertEquals("1.2", $this->Dbo->value(1.2, 'float'));
 		$this->assertEquals("'1,2'", $this->Dbo->value('1,2', 'float'));
 
 		$this->assertEquals("0", $this->Dbo->value('0', 'integer'));
@@ -369,7 +369,7 @@ class PostgresTest extends CakeTestCase {
 		$this->assertEquals("3.141593", $result);
 
 		$result = $this->db->value(3.14);
-		$this->assertEquals("3.140000", $result);
+		$this->assertEquals("3.14", $result);
 	}
 
 /**
