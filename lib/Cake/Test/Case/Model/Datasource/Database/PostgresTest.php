@@ -210,6 +210,13 @@ class PostgresTest extends CakeTestCase {
 	public $Dbo2 = null;
 
 /**
+ * Number locale before changing during testing
+ *
+ * @var string
+ */
+	public $restoreLocaleNumeric = null;
+
+/**
  * Sets up a Dbo class instance for testing
  *
  * @return void
@@ -232,6 +239,11 @@ class PostgresTest extends CakeTestCase {
 		parent::tearDown();
 		Configure::write('Cache.disable', false);
 		unset($this->Dbo2);
+
+		if (!is_null($this->restoreLocaleNumeric)) {
+			setlocale(LC_NUMERIC, $this->restoreLocaleNumeric);
+			$this->restoreLocaleNumeric = null;
+		}
 	}
 
 /**
@@ -349,7 +361,7 @@ class PostgresTest extends CakeTestCase {
  * @return void
  */
 	public function testLocalizedFloats() {
-		$restore = setlocale(LC_NUMERIC, 0);
+		$this->restoreLocaleNumeric = setlocale(LC_NUMERIC, 0);
 
 		$this->skipIf(setlocale(LC_NUMERIC, 'de_DE') === false, "The German locale isn't available.");
 
@@ -358,8 +370,6 @@ class PostgresTest extends CakeTestCase {
 
 		$result = $this->db->value(3.14);
 		$this->assertEquals("3.140000", $result);
-
-		setlocale(LC_NUMERIC, $restore);
 	}
 
 /**
