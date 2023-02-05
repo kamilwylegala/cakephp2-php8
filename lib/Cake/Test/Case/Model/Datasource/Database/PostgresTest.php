@@ -703,8 +703,6 @@ class PostgresTest extends CakeTestCase {
 		$this->assertEquals(true, $result['author_id']['null']);
 		$this->assertEquals(false, $result['title']['null']);
 
-		$this->Dbo->query($this->Dbo->dropSchema($New));
-
 		$New = new CakeSchema(array(
 			'connection' => 'test_suite',
 			'name' => 'AlterPosts',
@@ -720,6 +718,8 @@ class PostgresTest extends CakeTestCase {
 		));
 		$result = $this->Dbo->alterSchema($New->compare($Old), 'alter_posts');
 		$this->assertDoesNotMatchRegularExpression('/varchar\(36\) NOT NULL/i', $result);
+
+		$this->Dbo->query($this->Dbo->dropSchema($New));
 	}
 
 /**
