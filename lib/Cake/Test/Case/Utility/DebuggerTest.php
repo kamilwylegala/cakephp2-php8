@@ -642,6 +642,10 @@ TEXT;
  * @return void
  */
 	public function testExportVarRecursion() {
+		$this->skipIf(
+			version_compare(PHP_VERSION, '8.1.0', '>='),
+			'PHP 8.1+, $GLOBALS no longer has $GLOBALS as an element.'
+		);
 		$output = Debugger::exportVar($GLOBALS);
 		$this->assertStringContainsString("'GLOBALS' => [recursion]", $output);
 	}
