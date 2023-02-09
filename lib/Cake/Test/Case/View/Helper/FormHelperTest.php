@@ -1699,11 +1699,13 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
- * Tests that the correct keys are added to the field hash index
+ * Tests that the correct keys are added to the field hash index (For PHP < 8.1)
  *
  * @return void
  */
 	public function testSecuredFileInput() {
+		$this->skipIf(version_compare(PHP_VERSION, '8.1.0', '>='));
+
 		$this->Form->request['_Token'] = array('key' => 'testKey');
 		$this->assertEquals(array(), $this->Form->fields);
 
@@ -1711,6 +1713,28 @@ class FormHelperTest extends CakeTestCase {
 		$expected = array(
 			'Attachment.file.name', 'Attachment.file.type', 'Attachment.file.tmp_name',
 			'Attachment.file.error', 'Attachment.file.size'
+		);
+		$this->assertEquals($expected, $this->Form->fields);
+	}
+
+/**
+ * Tests that the correct keys are added to the field hash index (For PHP >= 8.1)
+ *
+ * Added full_path key
+ *
+ * @see https://www.php.net/manual/en/migration81.new-features.php#migration81.new-features.core.upload-full-path-key
+ * @return void
+ */
+	public function testSecuredFileInputForPhp81Plus() {
+		$this->skipIf(version_compare(PHP_VERSION, '8.1.0', '<'));
+
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+		$this->assertEquals(array(), $this->Form->fields);
+
+		$this->Form->file('Attachment.file');
+		$expected = array(
+			'Attachment.file.name', 'Attachment.file.type', 'Attachment.file.tmp_name',
+			'Attachment.file.error', 'Attachment.file.size', 'Attachment.file.full_path'
 		);
 		$this->assertEquals($expected, $this->Form->fields);
 	}
