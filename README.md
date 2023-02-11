@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-02-11
+
+- Fixed PostgreSQL test suite.
+
 ### 2023-01-30
 
 - `PaginatorHelper` fix.
