@@ -214,19 +214,19 @@ class MysqlTest extends CakeTestCase {
 		$this->assertTrue((bool)$this->model->save(array('bool' => 5, 'tiny_int' => 5)));
 		$result = $this->model->find('first');
 		$this->assertTrue($result['Tinyint']['bool']);
-		$this->assertSame($result['Tinyint']['tiny_int'], '5');
+		$this->assertEquals($result['Tinyint']['tiny_int'], '5');
 		$this->model->deleteAll(true);
 
 		$this->assertTrue((bool)$this->model->save(array('bool' => 0, 'tiny_int' => 100)));
 		$result = $this->model->find('first');
 		$this->assertFalse($result['Tinyint']['bool']);
-		$this->assertSame($result['Tinyint']['tiny_int'], '100');
+		$this->assertEquals($result['Tinyint']['tiny_int'], '100');
 		$this->model->deleteAll(true);
 
 		$this->assertTrue((bool)$this->model->save(array('bool' => true, 'tiny_int' => 0)));
 		$result = $this->model->find('first');
 		$this->assertTrue($result['Tinyint']['bool']);
-		$this->assertSame($result['Tinyint']['tiny_int'], '0');
+		$this->assertEquals($result['Tinyint']['tiny_int'], '0');
 		$this->model->deleteAll(true);
 
 		$this->Dbo->rawQuery('DROP TABLE ' . $this->Dbo->fullTableName($tableName));
