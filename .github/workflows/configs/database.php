@@ -5,7 +5,10 @@ class DATABASE_CONFIG {
 			'datasource' => 'Database/Mysql',
 			'host' => '127.0.0.1',
 			'login' => 'root',
-			'password' => 'root'
+			'password' => 'root',
+			'flags' => array(
+				PDO::ATTR_STRINGIFY_FETCHES => false,
+			),
 		),
 		'pgsql' => array(
 			'datasource' => 'Database/Postgres',
@@ -18,7 +21,10 @@ class DATABASE_CONFIG {
 				'test' => 'public',
 				'test2' => 'test2',
 				'test_database_three' => 'test3'
-			)
+			),
+			'flags' => array(
+				PDO::ATTR_STRINGIFY_FETCHES => false,
+			),
 		),
 		'sqlite' => array(
 			'datasource' => 'Database/Sqlite',
@@ -27,6 +33,9 @@ class DATABASE_CONFIG {
 				'test' => ':memory:',
 				'test2' => '/tmp/cakephp_test2.db',
 				'test_database_three' => '/tmp/cakephp_test3.db'
+			),
+			'flags' => array(
+				PDO::ATTR_STRINGIFY_FETCHES => false,
 			),
 		)
 	);
