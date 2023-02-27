@@ -435,7 +435,21 @@ class I18n {
 				if ($translations === false && is_file($file . '.po')) {
 					$translations = static::loadPo($file . '.po');
 				}
+				
+				if ($translations !== false) {
 
+					# PHP 8.1 fix
+					# Deprecated: Automatic conversion of false to array is deprecated
+					if(!is_array($this->_domains[$domain][$this->_lang])) {
+						$this->_domains[$domain][$this->_lang] = [];
+					}
+
+					$this->_domains[$domain][$this->_lang][$this->category] = $translations;
+					$this->_noLocale = false;
+					break 2;
+					
+				}
+				
 				if ($translations !== false) {
 					$this->_domains[$domain][$this->_lang][$this->category] = $translations;
 					$this->_noLocale = false;
