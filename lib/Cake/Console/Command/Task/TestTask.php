@@ -19,6 +19,10 @@ App::uses('AppShell', 'Console/Command');
 App::uses('BakeTask', 'Console/Command/Task');
 App::uses('ClassRegistry', 'Utility');
 
+if (!defined('TESTS')) {
+	define('TESTS', APP . 'Test' . DS);
+}
+
 /**
  * Task class for creating and updating test files.
  *
