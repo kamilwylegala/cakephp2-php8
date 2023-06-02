@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-06-02
+
+- Fixed PHP 8.2 deprecation notices in CakeEvent: `Creation of dynamic property ... is deprecated.`
+
 ### 2023-02-19
 
 - Fixed PHP 8.1 MySQL test suite.
