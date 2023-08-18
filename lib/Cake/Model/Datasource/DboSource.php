@@ -3270,13 +3270,14 @@ class DboSource extends DataSource {
 		}
 		$sign = isset($result[3]);
 
+		if ($length === null) {
+			// prevent deprecation warnings
+			return null;
+		}
+
 		$isFloat = in_array($type, array('dec', 'decimal', 'float', 'numeric', 'double'));
 		if ($isFloat && strpos($length, ',') !== false) {
 			return $length;
-		}
-
-		if ($length === null) {
-			return null;
 		}
 
 		if (isset($types[$type])) {

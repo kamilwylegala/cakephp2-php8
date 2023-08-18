@@ -838,7 +838,7 @@ class Mysql extends DboSource {
  */
 	public function value($data, $column = null, $null = true) {
 		$value = parent::value($data, $column, $null);
-		if (is_numeric($value) && substr($column, 0, 3) === 'set') {
+		if (is_numeric($value) && $column !== null && str_starts_with($column, 'set')) {
 			return $this->_connection->quote($value);
 		}
 		return $value;
