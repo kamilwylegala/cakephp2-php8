@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-08-18
+
+- Fixed PHP8 deprecation notices. Related mostly to passing null as a `$haystack` value.
+
 ### 2023-06-02
 
 - Fixed PHP 8.2 deprecation notices in CakeEvent: `Creation of dynamic property ... is deprecated.`
