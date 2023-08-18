@@ -370,6 +370,7 @@ class ContainableBehavior extends ModelBehavior {
  */
 	public function fieldDependencies(Model $Model, $map, $fields = array()) {
 		if ($fields === false) {
+			$fields = [];
 			foreach ($map as $parent => $children) {
 				foreach ($children as $type => $bindings) {
 					foreach ($bindings as $dependency) {
