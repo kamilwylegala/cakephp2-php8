@@ -292,7 +292,7 @@ class ShellDispatcher {
 		$params = array_merge($defaults, array_intersect_key($this->params, $defaults));
 		$isWin = false;
 		foreach ($defaults as $default => $value) {
-			if (strpos($params[$default], '\\') !== false) {
+			if (!is_null($params[$default]) && strpos($params[$default], '\\') !== false) {
 				$isWin = true;
 				break;
 			}
