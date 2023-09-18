@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-09-18
+
+- Fix for `ShellDispatcher` where `null` was passed to `strpos` function.
+
 ### 2023-08-18
 
 - Fixed PHP8 deprecation notices. Related mostly to passing null as a `$haystack` value.
