@@ -323,7 +323,7 @@ if (!function_exists('env')) {
 			if (isset($_SERVER['HTTPS'])) {
 				return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 			}
-			return (strpos(env('SCRIPT_URI'), 'https://') === 0);
+			return (strpos(env('SCRIPT_URI') ?? '', 'https://') === 0);
 		}
 
 		if ($key === 'SCRIPT_NAME') {
