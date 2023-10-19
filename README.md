@@ -59,6 +59,7 @@ It means that composer will look at `master` branch of repository configured und
 ### 2023-10-19
 
 - Removed usage of deprecated `redis->getKeys()` in favor of `redis->keys()`.
+- Added docker-compose setup to run tests locally.
 
 ### 2023-09-18
 
