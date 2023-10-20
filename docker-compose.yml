@@ -1,0 +1,54 @@
+services:
+  web:
+    build: ./docker/web
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
+    volumes:
+      - ./:/var/www/html:cached
+    working_dir: /var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+      - pgsql
+      - memcached
+      - redis
+  mysql:
+    image: mysql:5.6
+    platform: linux/amd64
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cakephp_test
+      MYSQL_USER: cakephp_test
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d:cached
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  pgsql:
+    image: postgres:9.4
+    platform: linux/amd64
+    environment:
+      POSTGRES_DB: cakephp_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./docker/pgsql:/docker-entrypoint-initdb.d:cached
+      - pgsql-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  memcached:
+    image: memcached:latest
+    hostname: memcached
+    ports:
+      - "11211:11211"
+  redis:
+    image: "redis:latest"
+    hostname: redis
+    ports:
+      - "6379:6379"
+volumes:
+  mysql-data:
+  pgsql-data:
