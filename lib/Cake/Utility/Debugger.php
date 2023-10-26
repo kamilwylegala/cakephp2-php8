@@ -593,6 +593,11 @@ class Debugger {
 					$reflectionProperties = $ref->getProperties($filter);
 					foreach ($reflectionProperties as $reflectionProperty) {
 						$reflectionProperty->setAccessible(true);
+
+						if (!$reflectionProperty->isInitialized($var)) {
+							continue;
+						}
+
 						$property = $reflectionProperty->getValue($var);
 
 						$value = static::_export($property, $depth - 1, $indent);
