@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-11-02
+
+- Fixed: unitialized property in Debugger.php
+
 ### 2023-10-20
 
 - Fallback to empty string from `env()` in basics.php and request handler.
