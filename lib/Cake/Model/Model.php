@@ -42,6 +42,7 @@ App::uses('CakeEventManager', 'Event');
  * @package       Cake.Model
  * @link          https://book.cakephp.org/2.0/en/models.html
  */
+#[AllowDynamicProperties]
 class Model extends CakeObject implements CakeEventListener {
 
 /**
