@@ -55,6 +55,12 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2023-12-19
+
+- Muted dynamic property creation warnings in Controller.php
+- Fix passing a null input to h function (PR #56)
+- Fix Hash class callback callable pattern deprecated (PR #58)
+
 ### 2023-11-13
 
 - Silence dynamic property creation warning in Model.php
