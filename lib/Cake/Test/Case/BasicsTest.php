@@ -243,6 +243,9 @@ class BasicsTest extends CakeTestCase {
 		$obj = new CakeResponse(array('body' => 'Body content'));
 		$result = h($obj);
 		$this->assertEquals('Body content', $result);
+
+		$result = h(null);
+		$this->assertEquals('', $result);
 	}
 
 /**

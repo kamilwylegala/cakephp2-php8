@@ -215,6 +215,8 @@ if (!function_exists('h')) {
 			}
 		} elseif (is_bool($text)) {
 			return $text;
+		} elseif (is_null($text)) {
+			return '';
 		}
 
 		static $defaultCharset = false;
