@@ -48,6 +48,12 @@ class CakeEvent {
 	public mixed $omitSubject;
 
 /**
+ * PHP 8.2 deprecation notice: added to avoid `Creation of dynamic property ... is deprecated.`
+ * @var mixed
+ */
+	public mixed $collectReturn;
+
+/**
  * Name of the event
  *
  * @var string
