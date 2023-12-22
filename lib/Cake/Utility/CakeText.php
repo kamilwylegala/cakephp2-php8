@@ -164,8 +164,8 @@ class CakeText {
 			$format = sprintf(
 				'/(?<!%s)%s%%s%s/',
 				preg_quote($options['escape'], '/'),
-				str_replace('%', '%%', preg_quote($options['before'], '/')),
-				str_replace('%', '%%', preg_quote($options['after'], '/'))
+				str_replace('%', '%%', preg_quote((string)$options['before'], '/')),
+				str_replace('%', '%%', preg_quote((string)$options['after'], '/'))
 			);
 		}
 
