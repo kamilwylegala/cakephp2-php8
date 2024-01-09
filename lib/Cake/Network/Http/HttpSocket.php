@@ -720,7 +720,7 @@ class HttpSocket extends CakeSocket {
 			return false;
 		}
 
-		$uri['path'] = preg_replace('/^\//', null, $uri['path']);
+		$uri['path'] = preg_replace('/^\//', '', $uri['path']);
 		$uri['query'] = http_build_query($uri['query'], '', '&');
 		$uri['query'] = rtrim($uri['query'], '=');
 		$stripIfEmpty = array(
@@ -732,16 +732,16 @@ class HttpSocket extends CakeSocket {
 
 		foreach ($stripIfEmpty as $key => $strip) {
 			if (empty($uri[$key])) {
-				$uriTemplate = str_replace($strip, null, $uriTemplate);
+				$uriTemplate = str_replace($strip, '', $uriTemplate);
 			}
 		}
 
 		$defaultPorts = array('http' => 80, 'https' => 443);
 		if (array_key_exists($uri['scheme'], $defaultPorts) && $defaultPorts[$uri['scheme']] == $uri['port']) {
-			$uriTemplate = str_replace(':%port', null, $uriTemplate);
+			$uriTemplate = str_replace(':%port', '', $uriTemplate);
 		}
 		foreach ($uri as $property => $value) {
-			$uriTemplate = str_replace('%' . $property, $value, $uriTemplate);
+			$uriTemplate = str_replace('%' . $property, (string)$value, $uriTemplate);
 		}
 
 		if ($uriTemplate === '/*') {
