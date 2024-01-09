@@ -498,7 +498,7 @@ class CakeRoute {
 		}
 
 		if (is_array($params['pass'])) {
-			$params['pass'] = implode('/', array_map('rawurlencode', $params['pass']));
+			$params['pass'] = implode('/', array_map(fn($param) => rawurlencode((string)$param), $params['pass']));
 		}
 
 		$namedConfig = Router::namedConfig();
