@@ -31,6 +31,7 @@ App::uses('Hash', 'Utility');
  * @package       Cake.Model
  * @link          https://book.cakephp.org/2.0/en/data-validation.html
  */
+#[\AllowDynamicProperties]
 class ModelValidator implements ArrayAccess, IteratorAggregate, Countable {
 
 /**

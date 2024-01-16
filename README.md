@@ -55,6 +55,14 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-01-11
+
+- `preg_replace` deprecation warning fixes (passing null instead of `string`)
+
+### 2023-12-22
+
+- `preg_quote()` passing null fix
+
 ### 2023-12-19
 
 - Muted dynamic property creation warnings in Controller.php
