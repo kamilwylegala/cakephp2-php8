@@ -2767,19 +2767,7 @@ class FormHelper extends AppHelper {
 		}
 
 		if (is_numeric($value)) {
-			try {
-				$value = datefmt_format(
-					datefmt_create(
-						locale: setLocale(LC_TIME, 0),
-						dateType: \IntlDateFormatter::FULL,
-						timeType: \IntlDateFormatter::FULL,
-						pattern: 'yyyy-MM-dd HH:mm:SS'
-					),
-					$value
-				);
-			} catch (\Error) {
-				$value = date('Y-m-d H:i:s', $value);
-			}
+			$value = strftime('%Y-%m-%d %H:%M:%S', $value);
 		}
 		$meridian = 'am';
 		$pos = strpos($value, '-');
@@ -3033,19 +3021,7 @@ class FormHelper extends AppHelper {
 					$data = $options['monthNames'];
 				} else {
 					for ($m = 1; $m <= 12; $m++) {
-						try {
-							$data[sprintf("%02s", $m)] = datefmt_format(
-								datefmt_create(
-									locale: setLocale(LC_TIME, 0),
-									dateType: \IntlDateFormatter::FULL,
-									timeType: \IntlDateFormatter::FULL,
-									pattern: 'MM'
-								),
-								mktime(1, 1, 1, $m, 1, 1999)
-							);
-						} catch (\Error) {
-							$data[sprintf("%02s", $m)] = date('m', mktime(1, 1, 1, $m, 1, 1999));
-						}
+						$data[sprintf("%02s", $m)] = strftime("%m", mktime(1, 1, 1, $m, 1, 1999));
 					}
 				}
 				break;
