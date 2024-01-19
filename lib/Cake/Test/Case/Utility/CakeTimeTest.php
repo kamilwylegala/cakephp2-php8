@@ -1174,7 +1174,7 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, '%c');
-		$expected = 'jue 14 ene 2010 13:59:28 ' . utf8_encode(strftime('%Z', $time));
+		$expected = 'jue 14 ene 2010 13:59:28 ' . mb_convert_encoding(strftime('%Z', $time), 'UTF-8', 'ISO-8859-1');
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, 'Time is %r, and date is %x');
@@ -1188,7 +1188,7 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, '%c');
-		$expected = 'mié 13 ene 2010 13:59:28 ' . utf8_encode(strftime('%Z', $time));
+		$expected = 'mié 13 ene 2010 13:59:28 ' . mb_convert_encoding(strftime('%Z', $time), 'UTF-8', 'ISO-8859-1');
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, 'Time is %r, and date is %x');
