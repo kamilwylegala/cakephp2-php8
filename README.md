@@ -55,6 +55,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-01-19
+
+- `strotime()` and `preg_split()` in CakeResponse deprecation warning fixes (passing null)
+
 ### 2024-01-11
 
 - `preg_replace` deprecation warning fixes (passing null instead of `string`)
