@@ -1164,7 +1164,11 @@ class CakeResponse {
 		$ifNoneMatchHeader = $request->header('If-None-Match');
 		$etags = array();
 		if (is_string($ifNoneMatchHeader)) {
-			$etags = preg_split('/\s*,\s*/', $ifNoneMatchHeader, null, PREG_SPLIT_NO_EMPTY);
+			$etags = preg_split(
+				pattern: '/\s*,\s*/',
+				subject: $ifNoneMatchHeader,
+				flags: PREG_SPLIT_NO_EMPTY
+			);
 		}
 		$modifiedSince = $request->header('If-Modified-Since');
 		$checks = array();
