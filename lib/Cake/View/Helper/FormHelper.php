@@ -2708,7 +2708,7 @@ class FormHelper extends AppHelper {
 		}
 
 		$selects = array();
-		foreach (preg_split('//', $dateFormat, -1, PREG_SPLIT_NO_EMPTY) as $char) {
+		foreach (preg_split('//', (string)$dateFormat, -1, PREG_SPLIT_NO_EMPTY) as $char) {
 			switch ($char) {
 				case 'Y':
 					$attrs['Year']['value'] = $year;
