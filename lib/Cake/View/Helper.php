@@ -632,7 +632,7 @@ class Helper extends CakeObject {
  * @return array An array containing the identity elements of an entity
  */
 	public function entity() {
-		return explode('.', $this->_entityPath);
+		return explode('.', (string)$this->_entityPath);
 	}
 
 /**
