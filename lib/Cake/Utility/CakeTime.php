@@ -1167,9 +1167,9 @@ class CakeTime {
  * @return string formatted string with correct encoding.
  */
 	protected static function _strftime($format, $timestamp) {
-		// @codingStandardIgnoreStart
+		// @codingStandardsIgnoreStart
 		$format = @strftime($format, $timestamp);
-		// @codingStandardIgnoreEnd
+		// @codingStandardsIgnoreEnd
 		$encoding = Configure::read('App.encoding');
 		if (!empty($encoding) && $encoding === 'UTF-8') {
 			if (function_exists('mb_check_encoding')) {
@@ -1178,9 +1178,7 @@ class CakeTime {
 				$valid = Multibyte::checkMultibyte($format);
 			}
 			if (!$valid) {
-				// @codingStandardIgnoreStart
 				$format = mb_convert_encoding($format, 'UTF-8', 'ISO-8859-1');
-				// @codingStandardIgnoreEnd
 			}
 		}
 		return $format;
