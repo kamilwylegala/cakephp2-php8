@@ -10,6 +10,7 @@
 /dist
 /tags
 *.mo
+.phpunit.result.cache
 
 # IDE and editor specific files #
 #################################

@@ -279,7 +279,9 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertEquals('on 2007-09-25', $result);
 
 		$result = $this->Time->timeAgoInWords('2007-9-25', '%x');
-		$this->assertEquals('on ' . strftime('%x', strtotime('2007-9-25')), $result);
+		// @codingStandardsIgnoreStart
+		$this->assertEquals('on ' . @strftime('%x', strtotime('2007-9-25')), $result);
+		// @codingStandardsIgnoreEnd
 
 		$result = $this->Time->timeAgoInWords(
 			strtotime('+2 weeks +2 days'),
@@ -303,7 +305,9 @@ class CakeTimeTest extends CakeTestCase {
 			strtotime('+2 months +2 days'),
 			array('end' => '1 month', 'format' => '%x')
 		);
-		$this->assertEquals('on ' . strftime('%x', strtotime('+2 months +2 days')), $result);
+		// @codingStandardsIgnoreStart
+		$this->assertEquals('on ' . @strftime('%x', strtotime('+2 months +2 days')), $result);
+		// @codingStandardsIgnoreEnd
 	}
 
 /**
@@ -1174,7 +1178,9 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, '%c');
-		$expected = 'jue 14 ene 2010 13:59:28 ' . utf8_encode(strftime('%Z', $time));
+		// @codingStandardsIgnoreStart
+		$expected = 'jue 14 ene 2010 13:59:28 ' . mb_convert_encoding(@strftime('%Z', $time), 'UTF-8', 'ISO-8859-1');
+		// @codingStandardsIgnoreEnd
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, 'Time is %r, and date is %x');
@@ -1188,7 +1194,9 @@ class CakeTimeTest extends CakeTestCase {
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, '%c');
-		$expected = 'mié 13 ene 2010 13:59:28 ' . utf8_encode(strftime('%Z', $time));
+		// @codingStandardsIgnoreStart
+		$expected = 'mié 13 ene 2010 13:59:28 ' . mb_convert_encoding(@strftime('%Z', $time), 'UTF-8', 'ISO-8859-1');
+		// @codingStandardsIgnoreEnd
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Time->i18nFormat($time, 'Time is %r, and date is %x');
