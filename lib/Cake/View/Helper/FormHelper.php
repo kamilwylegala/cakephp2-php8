@@ -2767,7 +2767,9 @@ class FormHelper extends AppHelper {
 		}
 
 		if (is_numeric($value)) {
+			// @codingStandardIgnoreStart
 			$value = @strftime('%Y-%m-%d %H:%M:%S', $value);
+			// @codingStandardIgnoreEnd
 		}
 		$meridian = 'am';
 		$pos = strpos($value, '-');
@@ -3021,7 +3023,9 @@ class FormHelper extends AppHelper {
 					$data = $options['monthNames'];
 				} else {
 					for ($m = 1; $m <= 12; $m++) {
+						// @codingStandardIgnoreStart
 						$data[sprintf("%02s", $m)] = @strftime("%m", mktime(1, 1, 1, $m, 1, 1999));
+						// @codingStandardIgnoreEnd
 					}
 				}
 				break;
