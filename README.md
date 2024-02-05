@@ -4,6 +4,12 @@
 
 Unfortunately branch 2.x in original repository was taken down.
 
+## Incoming breaking changes
+
+The `strftime` function is widely used in the framework codebase. We plan to replace it with `IntlDateFormatter::format()`, this method comes from the `Intl` extension. CakePHP2 doesn't use it, so it would be a **breaking change**. We'd like to start rolling it out in early **May 2024**.
+
+If you have any concerns, let's discuss it under: https://github.com/kamilwylegala/cakephp2-php8/issues/65
+
 ## Why I created this fork? 🤔
 
 CakePHP 2 stopped getting updates in the end of 2019 (AFAIR). Unfortunately in my case it's too expensive to migrate to newer versions of CakePHP. I started migrating to Symfony framework, but I still use ORM from CakePHP (and actually I like it). So in order to keep up with the newest PHP versions I decided to create fork of the framework.
