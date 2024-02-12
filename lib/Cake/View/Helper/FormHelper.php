@@ -2561,7 +2561,7 @@ class FormHelper extends AppHelper {
 						$attributes['value'] = date('a');
 					}
 				} else {
-					$date = date_create($attributes['value']);
+					$date = date_create($value);
 					$attributes['value'] = null;
 					if ($date) {
 						$attributes['value'] = $date->format('a');
