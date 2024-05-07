@@ -4,12 +4,6 @@
 
 Unfortunately branch 2.x in original repository was taken down.
 
-## Incoming breaking changes
-
-The `strftime` function is widely used in the framework codebase. We plan to replace it with `IntlDateFormatter::format()`, this method comes from the `Intl` extension. CakePHP2 doesn't use it, so it would be a **breaking change**. We'd like to start rolling it out in early **May 2024**.
-
-If you have any concerns, let's discuss it under: https://github.com/kamilwylegala/cakephp2-php8/issues/65
-
 ## Why I created this fork? 🤔
 
 CakePHP 2 stopped getting updates in the end of 2019 (AFAIR). Unfortunately in my case it's too expensive to migrate to newer versions of CakePHP. I started migrating to Symfony framework, but I still use ORM from CakePHP (and actually I like it). So in order to keep up with the newest PHP versions I decided to create fork of the framework.
@@ -37,6 +31,10 @@ Here are steps I took to migrate my project through all versions to PHP 8.1, may
 - ~~Tests of CakePHP framework aren't refactored yet to support PHP 8. Main issue is old version of PHPUnit that is tightly coupled to framework's tests. Issue for fixing this situation is here: https://github.com/kamilwylegala/cakephp2-php8/issues/7~~ Framework tests are migrated to PHPUnit 9.*. Github actions are running tests on PHP 8.0, 8.1.
 - ~~Due to lack of tests ☝️~~ - **you also need to rely** on tests in your application after integrating with this fork.
 - If after integration you spot any issues related to framework please let me know by creating an issue or pull request with fix.
+
+### Breaking changes
+
+- In order to get rid of `strftime()` deprecation notices, it's required to switch to `IntlDateFormatter` class. This class is available in `intl` extension, fork requires `intl` extension to be enabled in PHP configuration. If you don't have `intl` extension, installing fork will result in error. Discussed (here)[https://github.com/kamilwylegala/cakephp2-php8/pull/64] and (here)[https://github.com/kamilwylegala/cakephp2-php8/issues/65].
 
 ## Installation
 
