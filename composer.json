@@ -22,7 +22,8 @@
 	},
 	"suggest": {
 		"ext-openssl": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
-		"ext-mcrypt": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption"
+		"ext-mcrypt": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
+		"ext-intl": "Required to use IntlDateFormatter instead of strftime"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",
