@@ -437,7 +437,13 @@ class I18n {
 				}
 
 				if ($translations !== false) {
-					$this->_domains[$domain][$this->_lang][$this->category] = $translations;
+					if ($this->_domains[$domain][$this->_lang] === false) {
+						$this->_domains[$domain][$this->_lang] = [
+							$this->category => $translations
+						];
+					} else {
+						$this->_domains[$domain][$this->_lang][$this->category] = $translations;
+					}
 					$this->_noLocale = false;
 					break 2;
 				}
@@ -445,7 +451,13 @@ class I18n {
 		}
 
 		if (empty($this->_domains[$domain][$this->_lang][$this->category])) {
-			$this->_domains[$domain][$this->_lang][$this->category] = array();
+			if ($this->_domains[$domain][$this->_lang] === false) {
+				$this->_domains[$domain][$this->_lang] = [
+					$this->category => []
+				];
+			} else {
+				$this->_domains[$domain][$this->_lang][$this->category] = [];
+			}
 			return $domain;
 		}
 
