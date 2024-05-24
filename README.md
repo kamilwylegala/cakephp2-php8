@@ -61,6 +61,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-05-24
+
+- Fix deprecation error in Model: `Automatic conversion of false to array is deprecated`
+
 ### 2024-05-22
 
 - Fix deprecation error in I18n: `Automatic conversion of false to array is deprecated`
