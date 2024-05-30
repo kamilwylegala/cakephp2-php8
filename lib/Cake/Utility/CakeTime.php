@@ -1167,9 +1167,8 @@ class CakeTime {
  * @return string formatted string with correct encoding.
  */
 	protected static function _strftime($format, $timestamp) {
-		// @codingStandardsIgnoreStart
-		$format = @strftime($format, $timestamp);
-		// @codingStandardsIgnoreEnd
+		$format = PHP81_BC\strftime($format, $timestamp);
+
 		$encoding = Configure::read('App.encoding');
 		if (!empty($encoding) && $encoding === 'UTF-8') {
 			if (function_exists('mb_check_encoding')) {
