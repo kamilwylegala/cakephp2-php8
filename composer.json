@@ -18,11 +18,15 @@
 		"source": "https://github.com/cakephp/cakephp"
 	},
 	"require": {
-		"php": "^8.0"
+		"php": "^8.0",
+		"ext-mbstring": "*",
+		"symfony/polyfill-intl-icu": "^1.29",
+		"php81_bc/strftime": "^0.7.5"
 	},
 	"suggest": {
 		"ext-openssl": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
-		"ext-mcrypt": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption"
+		"ext-mcrypt": "You need to install ext-openssl or ext-mcrypt to use AES-256 encryption",
+		"ext-intl": "Required to use IntlDateFormatter instead of strftime, if not Symfony polyfill will be used."
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",

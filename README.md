@@ -4,12 +4,6 @@
 
 Unfortunately branch 2.x in original repository was taken down.
 
-## Incoming breaking changes
-
-The `strftime` function is widely used in the framework codebase. We plan to replace it with `IntlDateFormatter::format()`, this method comes from the `Intl` extension. CakePHP2 doesn't use it, so it would be a **breaking change**. We'd like to start rolling it out in early **May 2024**.
-
-If you have any concerns, let's discuss it under: https://github.com/kamilwylegala/cakephp2-php8/issues/65
-
 ## Why I created this fork? 🤔
 
 CakePHP 2 stopped getting updates in the end of 2019 (AFAIR). Unfortunately in my case it's too expensive to migrate to newer versions of CakePHP. I started migrating to Symfony framework, but I still use ORM from CakePHP (and actually I like it). So in order to keep up with the newest PHP versions I decided to create fork of the framework.
@@ -38,6 +32,10 @@ Here are steps I took to migrate my project through all versions to PHP 8.1, may
 - ~~Due to lack of tests ☝️~~ - **you also need to rely** on tests in your application after integrating with this fork.
 - If after integration you spot any issues related to framework please let me know by creating an issue or pull request with fix.
 
+### Breaking changes
+
+- In order to get rid of `strftime()` deprecation notices, it's required to switch to `IntlDateFormatter` class. This class is available in `intl` extension. Fork doesn't require it explicitly but to be able to use its functions Symfony ICU Polyfill is installed. To provide `strftime` behavior compatibility, `PHP81_BC\strftime` is used. `PHP81_BC` doesn't fully cover strftime, your code should work but there is a chance you'll get slightly different results. Discussed (here)[https://github.com/kamilwylegala/cakephp2-php8/pull/64] and (here)[https://github.com/kamilwylegala/cakephp2-php8/issues/65].
+
 ## Installation
 
 This repository **is not** available in packagist, therefore your project's `composer.json` must be changed to point to custom repository.
@@ -60,6 +58,10 @@ Example configuration:
 It means that composer will look at `master` branch of repository configured under `repositories` to resolve update of `cakephp/cakephp` package.
 
 ## Changelog
+
+### 2024-06-05
+
+- Removed usage of `strftime`, replaced with Intl extension.
 
 ### 2024-05-24
 
