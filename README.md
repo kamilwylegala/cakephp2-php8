@@ -59,6 +59,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-06-05
+
+- Removed usage of `strftime`, replaced with Intl extension.
+
 ### 2024-05-24
 
 - Fix deprecation error in Model: `Automatic conversion of false to array is deprecated`
