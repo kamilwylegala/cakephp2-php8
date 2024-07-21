@@ -65,7 +65,7 @@ class XmlView extends View {
  *
  * @param Controller $controller Controller instance.
  */
-	public function __construct(Controller $controller = null) {
+	public function __construct(?Controller $controller = null) {
 		parent::__construct($controller);
 
 		if (isset($controller->response) && $controller->response instanceof CakeResponse) {

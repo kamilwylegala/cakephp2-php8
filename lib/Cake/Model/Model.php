@@ -3913,7 +3913,7 @@ class Model extends CakeObject implements CakeEventListener {
  *  If null a new ModelValidator instance will be made using current model object
  * @return ModelValidator
  */
-	public function validator(ModelValidator $instance = null) {
+	public function validator(?ModelValidator $instance = null) {
 		if ($instance) {
 			$this->_validator = $instance;
 		} elseif (!$this->_validator) {

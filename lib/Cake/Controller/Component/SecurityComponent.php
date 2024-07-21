@@ -344,7 +344,7 @@ class SecurityComponent extends Component {
  * @link https://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#handling-blackhole-callbacks
  * @throws BadRequestException
  */
-	public function blackHole(Controller $controller, $error = '', SecurityException $exception = null) {
+	public function blackHole(?Controller $controller, $error = '', ?SecurityException $exception = null) {
 		if (!$this->blackHoleCallback) {
 			$this->_throwException($exception);
 		}
