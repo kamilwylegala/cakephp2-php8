@@ -227,7 +227,7 @@ class SecurityComponent extends Component {
 	public function startup(Controller $controller) {
 		$this->request = $controller->request;
 		$this->_action = $controller->request->params['action'];
-		$hasData = ($controller->request->data || $controller->request->is(array('put', 'post', 'delete', 'patch')));
+		$hasData = ($controller->request->data || !$controller->request->is(['head', 'get', 'options']));
 		try {
 			$this->_methodsRequired($controller);
 			$this->_secureRequired($controller);
