@@ -62,6 +62,7 @@ It means that composer will look at `master` branch of repository configured und
 ### 2024-07-24
 
 - Csrf vulnerabity fix back ported from Cake PHP 3
+- Explicit type hint definition of nullable parameters.
 
 ### 2024-06-05
 
