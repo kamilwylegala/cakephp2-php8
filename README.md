@@ -59,6 +59,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-07-24
+
+- Csrf vulnerabity fix back ported from Cake PHP 3
+
 ### 2024-06-05
 
 - Removed usage of `strftime`, replaced with Intl extension.
