@@ -297,7 +297,7 @@ class PrivateActionException extends CakeException {
 	protected $_messageTemplate = 'Private Action %s::%s() is not directly accessible.';
 
 //@codingStandardsIgnoreStart
-	public function __construct($message, $code = 404, Exception $previous = null) {
+	public function __construct($message, $code = 404, ?Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 	}
 //@codingStandardsIgnoreEnd

@@ -607,7 +607,7 @@ class ShellTest extends CakeTestCase {
 
 		$this->Shell->interactive = false;
 
-		$contents = "<?php{$eol}echo 'test';${eol}\$te = 'st';{$eol}";
+		$contents = "<?php{$eol}echo 'test';{$eol}\$te = 'st';{$eol}";
 		$result = $this->Shell->createFile($file, $contents);
 		$this->assertTrue($result);
 		$this->assertTrue(file_exists($file));

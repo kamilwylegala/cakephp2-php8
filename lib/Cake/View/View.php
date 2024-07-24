@@ -330,7 +330,7 @@ class View extends CakeObject {
  *
  * @param Controller $controller A controller object to pull View::_passedVars from.
  */
-	public function __construct(Controller $controller = null) {
+	public function __construct(?Controller $controller = null) {
 		if (is_object($controller)) {
 			$count = count($this->_passedVars);
 			for ($j = 0; $j < $count; $j++) {
