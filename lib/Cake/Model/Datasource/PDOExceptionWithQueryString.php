@@ -12,6 +12,7 @@ class PDOExceptionWithQueryString extends PDOException {
 	public function __construct(PDOException $e) {
 		parent::__construct($e->getMessage(), 0, $e->getPrevious());
 
+		$this->errorInfo = $e->errorInfo;
 		$this->code = $e->code;
 	}
 }
