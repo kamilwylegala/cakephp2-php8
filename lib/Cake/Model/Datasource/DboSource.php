@@ -17,6 +17,7 @@
  */
 
 App::uses('DataSource', 'Model/Datasource');
+App::uses('PDOExceptionWithQueryString', 'Model/Datasource');
 App::uses('CakeText', 'Utility');
 App::uses('View', 'View');
 
@@ -512,12 +513,13 @@ class DboSource extends DataSource {
 			}
 			return $query;
 		} catch (PDOException $e) {
+			$wrapperException = new PDOExceptionWithQueryString($e);
 			if (isset($query->queryString)) {
-				$e->queryString = $query->queryString;
+				$wrapperException->queryString = $query->queryString;
 			} else {
-				$e->queryString = $sql;
+				$wrapperException->queryString = $sql;
 			}
-			throw $e;
+			throw $wrapperException;
 		}
 	}
 
