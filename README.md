@@ -59,6 +59,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-09-21
+
+- Added wrapper for PDOException to avoid creating dynamic property `queryString`.
+
 ### 2024-07-24
 
 - Csrf vulnerabity fix back ported from Cake PHP 3
