@@ -59,6 +59,10 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2024-11-16
+
+- Inflector fix: str_place with null.
+
 ### 2024-09-21
 
 - Added wrapper for PDOException to avoid creating dynamic property `queryString`.
