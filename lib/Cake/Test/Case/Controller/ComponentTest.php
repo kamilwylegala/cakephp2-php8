@@ -31,10 +31,10 @@ class ParamTestComponent extends Component {
  *
  * @var array
  */
-	public $components = array(
-		'Apple' => array('enabled' => true),
-		'Banana' => array('config' => 'value'),
-	);
+	public $components = [
+		'Apple' => ['enabled' => true],
+		'Banana' => ['config' => 'value'],
+	];
 }
 
 /**
@@ -49,7 +49,7 @@ class ComponentTestController extends Controller {
  *
  * @var array
  */
-	public $uses = array();
+	public $uses = [];
 
 }
 
@@ -65,7 +65,7 @@ class AppleComponent extends Component {
  *
  * @var array
  */
-	public $components = array('Orange');
+	public $components = ['Orange'];
 
 /**
  * testName property
@@ -98,7 +98,7 @@ class OrangeComponent extends Component {
  *
  * @var array
  */
-	public $components = array('Banana');
+	public $components = ['Banana'];
 
 /**
  * initialize method
@@ -161,7 +161,7 @@ class MutuallyReferencingOneComponent extends Component {
  *
  * @var array
  */
-	public $components = array('MutuallyReferencingTwo');
+	public $components = ['MutuallyReferencingTwo'];
 }
 
 /**
@@ -176,7 +176,7 @@ class MutuallyReferencingTwoComponent extends Component {
  *
  * @var array
  */
-	public $components = array('MutuallyReferencingOne');
+	public $components = ['MutuallyReferencingOne'];
 }
 
 /**
@@ -191,7 +191,7 @@ class SomethingWithEmailComponent extends Component {
  *
  * @var array
  */
-	public $components = array('Email');
+	public $components = ['Email'];
 }
 
 /**
@@ -209,9 +209,9 @@ class ComponentTest extends CakeTestCase {
 	public function setUp() : void {
 		parent::setUp();
 		$this->_pluginPaths = App::path('plugins');
-		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		));
+		App::build([
+			'Plugin' => [CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS]
+		]);
 	}
 
 /**
@@ -252,7 +252,7 @@ class ComponentTest extends CakeTestCase {
 
 		$this->assertInstanceOf('OrangeComponent', $Apple->Orange, 'class is wrong');
 		$result = $Collection->enabled();
-		$this->assertEquals(array('Apple'), $result, 'Too many components enabled.');
+		$this->assertEquals(['Apple'], $result, 'Too many components enabled.');
 	}
 
 /**
@@ -278,12 +278,12 @@ class ComponentTest extends CakeTestCase {
  */
 	public function testSomethingReferencingEmailComponent() {
 		$Controller = new ComponentTestController();
-		$Controller->components = array('SomethingWithEmail');
+		$Controller->components = ['SomethingWithEmail'];
 		$Controller->uses = false;
 		$Controller->constructClasses();
-		$Controller->Components->trigger('initialize', array(&$Controller));
+		$Controller->Components->trigger('initialize', [&$Controller]);
 		$Controller->beforeFilter();
-		$Controller->Components->trigger('startup', array(&$Controller));
+		$Controller->Components->trigger('startup', [&$Controller]);
 
 		$this->assertInstanceOf('SomethingWithEmailComponent', $Controller->SomethingWithEmail);
 		$this->assertInstanceOf('EmailComponent', $Controller->SomethingWithEmail->Email);

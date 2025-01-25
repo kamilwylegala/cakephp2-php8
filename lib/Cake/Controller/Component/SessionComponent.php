@@ -135,13 +135,13 @@ class SessionComponent extends Component {
  * @link https://book.cakephp.org/2.0/en/core-libraries/components/sessions.html#creating-notification-messages
  * @deprecated 3.0.0 Since 2.7, use the FlashComponent instead.
  */
-	public function setFlash($message, $element = 'default', $params = array(), $key = 'flash') {
+	public function setFlash($message, $element = 'default', $params = [], $key = 'flash') {
 		$messages = (array)CakeSession::read('Message.' . $key);
-		$messages[] = array(
+		$messages[] = [
 			'message' => $message,
 			'element' => $element,
 			'params' => $params,
-		);
+		];
 		CakeSession::write('Message.' . $key, $messages);
 	}
 

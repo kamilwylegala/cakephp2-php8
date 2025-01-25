@@ -98,13 +98,13 @@ class PaginatorComponent extends Component {
  *
  * @var array
  */
-	public $settings = array(
+	public $settings = [
 		'page' => 1,
 		'limit' => 20,
 		'maxLimit' => 100,
 		'paramType' => 'named',
 		'queryScope' => null
-	);
+	];
 
 /**
  * A list of parameters users are allowed to set using request parameters. Modifying
@@ -113,9 +113,9 @@ class PaginatorComponent extends Component {
  *
  * @var array
  */
-	public $whitelist = array(
+	public $whitelist = [
 		'limit', 'sort', 'page', 'direction'
-	);
+	];
 
 /**
  * Constructor
@@ -123,7 +123,7 @@ class PaginatorComponent extends Component {
  * @param ComponentCollection $collection A ComponentCollection this component can use to lazy load its components
  * @param array $settings Array of configuration settings.
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentCollection $collection, $settings = []) {
 		$settings = array_merge($this->settings, (array)$settings);
 		$this->Controller = $collection->getController();
 		parent::__construct($collection, $settings);
@@ -141,7 +141,7 @@ class PaginatorComponent extends Component {
  * @throws MissingModelException
  * @throws NotFoundException
  */
-	public function paginate($object = null, $scope = array(), $whitelist = array()) {
+	public function paginate($object = null, $scope = [], $whitelist = []) {
 		if (is_array($object)) {
 			$whitelist = $scope;
 			$scope = $object;
@@ -161,7 +161,7 @@ class PaginatorComponent extends Component {
 		$conditions = $fields = $order = $limit = $page = $recursive = null;
 
 		if (!isset($options['conditions'])) {
-			$options['conditions'] = array();
+			$options['conditions'] = [];
 		}
 
 		$type = 'all';
@@ -176,7 +176,7 @@ class PaginatorComponent extends Component {
 		if (is_array($scope) && !empty($scope)) {
 			$conditions = array_merge($conditions, $scope);
 		} elseif (is_string($scope)) {
-			$conditions = array($conditions, $scope);
+			$conditions = [$conditions, $scope];
 		}
 		if ($recursive === null) {
 			$recursive = $object->recursive;
@@ -231,7 +231,7 @@ class PaginatorComponent extends Component {
 		$requestedPage = $page;
 		$page = max(min($page, $pageCount), 1);
 
-		$paging = array(
+		$paging = [
 			'page' => $page,
 			'current' => count($results),
 			'count' => $count,
@@ -243,14 +243,14 @@ class PaginatorComponent extends Component {
 			'options' => Hash::diff($options, $defaults),
 			'paramType' => $options['paramType'],
 			'queryScope' => $options['queryScope'],
-		);
+		];
 
 		if (!isset($this->Controller->request['paging'])) {
-			$this->Controller->request['paging'] = array();
+			$this->Controller->request['paging'] = [];
 		}
 		$this->Controller->request['paging'] = array_merge(
 			(array)$this->Controller->request['paging'],
-			array($object->alias => $paging)
+			[$object->alias => $paging]
 		);
 
 		if ($requestedPage > $page) {
@@ -274,8 +274,8 @@ class PaginatorComponent extends Component {
 	protected function _getObject($object) {
 		if (is_string($object)) {
 			$assoc = null;
-			if (strpos($object, '.') !== false) {
-				list($object, $assoc) = pluginSplit($object);
+			if (str_contains($object, '.')) {
+				[$object, $assoc] = pluginSplit($object);
 			}
 			if ($assoc && isset($this->Controller->{$object}->{$assoc})) {
 				return $this->Controller->{$object}->{$assoc};
@@ -297,8 +297,8 @@ class PaginatorComponent extends Component {
 
 			$className = null;
 			$name = $this->Controller->uses[0];
-			if (strpos($this->Controller->uses[0], '.') !== false) {
-				list($name, $className) = explode('.', $this->Controller->uses[0]);
+			if (str_contains($this->Controller->uses[0], '.')) {
+				[$name, $className] = explode('.', $this->Controller->uses[0]);
 			}
 			if ($className) {
 				return $this->Controller->{$className};
@@ -335,7 +335,7 @@ class PaginatorComponent extends Component {
 				break;
 		}
 		if ($defaults['queryScope']) {
-			$request = Hash::get($request, $defaults['queryScope'], array());
+			$request = Hash::get($request, $defaults['queryScope'], []);
 		}
 		$request = array_intersect_key($request, array_flip($this->whitelist));
 		return array_merge($defaults, $request);
@@ -353,13 +353,13 @@ class PaginatorComponent extends Component {
 		if (isset($this->settings[$alias])) {
 			$defaults = $this->settings[$alias];
 		}
-		$defaults += array(
+		$defaults += [
 			'page' => 1,
 			'limit' => 20,
 			'maxLimit' => 100,
 			'paramType' => 'named',
 			'queryScope' => null
-		);
+		];
 		return $defaults;
 	}
 
@@ -379,7 +379,7 @@ class PaginatorComponent extends Component {
  * @param array $whitelist The list of columns that can be used for sorting. If empty all keys are allowed.
  * @return array An array of options with sort + direction removed and replaced with order if possible.
  */
-	public function validateSort(Model $object, array $options, array $whitelist = array()) {
+	public function validateSort(Model $object, array $options, array $whitelist = []) {
 		if (empty($options['order']) && is_array($object->order)) {
 			$options['order'] = $object->order;
 		}
@@ -389,10 +389,10 @@ class PaginatorComponent extends Component {
 			if (isset($options['direction'])) {
 				$direction = strtolower($options['direction']);
 			}
-			if (!in_array($direction, array('asc', 'desc'))) {
+			if (!in_array($direction, ['asc', 'desc'])) {
 				$direction = 'asc';
 			}
-			$options['order'] = array($options['sort'] => $direction);
+			$options['order'] = [$options['sort'] => $direction];
 		}
 
 		if (!empty($whitelist) && isset($options['order']) && is_array($options['order'])) {
@@ -404,7 +404,7 @@ class PaginatorComponent extends Component {
 			return $options;
 		}
 		if (!empty($options['order']) && is_array($options['order'])) {
-			$order = array();
+			$order = [];
 			foreach ($options['order'] as $key => $value) {
 				if (is_int($key)) {
 					$field = explode(' ', $value);
@@ -413,8 +413,8 @@ class PaginatorComponent extends Component {
 				}
 				$field = $key;
 				$alias = $object->alias;
-				if (strpos($key, '.') !== false) {
-					list($alias, $field) = explode('.', $key);
+				if (str_contains($key, '.')) {
+					[$alias, $field] = explode('.', $key);
 				}
 				$correctAlias = ($object->alias === $alias);
 

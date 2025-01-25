@@ -40,13 +40,13 @@ class HtmlCoverageReportTest extends CakeTestCase {
 		// Therefore, CakeBaseReporter are unnecessary.
 		$this->skipIf(version_compare(\PHPUnit\Runner\Version::id(), '9.0.0', '>='), 'This test can not be run with PHPUnit 9+');
 		parent::setUp();
-		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		), App::RESET);
-		CakePlugin::load(array('TestPlugin'));
+		App::build([
+			'Plugin' => [CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS]
+		], App::RESET);
+		CakePlugin::load(['TestPlugin']);
 		$reporter = new CakeBaseReporter();
-		$reporter->params = array('app' => false, 'plugin' => false, 'group' => false);
-		$coverage = array();
+		$reporter->params = ['app' => false, 'plugin' => false, 'group' => false];
+		$coverage = [];
 		$this->Coverage = new HtmlCoverageReport($coverage, $reporter);
 	}
 
@@ -76,16 +76,16 @@ class HtmlCoverageReportTest extends CakeTestCase {
  * @return void
  */
 	public function testFilterCoverageDataByPathRemovingElements() {
-		$data = array(
-			CAKE . 'dispatcher.php' => array(
+		$data = [
+			CAKE . 'dispatcher.php' => [
 				10 => -1,
 				12 => 1
-			),
-			APP . 'app_model.php' => array(
+			],
+			APP . 'app_model.php' => [
 				50 => 1,
 				52 => -1
-			)
-		);
+			]
+		];
 		$this->Coverage->setCoverage($data);
 		$result = $this->Coverage->filterCoverageDataByPath(CAKE);
 		$this->assertTrue(isset($result[CAKE . 'dispatcher.php']));
@@ -98,7 +98,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  * @return void
  */
 	public function testGenerateDiff() {
-		$file = array(
+		$file = [
 			'line 1',
 			'line 2',
 			'line 3',
@@ -109,33 +109,33 @@ class HtmlCoverageReportTest extends CakeTestCase {
 			'line 8',
 			'line 9',
 			'line 10',
-		);
-		$coverage = array(
-			1 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
+		];
+		$coverage = [
+			1 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
 			2 => -2,
-			3 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
-			4 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
+			3 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
+			4 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
 			5 => -1,
-			6 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
-			7 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
-			8 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff')),
+			6 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
+			7 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
+			8 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']],
 			9 => -1,
-			10 => array(array('id' => 'HtmlCoverageReportTest::testGenerateDiff'))
-		);
+			10 => [['id' => 'HtmlCoverageReportTest::testGenerateDiff']]
+		];
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
 		$this->assertMatchesRegularExpression('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
 		$this->assertMatchesRegularExpression('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
 		$this->assertMatchesRegularExpression('/<pre>/', $result);
 		foreach ($file as $i => $line) {
-			$this->assertTrue(strpos($line, $result) !== 0, 'Content is missing ' . $i);
+			$this->assertTrue(!str_starts_with($line, $result), 'Content is missing ' . $i);
 			$class = 'covered';
-			if (in_array($i + 1, array(5, 9, 2))) {
+			if (in_array($i + 1, [5, 9, 2])) {
 				$class = 'uncovered';
 			}
 			if ($i + 1 === 2) {
 				$class .= ' dead';
 			}
-			$this->assertTrue(strpos($class, $result) !== 0, 'Class name is wrong ' . $i);
+			$this->assertTrue(!str_starts_with($class, $result), 'Class name is wrong ' . $i);
 		}
 	}
 
@@ -145,7 +145,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
  * @return void
  */
 	public function testPhpunit36Compatibility() {
-		$file = array(
+		$file = [
 			'line 1',
 			'line 2',
 			'line 3',
@@ -156,34 +156,34 @@ class HtmlCoverageReportTest extends CakeTestCase {
 			'line 8',
 			'line 9',
 			'line 10',
-		);
-		$coverage = array(
-			1 => array('HtmlCoverageReportTest::testGenerateDiff'),
+		];
+		$coverage = [
+			1 => ['HtmlCoverageReportTest::testGenerateDiff'],
 			2 => null,
-			3 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			4 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			5 => array(),
-			6 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			7 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			8 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			9 => array(),
-			10 => array('HtmlCoverageReportTest::testSomething', 'HtmlCoverageReportTest::testGenerateDiff')
-		);
+			3 => ['HtmlCoverageReportTest::testGenerateDiff'],
+			4 => ['HtmlCoverageReportTest::testGenerateDiff'],
+			5 => [],
+			6 => ['HtmlCoverageReportTest::testGenerateDiff'],
+			7 => ['HtmlCoverageReportTest::testGenerateDiff'],
+			8 => ['HtmlCoverageReportTest::testGenerateDiff'],
+			9 => [],
+			10 => ['HtmlCoverageReportTest::testSomething', 'HtmlCoverageReportTest::testGenerateDiff']
+		];
 
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
 		$this->assertMatchesRegularExpression('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
 		$this->assertMatchesRegularExpression('/<div class="code-coverage-results" id\="coverage\-myfile\.php-' . md5('myfile.php') . '"/', $result);
 		$this->assertMatchesRegularExpression('/<pre>/', $result);
 		foreach ($file as $i => $line) {
-			$this->assertTrue(strpos($line, $result) !== 0, 'Content is missing ' . $i);
+			$this->assertTrue(!str_starts_with($line, $result), 'Content is missing ' . $i);
 			$class = 'covered';
-			if (in_array($i + 1, array(5, 9, 2))) {
+			if (in_array($i + 1, [5, 9, 2])) {
 				$class = 'uncovered';
 			}
 			if ($i + 1 === 2) {
 				$class .= ' dead';
 			}
-			$this->assertTrue(strpos($class, $result) !== 0, 'Class name is wrong ' . $i);
+			$this->assertTrue(!str_starts_with($class, $result), 'Class name is wrong ' . $i);
 		}
 	}
 
@@ -193,38 +193,38 @@ class HtmlCoverageReportTest extends CakeTestCase {
  * @return void
  */
 	public function testCoveredLinesTitleAttributes() {
-		$file = array(
+		$file = [
 			'line 1',
 			'line 2',
 			'line 3',
 			'line 4',
 			'line 5',
-		);
+		];
 
-		$coverage = array(
-			1 => array(array('id' => 'HtmlCoverageReportTest::testAwesomeness')),
+		$coverage = [
+			1 => [['id' => 'HtmlCoverageReportTest::testAwesomeness']],
 			2 => -2,
-			3 => array(array('id' => 'HtmlCoverageReportTest::testCakeIsSuperior')),
-			4 => array(array('id' => 'HtmlCoverageReportTest::testOther')),
+			3 => [['id' => 'HtmlCoverageReportTest::testCakeIsSuperior']],
+			4 => [['id' => 'HtmlCoverageReportTest::testOther']],
 			5 => -1
-		);
+		];
 
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
 
 		$this->assertTrue(
-			strpos($result, "title=\"Covered by:\nHtmlCoverageReportTest::testAwesomeness\n\"><span class=\"line-num\">1") !== false,
+			str_contains($result, "title=\"Covered by:\nHtmlCoverageReportTest::testAwesomeness\n\"><span class=\"line-num\">1"),
 			'Missing method coverage for line 1'
 		);
 		$this->assertTrue(
-			strpos($result, "title=\"Covered by:\nHtmlCoverageReportTest::testCakeIsSuperior\n\"><span class=\"line-num\">3") !== false,
+			str_contains($result, "title=\"Covered by:\nHtmlCoverageReportTest::testCakeIsSuperior\n\"><span class=\"line-num\">3"),
 			'Missing method coverage for line 3'
 		);
 		$this->assertTrue(
-			strpos($result, "title=\"Covered by:\nHtmlCoverageReportTest::testOther\n\"><span class=\"line-num\">4") !== false,
+			str_contains($result, "title=\"Covered by:\nHtmlCoverageReportTest::testOther\n\"><span class=\"line-num\">4"),
 			'Missing method coverage for line 4'
 		);
 		$this->assertTrue(
-			strpos($result, "title=\"\"><span class=\"line-num\">5") !== false,
+			str_contains($result, "title=\"\"><span class=\"line-num\">5"),
 			'Coverage report is wrong for line 5'
 		);
 	}

@@ -54,27 +54,6 @@ class CakeEvent {
 	public mixed $collectReturn;
 
 /**
- * Name of the event
- *
- * @var string
- */
-	protected $_name = null;
-
-/**
- * The object this event applies to (usually the same object that generates the event)
- *
- * @var object
- */
-	protected $_subject;
-
-/**
- * Custom data for the method that receives the event
- *
- * @var mixed
- */
-	public $data = null;
-
-/**
  * Property used to retain the result value of the event listeners
  *
  * @var mixed
@@ -89,24 +68,35 @@ class CakeEvent {
 	protected $_stopped = false;
 
 /**
- * Constructor
- *
- * @param string $name Name of the event
- * @param object $subject the object that this event applies to (usually the object that is generating the event)
- * @param mixed $data any value you wish to be transported with this event to it can be read by listeners
- *
- * ## Examples of usage:
- *
- * ```
- *	$event = new CakeEvent('Order.afterBuy', $this, array('buyer' => $userData));
- *	$event = new CakeEvent('User.afterRegister', $UserModel);
- * ```
- */
-	public function __construct($name, $subject = null, $data = null) {
-		$this->_name = $name;
-		$this->data = $data;
-		$this->_subject = $subject;
-	}
+     * Constructor
+     *
+     * @param string $_name Name of the event
+     * @param object $_subject the object that this event applies to (usually the object that is generating the event)
+     * @param mixed $data any value you wish to be transported with this event to it can be read by listeners
+     *
+     * ## Examples of usage:
+     *
+     * ```
+     *	$event = new CakeEvent('Order.afterBuy', $this, array('buyer' => $userData));
+     *	$event = new CakeEvent('User.afterRegister', $UserModel);
+     * ```
+     */
+    public function __construct(
+        /**
+         * Name of the event
+         */
+        protected $_name,
+        /**
+         * The object this event applies to (usually the same object that generates the event)
+         */
+        protected $_subject = null,
+        /**
+         * Custom data for the method that receives the event
+         */
+        public $data = null
+    )
+    {
+    }
 
 /**
  * Dynamically returns the name and subject if accessed directly

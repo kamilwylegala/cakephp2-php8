@@ -60,7 +60,7 @@ class PhpReader implements ConfigReaderInterface {
  *  Or when files contain '..' as this could lead to abusive reads.
  */
 	public function read($key) {
-		if (strpos($key, '..') !== false) {
+		if (str_contains($key, '..')) {
 			throw new ConfigureException(__d('cake_dev', 'Cannot load configuration files with ../ in them.'));
 		}
 
@@ -100,10 +100,10 @@ class PhpReader implements ConfigReaderInterface {
  * @return string Full file path
  */
 	protected function _getFilePath($key) {
-		if (substr($key, -4) === '.php') {
+		if (str_ends_with($key, '.php')) {
 			$key = substr($key, 0, -4);
 		}
-		list($plugin, $key) = pluginSplit($key);
+		[$plugin, $key] = pluginSplit($key);
 		$key .= '.php';
 
 		if ($plugin) {

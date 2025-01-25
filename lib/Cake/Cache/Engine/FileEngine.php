@@ -48,7 +48,7 @@ class FileEngine extends CacheEngine {
  * @var array
  * @see CacheEngine::__defaults
  */
-	public $settings = array();
+	public $settings = [];
 
 /**
  * True unless FileEngine::__active(); fails
@@ -66,8 +66,8 @@ class FileEngine extends CacheEngine {
  * @param array $settings array of setting for the engine
  * @return bool True if the engine has been successfully initialized, false if not
  */
-	public function init($settings = array()) {
-		$settings += array(
+	public function init($settings = []) {
+		$settings += [
 			'engine' => 'File',
 			'path' => CACHE,
 			'prefix' => 'cake_',
@@ -75,7 +75,7 @@ class FileEngine extends CacheEngine {
 			'serialize' => true,
 			'isWindows' => false,
 			'mask' => 0664
-		);
+		];
 		parent::init($settings);
 
 		if (DS === '\\') {
@@ -132,7 +132,7 @@ class FileEngine extends CacheEngine {
 		}
 
 		$expires = time() + $duration;
-		$contents = implode(array($expires, $lineBreak, $data, $lineBreak));
+		$contents = implode('', [$expires, $lineBreak, $data, $lineBreak]);
 
 		if ($this->settings['lock']) {
 			$this->_File->flock(LOCK_EX);
@@ -236,7 +236,7 @@ class FileEngine extends CacheEngine {
 
 		$directory = new RecursiveDirectoryIterator($this->settings['path']);
 		$contents = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-		$cleared = array();
+		$cleared = [];
 		foreach ($contents as $path) {
 			if ($path->isFile()) {
 				continue;
@@ -278,7 +278,7 @@ class FileEngine extends CacheEngine {
 
 			try {
 				$file = new SplFileObject($path . $entry, 'r');
-			} catch (Exception $e) {
+			} catch (Exception) {
 				continue;
 			}
 
@@ -369,7 +369,7 @@ class FileEngine extends CacheEngine {
 			if (!$exists && !chmod($this->_File->getPathname(), (int)$this->settings['mask'])) {
 				trigger_error(__d(
 					'cake_dev', 'Could not apply permission mask "%s" on cache file "%s"',
-					array($this->_File->getPathname(), $this->settings['mask'])), E_USER_WARNING);
+					[$this->_File->getPathname(), $this->settings['mask']]), E_USER_WARNING);
 			}
 		}
 		return true;
@@ -407,7 +407,7 @@ class FileEngine extends CacheEngine {
 			return false;
 		}
 
-		$key = Inflector::underscore(str_replace(array(DS, '/', '.', '<', '>', '?', ':', '|', '*', '"'), '_', strval($key)));
+		$key = Inflector::underscore(str_replace([DS, '/', '.', '<', '>', '?', ':', '|', '*', '"'], '_', strval($key)));
 		return $key;
 	}
 
@@ -422,10 +422,10 @@ class FileEngine extends CacheEngine {
 		$directoryIterator = new RecursiveDirectoryIterator($this->settings['path']);
 		$contents = new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST);
 		foreach ($contents as $object) {
-			$containsGroup = strpos($object->getPathName(), DS . $group . DS) !== false;
+			$containsGroup = str_contains($object->getPathName(), DS . $group . DS);
 			$hasPrefix = true;
 			if (strlen($this->settings['prefix']) !== 0) {
-				$hasPrefix = strpos($object->getBaseName(), $this->settings['prefix']) === 0;
+				$hasPrefix = str_starts_with($object->getBaseName(), $this->settings['prefix']);
 			}
 			if ($object->isFile() && $containsGroup && $hasPrefix) {
 				$path = $object->getPathName();

@@ -18,13 +18,13 @@
 if (!class_exists('PHPUnit_TextUI_TestRunner')) {
 	require_once 'PHPUnit/TextUI/TestRunner.php';
 }
-if (class_exists('SebastianBergmann\CodeCoverage\CodeCoverage')) {
-	class_alias('SebastianBergmann\CodeCoverage\CodeCoverage', 'PHP_CodeCoverage');
-	class_alias('SebastianBergmann\CodeCoverage\Report\Text', 'PHP_CodeCoverage_Report_Text');
-	class_alias('SebastianBergmann\CodeCoverage\Report\PHP', 'PHP_CodeCoverage_Report_PHP');
-	class_alias('SebastianBergmann\CodeCoverage\Report\Clover', 'PHP_CodeCoverage_Report_Clover');
-	class_alias('SebastianBergmann\CodeCoverage\Report\Html\Facade', 'PHP_CodeCoverage_Report_HTML');
-	class_alias('SebastianBergmann\CodeCoverage\Exception', 'PHP_CodeCoverage_Exception');
+if (class_exists(\SebastianBergmann\CodeCoverage\CodeCoverage::class)) {
+	class_alias(\SebastianBergmann\CodeCoverage\CodeCoverage::class, 'PHP_CodeCoverage');
+	class_alias(\SebastianBergmann\CodeCoverage\Report\Text::class, 'PHP_CodeCoverage_Report_Text');
+	class_alias(\SebastianBergmann\CodeCoverage\Report\PHP::class, 'PHP_CodeCoverage_Report_PHP');
+	class_alias(\SebastianBergmann\CodeCoverage\Report\Clover::class, 'PHP_CodeCoverage_Report_Clover');
+	class_alias(\SebastianBergmann\CodeCoverage\Report\Html\Facade::class, 'PHP_CodeCoverage_Report_HTML');
+	class_alias(\SebastianBergmann\CodeCoverage\Exception::class, 'PHP_CodeCoverage_Exception');
 }
 
 App::uses('CakeFixtureManager', 'TestSuite/Fixture');
@@ -56,7 +56,7 @@ class CakeTestRunner extends PHPUnit_TextUI_TestRunner {
  * This argument is ignored if >PHPUnit5.2.0
  * @return void
  */
-	public function doRun(PHPUnit_Framework_Test $suite, array $arguments = array(), $exit = true) {
+	public function doRun(PHPUnit_Framework_Test $suite, array $arguments = [], $exit = true) {
 		if (isset($arguments['printer'])) {
 			static::$versionStringPrinted = true;
 		}

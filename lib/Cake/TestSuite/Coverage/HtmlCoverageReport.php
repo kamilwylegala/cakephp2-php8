@@ -84,9 +84,9 @@ HTML;
  */
 	public function generateDiff($filename, $fileLines, $coverageData) {
 		$output = '';
-		$diff = array();
+		$diff = [];
 
-		list($covered, $total) = $this->_calculateCoveredLines($fileLines, $coverageData);
+		[$covered, $total] = $this->_calculateCoveredLines($fileLines, $coverageData);
 		$this->_covered += $covered;
 		$this->_total += $total;
 
@@ -96,9 +96,9 @@ HTML;
 
 		foreach ($fileLines as $lineno => $line) {
 			$class = 'ignored';
-			$coveringTests = array();
+			$coveringTests = [];
 			if (!empty($coverageData[$lineno]) && is_array($coverageData[$lineno])) {
-				$coveringTests = array();
+				$coveringTests = [];
 				foreach ($coverageData[$lineno] as $test) {
 					$class = (is_array($test) && isset($test['id'])) ? $test['id'] : $test;
 					$testReflection = new ReflectionClass(current(explode('::', $class)));
@@ -106,7 +106,7 @@ HTML;
 					$coveringTests[] = $class;
 				}
 				$class = 'covered';
-			} elseif (isset($coverageData[$lineno]) && ($coverageData[$lineno] === -1 || $coverageData[$lineno] === array())) {
+			} elseif (isset($coverageData[$lineno]) && ($coverageData[$lineno] === -1 || $coverageData[$lineno] === [])) {
 				$class = 'uncovered';
 			} elseif (array_key_exists($lineno, $coverageData) && ($coverageData[$lineno] === -2 || $coverageData[$lineno] === null)) {
 				$class .= ' dead';
@@ -132,8 +132,8 @@ HTML;
  */
 	protected function _guessSubjectName($testReflection) {
 		$basename = basename($testReflection->getFilename());
-		if (strpos($basename, '.test') !== false) {
-			list($subject, ) = explode('.', $basename, 2);
+		if (str_contains($basename, '.test')) {
+			[$subject, ] = explode('.', $basename, 2);
 			return $subject;
 		}
 		$subject = str_replace('Test.php', '', $basename);
@@ -202,7 +202,7 @@ HTML;
 	public function coverageHeader($filename, $percent) {
 		$hash = md5($filename);
 		$filename = basename($filename);
-		list($file) = explode('.', $filename);
+		[$file] = explode('.', $filename);
 		$display = in_array($file, $this->_testNames) ? 'block' : 'none';
 		$primary = $display === 'block' ? 'primary' : '';
 		return <<<HTML

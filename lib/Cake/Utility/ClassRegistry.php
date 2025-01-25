@@ -37,21 +37,21 @@ class ClassRegistry {
  *
  * @var array
  */
-	protected $_objects = array();
+	protected $_objects = [];
 
 /**
  * Names of class names mapped to the object in the registry.
  *
  * @var array
  */
-	protected $_map = array();
+	protected $_map = [];
 
 /**
  * Default constructor parameter settings, indexed by type
  *
  * @var array
  */
-	protected $_config = array();
+	protected $_config = [];
 
 /**
  * Return a singleton instance of the ClassRegistry.
@@ -59,7 +59,7 @@ class ClassRegistry {
  * @return ClassRegistry instance
  */
 	public static function getInstance() {
-		static $instance = array();
+		static $instance = [];
 		if (!$instance) {
 			$instance[0] = new ClassRegistry();
 		}
@@ -100,12 +100,12 @@ class ClassRegistry {
 		if (is_array($class)) {
 			$objects = $class;
 			if (!isset($class[0])) {
-				$objects = array($class);
+				$objects = [$class];
 			}
 		} else {
-			$objects = array(array('class' => $class));
+			$objects = [['class' => $class]];
 		}
-		$defaults = array();
+		$defaults = [];
 		if (isset($_this->_config['Model'])) {
 			$defaults = $_this->_config['Model'];
 		}
@@ -123,7 +123,7 @@ class ClassRegistry {
 				$settings += $defaults;
 				$class = $settings['class'];
 
-				list($plugin, $class) = pluginSplit($class);
+				[$plugin, $class] = pluginSplit($class);
 				if ($plugin) {
 					$pluginPath = $plugin . '.';
 					$settings['plugin'] = $plugin;
@@ -148,7 +148,7 @@ class ClassRegistry {
 					if ($reflection->isAbstract() || $reflection->isInterface()) {
 						throw new CakeException(__d('cake_dev', 'Cannot create instance of %s, as it is abstract or is an interface', $class));
 					}
-					$testing = isset($settings['testing']) ? $settings['testing'] : false;
+					$testing = $settings['testing'] ?? false;
 					if ($testing) {
 						$settings['ds'] = 'test';
 						$defaultProperties = $reflection->getDefaultProperties();
@@ -160,7 +160,7 @@ class ClassRegistry {
 							if (in_array('test_' . $useDbConfig, $availableDs)) {
 								$useDbConfig = 'test_' . $useDbConfig;
 							}
-							if (strpos($useDbConfig, 'test') === 0) {
+							if (str_starts_with($useDbConfig, 'test')) {
 								$settings['ds'] = $useDbConfig;
 							}
 						}
@@ -278,7 +278,7 @@ class ClassRegistry {
  * @return mixed Void if $param is being set. Otherwise, if only $type is passed, returns
  *               the previously-set value of $param, or null if not set.
  */
-	public static function config($type, $param = array()) {
+	public static function config($type, $param = []) {
 		$_this = ClassRegistry::getInstance();
 
 		if (empty($param) && is_array($type)) {
@@ -287,7 +287,7 @@ class ClassRegistry {
 		} elseif ($param === null) {
 			unset($_this->_config[$type]);
 		} elseif (empty($param) && is_string($type)) {
-			return isset($_this->_config[$type]) ? $_this->_config[$type] : null;
+			return $_this->_config[$type] ?? null;
 		}
 		if (isset($_this->_config[$type]['testing'])) {
 			$param['testing'] = true;
@@ -304,8 +304,8 @@ class ClassRegistry {
  */
 	protected function &_duplicate($alias, $class) {
 		$duplicate = false;
-		if ($this->isKeySet($alias)) {
-			$model = $this->getObject($alias);
+		if (static::isKeySet($alias)) {
+			$model = static::getObject($alias);
 			if (is_object($model) && ($model instanceof $class || $model->alias === $class)) {
 				$duplicate = $model;
 			}
@@ -358,8 +358,8 @@ class ClassRegistry {
  */
 	public static function flush() {
 		$_this = ClassRegistry::getInstance();
-		$_this->_objects = array();
-		$_this->_map = array();
+		$_this->_objects = [];
+		$_this->_map = [];
 	}
 
 }

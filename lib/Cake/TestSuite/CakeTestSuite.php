@@ -33,10 +33,10 @@ class CakeTestSuite extends \PHPUnit\Framework\TestSuite {
  */
 	public function addTestDirectory($directory = '.') {
 		$Folder = new Folder($directory);
-		list(, $files) = $Folder->read(true, true, true);
+		[, $files] = $Folder->read(true, true, true);
 
 		foreach ($files as $file) {
-			if (substr($file, -4) === '.php') {
+			if (str_ends_with($file, '.php')) {
 				$this->addTestFile($file);
 			}
 		}
@@ -53,7 +53,7 @@ class CakeTestSuite extends \PHPUnit\Framework\TestSuite {
 		$files = $Folder->tree(null, true, 'files');
 
 		foreach ($files as $file) {
-			if (substr($file, -4) === '.php') {
+			if (str_ends_with($file, '.php')) {
 				$this->addTestFile($file);
 			}
 		}

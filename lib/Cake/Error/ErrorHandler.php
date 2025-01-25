@@ -117,9 +117,9 @@ class ErrorHandler {
 		$config = Configure::read('Exception');
 		static::_log($exception, $config);
 
-		$renderer = isset($config['renderer']) ? $config['renderer'] : 'ExceptionRenderer';
+		$renderer = $config['renderer'] ?? 'ExceptionRenderer';
 		if ($renderer !== 'ExceptionRenderer') {
-			list($plugin, $renderer) = pluginSplit($renderer, true);
+			[$plugin, $renderer] = pluginSplit($renderer, true);
 			App::uses($renderer, $plugin . 'Error');
 		}
 		try {
@@ -129,7 +129,7 @@ class ErrorHandler {
 			set_error_handler(Configure::read('Error.handler')); // Should be using configured ErrorHandler
 			Configure::write('Error.trace', false); // trace is useless here since it's internal
 			$message = sprintf("[%s] %s\n%s", // Keeping same message format
-				get_class($e),
+				$e::class,
 				$e->getMessage(),
 				$e->getTraceAsString()
 			);
@@ -147,7 +147,7 @@ class ErrorHandler {
  */
 	protected static function _getMessage($exception) {
 		$message = sprintf("[%s] %s",
-			get_class($exception),
+			$exception::class,
 			$exception->getMessage()
 		);
 		if (method_exists($exception, 'getAttributes')) {
@@ -209,14 +209,14 @@ class ErrorHandler {
 		if (!(error_reporting() & $code)) {
 			return false;
 		}
-		list($error, $log) = static::mapErrorCode($code);
+		[$error, $log] = static::mapErrorCode($code);
 		if ($log === LOG_ERR) {
 			return static::handleFatalError($code, $description, $file, $line);
 		}
 
 		$debug = Configure::read('debug');
 		if ($debug) {
-			$data = array(
+			$data = [
 				'level' => $log,
 				'code' => $code,
 				'error' => $error,
@@ -226,7 +226,7 @@ class ErrorHandler {
 				'context' => $context,
 				'start' => 2,
 				'path' => Debugger::trimPath($file)
-			);
+			];
 			return Debugger::getInstance()->outputError($data);
 		}
 		$message = static::_getErrorMessage($error, $code, $description, $file, $line);
@@ -312,7 +312,7 @@ class ErrorHandler {
 				$log = LOG_NOTICE;
 				break;
 		}
-		return array($error, $log);
+		return [$error, $log];
 	}
 
 /**
@@ -339,7 +339,7 @@ class ErrorHandler {
 					App::load('CakeText');
 				}
 			}
-			$trace = Debugger::trace(array('start' => 1, 'format' => 'log'));
+			$trace = Debugger::trace(['start' => 1, 'format' => 'log']);
 			$message .= "\nTrace:\n" . $trace . "\n";
 		}
 		return $message;

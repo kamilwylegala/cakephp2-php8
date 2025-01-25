@@ -41,7 +41,7 @@ class AssetDispatcher extends DispatcherFilter {
  */
 	public function beforeDispatch(CakeEvent $event) {
 		$url = urldecode($event->data['request']->url);
-		if (strpos($url, '..') !== false || strpos($url, '.') === false) {
+		if (str_contains($url, '..') || !str_contains($url, '.')) {
 			return null;
 		}
 
@@ -81,11 +81,11 @@ class AssetDispatcher extends DispatcherFilter {
 		$response = $event->data['response'];
 		$filters = Configure::read('Asset.filter');
 		$isCss = (
-			strpos($url, 'ccss/') === 0 ||
+			str_starts_with($url, 'ccss/') ||
 			preg_match('#^(theme/([^/]+)/ccss/)|(([^/]+)(?<!css)/ccss)/#i', $url)
 		);
 		$isJs = (
-			strpos($url, 'cjs/') === 0 ||
+			str_starts_with($url, 'cjs/') ||
 			preg_match('#^/((theme/[^/]+)/cjs/)|(([^/]+)(?<!js)/cjs)/#i', $url)
 		);
 

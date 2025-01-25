@@ -84,24 +84,24 @@ class Folder {
 /**
  * Functions array to be called depending on the sort type chosen.
  */
-	protected $_fsorts = array(
+	protected $_fsorts = [
 		self::SORT_NAME => 'getPathname',
 		self::SORT_TIME => 'getCTime'
-	);
+	];
 
 /**
  * Holds messages from last method.
  *
  * @var array
  */
-	protected $_messages = array();
+	protected $_messages = [];
 
 /**
  * Holds errors from last method.
  *
  * @var array
  */
-	protected $_errors = array();
+	protected $_errors = [];
 
 /**
  * Holds array of complete directory paths.
@@ -181,10 +181,10 @@ class Folder {
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::read
  */
 	public function read($sort = self::SORT_NAME, $exceptions = false, $fullPath = false) {
-		$dirs = $files = array();
+		$dirs = $files = [];
 
 		if (!$this->pwd()) {
-			return array($dirs, $files);
+			return [$dirs, $files];
 		}
 		if (is_array($exceptions)) {
 			$exceptions = array_flip($exceptions);
@@ -193,8 +193,8 @@ class Folder {
 
 		try {
 			$iterator = new DirectoryIterator($this->path);
-		} catch (Exception $e) {
-			return array($dirs, $files);
+		} catch (Exception) {
+			return [$dirs, $files];
 		}
 		if (!is_bool($sort) && isset($this->_fsorts[$sort])) {
 			$methodName = $this->_fsorts[$sort];
@@ -231,7 +231,7 @@ class Folder {
 		if ($files) {
 			$files = call_user_func_array('array_merge', array_values($files));
 		}
-		return array($dirs, $files);
+		return [$dirs, $files];
 	}
 
 /**
@@ -243,7 +243,7 @@ class Folder {
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::find
  */
 	public function find($regexpPattern = '.*', $sort = false) {
-		list(, $files) = $this->read($sort);
+		[, $files] = $this->read($sort);
 		return array_values(preg_grep('/^' . $regexpPattern . '$/i', $files));
 	}
 
@@ -257,7 +257,7 @@ class Folder {
  */
 	public function findRecursive($pattern = '.*', $sort = false) {
 		if (!$this->pwd()) {
-			return array();
+			return [];
 		}
 		$startsOn = $this->path;
 		$out = $this->_findRecursive($pattern, $sort);
@@ -273,8 +273,8 @@ class Folder {
  * @return array Files matching pattern
  */
 	protected function _findRecursive($pattern, $sort = false) {
-		list($dirs, $files) = $this->read($sort);
-		$found = array();
+		[$dirs, $files] = $this->read($sort);
+		$found = [];
 
 		foreach ($files as $file) {
 			if (preg_match('/^' . $pattern . '$/i', $file)) {
@@ -298,7 +298,7 @@ class Folder {
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::isWindowsPath
  */
 	public static function isWindowsPath($path) {
-		return (preg_match('/^[A-Z]:\\\\/i', $path) || substr($path, 0, 2) === '\\\\');
+		return (preg_match('/^[A-Z]:\\\\/i', $path) || str_starts_with($path, '\\\\'));
 	}
 
 /**
@@ -315,7 +315,7 @@ class Folder {
 
 		return $path[0] === '/' ||
 			preg_match('/^[A-Z]:\\\\/i', $path) ||
-			substr($path, 0, 2) === '\\\\' ||
+			str_starts_with($path, '\\\\') ||
 			static::isRegisteredStreamWrapper($path);
 	}
 
@@ -433,7 +433,7 @@ class Folder {
  * @return bool Success.
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::chmod
  */
-	public function chmod($path, $mode = false, $recursive = true, $exceptions = array()) {
+	public function chmod($path, $mode = false, $recursive = true, $exceptions = []) {
 		if (!$mode) {
 			$mode = $this->mode;
 		}
@@ -493,8 +493,8 @@ class Folder {
 		if (!$path) {
 			$path = $this->path;
 		}
-		$files = array();
-		$directories = array($path);
+		$files = [];
+		$directories = [$path];
 
 		if (is_array($exceptions)) {
 			$exceptions = array_flip($exceptions);
@@ -510,17 +510,17 @@ class Folder {
 		try {
 			$directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF);
 			$iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-		} catch (Exception $e) {
+		} catch (Exception) {
 			if ($type === null) {
-				return array(array(), array());
+				return [[], []];
 			}
-			return array();
+			return [];
 		}
 
 		foreach ($iterator as $itemPath => $fsIterator) {
 			if ($skipHidden) {
 				$subPathName = $fsIterator->getSubPathname();
-				if ($subPathName[0] === '.' || strpos($subPathName, DS . '.') !== false) {
+				if ($subPathName[0] === '.' || str_contains($subPathName, DS . '.')) {
 					continue;
 				}
 			}
@@ -536,7 +536,7 @@ class Folder {
 			}
 		}
 		if ($type === null) {
-			return array($directories, $files);
+			return [$directories, $files];
 		}
 		if ($type === 'dir') {
 			return $directories;
@@ -601,7 +601,7 @@ class Folder {
 	public function dirsize() {
 		$size = 0;
 		$directory = Folder::slashTerm($this->path);
-		$stack = array($directory);
+		$stack = [$directory];
 		$count = count($stack);
 		for ($i = 0, $j = $count; $i < $j; ++$i) {
 			if (is_file($stack[$i])) {
@@ -647,7 +647,7 @@ class Folder {
 			try {
 				$directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::CURRENT_AS_SELF);
 				$iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::CHILD_FIRST);
-			} catch (Exception $e) {
+			} catch (Exception) {
 				return false;
 			}
 
@@ -708,15 +708,15 @@ class Folder {
 		$to = null;
 		if (is_string($options)) {
 			$to = $options;
-			$options = array();
+			$options = [];
 		}
-		$options += array(
+		$options += [
 			'to' => $to,
 			'from' => $this->path,
 			'mode' => $this->mode,
-			'skip' => array(),
+			'skip' => [],
 			'scheme' => Folder::MERGE
-		);
+		];
 
 		$fromDir = $options['from'];
 		$toDir = $options['to'];
@@ -736,7 +736,7 @@ class Folder {
 			return false;
 		}
 
-		$exceptions = array_merge(array('.', '..', '.svn'), $options['skip']);
+		$exceptions = array_merge(['.', '..', '.svn'], $options['skip']);
 		//@codingStandardsIgnoreStart
 		if ($handle = @opendir($fromDir)) {
 			//@codingStandardsIgnoreEnd
@@ -766,13 +766,13 @@ class Folder {
 							chmod($to, $mode);
 							umask($old);
 							$this->_messages[] = __d('cake_dev', '%s created', $to);
-							$options = array('to' => $to, 'from' => $from) + $options;
+							$options = ['to' => $to, 'from' => $from] + $options;
 							$this->copy($options);
 						} else {
 							$this->_errors[] = __d('cake_dev', '%s not created', $to);
 						}
 					} elseif (is_dir($from) && $options['scheme'] === Folder::MERGE) {
-						$options = array('to' => $to, 'from' => $from) + $options;
+						$options = ['to' => $to, 'from' => $from] + $options;
 						$this->copy($options);
 					}
 				}
@@ -809,7 +809,7 @@ class Folder {
 			$to = $options;
 			$options = (array)$options;
 		}
-		$options += array('to' => $to, 'from' => $this->path, 'mode' => $this->mode, 'skip' => array());
+		$options += ['to' => $to, 'from' => $this->path, 'mode' => $this->mode, 'skip' => []];
 
 		if ($this->copy($options)) {
 			if ($this->delete($options['from'])) {
@@ -829,7 +829,7 @@ class Folder {
 	public function messages($reset = true) {
 		$messages = $this->_messages;
 		if ($reset) {
-			$this->_messages = array();
+			$this->_messages = [];
 		}
 		return $messages;
 	}
@@ -844,7 +844,7 @@ class Folder {
 	public function errors($reset = true) {
 		$errors = $this->_errors;
 		if ($reset) {
-			$this->_errors = array();
+			$this->_errors = [];
 		}
 		return $errors;
 	}
@@ -857,7 +857,7 @@ class Folder {
  * @link https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#Folder::realpath
  */
 	public function realpath($path) {
-		if (strpos($path, '..') === false) {
+		if (!str_contains($path, '..')) {
 			if (!Folder::isAbsolute($path)) {
 				$path = Folder::addPathElement($this->path, $path);
 			}
@@ -865,7 +865,7 @@ class Folder {
 		}
 		$path = str_replace('/', DS, trim($path));
 		$parts = explode(DS, $path);
-		$newparts = array();
+		$newparts = [];
 		$newpath = '';
 		if ($path[0] === DS) {
 			$newpath = DS;

@@ -32,11 +32,11 @@ class PagesControllerTest extends CakeTestCase {
  * @return void
  */
 	public function testDisplay() {
-		App::build(array(
-			'View' => array(
+		App::build([
+			'View' => [
 				CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS
-			)
-		));
+			]
+		]);
 		$Pages = new PagesController(new CakeRequest(null, false), new CakeResponse());
 
 		$Pages->viewPath = 'Posts';
@@ -85,11 +85,11 @@ class PagesControllerTest extends CakeTestCase {
 	public function testDirectoryTraversalProtection() {
 		$this->expectException(ForbiddenException::class);
 		$this->expectExceptionCode(403);
-		App::build(array(
-			'View' => array(
+		App::build([
+			'View' => [
 				CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS
-			)
-		));
+			]
+		]);
 		$Pages = new PagesController(new CakeRequest(null, false), new CakeResponse());
 		$Pages->display('..', 'Posts', 'index');
 	}

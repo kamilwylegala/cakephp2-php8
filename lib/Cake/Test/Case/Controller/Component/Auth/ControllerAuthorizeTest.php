@@ -35,7 +35,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  */
 	public function setUp() : void {
 		parent::setUp();
-		$this->controller = $this->getMock('Controller', array('isAuthorized'), array(), '', false);
+		$this->controller = $this->getMock('Controller', ['isAuthorized'], [], '', false);
 		$this->components = $this->getMock('ComponentCollection');
 		$this->components->expects($this->any())
 			->method('getController')
@@ -55,7 +55,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
 		try {
 			$this->auth->controller(new StdClass());
 			$this->fail('No exception thrown');
-		} catch (TypeError $e) {
+		} catch (TypeError) {
 			throw new \PHPUnit\Framework\Error('Raised an error', 100);
 		}
 	}
@@ -76,7 +76,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  * @return void
  */
 	public function testAuthorizeFailure() {
-		$user = array();
+		$user = [];
 		$request = new CakeRequest('/posts/index', false);
 		$this->assertFalse($this->auth->authorize($user, $request));
 	}
@@ -87,7 +87,7 @@ class ControllerAuthorizeTest extends CakeTestCase {
  * @return void
  */
 	public function testAuthorizeSuccess() {
-		$user = array('User' => array('username' => 'mark'));
+		$user = ['User' => ['username' => 'mark']];
 		$request = new CakeRequest('/posts/index', false);
 
 		$this->controller->expects($this->once())

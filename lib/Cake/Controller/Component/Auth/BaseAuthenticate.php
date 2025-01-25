@@ -39,18 +39,18 @@ abstract class BaseAuthenticate implements CakeEventListener {
  *
  * @var array
  */
-	public $settings = array(
-		'fields' => array(
+	public $settings = [
+		'fields' => [
 			'username' => 'username',
 			'password' => 'password'
-		),
+		],
 		'userModel' => 'User',
 		'userFields' => null,
-		'scope' => array(),
+		'scope' => [],
 		'recursive' => 0,
 		'contain' => null,
 		'passwordHasher' => 'Simple'
-	);
+	];
 
 /**
  * A Component collection, used to get more components.
@@ -72,7 +72,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
  * @return array of events => callbacks.
  */
 	public function implementedEvents() {
-		return array();
+		return [];
 	}
 
 /**
@@ -102,15 +102,15 @@ abstract class BaseAuthenticate implements CakeEventListener {
  */
 	protected function _findUser($username, $password = null) {
 		$userModel = $this->settings['userModel'];
-		list(, $model) = pluginSplit($userModel);
+		[, $model] = pluginSplit($userModel);
 		$fields = $this->settings['fields'];
 
 		if (is_array($username)) {
 			$conditions = $username;
 		} else {
-			$conditions = array(
+			$conditions = [
 				$model . '.' . $fields['username'] => $username
-			);
+			];
 		}
 
 		if (!empty($this->settings['scope'])) {
@@ -122,12 +122,12 @@ abstract class BaseAuthenticate implements CakeEventListener {
 			$userFields[] = $model . '.' . $fields['password'];
 		}
 
-		$result = ClassRegistry::init($userModel)->find('first', array(
+		$result = ClassRegistry::init($userModel)->find('first', [
 			'conditions' => $conditions,
 			'recursive' => $this->settings['recursive'],
 			'fields' => $userFields,
 			'contain' => $this->settings['contain'],
-		));
+		]);
 		if (empty($result[$model])) {
 			$this->passwordHasher()->hash($password);
 			return false;
@@ -157,7 +157,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
 			return $this->_passwordHasher;
 		}
 
-		$config = array();
+		$config = [];
 		if (is_string($this->settings['passwordHasher'])) {
 			$class = $this->settings['passwordHasher'];
 		} else {
@@ -165,7 +165,7 @@ abstract class BaseAuthenticate implements CakeEventListener {
 			$config = $this->settings['passwordHasher'];
 			unset($config['className']);
 		}
-		list($plugin, $class) = pluginSplit($class, true);
+		[$plugin, $class] = pluginSplit($class, true);
 		$className = $class . 'PasswordHasher';
 		App::uses($className, $plugin . 'Controller/Component/Auth');
 		if (!class_exists($className)) {

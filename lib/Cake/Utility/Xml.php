@@ -89,33 +89,33 @@ class Xml {
  * @return SimpleXMLElement|DOMDocument SimpleXMLElement or DOMDocument
  * @throws XmlException
  */
-	public static function build($input, $options = array()) {
+	public static function build($input, $options = []) {
 		if (!is_array($options)) {
-			$options = array('return' => (string)$options);
+			$options = ['return' => (string)$options];
 		}
-		$defaults = array(
+		$defaults = [
 			'return' => 'simplexml',
 			'loadEntities' => false,
 			'readFile' => true,
 			'parseHuge' => true
-		);
+		];
 		$options += $defaults;
 
 		if (is_array($input) || is_object($input)) {
 			return static::fromArray((array)$input, $options);
-		} elseif (strpos($input, '<') !== false) {
+		} elseif (str_contains($input, '<')) {
 			return static::_loadXml($input, $options);
 		} elseif ($options['readFile'] && file_exists($input)) {
 			return static::_loadXml(file_get_contents($input), $options);
-		} elseif ($options['readFile'] && strpos($input, 'http://') === 0 || strpos($input, 'https://') === 0) {
+		} elseif ($options['readFile'] && str_starts_with($input, 'http://') || str_starts_with($input, 'https://')) {
 			try {
-				$socket = new HttpSocket(array('request' => array('redirect' => 10)));
+				$socket = new HttpSocket(['request' => ['redirect' => 10]]);
 				$response = $socket->get($input);
 				if (!$response->isOk()) {
 					throw new XmlException(__d('cake_dev', 'XML cannot be read.'));
 				}
 				return static::_loadXml($response->body, $options);
-			} catch (SocketException $e) {
+			} catch (SocketException) {
 				throw new XmlException(__d('cake_dev', 'XML cannot be read.'));
 			}
 		} elseif (!is_string($input)) {
@@ -149,7 +149,7 @@ class Xml {
 				$xml = new DOMDocument();
 				$xml->loadXML($input);
 			}
-		} catch (Exception $e) {
+		} catch (Exception) {
 			$xml = null;
 		}
 		if ($hasDisable && !$options['loadEntities']) {
@@ -200,7 +200,7 @@ class Xml {
  * @return SimpleXMLElement|DOMDocument SimpleXMLElement or DOMDocument
  * @throws XmlException
  */
-	public static function fromArray($input, $options = array()) {
+	public static function fromArray($input, $options = []) {
 		if (!is_array($input) || count($input) !== 1) {
 			throw new XmlException(__d('cake_dev', 'Invalid input.'));
 		}
@@ -210,15 +210,15 @@ class Xml {
 		}
 
 		if (!is_array($options)) {
-			$options = array('format' => (string)$options);
+			$options = ['format' => (string)$options];
 		}
-		$defaults = array(
+		$defaults = [
 			'format' => 'tags',
 			'version' => '1.0',
 			'encoding' => Configure::read('App.encoding'),
 			'return' => 'simplexml',
 			'pretty' => false
-		);
+		];
 		$options += $defaults;
 
 		$dom = new DOMDocument($options['version'], $options['encoding']);
@@ -349,8 +349,8 @@ class Xml {
 		if (!($obj instanceof SimpleXMLElement)) {
 			throw new XmlException(__d('cake_dev', 'The input is not instance of SimpleXMLElement, DOMDocument or DOMNode.'));
 		}
-		$result = array();
-		$namespaces = array_merge(array('' => ''), $obj->getNamespaces(true));
+		$result = [];
+		$namespaces = array_merge(['' => ''], $obj->getNamespaces(true));
 		static::_toArray($obj, $result, '', array_keys($namespaces));
 		return $result;
 	}
@@ -365,7 +365,7 @@ class Xml {
  * @return void
  */
 	protected static function _toArray($xml, &$parentData, $ns, $namespaces) {
-		$data = array();
+		$data = [];
 
 		foreach ($namespaces as $namespace) {
 			foreach ($xml->attributes($namespace, true) as $key => $value) {
@@ -393,7 +393,7 @@ class Xml {
 		$name = $ns . $xml->getName();
 		if (isset($parentData[$name])) {
 			if (!is_array($parentData[$name]) || !isset($parentData[$name][0])) {
-				$parentData[$name] = array($parentData[$name]);
+				$parentData[$name] = [$parentData[$name]];
 			}
 			$parentData[$name][] = $data;
 		} else {

@@ -52,7 +52,7 @@ class SmtpTestTransport extends SmtpTransport {
  */
 	public function __call($method, $args) {
 		$method = '_' . $method;
-		return call_user_func_array(array($this, $method), $args);
+		return call_user_func_array([$this, $method], $args);
 	}
 
 }
@@ -69,11 +69,11 @@ class SmtpTransportTest extends CakeTestCase {
  */
 	public function setUp() : void {
 		parent::setUp();
-		$this->socket = $this->getMock('CakeSocket', array('read', 'write', 'connect', 'enableCrypto'));
+		$this->socket = $this->getMock('CakeSocket', ['read', 'write', 'connect', 'enableCrypto']);
 
 		$this->SmtpTransport = new SmtpTestTransport();
 		$this->SmtpTransport->setSocket($this->socket);
-		$this->SmtpTransport->config(array('client' => 'localhost'));
+		$this->SmtpTransport->config(['client' => 'localhost']);
 	}
 
 /**
@@ -99,7 +99,7 @@ class SmtpTransportTest extends CakeTestCase {
  * @return void
  */
 	public function testConnectEhloTls() {
-		$this->SmtpTransport->config(array('tls' => true));
+		$this->SmtpTransport->config(['tls' => true]);
 		$this->socket->expects($this->any())->method('connect')->will($this->returnValue(true));
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("220 Welcome message\r\n"));
 		$this->socket->expects($this->at(2))->method('write')->with("EHLO localhost\r\n");
@@ -120,7 +120,7 @@ class SmtpTransportTest extends CakeTestCase {
 	public function testConnectEhloTlsOnNonTlsServer() {
 		$this->expectException(SocketException::class);
 		$this->expectExceptionMessage("SMTP server did not accept the connection or trying to connect to non TLS SMTP server using TLS.");
-		$this->SmtpTransport->config(array('tls' => true));
+		$this->SmtpTransport->config(['tls' => true]);
 		$this->socket->expects($this->any())->method('connect')->will($this->returnValue(true));
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("220 Welcome message\r\n"));
 		$this->socket->expects($this->at(2))->method('write')->with("EHLO localhost\r\n");
@@ -138,7 +138,7 @@ class SmtpTransportTest extends CakeTestCase {
 	public function testConnectEhloNoTlsOnRequiredTlsServer() {
 		$this->expectException(SocketException::class);
 		$this->expectExceptionMessage("SMTP authentication method not allowed, check if SMTP server requires TLS.");
-		$this->SmtpTransport->config(array('tls' => false, 'username' => 'user', 'password' => 'pass'));
+		$this->SmtpTransport->config(['tls' => false, 'username' => 'user', 'password' => 'pass']);
 		$this->socket->expects($this->any())->method('connect')->will($this->returnValue(true));
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("220 Welcome message\r\n"));
 		$this->socket->expects($this->at(2))->method('write')->with("EHLO localhost\r\n");
@@ -193,7 +193,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(3))->method('read')->will($this->returnValue("334 Pass\r\n"));
 		$this->socket->expects($this->at(4))->method('write')->with("c3Rvcnk=\r\n");
 		$this->socket->expects($this->at(5))->method('read')->will($this->returnValue("235 OK\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -207,7 +207,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->expectExceptionMessage("AUTH command not recognized or not implemented, SMTP server may not require authentication.");
 		$this->socket->expects($this->at(0))->method('write')->with("AUTH LOGIN\r\n");
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("500 5.3.3 Unrecognized command\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -222,7 +222,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(0))->method('write')->with("AUTH LOGIN\r\n");
 		$this->socket->expects($this->at(1))->method('read')
 			->will($this->returnValue("502 5.3.3 Command not implemented\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -237,7 +237,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(0))->method('write')->with("AUTH LOGIN\r\n");
 		$this->socket->expects($this->at(1))->method('read')
 			->will($this->returnValue("503 5.5.1 Already authenticated\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -253,7 +253,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("334 Login\r\n"));
 		$this->socket->expects($this->at(2))->method('write')->with("bWFyaw==\r\n");
 		$this->socket->expects($this->at(3))->method('read')->will($this->returnValue("535 5.7.8 Authentication failed\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -271,7 +271,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(3))->method('read')->will($this->returnValue("334 Pass\r\n"));
 		$this->socket->expects($this->at(4))->method('write')->with("c3Rvcnk=\r\n");
 		$this->socket->expects($this->at(5))->method('read')->will($this->returnValue("535 5.7.8 Authentication failed\r\n"));
-		$this->SmtpTransport->config(array('username' => 'mark', 'password' => 'story'));
+		$this->SmtpTransport->config(['username' => 'mark', 'password' => 'story']);
 		$this->SmtpTransport->auth();
 	}
 
@@ -283,7 +283,7 @@ class SmtpTransportTest extends CakeTestCase {
 	public function testAuthNoAuth() {
 		$this->socket->expects($this->any())->method('write')->with($this->logicalNot($this->stringContains('AUTH LOGIN')));
 
-		$this->SmtpTransport->config(array('username' => null, 'password' => null));
+		$this->SmtpTransport->config(['username' => null, 'password' => null]);
 		$this->SmtpTransport->auth();
 	}
 
@@ -297,7 +297,7 @@ class SmtpTransportTest extends CakeTestCase {
 		$email->from('noreply@cakephp.org', 'CakePHP Test');
 		$email->to('cake@cakephp.org', 'CakePHP');
 		$email->bcc('phpnut@cakephp.org');
-		$email->cc(array('mark@cakephp.org' => 'Mark Story', 'juan@cakephp.org' => 'Juan Basso'));
+		$email->cc(['mark@cakephp.org' => 'Mark Story', 'juan@cakephp.org' => 'Juan Basso']);
 
 		$this->socket->expects($this->at(0))->method('write')->with("MAIL FROM:<noreply@cakephp.org>\r\n");
 		$this->socket->expects($this->at(1))->method('read')->will($this->returnValue("250 OK\r\n"));
@@ -338,17 +338,17 @@ class SmtpTransportTest extends CakeTestCase {
  * @return void
  */
 	public function testSendData() {
-		$email = $this->getMock('CakeEmail', array('message'), array(), 'SmtpCakeEmail');
+		$email = $this->getMock('CakeEmail', ['message'], [], 'SmtpCakeEmail');
 		$email->from('noreply@cakephp.org', 'CakePHP Test');
 		$email->returnPath('pleasereply@cakephp.org', 'CakePHP Return');
 		$email->to('cake@cakephp.org', 'CakePHP');
-		$email->cc(array('mark@cakephp.org' => 'Mark Story', 'juan@cakephp.org' => 'Juan Basso'));
+		$email->cc(['mark@cakephp.org' => 'Mark Story', 'juan@cakephp.org' => 'Juan Basso']);
 		$email->bcc('phpnut@cakephp.org');
 		$email->messageID('<4d9946cf-0a44-4907-88fe-1d0ccbdd56cb@localhost>');
 		$email->subject('Testing SMTP');
 		$date = date(DATE_RFC2822);
-		$email->setHeaders(array('X-Mailer' => SmtpCakeEmail::EMAIL_CLIENT, 'Date' => $date));
-		$email->expects($this->once())->method('message')->will($this->returnValue(array('First Line', 'Second Line', '.Third Line', '')));
+		$email->setHeaders(['X-Mailer' => SmtpCakeEmail::EMAIL_CLIENT, 'Date' => $date]);
+		$email->expects($this->once())->method('message')->will($this->returnValue(['First Line', 'Second Line', '.Third Line', '']));
 
 		$data = "From: CakePHP Test <noreply@cakephp.org>\r\n";
 		$data .= "To: CakePHP <cake@cakephp.org>\r\n";
@@ -391,14 +391,14 @@ class SmtpTransportTest extends CakeTestCase {
  * @return void
  */
 	public function testEmptyConfigArray() {
-		$expected = $this->SmtpTransport->config(array(
+		$expected = $this->SmtpTransport->config([
 			'client' => 'myhost.com',
 			'port' => 666
-		));
+		]);
 
 		$this->assertEquals(666, $expected['port']);
 
-		$result = $this->SmtpTransport->config(array());
+		$result = $this->SmtpTransport->config([]);
 		$this->assertEquals($expected, $result);
 	}
 
@@ -425,18 +425,18 @@ class SmtpTransportTest extends CakeTestCase {
 		$this->socket->expects($this->at(12))->method('read')->will($this->returnValue("250 DSN\r\n"));
 		$this->SmtpTransport->connect();
 
-		$expected = array(
-			array('code' => '250', 'message' => 'PIPELINING'),
-			array('code' => '250', 'message' => 'SIZE 102400000'),
-			array('code' => '250', 'message' => 'VRFY'),
-			array('code' => '250', 'message' => 'ETRN'),
-			array('code' => '250', 'message' => 'STARTTLS'),
-			array('code' => '250', 'message' => 'AUTH PLAIN LOGIN'),
-			array('code' => '250', 'message' => 'AUTH=PLAIN LOGIN'),
-			array('code' => '250', 'message' => 'ENHANCEDSTATUSCODES'),
-			array('code' => '250', 'message' => '8BITMIME'),
-			array('code' => '250', 'message' => 'DSN')
-		);
+		$expected = [
+			['code' => '250', 'message' => 'PIPELINING'],
+			['code' => '250', 'message' => 'SIZE 102400000'],
+			['code' => '250', 'message' => 'VRFY'],
+			['code' => '250', 'message' => 'ETRN'],
+			['code' => '250', 'message' => 'STARTTLS'],
+			['code' => '250', 'message' => 'AUTH PLAIN LOGIN'],
+			['code' => '250', 'message' => 'AUTH=PLAIN LOGIN'],
+			['code' => '250', 'message' => 'ENHANCEDSTATUSCODES'],
+			['code' => '250', 'message' => '8BITMIME'],
+			['code' => '250', 'message' => 'DSN']
+		];
 		$result = $this->SmtpTransport->getLastResponse();
 		$this->assertEquals($expected, $result);
 
@@ -451,9 +451,9 @@ class SmtpTransportTest extends CakeTestCase {
 
 		$this->SmtpTransport->sendRcpt($email);
 
-		$expected = array(
-			array('code' => '250', 'message' => 'OK'),
-		);
+		$expected = [
+			['code' => '250', 'message' => 'OK'],
+		];
 		$result = $this->SmtpTransport->getLastResponse();
 		$this->assertEquals($expected, $result);
 	}
@@ -464,7 +464,7 @@ class SmtpTransportTest extends CakeTestCase {
  * @return void
  */
 	public function testBufferResponseLines() {
-		$reponseLines = array(
+		$reponseLines = [
 			'123',
 			"456\tFOO",
 			'FOOBAR',
@@ -472,16 +472,16 @@ class SmtpTransportTest extends CakeTestCase {
 			'250-ENHANCEDSTATUSCODES',
 			'250-8BITMIME',
 			'250 DSN',
-		);
+		];
 		$this->SmtpTransport->bufferResponseLines($reponseLines);
 
-		$expected = array(
-			array('code' => '123', 'message' => null),
-			array('code' => '250', 'message' => 'PIPELINING'),
-			array('code' => '250', 'message' => 'ENHANCEDSTATUSCODES'),
-			array('code' => '250', 'message' => '8BITMIME'),
-			array('code' => '250', 'message' => 'DSN')
-		);
+		$expected = [
+			['code' => '123', 'message' => null],
+			['code' => '250', 'message' => 'PIPELINING'],
+			['code' => '250', 'message' => 'ENHANCEDSTATUSCODES'],
+			['code' => '250', 'message' => '8BITMIME'],
+			['code' => '250', 'message' => 'DSN']
+		];
 		$result = $this->SmtpTransport->getLastResponse();
 		$this->assertEquals($expected, $result);
 	}

@@ -86,8 +86,8 @@ class BasicAuthenticate extends BaseAuthenticate {
 		$pass = env('PHP_AUTH_PW');
 		if (!strlen($username)) {
 			$httpAuthorization = $request->header('Authorization');
-			if (strlen($httpAuthorization) > 0 && strpos($httpAuthorization, 'Basic') !== false) {
-				list($username, $pass) = explode(':', base64_decode(substr($httpAuthorization, 6)));
+			if (strlen($httpAuthorization) > 0 && str_contains($httpAuthorization, 'Basic')) {
+				[$username, $pass] = explode(':', base64_decode(substr($httpAuthorization, 6)));
 			}
 		}
 
@@ -107,7 +107,7 @@ class BasicAuthenticate extends BaseAuthenticate {
  */
 	public function unauthenticated(CakeRequest $request, CakeResponse $response) {
 		$Exception = new UnauthorizedException();
-		$Exception->responseHeader(array($this->loginHeaders()));
+		$Exception->responseHeader([$this->loginHeaders()]);
 		throw $Exception;
 	}
 

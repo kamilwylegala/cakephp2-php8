@@ -34,12 +34,12 @@ class FlashComponent extends Component {
  *
  * @var array
  */
-	protected $_defaultConfig = array(
+	protected $_defaultConfig = [
 		'key' => 'flash',
 		'element' => 'default',
-		'params' => array(),
+		'params' => [],
 		'clear' => false
-	);
+	];
 
 /**
  * Constructor
@@ -47,7 +47,7 @@ class FlashComponent extends Component {
  * @param ComponentCollection $collection The ComponentCollection object
  * @param array $settings Settings passed via controller
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentCollection $collection, $settings = []) {
 		$this->_defaultConfig = Hash::merge($this->_defaultConfig, $settings);
 	}
 
@@ -69,31 +69,31 @@ class FlashComponent extends Component {
  * @return void
  */
 
-	public function set($message, $options = array()) {
+	public function set($message, $options = []) {
 		$options += $this->_defaultConfig;
 
 		if ($message instanceof Exception) {
-			$options['params'] += array('code' => $message->getCode());
+			$options['params'] += ['code' => $message->getCode()];
 			$message = $message->getMessage();
 		}
 
-		list($plugin, $element) = pluginSplit($options['element'], true);
+		[$plugin, $element] = pluginSplit($options['element'], true);
 		if (!empty($options['plugin'])) {
 			$plugin = $options['plugin'] . '.';
 		}
 		$options['element'] = $plugin . 'Flash/' . $element;
 
-		$messages = array();
+		$messages = [];
 		if ($options['clear'] === false) {
 			$messages = (array)CakeSession::read('Message.' . $options['key']);
 		}
 
-		$newMessage = array(
+		$newMessage = [
 			'message' => $message,
 			'key' => $options['key'],
 			'element' => $options['element'],
 			'params' => $options['params']
-		);
+		];
 
 		$messages[] = $newMessage;
 
@@ -113,7 +113,7 @@ class FlashComponent extends Component {
  * @throws InternalErrorException If missing the flash message.
  */
 	public function __call($name, $args) {
-		$options = array('element' => Inflector::underscore($name));
+		$options = ['element' => Inflector::underscore($name)];
 
 		if (count($args) < 1) {
 			throw new InternalErrorException('Flash message missing.');

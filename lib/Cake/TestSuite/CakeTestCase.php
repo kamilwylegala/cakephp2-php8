@@ -57,14 +57,14 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  *
  * @var array
  */
-	protected $_configure = array();
+	protected $_configure = [];
 
 /**
  * Path settings to restore at the end of the test.
  *
  * @var array
  */
-	protected $_pathRestore = array();
+	protected $_pathRestore = [];
 
 /**
  * Called when a test case method is about to start (to be overridden when needed.)
@@ -203,8 +203,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextNotEquals($expected, $result, $message = '') {
-		$expected = str_replace(array("\r\n", "\r"), "\n", $expected);
-		$result = str_replace(array("\r\n", "\r"), "\n", $result);
+		$expected = str_replace(["\r\n", "\r"], "\n", $expected);
+		$result = str_replace(["\r\n", "\r"], "\n", $result);
 		return $this->assertNotEquals($expected, $result, $message);
 	}
 
@@ -218,8 +218,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextEquals($expected, $result, $message = '') {
-		$expected = str_replace(array("\r\n", "\r"), "\n", $expected);
-		$result = str_replace(array("\r\n", "\r"), "\n", $result);
+		$expected = str_replace(["\r\n", "\r"], "\n", $expected);
+		$result = str_replace(["\r\n", "\r"], "\n", $result);
 		return $this->assertEquals($expected, $result, $message);
 	}
 
@@ -233,8 +233,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextStartsWith($prefix, $string, $message = '') {
-		$prefix = str_replace(array("\r\n", "\r"), "\n", $prefix);
-		$string = str_replace(array("\r\n", "\r"), "\n", $string);
+		$prefix = str_replace(["\r\n", "\r"], "\n", $prefix);
+		$string = str_replace(["\r\n", "\r"], "\n", $string);
 		return $this->assertStringStartsWith($prefix, $string, $message);
 	}
 
@@ -248,8 +248,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextStartsNotWith($prefix, $string, $message = '') {
-		$prefix = str_replace(array("\r\n", "\r"), "\n", $prefix);
-		$string = str_replace(array("\r\n", "\r"), "\n", $string);
+		$prefix = str_replace(["\r\n", "\r"], "\n", $prefix);
+		$string = str_replace(["\r\n", "\r"], "\n", $string);
 		return $this->assertStringStartsNotWith($prefix, $string, $message);
 	}
 
@@ -263,8 +263,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextEndsWith($suffix, $string, $message = '') {
-		$suffix = str_replace(array("\r\n", "\r"), "\n", $suffix);
-		$string = str_replace(array("\r\n", "\r"), "\n", $string);
+		$suffix = str_replace(["\r\n", "\r"], "\n", $suffix);
+		$string = str_replace(["\r\n", "\r"], "\n", $string);
 		return $this->assertStringEndsWith($suffix, $string, $message);
 	}
 
@@ -278,8 +278,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextEndsNotWith($suffix, $string, $message = '') {
-		$suffix = str_replace(array("\r\n", "\r"), "\n", $suffix);
-		$string = str_replace(array("\r\n", "\r"), "\n", $string);
+		$suffix = str_replace(["\r\n", "\r"], "\n", $suffix);
+		$string = str_replace(["\r\n", "\r"], "\n", $string);
 		return $this->assertStringEndsNotWith($suffix, $string, $message);
 	}
 
@@ -294,8 +294,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextContains($needle, $haystack, $message = '', $ignoreCase = false) {
-		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
-		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
+		$needle = str_replace(["\r\n", "\r"], "\n", $needle);
+		$haystack = str_replace(["\r\n", "\r"], "\n", $haystack);
 		if ($ignoreCase) {
 			return $this->assertStringContainsStringIgnoringCase($needle, $haystack, $message);
 		}
@@ -313,8 +313,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTextNotContains($needle, $haystack, $message = '', $ignoreCase = false) {
-		$needle = str_replace(array("\r\n", "\r"), "\n", $needle);
-		$haystack = str_replace(array("\r\n", "\r"), "\n", $haystack);
+		$needle = str_replace(["\r\n", "\r"], "\n", $needle);
+		$haystack = str_replace(["\r\n", "\r"], "\n", $haystack);
 		if ($ignoreCase) {
 			return $this->assertStringNotContainsStringIgnoringCase($needle, $haystack, $message);
 		}
@@ -364,11 +364,11 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @return bool
  */
 	public function assertTags($string, $expected, $fullDebug = false) {
-		$regex = array();
-		$normalized = array();
+		$regex = [];
+		$normalized = [];
 		foreach ((array)$expected as $key => $val) {
 			if (!is_numeric($key)) {
-				$normalized[] = array($key => $val);
+				$normalized[] = [$key => $val];
 			} else {
 				$normalized[] = $val;
 			}
@@ -380,21 +380,21 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 			}
 			$i++;
 			if (is_string($tags) && $tags[0] === '<') {
-				$tags = array(substr($tags, 1) => array());
+				$tags = [substr($tags, 1) => []];
 			} elseif (is_string($tags)) {
 				$tagsTrimmed = preg_replace('/\s+/m', '', $tags);
 
 				if (preg_match('/^\*?\//', $tags, $match) && $tagsTrimmed !== '//') {
-					$prefix = array(null, null);
+					$prefix = [null, null];
 
 					if ($match[0] === '*/') {
-						$prefix = array('Anything, ', '.*?');
+						$prefix = ['Anything, ', '.*?'];
 					}
-					$regex[] = array(
+					$regex[] = [
 						sprintf('%sClose %s tag', $prefix[0], substr($tags, strlen($match[0]))),
 						sprintf('%s<[\s]*\/[\s]*%s[\s]*>[\n\r]*', $prefix[1], substr($tags, strlen($match[0]))),
 						$i,
-					);
+					];
 					continue;
 				}
 				if (!empty($tags) && preg_match('/^preg\:\/(.+)\/$/i', $tags, $matches)) {
@@ -404,24 +404,24 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 					$tags = preg_quote($tags, '/');
 					$type = 'Text equals';
 				}
-				$regex[] = array(
+				$regex[] = [
 					sprintf('%s "%s"', $type, $tags),
 					$tags,
 					$i,
-				);
+				];
 				continue;
 			}
 			foreach ($tags as $tag => $attributes) {
-				$regex[] = array(
+				$regex[] = [
 					sprintf('Open %s tag', $tag),
 					sprintf('[\s]*<%s', preg_quote($tag, '/')),
 					$i,
-				);
+				];
 				if ($attributes === true) {
-					$attributes = array();
+					$attributes = [];
 				}
-				$attrs = array();
-				$explanations = array();
+				$attrs = [];
+				$explanations = [];
 				$i = 1;
 				foreach ($attributes as $attr => $val) {
 					if (is_numeric($attr) && preg_match('/^preg\:\/(.+)\/$/i', $val, $matches)) {
@@ -436,8 +436,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 							$explanations[] = sprintf('Attribute "%s" present', $attr);
 						} elseif (!empty($val) && preg_match('/^preg\:\/(.+)\/$/i', $val, $matches)) {
 							$val = str_replace(
-								array('.*', '.+'),
-								array('.*?', '.+?'),
+								['.*', '.+'],
+								['.*?', '.+?'],
 								$matches[1]
 							);
 							$quotes = $val !== $matches[1] ? '["\']' : '["\']?';
@@ -452,16 +452,16 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 					$i++;
 				}
 				if ($attrs) {
-					$regex[] = array(
+					$regex[] = [
 						'explains' => $explanations,
 						'attrs' => $attrs,
-					);
+					];
 				}
-				$regex[] = array(
+				$regex[] = [
 					sprintf('End %s tag', $tag),
 					'[\s]*\/?[\s]*>[\n\r]*',
 					$i,
-				);
+				];
 			}
 		}
 		foreach ($regex as $i => $assertion) {
@@ -471,7 +471,7 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
 				continue;
 			}
 
-			list($description, $expressions, $itemNum) = $assertion;
+			[$description, $expressions, $itemNum] = $assertion;
 			foreach ((array)$expressions as $expression) {
 				if (preg_match(sprintf('/^%s/s', $expression), $string, $match)) {
 					$matches = true;
@@ -696,8 +696,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  */
 	protected function _buildMock(
 		$originalClassName,
-		$methods = array(),
-		array $arguments = array(),
+		$methods = [],
+		array $arguments = [],
 		$mockClassName = '',
 		$callOriginalConstructor = true,
 		$callOriginalClone = true,
@@ -757,8 +757,8 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  */
 	public function getMock(
 		$originalClassName,
-		$methods = array(),
-		array $arguments = array(),
+		$methods = [],
+		array $arguments = [],
 		$mockClassName = '',
 		$callOriginalConstructor = true,
 		$callOriginalClone = true,
@@ -796,19 +796,19 @@ abstract class CakeTestCase extends \PHPUnit\Framework\TestCase {
  * @throws MissingModelException
  * @return Model
  */
-	public function getMockForModel($model, $methods = array(), $config = array()) {
+	public function getMockForModel($model, $methods = [], $config = []) {
 		$defaults = ClassRegistry::config('Model');
 		unset($defaults['ds']);
 
-		list($plugin, $name) = pluginSplit($model, true);
+		[$plugin, $name] = pluginSplit($model, true);
 		App::uses($name, $plugin . 'Model');
 
-		$config = array_merge($defaults, (array)$config, array('name' => $name));
+		$config = array_merge($defaults, (array)$config, ['name' => $name]);
 
 		if (!class_exists($name)) {
-			throw new MissingModelException(array($model));
+			throw new MissingModelException([$model]);
 		}
-		$mock = $this->getMock($name, $methods, array($config));
+		$mock = $this->getMock($name, $methods, [$config]);
 
 		$availableDs = array_keys(ConnectionManager::enumConnectionObjects());
 

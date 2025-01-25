@@ -57,7 +57,7 @@ class CakeTestFixture {
  *
  * @var array
  */
-	public $created = array();
+	public $created = [];
 
 /**
  * Fields / Schema for the fixture.
@@ -65,14 +65,14 @@ class CakeTestFixture {
  *
  * @var array
  */
-	public $fields = array();
+	public $fields = [];
 
 /**
  * Fixture records to be inserted.
  *
  * @var array
  */
-	public $records = array();
+	public $records = [];
 
 /**
  * The primary key for the table this fixture represents.
@@ -97,16 +97,16 @@ class CakeTestFixture {
  */
 	public function __construct() {
 		if ($this->name === null) {
-			if (preg_match('/^(.*)Fixture$/', get_class($this), $matches)) {
+			if (preg_match('/^(.*)Fixture$/', static::class, $matches)) {
 				$this->name = $matches[1];
 			} else {
-				$this->name = get_class($this);
+				$this->name = static::class;
 			}
 		}
 		$connection = 'test';
 		if (!empty($this->useDbConfig)) {
 			$connection = $this->useDbConfig;
-			if (strpos($connection, 'test') !== 0) {
+			if (!str_starts_with($connection, 'test')) {
 				$message = __d(
 					'cake_dev',
 					'Invalid datasource name "%s" for "%s" fixture. Fixture datasource names must begin with "test".',
@@ -116,7 +116,7 @@ class CakeTestFixture {
 				throw new CakeException($message);
 			}
 		}
-		$this->Schema = new CakeSchema(array('name' => 'TestSuite', 'connection' => $connection));
+		$this->Schema = new CakeSchema(['name' => 'TestSuite', 'connection' => $connection]);
 		$this->init();
 	}
 
@@ -129,16 +129,16 @@ class CakeTestFixture {
 	public function init() {
 		if (isset($this->import) && (is_string($this->import) || is_array($this->import))) {
 			$import = array_merge(
-				array('connection' => 'default', 'records' => false),
-				is_array($this->import) ? $this->import : array('model' => $this->import)
+				['connection' => 'default', 'records' => false],
+				is_array($this->import) ? $this->import : ['model' => $this->import]
 			);
 
 			$this->Schema->connection = $import['connection'];
 			if (isset($import['model'])) {
-				list($plugin, $modelClass) = pluginSplit($import['model'], true);
+				[$plugin, $modelClass] = pluginSplit($import['model'], true);
 				App::uses($modelClass, $plugin . 'Model');
 				if (!class_exists($modelClass)) {
-					throw new MissingModelException(array('class' => $modelClass));
+					throw new MissingModelException(['class' => $modelClass]);
 				}
 				$model = new $modelClass(null, null, $import['connection']);
 				$db = $model->getDataSource();
@@ -149,7 +149,7 @@ class CakeTestFixture {
 				$this->fields[$model->primaryKey]['key'] = 'primary';
 				$this->table = $db->fullTableName($model, false, false);
 				$this->primaryKey = $model->primaryKey;
-				ClassRegistry::config(array('ds' => 'test'));
+				ClassRegistry::config(['ds' => 'test']);
 				ClassRegistry::flush();
 			} elseif (isset($import['table'])) {
 				$model = new Model(null, $import['table'], $import['connection']);
@@ -164,21 +164,21 @@ class CakeTestFixture {
 				ClassRegistry::flush();
 			}
 
-			if (!empty($db->config['prefix']) && strpos($this->table, $db->config['prefix']) === 0) {
+			if (!empty($db->config['prefix']) && str_starts_with($this->table, $db->config['prefix'])) {
 				$this->table = str_replace($db->config['prefix'], '', $this->table);
 			}
 
 			if (isset($import['records']) && $import['records'] !== false && isset($model) && isset($db)) {
-				$this->records = array();
-				$query = array(
+				$this->records = [];
+				$query = [
 					'fields' => $db->fields($model, null, array_keys($this->fields)),
 					'table' => $db->fullTableName($model),
 					'alias' => $model->alias,
-					'conditions' => array(),
+					'conditions' => [],
 					'order' => null,
 					'limit' => null,
 					'group' => null
-				);
+				];
 				$records = $db->fetchAll($db->buildStatement($query, $model), false, $model->alias);
 
 				if ($records !== false && !empty($records)) {
@@ -219,7 +219,7 @@ class CakeTestFixture {
 					continue;
 				}
 
-				if (in_array($type, array('blob', 'text', 'binary'))) {
+				if (in_array($type, ['blob', 'text', 'binary'])) {
 					$canUseMemory = false;
 					break;
 				}
@@ -229,9 +229,9 @@ class CakeTestFixture {
 				$this->fields['tableParameters']['engine'] = 'MEMORY';
 			}
 		}
-		$this->Schema->build(array($this->table => $this->fields));
+		$this->Schema->build([$this->table => $this->fields]);
 		try {
-			$db->execute($db->createSchema($this->Schema), array('log' => false));
+			$db->execute($db->createSchema($this->Schema), ['log' => false]);
 			$this->created[] = $db->configKeyName;
 		} catch (Exception $e) {
 			$msg = __d(
@@ -257,12 +257,12 @@ class CakeTestFixture {
 		if (empty($this->fields)) {
 			return false;
 		}
-		$this->Schema->build(array($this->table => $this->fields));
+		$this->Schema->build([$this->table => $this->fields]);
 		try {
 
-			$db->execute($db->dropSchema($this->Schema), array('log' => false));
-			$this->created = array_diff($this->created, array($db->configKeyName));
-		} catch (Exception $e) {
+			$db->execute($db->dropSchema($this->Schema), ['log' => false]);
+			$this->created = array_diff($this->created, [$db->configKeyName]);
+		} catch (Exception) {
 			return false;
 		}
 		return true;
@@ -278,9 +278,9 @@ class CakeTestFixture {
  */
 	public function insert($db) {
 		if (!isset($this->_insert)) {
-			$values = array();
+			$values = [];
 			if (isset($this->records) && !empty($this->records)) {
-				$fields = array();
+				$fields = [];
 				foreach ($this->records as $record) {
 					$fields = array_merge($fields, array_keys(array_intersect_key($record, $this->fields)));
 				}
@@ -293,7 +293,7 @@ class CakeTestFixture {
 
 						$mergeFields = array_diff_key(array_keys($mergeData), $fields);
 
-						$message = 'Fixture invalid: Count of fields does not match count of values in ' . get_class($this) . "\n";
+						$message = 'Fixture invalid: Count of fields does not match count of values in ' . static::class . "\n";
 						foreach ($mergeFields as $field) {
 							$message .= "The field '" . $field . "' is in the data fixture but not in the schema." . "\n";
 						}
@@ -307,7 +307,7 @@ class CakeTestFixture {
 				$result = $db->insertMulti($this->table, $fields, $values);
 				if ($this->primaryKey &&
 					isset($this->fields[$this->primaryKey]['type']) &&
-					in_array($this->fields[$this->primaryKey]['type'], array('integer', 'biginteger'))
+					in_array($this->fields[$this->primaryKey]['type'], ['integer', 'biginteger'])
 				) {
 					$db->resetSequence($this->table, $this->primaryKey);
 				}

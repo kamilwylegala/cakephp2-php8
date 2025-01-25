@@ -45,14 +45,14 @@ class CakeFixtureManager {
  *
  * @var array
  */
-	protected $_loaded = array();
+	protected $_loaded = [];
 
 /**
  * Holds the fixture classes that where instantiated indexed by class name
  *
  * @var array
  */
-	protected $_fixtureMap = array();
+	protected $_fixtureMap = [];
 
 /**
  * Inspects the test to look for unloaded fixtures and loads them
@@ -62,9 +62,9 @@ class CakeFixtureManager {
  */
 	public function fixturize($test) {
 		if (!$this->_initialized) {
-			ClassRegistry::config(array('ds' => 'test', 'testing' => true));
+			ClassRegistry::config(['ds' => 'test', 'testing' => true]);
 		}
-		if (empty($test->fixtures) || !empty($this->_processed[get_class($test)])) {
+		if (empty($test->fixtures) || !empty($this->_processed[$test::class])) {
 			$test->db = $this->_db;
 			return;
 		}
@@ -77,7 +77,7 @@ class CakeFixtureManager {
 			$this->_loadFixtures($test->fixtures);
 		}
 
-		$this->_processed[get_class($test)] = true;
+		$this->_processed[$test::class] = true;
 	}
 
 /**
@@ -109,7 +109,7 @@ class CakeFixtureManager {
 		foreach ($pathTokenArray as $pathToken) {
 			$additionalPath .= DS . $pathToken;
 		}
-		return array('fixture' => $fixture, 'additionalPath' => $additionalPath);
+		return ['fixture' => $fixture, 'additionalPath' => $additionalPath];
 	}
 
 /**
@@ -127,30 +127,30 @@ class CakeFixtureManager {
 				continue;
 			}
 
-			if (strpos($fixture, 'core.') === 0) {
+			if (str_starts_with($fixture, 'core.')) {
 				$fixture = substr($fixture, strlen('core.'));
 				$fixturePaths[] = CAKE . 'Test' . DS . 'Fixture';
-			} elseif (strpos($fixture, 'app.') === 0) {
+			} elseif (str_starts_with($fixture, 'app.')) {
 				$fixturePrefixLess = substr($fixture, strlen('app.'));
 				$fixtureParsedPath = $this->_parseFixturePath($fixturePrefixLess);
 				$fixture = $fixtureParsedPath['fixture'];
-				$fixturePaths = array(
+				$fixturePaths = [
 					TESTS . 'Fixture' . $fixtureParsedPath['additionalPath']
-				);
-			} elseif (strpos($fixture, 'plugin.') === 0) {
+				];
+			} elseif (str_starts_with($fixture, 'plugin.')) {
 				$explodedFixture = explode('.', $fixture, 3);
 				$pluginName = $explodedFixture[1];
 				$fixtureParsedPath = $this->_parseFixturePath($explodedFixture[2]);
 				$fixture = $fixtureParsedPath['fixture'];
-				$fixturePaths = array(
+				$fixturePaths = [
 					CakePlugin::path(Inflector::camelize($pluginName)) . 'Test' . DS . 'Fixture' . $fixtureParsedPath['additionalPath'],
 					TESTS . 'Fixture' . $fixtureParsedPath['additionalPath']
-				);
+				];
 			} else {
-				$fixturePaths = array(
+				$fixturePaths = [
 					TESTS . 'Fixture',
 					CAKE . 'Test' . DS . 'Fixture'
-				);
+				];
 			}
 
 			$loaded = false;
@@ -168,7 +168,7 @@ class CakeFixtureManager {
 			}
 
 			if (!$loaded) {
-				$firstPath = str_replace(array(APP, CAKE_CORE_INCLUDE_PATH, ROOT), '', $fixturePaths[0] . DS . $className . 'Fixture.php');
+				$firstPath = str_replace([APP, CAKE_CORE_INCLUDE_PATH, ROOT], '', $fixturePaths[0] . DS . $className . 'Fixture.php');
 				throw new UnexpectedValueException(__d('cake_dev', 'Referenced fixture class %s (%s) not found', $className, $firstPath));
 			}
 		}
@@ -244,7 +244,7 @@ class CakeFixtureManager {
  * @return void
  */
 	public function unload(CakeTestCase $test) {
-		$fixtures = !empty($test->fixtures) ? $test->fixtures : array();
+		$fixtures = !empty($test->fixtures) ? $test->fixtures : [];
 		foreach (array_reverse($fixtures) as $f) {
 			if (isset($this->_loaded[$f])) {
 				$fixture = $this->_loaded[$f];

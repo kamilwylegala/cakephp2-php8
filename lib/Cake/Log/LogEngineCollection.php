@@ -33,11 +33,11 @@ class LogEngineCollection extends ObjectCollection {
  * @return BaseLog BaseLog engine instance
  * @throws CakeLogException when logger class does not implement a write method
  */
-	public function load($name, $options = array()) {
-		$enable = isset($options['enabled']) ? $options['enabled'] : true;
+	public function load($name, $options = []) {
+		$enable = $options['enabled'] ?? true;
 		$loggerName = $options['engine'];
 		unset($options['engine']);
-		$className = $this->_getLogger($loggerName);
+		$className = static::_getLogger($loggerName);
 		$logger = new $className($options);
 		if (!$logger instanceof CakeLogInterface) {
 			throw new CakeLogException(
@@ -60,8 +60,8 @@ class LogEngineCollection extends ObjectCollection {
  * @throws CakeLogException
  */
 	protected static function _getLogger($loggerName) {
-		list($plugin, $loggerName) = pluginSplit($loggerName, true);
-		if (substr($loggerName, -3) !== 'Log') {
+		[$plugin, $loggerName] = pluginSplit($loggerName, true);
+		if (!str_ends_with($loggerName, 'Log')) {
 			$loggerName .= 'Log';
 		}
 		App::uses($loggerName, $plugin . 'Log/Engine');

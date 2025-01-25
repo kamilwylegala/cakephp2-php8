@@ -33,12 +33,12 @@ class AllConsoleLibsTest extends \PHPUnit\Framework\TestSuite {
 	public static function suite() {
 		$suite = new CakeTestSuite('All console lib classes');
 
-		foreach (new DirectoryIterator(dirname(__FILE__)) as $file) {
-			if (!$file->isFile() || strpos($file, 'All') === 0) {
+		foreach (new DirectoryIterator(__DIR__) as $file) {
+			if (!$file->isFile() || str_starts_with($file, 'All')) {
 				continue;
 			}
 			$fileName = $file->getRealPath();
-			if (substr($fileName, -4) === '.php') {
+			if (str_ends_with($fileName, '.php')) {
 				$suite->addTestFile($file->getRealPath());
 			}
 		}
