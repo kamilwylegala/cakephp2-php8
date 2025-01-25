@@ -195,7 +195,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * @return void
  */
 	protected function _paintLinks() {
-		$show = $query = array();
+		$show = $query = [];
 		if (!empty($this->params['case'])) {
 			$show['show'] = 'cases';
 		}
@@ -209,7 +209,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 		if (!empty($this->params['case'])) {
 			$query['case'] = $this->params['case'];
 		}
-		list($show, $query) = $this->_getQueryLink();
+		[$show, $query] = str_split($this->_getQueryLink());
 
 		echo "<p><a href='" . $this->baseUrl() . $show . "'>Run more tests</a> | <a href='" . $this->baseUrl() . $query . "&amp;show_passes=1'>Show Passes</a> | \n";
 		echo "<a href='" . $this->baseUrl() . $query . "&amp;debug=1'>Enable Debug Output</a> | \n";
@@ -225,7 +225,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  */
 	protected function _queryString($url) {
 		$out = '?';
-		$params = array();
+		$params = [];
 		foreach ($url as $key => $value) {
 			$params[] = "$key=$value";
 		}
@@ -259,7 +259,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 	public function paintFail($message, $test) {
 		ob_start();
 		$trace = $this->_getStackTrace($message);
-		$className = get_class($test);
+		$className = $test::class;
 		$testName = $className . '::' . $test->getName() . '()';
 
 		$actualMsg = $expectedMsg = null;
@@ -280,7 +280,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 			$diffs = "";
 			if (class_exists('PHPUnit_Util_Diff')) {
 				$diffs = PHPUnit_Util_Diff::diff($expectedMsg, $actualMsg);
-			} elseif (class_exists('SebastianBergmann\Diff\Differ')) {
+			} elseif (class_exists(\SebastianBergmann\Diff\Differ::class)) {
 				$differ = new SebastianBergmann\Diff\Differ();
 				$diffs = $differ->diff($expectedMsg, $actualMsg);
 			}
@@ -290,8 +290,8 @@ class CakeHtmlReporter extends CakeBaseReporter {
 
 		echo "</pre></div>\n";
 		echo "<div class='msg'>" . __d('cake_dev', 'Test case: %s', $testName) . "</div>\n";
-		if (strpos($className, "PHPUnit_") === false) {
-			list($show, $query) = $this->_getQueryLink();
+		if (!str_contains($className, "PHPUnit_")) {
+			[$show, $query] = str_split($this->_getQueryLink());
 			echo "<div class='msg'><a href='" . $this->baseUrl() . $query . "&amp;filter=" . $test->getName() . "'>" . __d('cake_dev', 'Rerun only this test: %s', $testName) . "</a></div>\n";
 		}
 		echo "<div class='msg'>" . __d('cake_dev', 'Stack trace:') . '<br />' . $trace . "</div>\n";
@@ -330,10 +330,10 @@ class CakeHtmlReporter extends CakeBaseReporter {
 	public function paintException($message, $test) {
 		ob_start();
 		$trace = $this->_getStackTrace($message);
-		$testName = get_class($test) . '(' . $test->getName() . ')';
+		$testName = $test::class . '(' . $test->getName() . ')';
 
 		echo "<li class='fail'>\n";
-		echo "<span>" . get_class($message) . "</span>";
+		echo "<span>" . $message::class . "</span>";
 
 		echo "<div class='msg'>" . $this->_htmlEntities($message->getMessage()) . "</div>\n";
 		echo "<div class='msg'>" . __d('cake_dev', 'Test case: %s', $testName) . "</div>\n";
@@ -386,7 +386,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  */
 	protected function _getStackTrace(Exception $e) {
 		$trace = $e->getTrace();
-		$out = array();
+		$out = [];
 		foreach ($trace as $frame) {
 			if (isset($frame['file']) && isset($frame['line'])) {
 				$out[] = $frame['file'] . ' : ' . $frame['line'];
@@ -418,7 +418,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
  * @return string
  */
 	protected function _getQueryLink() {
-		$show = $query = array();
+		$show = $query = [];
 		if (!empty($this->params['case'])) {
 			$show['show'] = 'cases';
 		}
@@ -437,7 +437,7 @@ class CakeHtmlReporter extends CakeBaseReporter {
 		}
 		$show = $this->_queryString($show);
 		$query = $this->_queryString($query);
-		return array($show, $query);
+		return [$show, $query];
 	}
 
 }

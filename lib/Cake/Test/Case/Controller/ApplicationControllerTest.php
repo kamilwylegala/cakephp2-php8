@@ -30,13 +30,13 @@ class TransSessionIdController extends AppController {
 	public function next() {
 		$sessionName = session_name();
 		$sessionId = $this->Session->id();
-		return $this->redirect(array(
+		return $this->redirect([
 			'controller' => 'trans_session_id',
 			'action' => 'next_step',
-			'?' => array(
+			'?' => [
 				$sessionName => $sessionId,
-			),
-		));
+			],
+		]);
 	}
 
 }
@@ -78,12 +78,12 @@ class ApplicationControllerTest extends ControllerTestCase {
  */
 	public function testRedirect() {
 		$sessionId = 'o7k64tlhil9pakp89j6d8ovlqk';
-		$this->testAction('/trans_session_id/next?CAKEPHP=' . $sessionId);
+		$this->testAction();
 		$this->assertStringContainsString('/trans_session_id/next_step?CAKEPHP=' . $sessionId, $this->headers['Location']);
-		$expectedConfig = array(
+		$expectedConfig = [
 			'cookie' => 'CAKEPHP',
 			'timeout' => 240,
-			'ini' => array(
+			'ini' => [
 				'session.use_trans_sid' => 1,
 				'session.cookie_path' => '/',
 				'session.cookie_lifetime' => 14400,
@@ -92,11 +92,11 @@ class ApplicationControllerTest extends ControllerTestCase {
 				'session.cookie_httponly' => 1,
 				'session.use_cookies' => 0,
 				'session.use_only_cookies' => 0,
-			),
+			],
 			'defaults' => 'php',
 			'cookieTimeout' => 240,
 			'cacheLimiter' => 'must-revalidate',
-		);
+		];
 		$actualConfig = Configure::read('Session');
 		$this->assertEquals($expectedConfig, $actualConfig);
 	}

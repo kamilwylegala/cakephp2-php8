@@ -11,7 +11,7 @@ class TestAppsExceptionRenderer extends ExceptionRenderer {
 		try {
 			$controller = new TestAppsErrorController($request, $response);
 			$controller->layout = 'banana';
-		} catch (Exception $e) {
+		} catch (Exception) {
 			$controller = new Controller($request, $response);
 			$controller->viewPath = 'Errors';
 		}

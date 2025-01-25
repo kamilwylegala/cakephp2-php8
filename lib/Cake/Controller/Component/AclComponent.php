@@ -57,11 +57,11 @@ class AclComponent extends Component {
  * @param array $settings Settings list.
  * @throws CakeException when Acl.classname could not be loaded.
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentCollection $collection, $settings = []) {
 		parent::__construct($collection, $settings);
 		$name = Configure::read('Acl.classname');
 		if (!class_exists($name)) {
-			list($plugin, $name) = pluginSplit($name, true);
+			[$plugin, $name] = pluginSplit($name, true);
 			App::uses($name, $plugin . 'Controller/Component/Acl');
 			if (!class_exists($name)) {
 				throw new CakeException(__d('cake_dev', 'Could not find %s.', $name));

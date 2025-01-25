@@ -47,7 +47,7 @@ class File {
  * @var array
  * https://book.cakephp.org/2.0/en/core-utility-libraries/file-folder.html#File::$info
  */
-	public $info = array();
+	public $info = [];
 
 /**
  * Holds the file handler resource if the file is opened
@@ -211,7 +211,7 @@ class File {
 		if (DIRECTORY_SEPARATOR === '\\' || $forceWindows === true) {
 			$lineBreak = "\r\n";
 		}
-		return strtr($data, array("\r\n" => $lineBreak, "\n" => $lineBreak, "\r" => $lineBreak));
+		return strtr($data, ["\r\n" => $lineBreak, "\n" => $lineBreak, "\r" => $lineBreak]);
 	}
 
 /**
@@ -323,10 +323,7 @@ class File {
 		if (!$this->info) {
 			$this->info();
 		}
-		if (isset($this->info['extension'])) {
-			return $this->info['extension'];
-		}
-		return false;
+		return $this->info['extension'] ?? false;
 	}
 
 /**
@@ -561,7 +558,7 @@ class File {
 			if (!$finfo) {
 				return false;
 			}
-			list($type) = explode(';', $finfo);
+			[$type] = explode(';', $finfo);
 			return $type;
 		}
 		if (function_exists('mime_content_type')) {

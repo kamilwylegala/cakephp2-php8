@@ -47,7 +47,7 @@ class FormAuthenticate extends BaseAuthenticate {
 		if (empty($request->data[$model])) {
 			return false;
 		}
-		foreach (array($fields['username'], $fields['password']) as $field) {
+		foreach ([$fields['username'], $fields['password']] as $field) {
 			$value = $request->data($model . '.' . $field);
 			if (empty($value) && $value !== '0' || !is_string($value)) {
 				return false;
@@ -67,7 +67,7 @@ class FormAuthenticate extends BaseAuthenticate {
  */
 	public function authenticate(CakeRequest $request, CakeResponse $response) {
 		$userModel = $this->settings['userModel'];
-		list(, $model) = pluginSplit($userModel);
+		[, $model] = pluginSplit($userModel);
 
 		$fields = $this->settings['fields'];
 		if (!$this->_checkFields($request, $model, $fields)) {

@@ -112,12 +112,12 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
  * @return Helper A helper object, Either the existing loaded helper or a new one.
  * @throws MissingHelperException when the helper could not be found
  */
-	public function load($helper, $settings = array()) {
+	public function load($helper, $settings = []) {
 		if (isset($settings['className'])) {
 			$alias = $helper;
 			$helper = $settings['className'];
 		}
-		list($plugin, $name) = pluginSplit($helper, true);
+		[$plugin, $name] = pluginSplit($helper, true);
 		if (!isset($alias)) {
 			$alias = $name;
 		}
@@ -128,18 +128,18 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
 		$helperClass = $name . 'Helper';
 		App::uses($helperClass, $plugin . 'View/Helper');
 		if (!class_exists($helperClass)) {
-			throw new MissingHelperException(array(
+			throw new MissingHelperException([
 				'class' => $helperClass,
 				'plugin' => substr($plugin, 0, -1)
-			));
+			]);
 		}
 		$this->_loaded[$alias] = new $helperClass($this->_View, $settings);
 
-		$vars = array('request', 'theme', 'plugin');
+		$vars = ['request', 'theme', 'plugin'];
 		foreach ($vars as $var) {
 			$this->_loaded[$alias]->{$var} = $this->_View->{$var};
 		}
-		$enable = isset($settings['enabled']) ? $settings['enabled'] : true;
+		$enable = $settings['enabled'] ?? true;
 		if ($enable) {
 			$this->enable($alias);
 		}
@@ -152,14 +152,14 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
  * @return array
  */
 	public function implementedEvents() {
-		return array(
+		return [
 			'View.beforeRenderFile' => 'trigger',
 			'View.afterRenderFile' => 'trigger',
 			'View.beforeRender' => 'trigger',
 			'View.afterRender' => 'trigger',
 			'View.beforeLayout' => 'trigger',
 			'View.afterLayout' => 'trigger'
-		);
+		];
 	}
 
 /**
@@ -193,7 +193,7 @@ class HelperCollection extends ObjectCollection implements CakeEventListener {
  * @return mixed Either the last result or all results if collectReturn is on.
  * @throws CakeException when modParams is used with an index that does not exist.
  */
-	public function trigger($callback, $params = array(), $options = array()) {
+	public function trigger($callback, $params = [], $options = []) {
 		if ($callback instanceof CakeEvent) {
 			$callback->omitSubject = true;
 		}

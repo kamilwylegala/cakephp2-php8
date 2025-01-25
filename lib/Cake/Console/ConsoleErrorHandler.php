@@ -79,7 +79,7 @@ class ConsoleErrorHandler {
 			return;
 		}
 		$stderr = static::getStderr();
-		list($name, $log) = ErrorHandler::mapErrorCode($code);
+		[$name, $log] = ErrorHandler::mapErrorCode($code);
 		$message = __d('cake_console', '%s in [%s, line %s]', $description, $file, $line);
 		$stderr->write(__d('cake_console', "<error>%s Error:</error> %s\n", $name, $message));
 

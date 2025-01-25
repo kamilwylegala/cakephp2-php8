@@ -178,7 +178,7 @@ class SecurityTest extends CakeTestCase {
  */
 	public function testHashBlowfishEmptySalt() {
 		$test = Security::hash('password', 'blowfish');
-		$this->skipIf(strpos($test, '$2a$') === false, 'Blowfish hashes are incorrect.');
+		$this->skipIf(!str_contains($test, '$2a$'), 'Blowfish hashes are incorrect.');
 
 		$stored = '';
 		$hash = Security::hash('anything', 'blowfish', $stored);
@@ -198,7 +198,7 @@ class SecurityTest extends CakeTestCase {
  */
 	public function testHashBlowfish() {
 		$test = Security::hash('password', 'blowfish');
-		$this->skipIf(strpos($test, '$2a$') === false, 'Blowfish hashes are incorrect.');
+		$this->skipIf(!str_contains($test, '$2a$'), 'Blowfish hashes are incorrect.');
 
 		Security::setCost(10);
 		$_hashType = Security::$hashType;
@@ -394,15 +394,15 @@ class SecurityTest extends CakeTestCase {
  * @return array
  */
 	public function plainTextProvider() {
-		return array(
-			array(''),
-			array('abcdefg'),
-			array('1234567890123456'),
-			array('The quick brown fox'),
-			array('12345678901234567890123456789012'),
-			array('The quick brown fox jumped over the lazy dog.'),
-			array('何らかのマルチバイト文字列'),
-		);
+		return [
+			[''],
+			['abcdefg'],
+			['1234567890123456'],
+			['The quick brown fox'],
+			['12345678901234567890123456789012'],
+			['The quick brown fox jumped over the lazy dog.'],
+			['何らかのマルチバイト文字列'],
+		];
 	}
 
 /**

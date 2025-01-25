@@ -123,7 +123,7 @@ class CookieComponent extends Component {
  * @see CookieComponent::read();
  * @var string
  */
-	protected $_values = array();
+	protected $_values = [];
 
 /**
  * Type of encryption to use.
@@ -166,7 +166,7 @@ class CookieComponent extends Component {
  * @param ComponentCollection $collection A ComponentCollection for this component
  * @param array $settings Array of settings.
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentCollection $collection, $settings = []) {
 		$this->key = Configure::read('Security.salt');
 		parent::__construct($collection, $settings);
 		if (isset($this->time)) {
@@ -190,7 +190,7 @@ class CookieComponent extends Component {
 	public function startup(Controller $controller) {
 		$this->_expire($this->time);
 
-		$this->_values[$this->name] = array();
+		$this->_values[$this->name] = [];
 	}
 
 /**
@@ -225,13 +225,13 @@ class CookieComponent extends Component {
 		$this->_expire($expires);
 
 		if (!is_array($key)) {
-			$key = array($key => $value);
+			$key = [$key => $value];
 		}
 
 		foreach ($key as $name => $value) {
-			if (strpos($name, '.') !== false) {
+			if (str_contains($name, '.')) {
 				$this->_values[$this->name] = Hash::insert($this->_values[$this->name], $name, $value);
-				list($name) = explode('.', $name, 2);
+				[$name] = explode('.', $name, 2);
 				$value = $this->_values[$this->name][$name];
 			} else {
 				$this->_values[$this->name][$name] = $value;
@@ -256,7 +256,7 @@ class CookieComponent extends Component {
 			$this->_values[$this->name] = $this->_decrypt($_COOKIE[$this->name]);
 		}
 		if (empty($this->_values[$this->name])) {
-			$this->_values[$this->name] = array();
+			$this->_values[$this->name] = [];
 		}
 		if ($key === null) {
 			return $this->_values[$this->name];
@@ -300,12 +300,12 @@ class CookieComponent extends Component {
 		if (empty($this->_values[$this->name])) {
 			$this->read();
 		}
-		if (strpos($key, '.') === false) {
+		if (!str_contains($key, '.')) {
 			unset($this->_values[$this->name][$key]);
 			$this->_delete('[' . $key . ']');
 		} else {
 			$this->_values[$this->name] = Hash::remove((array)$this->_values[$this->name], $key);
-			list($key) = explode('.', $key, 2);
+			[$key] = explode('.', $key, 2);
 			if (isset($this->_values[$this->name][$key])) {
 				$value = $this->_values[$this->name][$key];
 				$this->_write('[' . $key . ']', $value);
@@ -341,11 +341,11 @@ class CookieComponent extends Component {
  * @return void
  */
 	public function type($type = 'cipher') {
-		$availableTypes = array(
+		$availableTypes = [
 			'cipher',
 			'rijndael',
 			'aes'
-		);
+		];
 		if (!in_array($type, $availableTypes)) {
 			trigger_error(__d('cake_dev', 'You must use cipher, rijndael or aes for cookie encryption type'), E_USER_WARNING);
 			$type = 'cipher';
@@ -391,7 +391,7 @@ class CookieComponent extends Component {
  * @return void
  */
 	protected function _write($name, $value) {
-		$this->_response->cookie(array(
+		$this->_response->cookie([
 			'name' => $this->name . $name,
 			'value' => $this->_encrypt($value),
 			'expire' => $this->_expires,
@@ -399,7 +399,7 @@ class CookieComponent extends Component {
 			'domain' => $this->domain,
 			'secure' => $this->secure,
 			'httpOnly' => $this->httpOnly
-		));
+		]);
 
 		if (!empty($this->_reset)) {
 			$this->_expires = $this->_reset;
@@ -414,7 +414,7 @@ class CookieComponent extends Component {
  * @return void
  */
 	protected function _delete($name) {
-		$this->_response->cookie(array(
+		$this->_response->cookie([
 			'name' => $this->name . $name,
 			'value' => '',
 			'expire' => time() - 42000,
@@ -422,7 +422,7 @@ class CookieComponent extends Component {
 			'domain' => $this->domain,
 			'secure' => $this->secure,
 			'httpOnly' => $this->httpOnly
-		));
+		]);
 	}
 
 /**
@@ -458,7 +458,7 @@ class CookieComponent extends Component {
  * @return array decrypted string
  */
 	protected function _decrypt($values) {
-		$decrypted = array();
+		$decrypted = [];
 		$type = $this->_type;
 
 		foreach ((array)$values as $name => $value) {
@@ -519,9 +519,9 @@ class CookieComponent extends Component {
 		$first = substr($string, 0, 1);
 		if ($first === '{' || $first === '[') {
 			$ret = json_decode($string, true);
-			return ($ret !== null) ? $ret : $string;
+			return $ret ?? $string;
 		}
-		$array = array();
+		$array = [];
 		foreach (explode(',', $string) as $pair) {
 			$key = explode('|', $pair);
 			if (!isset($key[1])) {

@@ -16,7 +16,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<?php include dirname(__FILE__) . DS . 'header.php'; ?>
+<?php include __DIR__ . DS . 'header.php'; ?>
 <div id="content">
 	<h2>PHPUnit is not installed!</h2>
 	<p>You must install PHPUnit to use the CakePHP(tm) Test Suite.</p>
@@ -26,4 +26,4 @@
 	<p><a href="https://github.com/sebastianbergmann/phpunit" target="_blank">Download PHPUnit</a></p>
 </div>
 <?php
-include dirname(__FILE__) . DS . 'footer.php';
+include __DIR__ . DS . 'footer.php';

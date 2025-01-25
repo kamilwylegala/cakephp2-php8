@@ -68,7 +68,7 @@ class I18n {
  *
  * @var array
  */
-	protected $_domains = array();
+	protected $_domains = [];
 
 /**
  * Set to true when I18N::_bindTextDomain() is called for the first time.
@@ -83,9 +83,9 @@ class I18n {
  *
  * @var array
  */
-	protected $_categories = array(
+	protected $_categories = [
 		'LC_ALL', 'LC_COLLATE', 'LC_CTYPE', 'LC_MONETARY', 'LC_NUMERIC', 'LC_TIME', 'LC_MESSAGES'
-	);
+	];
 
 /**
  * Constants for the translation categories.
@@ -169,7 +169,7 @@ class I18n {
  * @return I18n
  */
 	public static function getInstance() {
-		static $instance = array();
+		static $instance = [];
 		if (!$instance) {
 			$instance[0] = new I18n();
 		}
@@ -197,10 +197,10 @@ class I18n {
 	) {
 		$_this = I18n::getInstance();
 
-		if (strpos($singular, "\r\n") !== false) {
+		if (str_contains($singular, "\r\n")) {
 			$singular = str_replace("\r\n", "\n", $singular);
 		}
-		if ($plural !== null && strpos($plural, "\r\n") !== false) {
+		if ($plural !== null && str_contains($plural, "\r\n")) {
 			$plural = str_replace("\r\n", "\n", $plural);
 		}
 
@@ -297,7 +297,7 @@ class I18n {
  */
 	public static function clear() {
 		$self = I18n::getInstance();
-		$self->_domains = array();
+		$self->_domains = [];
 	}
 
 /**
@@ -378,7 +378,7 @@ class I18n {
 	protected function _bindTextDomain($domain) {
 		$this->_noLocale = true;
 		$core = true;
-		$merge = array();
+		$merge = [];
 		$searchPaths = App::path('locales');
 		$plugins = CakePlugin::loaded();
 
@@ -498,7 +498,7 @@ class I18n {
 		// @codingStandardsIgnoreStart
 		// Binary files extracted makes non-standard local variables
 		if ($data = file_get_contents($filename)) {
-			$translations = array();
+			$translations = [];
 			$header = substr($data, 0, 20);
 			$header = unpack('L1magic/L1version/L1count/L1o_msg/L1o_trn', $header);
 			extract($header);
@@ -510,11 +510,11 @@ class I18n {
 					unset($msgid_plural);
 					$context = null;
 
-					if (strpos($msgid, "\x04") !== false) {
-						list($context, $msgid) = explode("\x04", $msgid);
+					if (str_contains($msgid, "\x04")) {
+						[$context, $msgid] = explode("\x04", $msgid);
 					}
 					if (strpos($msgid, "\000")) {
-						list($msgid, $msgid_plural) = explode("\000", $msgid);
+						[$msgid, $msgid_plural] = explode("\000", $msgid);
 					}
 					$r = unpack("L1len/L1offs", substr($data, $o_trn + $n * 8, 8));
 					$msgstr = substr($data, $r["offs"], $r["len"]);
@@ -552,7 +552,7 @@ class I18n {
 		}
 
 		$type = 0;
-		$translations = array();
+		$translations = [];
 		$translationKey = '';
 		$translationContext = null;
 		$plural = 0;
@@ -631,7 +631,7 @@ class I18n {
 			return false;
 		}
 
-		$definitions = array();
+		$definitions = [];
 		$comment = '#';
 		$escape = '\\';
 		$currentToken = false;
@@ -667,14 +667,14 @@ class I18n {
 				continue;
 			}
 
-			$mustEscape = array($escape . ',', $escape . ';', $escape . '<', $escape . '>', $escape . $escape);
+			$mustEscape = [$escape . ',', $escape . ';', $escape . '<', $escape . '>', $escape . $escape];
 			$replacements = array_map('crc32', $mustEscape);
 			$value = str_replace($mustEscape, $replacements, $value);
 			$value = explode(';', $value);
 			$_this->_escape = $escape;
 			foreach ($value as $i => $val) {
 				$val = trim($val, '"');
-				$val = preg_replace_callback('/(?:<)?(.[^>]*)(?:>)?/', array(&$_this, '_parseLiteralValue'), $val);
+				$val = preg_replace_callback('/(?:<)?(.[^>]*)(?:>)?/', [&$_this, '_parseLiteralValue'], $val);
 				$val = str_replace($replacements, $mustEscape, $val);
 				$value[$i] = $val;
 			}
@@ -729,12 +729,12 @@ class I18n {
 			$delimiter = $this->_escape;
 			return implode('', array_map('chr', array_filter(explode($delimiter, $string))));
 		}
-		if (substr($string, 0, 3) === 'U00') {
+		if (str_starts_with($string, 'U00')) {
 			$delimiter = 'U00';
 			return implode('', array_map('chr', array_map('hexdec', array_filter(explode($delimiter, $string)))));
 		}
 		if (preg_match('/U([0-9a-fA-F]{4})/', $string, $match)) {
-			return Multibyte::ascii(array(hexdec($match[1])));
+			return Multibyte::ascii([hexdec($match[1])]);
 		}
 		return $string;
 	}

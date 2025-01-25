@@ -50,10 +50,10 @@ class TimeHelper extends AppHelper {
  * @param array $settings Settings array
  * @throws CakeException When the engine class could not be found.
  */
-	public function __construct(View $View, $settings = array()) {
-		$settings = Hash::merge(array('engine' => 'CakeTime'), $settings);
+	public function __construct(View $View, $settings = []) {
+		$settings = Hash::merge(['engine' => 'CakeTime'], $settings);
 		parent::__construct($View, $settings);
-		list($plugin, $engineClass) = pluginSplit($settings['engine'], true);
+		[$plugin, $engineClass] = pluginSplit($settings['engine'], true);
 		App::uses($engineClass, $plugin . 'Utility');
 		if (class_exists($engineClass)) {
 			$this->_engine = new $engineClass($settings);
@@ -70,13 +70,10 @@ class TimeHelper extends AppHelper {
  * @return void
  */
 	public function __set($name, $value) {
-		switch ($name) {
-			case 'niceFormat':
-				$this->_engine->{$name} = $value;
-				break;
-			default:
-				$this->{$name} = $value;
-		}
+		$this->_engine->{$name} = match ($name) {
+            'niceFormat' => $value,
+            default => $value,
+        };
 	}
 
 /**
@@ -89,7 +86,7 @@ class TimeHelper extends AppHelper {
 		if (isset($this->{$name})) {
 			return true;
 		}
-		$magicGet = array('niceFormat');
+		$magicGet = ['niceFormat'];
 		if (in_array($name, $magicGet)) {
 			return $this->__get($name) !== null;
 		}
@@ -106,7 +103,7 @@ class TimeHelper extends AppHelper {
 		if (isset($this->_engine->{$name})) {
 			return $this->_engine->{$name};
 		}
-		$magicGet = array('niceFormat');
+		$magicGet = ['niceFormat'];
 		if (in_array($name, $magicGet)) {
 			return $this->_engine->{$name};
 		}
@@ -121,7 +118,7 @@ class TimeHelper extends AppHelper {
  * @return mixed Whatever is returned by called method, or false on failure
  */
 	public function __call($method, $params) {
-		return call_user_func_array(array($this->_engine, $method), $params);
+		return call_user_func_array([$this->_engine, $method], $params);
 	}
 
 /**
@@ -380,15 +377,15 @@ class TimeHelper extends AppHelper {
  * @see CakeTime::timeAgoInWords()
  * @link https://book.cakephp.org/2.0/en/core-libraries/helpers/time.html#formatting
  */
-	public function timeAgoInWords($dateTime, $options = array()) {
+	public function timeAgoInWords($dateTime, $options = []) {
 		$element = null;
 
 		if (!empty($options['element'])) {
-			$element = array(
+			$element = [
 				'tag' => 'span',
 				'class' => 'time-ago-in-words',
 				'title' => $dateTime
-			);
+			];
 
 			if (is_array($options['element'])) {
 				$element = $options['element'] + $element;
@@ -403,7 +400,7 @@ class TimeHelper extends AppHelper {
 			$relativeDate = sprintf(
 				'<%s%s>%s</%s>',
 				$element['tag'],
-				$this->_parseAttributes($element, array('tag')),
+				$this->_parseAttributes($element, ['tag']),
 				$relativeDate,
 				$element['tag']
 			);

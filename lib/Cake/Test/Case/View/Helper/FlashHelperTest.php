@@ -35,9 +35,9 @@ class FlashHelperTest extends CakeTestCase {
  * @return void
  */
 	public static function setupBeforeClass() : void {
-		App::build(array(
-			'View' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS)
-		));
+		App::build([
+			'View' => [CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS]
+		]);
 	}
 
 /**
@@ -54,51 +54,51 @@ class FlashHelperTest extends CakeTestCase {
 		if (!CakeSession::started()) {
 			CakeSession::start();
 		}
-		CakeSession::write(array(
-			'Message' => array(
-				'flash' => array(
-					array(
+		CakeSession::write([
+			'Message' => [
+				'flash' => [
+					[
 						'key' => 'flash',
 						'message' => 'This is the first Message',
 						'element' => 'Flash/default',
-						'params' => array()
-					),
-					array(
+						'params' => []
+					],
+					[
 						'key' => 'flash',
 						'message' => 'This is the second Message',
 						'element' => 'Flash/default',
-						'params' => array()
-					)
-				),
-				'notification' => array(
-					array(
+						'params' => []
+					]
+				],
+				'notification' => [
+					[
 						'key' => 'notification',
 						'message' => 'Broadcast message testing',
 						'element' => 'flash_helper',
-						'params' => array(
+						'params' => [
 							'title' => 'Notice!',
 							'name' => 'Alert!'
-						)
-					)
-				),
-				'classy' => array(
-					array(
+						]
+					]
+				],
+				'classy' => [
+					[
 						'key' => 'classy',
 						'message' => 'Recorded',
 						'element' => 'flash_classy',
-						'params' => array()
-					)
-				),
-				'default' => array(
-					array(
+						'params' => []
+					]
+				],
+				'default' => [
+					[
 						'key' => 'default',
 						'message' => 'Default',
 						'element' => 'default',
-						'params' => array()
-					)
-				)
-			)
-		));
+						'params' => []
+					]
+				]
+			]
+		]);
 	}
 
 /**
@@ -149,10 +149,10 @@ class FlashHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testFlashElementInAttrs() {
-		$result = $this->Flash->render('notification', array(
+		$result = $this->Flash->render('notification', [
 			'element' => 'flash_helper',
-			'params' => array('title' => 'Alert!', 'name' => 'Notice!')
-		));
+			'params' => ['title' => 'Alert!', 'name' => 'Notice!']
+		]);
 
 		$expected = "<div id=\"notificationLayout\">\n\t<h1>Notice!</h1>\n\t<h3>Alert!</h3>\n\t<p>Broadcast message testing</p>\n</div>";
 
@@ -165,12 +165,12 @@ class FlashHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testFlashWithPluginElement() {
-		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		));
+		App::build([
+			'Plugin' => [CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS]
+		]);
 		CakePlugin::load('TestPlugin');
 
-		$result = $this->Flash->render('flash', array('element' => 'TestPlugin.plugin_element'));
+		$result = $this->Flash->render('flash', ['element' => 'TestPlugin.plugin_element']);
 		$expected = 'this is the plugin element';
 		$this->assertStringContainsString($expected, $result);
 	}

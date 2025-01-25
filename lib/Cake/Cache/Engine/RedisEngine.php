@@ -42,7 +42,7 @@ class RedisEngine extends CacheEngine {
  *
  * @var array
  */
-	public $settings = array();
+	public $settings = [];
 
 /**
  * Initialize the Cache Engine
@@ -53,11 +53,11 @@ class RedisEngine extends CacheEngine {
  * @param array $settings array of setting for the engine
  * @return bool True if the engine has been successfully initialized, false if not
  */
-	public function init($settings = array()) {
+	public function init($settings = []) {
 		if (!class_exists('Redis')) {
 			return false;
 		}
-		parent::init(array_merge(array(
+		parent::init(array_merge([
 			'engine' => 'Redis',
 			'prefix' => Inflector::slug(APP_DIR) . '_',
 			'server' => '127.0.0.1',
@@ -67,7 +67,7 @@ class RedisEngine extends CacheEngine {
 			'timeout' => 0,
 			'persistent' => true,
 			'unix_socket' => false
-			), $settings)
+			], $settings)
 		);
 
 		return $this->_connect();
@@ -89,7 +89,7 @@ class RedisEngine extends CacheEngine {
 				$persistentId = $this->settings['port'] . $this->settings['timeout'] . $this->settings['database'];
 				$return = $this->_Redis->pconnect($this->settings['server'], $this->settings['port'], $this->settings['timeout'], $persistentId);
 			}
-		} catch (RedisException $e) {
+		} catch (RedisException) {
 			$return = false;
 		}
 		if (!$return) {
@@ -201,7 +201,7 @@ class RedisEngine extends CacheEngine {
  * @return array
  */
 	public function groups() {
-		$result = array();
+		$result = [];
 		foreach ($this->settings['groups'] as $group) {
 			$value = $this->_Redis->get($this->settings['prefix'] . $group);
 			if (!$value) {

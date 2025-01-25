@@ -32,28 +32,21 @@ class CakeRoute {
  *
  * @var array
  */
-	public $keys = array();
+	public $keys = [];
 
 /**
  * An array of additional parameters for the Route.
  *
  * @var array
  */
-	public $options = array();
+	public $options = [];
 
 /**
  * Default parameters for a Route
  *
  * @var array
  */
-	public $defaults = array();
-
-/**
- * The routes template string.
- *
- * @var string
- */
-	public $template = null;
+	public $defaults = [];
 
 /**
  * Is this route a greedy route?  Greedy routes have a `/*` in their
@@ -75,11 +68,11 @@ class CakeRoute {
  *
  * @var array
  */
-	protected $_headerMap = array(
+	protected $_headerMap = [
 		'type' => 'content_type',
 		'method' => 'request_method',
 		'server' => 'server_name'
-	);
+	];
 
 /**
  * Constructor for a Route
@@ -88,8 +81,10 @@ class CakeRoute {
  * @param array $defaults Array of defaults for the route.
  * @param array $options Array of additional options for the Route
  */
-	public function __construct($template, $defaults = array(), $options = array()) {
-		$this->template = $template;
+	public function __construct(/**
+     * The routes template string.
+     */
+    public $template, $defaults = [], $options = []) {
 		$this->defaults = (array)$defaults;
 		$this->options = (array)$options;
 	}
@@ -130,11 +125,11 @@ class CakeRoute {
 	protected function _writeRoute() {
 		if (empty($this->template) || ($this->template === '/')) {
 			$this->_compiledRoute = '#^/*$#';
-			$this->keys = array();
+			$this->keys = [];
 			return;
 		}
 		$route = $this->template;
-		$names = $routeParams = array();
+		$names = $routeParams = [];
 		$parsed = preg_quote($this->template, '#');
 
 		preg_match_all('#:([A-Za-z0-9_-]+[A-Z0-9a-z])#', $route, $namedElements);
@@ -146,7 +141,7 @@ class CakeRoute {
 					$option = '?';
 				}
 				$slashParam = '/\\' . $namedElements[0][$i];
-				if (strpos($parsed, $slashParam) !== false) {
+				if (str_contains($parsed, $slashParam)) {
 					$routeParams[$slashParam] = '(?:/(?P<' . $name . '>' . $this->options[$name] . ')' . $option . ')' . $option;
 				} else {
 					$routeParams[$search] = '(?:(?P<' . $name . '>' . $this->options[$name] . ')' . $option . ')' . $option;
@@ -223,7 +218,7 @@ class CakeRoute {
 		for ($i = 0; $i <= $count; $i++) {
 			unset($route[$i]);
 		}
-		$route['pass'] = $route['named'] = array();
+		$route['pass'] = $route['named'] = [];
 
 		// Assign defaults, set passed args to pass
 		foreach ($this->defaults as $key => $value) {
@@ -238,7 +233,7 @@ class CakeRoute {
 		}
 
 		if (isset($route['_args_'])) {
-			list($pass, $named) = $this->_parseArgs($route['_args_'], $route);
+			[$pass, $named] = $this->_parseArgs($route['_args_'], $route);
 			$route['pass'] = array_merge($route['pass'], $pass);
 			$route['named'] = $named;
 			unset($route['_args_']);
@@ -270,7 +265,7 @@ class CakeRoute {
  * @return array Array of ($pass, $named)
  */
 	protected function _parseArgs($args, $context) {
-		$pass = $named = array();
+		$pass = $named = [];
 		$args = explode('/', $args);
 
 		$namedConfig = Router::namedConfig();
@@ -288,13 +283,13 @@ class CakeRoute {
 		}
 
 		foreach ($args as $param) {
-			if (empty($param) && $param !== '0' && $param !== 0) {
+			if (empty($param) && $param !== '0' && 0 !== 0) {
 				continue;
 			}
 
-			$separatorIsPresent = strpos($param, $namedConfig['separator']) !== false;
+			$separatorIsPresent = str_contains($param, $namedConfig['separator']);
 			if ((!isset($this->options['named']) || !empty($this->options['named'])) && $separatorIsPresent) {
-				list($key, $val) = explode($namedConfig['separator'], $param, 2);
+				[$key, $val] = explode($namedConfig['separator'], $param, 2);
 				$hasRule = isset($rules[$key]);
 				$passIt = (!$hasRule && !$greedy) || ($hasRule && !$this->_matchNamed($val, $rules[$key], $context));
 				if ($passIt) {
@@ -307,22 +302,22 @@ class CakeRoute {
 						$arr = $val;
 						foreach ($matches as $match) {
 							if (empty($match[1])) {
-								$arr = array($arr);
+								$arr = [$arr];
 							} else {
-								$arr = array(
+								$arr = [
 									$match[1] => $arr
-								);
+								];
 							}
 						}
 						$val = $arr;
 					}
-					$named = array_merge_recursive($named, array($key => $val));
+					$named = array_merge_recursive($named, [$key => $val]);
 				}
 			} else {
 				$pass[] = $param;
 			}
 		}
-		return array($pass, $named);
+		return [$pass, $named];
 	}
 
 /**
@@ -341,7 +336,7 @@ class CakeRoute {
 			return $rule;
 		}
 		if (is_string($rule)) {
-			$rule = array('match' => $rule);
+			$rule = ['match' => $rule];
 		}
 		if (!is_array($rule)) {
 			return false;
@@ -412,7 +407,7 @@ class CakeRoute {
 		}
 
 		// Missing defaults is a fail.
-		if (array_diff_key($defaults, $url) !== array()) {
+		if (array_diff_key($defaults, $url) !== []) {
 			return false;
 		}
 
@@ -421,7 +416,7 @@ class CakeRoute {
 		$greedyNamed = $namedConfig['greedyNamed'];
 		$allowedNamedParams = $namedConfig['rules'];
 
-		$named = $pass = array();
+		$named = $pass = [];
 
 		foreach ($url as $key => $value) {
 			// keys that exist in the defaults and have different values is a match failure.
@@ -492,7 +487,7 @@ class CakeRoute {
 		if (isset($params['prefix'])) {
 			$prefixed = $params['prefix'] . '_';
 		}
-		if (isset($prefixed, $params['action']) && strpos($params['action'], $prefixed) === 0) {
+		if (isset($prefixed, $params['action']) && str_starts_with($params['action'], $prefixed)) {
 			$params['action'] = substr($params['action'], strlen($prefixed));
 			unset($params['prefix']);
 		}
@@ -505,7 +500,7 @@ class CakeRoute {
 		$separator = $namedConfig['separator'];
 
 		if (!empty($params['named']) && is_array($params['named'])) {
-			$named = array();
+			$named = [];
 			foreach ($params['named'] as $key => $value) {
 				if (is_array($value)) {
 					$flat = Hash::flatten($value, '%5D%5B');
@@ -521,13 +516,13 @@ class CakeRoute {
 		$out = $this->template;
 
 		if (!empty($this->keys)) {
-			$search = $replace = array();
+			$search = $replace = [];
 
 			foreach ($this->keys as $key) {
 				$string = null;
 				if (isset($params[$key])) {
 					$string = $params[$key];
-				} elseif (strpos($out, $key) != strlen($out) - strlen($key)) {
+				} elseif (strpos($out, (string) $key) != strlen($out) - strlen($key)) {
 					$key .= '/';
 				}
 				$search[] = ':' . $key;
@@ -536,10 +531,10 @@ class CakeRoute {
 			$out = str_replace($search, $replace, $out);
 		}
 
-		if (strpos($this->template, '**') !== false) {
+		if (str_contains($this->template, '**')) {
 			$out = str_replace('**', $params['pass'], $out);
 			$out = str_replace('%2F', '/', $out);
-		} elseif (strpos($this->template, '*') !== false) {
+		} elseif (str_contains($this->template, '*')) {
 			$out = str_replace('*', $params['pass'], $out);
 		}
 		$out = str_replace('//', '/', $out);
@@ -556,7 +551,7 @@ class CakeRoute {
  * @return CakeRoute A new instance of the route
  */
 	public static function __set_state($fields) {
-		$class = function_exists('get_called_class') ? get_called_class() : __CLASS__;
+		$class = function_exists('get_called_class') ? static::class : self::class;
 		$obj = new $class('');
 		foreach ($fields as $field => $value) {
 			$obj->$field = $value;

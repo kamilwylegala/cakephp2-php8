@@ -68,18 +68,18 @@ class CakeSchema extends CakeObject {
  *
  * @var array
  */
-	public $tables = array();
+	public $tables = [];
 
 /**
  * Constructor
  *
  * @param array $options Optional load object properties.
  */
-	public function __construct($options = array()) {
+	public function __construct($options = []) {
 		parent::__construct();
 
 		if (empty($options['name'])) {
-			$this->name = preg_replace('/schema$/i', '', get_class($this));
+			$this->name = preg_replace('/schema$/i', '', static::class);
 		}
 		if (!empty($options['plugin'])) {
 			$this->plugin = $options['plugin'];
@@ -107,7 +107,7 @@ class CakeSchema extends CakeObject {
 		$file = null;
 		foreach ($data as $key => $val) {
 			if (!empty($val)) {
-				if (!in_array($key, array('plugin', 'name', 'path', 'file', 'connection', 'tables', '_log'))) {
+				if (!in_array($key, ['plugin', 'name', 'path', 'file', 'connection', 'tables', '_log'])) {
 					if ($key[0] === '_') {
 						continue;
 					}
@@ -134,7 +134,7 @@ class CakeSchema extends CakeObject {
  * @param array $event Schema object properties.
  * @return bool Should process continue.
  */
-	public function before($event = array()) {
+	public function before($event = []) {
 		return true;
 	}
 
@@ -144,7 +144,7 @@ class CakeSchema extends CakeObject {
  * @param array $event Schema object properties.
  * @return void
  */
-	public function after($event = array()) {
+	public function after($event = []) {
 	}
 
 /**
@@ -153,9 +153,9 @@ class CakeSchema extends CakeObject {
  * @param array $options Schema object properties.
  * @return array|bool Set of name and tables.
  */
-	public function load($options = array()) {
+	public function load($options = []) {
 		if (is_string($options)) {
-			$options = array('path' => $options);
+			$options = ['path' => $options];
 		}
 
 		$this->build($options);
@@ -187,13 +187,13 @@ class CakeSchema extends CakeObject {
  * @param array $options Schema object properties.
  * @return array Array indexed by name and tables.
  */
-	public function read($options = array()) {
+	public function read($options = []) {
 		$options = array_merge(
-			array(
+			[
 				'connection' => $this->connection,
 				'name' => $this->name,
 				'models' => true,
-			),
+			],
 			$options
 		);
 		$db = ConnectionManager::getDataSource($options['connection']);
@@ -202,7 +202,7 @@ class CakeSchema extends CakeObject {
 			App::uses($this->plugin . 'AppModel', $this->plugin . '.Model');
 		}
 
-		$tables = array();
+		$tables = [];
 		$currentTables = (array)$db->listSources();
 
 		$prefix = null;
@@ -245,8 +245,8 @@ class CakeSchema extends CakeObject {
 				}
 
 				try {
-					$Object = ClassRegistry::init(array('class' => $model, 'ds' => $options['connection']));
-				} catch (CakeException $e) {
+					$Object = ClassRegistry::init(['class' => $model, 'ds' => $options['connection']]);
+				} catch (CakeException) {
 					continue;
 				}
 
@@ -256,7 +256,7 @@ class CakeSchema extends CakeObject {
 				$db = $Object->getDataSource();
 
 				$fulltable = $table = $db->fullTableName($Object, false, false);
-				if ($prefix && strpos($table, $prefix) !== 0) {
+				if ($prefix && !str_starts_with($table, $prefix)) {
 					continue;
 				}
 				if (!in_array($fulltable, $currentTables)) {
@@ -283,7 +283,7 @@ class CakeSchema extends CakeObject {
 						continue;
 					}
 					$withTable = $db->fullTableName($Object->$class, false, false);
-					if ($prefix && strpos($withTable, $prefix) !== 0) {
+					if ($prefix && !str_starts_with($withTable, $prefix)) {
 						continue;
 					}
 					if (in_array($withTable, $currentTables)) {
@@ -302,18 +302,18 @@ class CakeSchema extends CakeObject {
 		if (!empty($currentTables)) {
 			foreach ($currentTables as $table) {
 				if ($prefix) {
-					if (strpos($table, $prefix) !== 0) {
+					if (!str_starts_with($table, $prefix)) {
 						continue;
 					}
 					$table = $this->_noPrefixTable($prefix, $table);
 				}
-				$Object = new AppModel(array(
+				$Object = new AppModel([
 					'name' => Inflector::classify($table), 'table' => $table, 'ds' => $options['connection']
-				));
+				]);
 
-				$systemTables = array(
+				$systemTables = [
 					'aros', 'acos', 'aros_acos', Configure::read('Session.table'), 'i18n'
-				);
+				];
 
 				$fulltable = $db->fullTableName($Object, false, false);
 
@@ -334,7 +334,7 @@ class CakeSchema extends CakeObject {
 		}
 
 		ksort($tables);
-		return array('name' => $options['name'], 'tables' => $tables);
+		return ['name' => $options['name'], 'tables' => $tables];
 	}
 
 /**
@@ -344,7 +344,7 @@ class CakeSchema extends CakeObject {
  * @param array $options Schema object properties to override object.
  * @return mixed False or string written to file.
  */
-	public function write($object, $options = array()) {
+	public function write($object, $options = []) {
 		if (is_object($object)) {
 			$object = get_object_vars($object);
 			$this->build($object);
@@ -413,12 +413,12 @@ class CakeSchema extends CakeObject {
 
 		$out = "\tpublic \${$table} = array(\n";
 		if (is_array($fields)) {
-			$cols = array();
+			$cols = [];
 			foreach ($fields as $field => $value) {
 				if ($field !== 'indexes' && $field !== 'tableParameters') {
 					if (is_string($value)) {
 						$type = $value;
-						$value = array('type' => $type);
+						$value = ['type' => $type];
 					}
 					$value['type'] = addslashes($value['type']);
 					$col = "\t\t'{$field}' => array('type' => '" . $value['type'] . "', ";
@@ -426,7 +426,7 @@ class CakeSchema extends CakeObject {
 					$col .= implode(', ', $this->_values($value));
 				} elseif ($field === 'indexes') {
 					$col = "\t\t'indexes' => array(\n\t\t\t";
-					$props = array();
+					$props = [];
 					foreach ((array)$value as $key => $index) {
 						$props[] = "'{$key}' => array(" . implode(', ', $this->_values($index)) . ")";
 					}
@@ -471,7 +471,7 @@ class CakeSchema extends CakeObject {
 		} else {
 			$old = $old->tables;
 		}
-		$tables = array();
+		$tables = [];
 		foreach ($new as $table => $fields) {
 			if ($table === 'missing') {
 				continue;
@@ -514,7 +514,7 @@ class CakeSchema extends CakeObject {
 				$diff = $this->_compareIndexes($new[$table]['indexes'], $old[$table]['indexes']);
 				if ($diff) {
 					if (!isset($tables[$table])) {
-						$tables[$table] = array();
+						$tables[$table] = [];
 					}
 					if (isset($diff['drop'])) {
 						$tables[$table]['drop']['indexes'] = $diff['drop'];
@@ -548,7 +548,7 @@ class CakeSchema extends CakeObject {
  *     where match was not found.
  */
 	protected function _arrayDiffAssoc($array1, $array2) {
-		$difference = array();
+		$difference = [];
 		foreach ($array1 as $key => $value) {
 			if (!array_key_exists($key, $array2)) {
 				$difference[$key] = $value;
@@ -581,7 +581,7 @@ class CakeSchema extends CakeObject {
  * @return array Formatted values.
  */
 	protected function _values($values) {
-		$vals = array();
+		$vals = [];
 		if (is_array($values)) {
 			foreach ($values as $key => $val) {
 				if (is_array($val)) {
@@ -620,12 +620,12 @@ class CakeSchema extends CakeObject {
 			}
 		}
 
-		$columns = array();
+		$columns = [];
 		foreach ($fields as $name => $value) {
 			if ($Obj->primaryKey === $name && !$hasPrimaryAlready && !isset($value['key'])) {
 				$value['key'] = 'primary';
 			}
-			if (substr($value['type'], 0, 4) !== 'enum') {
+			if (!str_starts_with($value['type'], 'enum')) {
 				if (!isset($db->columns[$value['type']])) {
 					trigger_error(__d('cake_dev', 'Schema generation error: invalid column type %s for %s.%s does not exist in DBO', $value['type'], $Obj->name, $name), E_USER_NOTICE);
 					continue;
@@ -682,7 +682,7 @@ class CakeSchema extends CakeObject {
 			return false;
 		}
 
-		$add = $drop = array();
+		$add = $drop = [];
 
 		$diff = $this->_arrayDiffAssoc($new, $old);
 		if (!empty($diff)) {
@@ -696,8 +696,8 @@ class CakeSchema extends CakeObject {
 
 		foreach ($new as $name => $value) {
 			if (isset($old[$name])) {
-				$newUnique = isset($value['unique']) ? $value['unique'] : 0;
-				$oldUnique = isset($old[$name]['unique']) ? $old[$name]['unique'] : 0;
+				$newUnique = $value['unique'] ?? 0;
+				$oldUnique = $old[$name]['unique'] ?? 0;
 				$newColumn = $value['column'];
 				$oldColumn = $old[$name]['column'];
 

@@ -38,7 +38,7 @@ class MailTransport extends AbstractTransport {
 		if (isset($this->_config['eol'])) {
 			$eol = $this->_config['eol'];
 		}
-		$headers = $email->getHeaders(array('from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'bcc'));
+		$headers = $email->getHeaders(['from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'bcc']);
 		$to = $headers['To'];
 		unset($headers['To']);
 		foreach ($headers as $key => $header) {
@@ -50,12 +50,12 @@ class MailTransport extends AbstractTransport {
 
 		$message = implode($eol, $email->message());
 
-		$params = isset($this->_config['additionalParameters']) ? $this->_config['additionalParameters'] : null;
+		$params = $this->_config['additionalParameters'] ?? null;
 		$this->_mail($to, $subject, $message, $headers, $params);
 
 		$headers .= $eol . 'Subject: ' . $subject;
 		$headers .= $eol . 'To: ' . $to;
-		return array('headers' => $headers, 'message' => $message);
+		return ['headers' => $headers, 'message' => $message];
 	}
 
 /**
@@ -74,12 +74,12 @@ class MailTransport extends AbstractTransport {
 			//@codingStandardsIgnoreStart
 			if (!@mail($to, $subject, $message, $headers)) {
 				$error = error_get_last();
-				$msg = 'Could not send email: ' . (isset($error['message']) ? $error['message'] : 'unknown');
+				$msg = 'Could not send email: ' . ($error['message'] ?? 'unknown');
 				throw new SocketException($msg);
 			}
 		} elseif (!@mail($to, $subject, $message, $headers, $params)) {
 			$error = error_get_last();
-			$msg = 'Could not send email: ' . (isset($error['message']) ? $error['message'] : 'unknown');
+			$msg = 'Could not send email: ' . ($error['message'] ?? 'unknown');
 			//@codingStandardsIgnoreEnd
 			throw new SocketException($msg);
 		}

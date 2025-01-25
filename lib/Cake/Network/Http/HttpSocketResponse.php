@@ -20,7 +20,7 @@
  *
  * @package       Cake.Network.Http
  */
-class HttpSocketResponse implements ArrayAccess {
+class HttpSocketResponse implements ArrayAccess, \Stringable {
 
 /**
  * Body content
@@ -34,14 +34,14 @@ class HttpSocketResponse implements ArrayAccess {
  *
  * @var array
  */
-	public $headers = array();
+	public $headers = [];
 
 /**
  * Cookies
  *
  * @var array
  */
-	public $cookies = array();
+	public $cookies = [];
 
 /**
  * HTTP version
@@ -77,7 +77,7 @@ class HttpSocketResponse implements ArrayAccess {
  *
  * @var array
  */
-	public $context = array();
+	public $context = [];
 
 /**
  * Constructor
@@ -127,7 +127,7 @@ class HttpSocketResponse implements ArrayAccess {
  * @return bool
  */
 	public function isOk() {
-		return in_array($this->code, array(200, 201, 202, 203, 204, 205, 206));
+		return in_array($this->code, [200, 201, 202, 203, 204, 205, 206]);
 	}
 
 /**
@@ -136,7 +136,7 @@ class HttpSocketResponse implements ArrayAccess {
  * @return bool
  */
 	public function isRedirect() {
-		return in_array($this->code, array(301, 302, 303, 307)) && $this->getHeader('Location') !== null;
+		return in_array($this->code, [301, 302, 303, 307]) && $this->getHeader('Location') !== null;
 	}
 
 /**
@@ -155,7 +155,7 @@ class HttpSocketResponse implements ArrayAccess {
 			throw new SocketException(__d('cake_dev', 'Invalid HTTP response.'));
 		}
 
-		list(, $statusLine, $header) = $match;
+		[, $statusLine, $header] = $match;
 		$this->raw = $message;
 		$this->body = (string)substr($message, strlen($match[0]));
 
@@ -194,12 +194,12 @@ class HttpSocketResponse implements ArrayAccess {
 			return false;
 		}
 		if (empty($encoding)) {
-			return array('body' => $body, 'header' => false);
+			return ['body' => $body, 'header' => false];
 		}
 		$decodeMethod = '_decode' . Inflector::camelize(str_replace('-', '_', $encoding)) . 'Body';
 
-		if (!is_callable(array(&$this, $decodeMethod))) {
-			return array('body' => $body, 'header' => false);
+		if (!is_callable([&$this, $decodeMethod])) {
+			return ['body' => $body, 'header' => false];
 		}
 		return $this->{$decodeMethod}($body);
 	}
@@ -225,10 +225,10 @@ class HttpSocketResponse implements ArrayAccess {
 				// Handle remaining invalid data as one big chunk.
 				preg_match('/^(.*?)\r\n/', $body, $invalidMatch);
 				$length = isset($invalidMatch[1]) ? strlen($invalidMatch[1]) : 0;
-				$match = array(
+				$match = [
 					0 => '',
 					1 => dechex($length)
-				);
+				];
 			}
 			$chunkSize = 0;
 			$hexLength = 0;
@@ -252,7 +252,7 @@ class HttpSocketResponse implements ArrayAccess {
 		if (!empty($body)) {
 			$entityHeader = $this->_parseHeader($body);
 		}
-		return array('body' => $decodedBody, 'header' => $entityHeader);
+		return ['body' => $decodedBody, 'header' => $entityHeader];
 	}
 
 /**
@@ -271,7 +271,7 @@ class HttpSocketResponse implements ArrayAccess {
 		preg_match_all("/(.+):(.+)(?:\r\n|\$)/Uis", $header, $matches, PREG_SET_ORDER);
 		$lines = explode("\r\n", $header);
 
-		$header = array();
+		$header = [];
 		foreach ($lines as $line) {
 			if (strlen($line) === 0) {
 				continue;
@@ -283,8 +283,8 @@ class HttpSocketResponse implements ArrayAccess {
 			if ($first === ' ' || $first === "\t") {
 				$value .= preg_replace("/\s+/", ' ', $line);
 				$continuation = true;
-			} elseif (strpos($line, ':') !== false) {
-				list($field, $value) = explode(':', $line, 2);
+			} elseif (str_contains($line, ':')) {
+				[$field, $value] = explode(':', $line, 2);
 				$field = $this->_unescapeToken($field);
 			}
 
@@ -310,9 +310,9 @@ class HttpSocketResponse implements ArrayAccess {
 			return false;
 		}
 
-		$cookies = array();
+		$cookies = [];
 		foreach ((array)$cookieHeader as $cookie) {
-			if (strpos($cookie, '";"') !== false) {
+			if (str_contains($cookie, '";"')) {
 				$cookie = str_replace('";"', "{__cookie_replace__}", $cookie);
 				$parts = str_replace("{__cookie_replace__}", '";"', explode(';', $cookie));
 			} else {
@@ -321,14 +321,14 @@ class HttpSocketResponse implements ArrayAccess {
 
 			$nameParts = explode('=', array_shift($parts), 2);
 			if (count($nameParts) < 2) {
-				$nameParts = array('', $nameParts[0]);
+				$nameParts = ['', $nameParts[0]];
 			}
-			list($name, $value) = $nameParts;
+			[$name, $value] = $nameParts;
 			$cookies[$name] = compact('value');
 
 			foreach ($parts as $part) {
-				if (strpos($part, '=') !== false) {
-					list($key, $value) = explode('=', $part);
+				if (str_contains($part, '=')) {
+					[$key, $value] = explode('=', $part);
 				} else {
 					$key = $part;
 					$value = true;
@@ -367,7 +367,7 @@ class HttpSocketResponse implements ArrayAccess {
 		if (!empty($chars)) {
 			$escape = $chars;
 		} else {
-			$escape = array('"', "(", ")", "<", ">", "@", ",", ";", ":", "\\", "/", "[", "]", "?", "=", "{", "}", " ");
+			$escape = ['"', "(", ")", "<", ">", "@", ",", ";", ":", "\\", "/", "[", "]", "?", "=", "{", "}", " "];
 			for ($i = 0; $i <= 31; $i++) {
 				$escape[] = chr($i);
 			}
@@ -390,7 +390,7 @@ class HttpSocketResponse implements ArrayAccess {
  * @return bool
  */
 	public function offsetExists(mixed $offset) : bool {
-		return in_array($offset, array('raw', 'status', 'header', 'body', 'cookies'));
+		return in_array($offset, ['raw', 'status', 'header', 'body', 'cookies']);
 	}
 
 /**
@@ -408,18 +408,18 @@ class HttpSocketResponse implements ArrayAccess {
 				} else {
 					$header = substr($this->raw, $firstLineLength, strpos($this->raw, "\r\n\r\n") - $firstLineLength) . "\r\n";
 				}
-				return array(
+				return [
 					'status-line' => $this->httpVersion . ' ' . $this->code . ' ' . $this->reasonPhrase . "\r\n",
 					'header' => $header,
 					'body' => $this->body,
 					'response' => $this->raw
-				);
+				];
 			case 'status':
-				return array(
+				return [
 					'http-version' => $this->httpVersion,
 					'code' => $this->code,
 					'reason-phrase' => $this->reasonPhrase
-				);
+				];
 			case 'header':
 				return $this->headers;
 			case 'body':
@@ -454,7 +454,7 @@ class HttpSocketResponse implements ArrayAccess {
  *
  * @return string
  */
-	public function __tostring() {
+	public function __tostring(): string {
 		return $this->body();
 	}
 

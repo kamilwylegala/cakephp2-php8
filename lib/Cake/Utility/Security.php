@@ -46,15 +46,11 @@ class Security {
  * @return int Allowed inactivity in minutes
  */
 	public static function inactiveMins() {
-		switch (Configure::read('Security.level')) {
-			case 'high':
-				return 10;
-			case 'medium':
-				return 100;
-			case 'low':
-			default:
-				return 300;
-		}
+		return match (Configure::read('Security.level')) {
+            'high' => 10,
+            'medium' => 100,
+            default => 300,
+        };
 	}
 
 /**
@@ -161,7 +157,7 @@ class Security {
 			trigger_error(__d(
 				'cake_dev',
 				'Invalid value, cost must be between %s and %s',
-				array(4, 31)
+				[4, 31]
 			), E_USER_WARNING);
 			return null;
 		}
@@ -223,18 +219,18 @@ class Security {
 			return '';
 		}
 
-		srand((int)(float)Configure::read('Security.cipherSeed'));
+		mt_srand((int)(float)Configure::read('Security.cipherSeed'));
 		$out = '';
 		$keyLength = strlen($key);
 		for ($i = 0, $textLength = strlen($text); $i < $textLength; $i++) {
 			$j = ord(substr($key, $i % $keyLength, 1));
 			while ($j--) {
-				rand(0, 255);
+				random_int(0, 255);
 			}
-			$mask = rand(0, 255);
+			$mask = random_int(0, 255);
 			$out .= chr(ord(substr($text, $i, 1)) ^ $mask);
 		}
-		srand();
+		mt_srand();
 		return $out;
 	}
 
@@ -255,7 +251,7 @@ class Security {
 			trigger_error(__d('cake_dev', 'You cannot use an empty key for %s', 'Security::rijndael()'), E_USER_WARNING);
 			return '';
 		}
-		if (empty($operation) || !in_array($operation, array('encrypt', 'decrypt'))) {
+		if (empty($operation) || !in_array($operation, ['encrypt', 'decrypt'])) {
 			trigger_error(__d('cake_dev', 'You must specify the operation for Security::rijndael(), either encrypt or decrypt'), E_USER_WARNING);
 			return '';
 		}
@@ -293,7 +289,7 @@ class Security {
  */
 	protected static function _salt($length = 22) {
 		$salt = str_replace(
-			array('+', '='),
+			['+', '='],
 			'.',
 			base64_encode(sha1(uniqid(Configure::read('Security.salt'), true), true))
 		);
@@ -310,19 +306,19 @@ class Security {
 	protected static function _crypt($password, $salt = false) {
 		if ($salt === false || $salt === null || $salt === '') {
 			$salt = static::_salt(22);
-			$salt = vsprintf('$2a$%02d$%s', array(static::$hashCost, $salt));
+			$salt = vsprintf('$2a$%02d$%s', [static::$hashCost, $salt]);
 		}
 
 		$invalidCipher = (
-			strpos($salt, '$2y$') !== 0 &&
-			strpos($salt, '$2x$') !== 0 &&
-			strpos($salt, '$2a$') !== 0
+			!str_starts_with($salt, '$2y$') &&
+			!str_starts_with($salt, '$2x$') &&
+			!str_starts_with($salt, '$2a$')
 		);
 		if ($salt === true || $invalidCipher || strlen($salt) < 29) {
 			trigger_error(__d(
 				'cake_dev',
 				'Invalid salt: %s for %s Please visit http://www.php.net/crypt and read the appropriate section for building %s salts.',
-				array($salt, 'blowfish', 'blowfish')
+				[$salt, 'blowfish', 'blowfish']
 			), E_USER_WARNING);
 			return '';
 		}

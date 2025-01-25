@@ -79,9 +79,9 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function testBootstrap() {
-		$expected = array(
+		$expected = [
 			'foo' => 'bar'
-		);
+		];
 		Configure::write('App', $expected);
 
 		Configure::bootstrap(true);
@@ -135,7 +135,7 @@ class ConfigureTest extends CakeTestCase {
 		$result = Configure::read('SomeName.someKey');
 		$this->assertEquals(null, $result);
 
-		$expected = array('One' => array('Two' => array('Three' => array('Four' => array('Five' => 'cool')))));
+		$expected = ['One' => ['Two' => ['Three' => ['Four' => ['Five' => 'cool']]]]];
 		$writeResult = Configure::write('Key', $expected);
 		$this->assertTrue($writeResult);
 
@@ -163,7 +163,7 @@ class ConfigureTest extends CakeTestCase {
  */
 	public function testConsume() {
 		$this->assertNull(Configure::consume('DoesNotExist'), 'Should be null on empty value');
-		Configure::write('Test', array('key' => 'value', 'key2' => 'value2'));
+		Configure::write('Test', ['key' => 'value', 'key2' => 'value2']);
 
 		$result = Configure::consume('Test.key');
 		$this->assertEquals('value', $result);
@@ -172,7 +172,7 @@ class ConfigureTest extends CakeTestCase {
 		$this->assertEquals('value2', $result, 'Other values should remain.');
 
 		$result = Configure::consume('Test');
-		$expected = array('key2' => 'value2');
+		$expected = ['key2' => 'value2'];
 		$this->assertEquals($expected, $result);
 	}
 
@@ -182,7 +182,7 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function testConsumeEmpty() {
-		Configure::write('Test', array('key' => 'value', 'key2' => 'value2'));
+		Configure::write('Test', ['key' => 'value', 'key2' => 'value2']);
 		$result = Configure::consume('');
 		$this->assertNull($result);
 		$result = Configure::consume(null);
@@ -218,7 +218,7 @@ class ConfigureTest extends CakeTestCase {
 		$result = Configure::read('SomeName.someKey');
 		$this->assertNull($result);
 
-		Configure::write('SomeName', array('someKey' => 'myvalue', 'otherKey' => 'otherValue'));
+		Configure::write('SomeName', ['someKey' => 'myvalue', 'otherKey' => 'otherValue']);
 
 		$result = Configure::read('SomeName.someKey');
 		$this->assertEquals('myvalue', $result);
@@ -309,7 +309,7 @@ class ConfigureTest extends CakeTestCase {
 	public function testLoadDefaultConfig() {
 		try {
 			Configure::load('non_existing_configuration_file');
-		} catch (Exception $e) {
+		} catch (Exception) {
 			$result = Configure::configured('default');
 			$this->assertTrue($result);
 		}
@@ -365,9 +365,9 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function testLoadPlugin() {
-		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		), App::RESET);
+		App::build([
+			'Plugin' => [CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS]
+		], App::RESET);
 		Configure::config('test', new PhpReader());
 		CakePlugin::load('TestPlugin');
 		$result = Configure::load('TestPlugin.load', 'test');
@@ -413,7 +413,7 @@ class ConfigureTest extends CakeTestCase {
 		Configure::write('Cache.disable', false);
 
 		Configure::write('testing', 'value');
-		Configure::store('store_test', 'default', array('store_test' => 'one'));
+		Configure::store('store_test', 'default', ['store_test' => 'one']);
 		Configure::delete('testing');
 		$this->assertNull(Configure::read('store_test'), 'Calling store with data shouldn\'t modify runtime.');
 
@@ -465,7 +465,7 @@ class ConfigureTest extends CakeTestCase {
 
 		try {
 			Configure::config('test', $reader);
-		} catch (TypeError $e) {
+		} catch (TypeError) {
 			throw new \PHPUnit\Framework\Error('Raised an error', 100);
 		}
 	}
@@ -518,7 +518,7 @@ class ConfigureTest extends CakeTestCase {
 	public function testDumpPartial() {
 		Configure::config('test_reader', new PhpReader(TMP));
 
-		$result = Configure::dump('config_test.php', 'test_reader', array('Error'));
+		$result = Configure::dump('config_test.php', 'test_reader', ['Error']);
 		$this->assertTrue($result > 0);
 		$result = file_get_contents(TMP . 'config_test.php');
 		$this->assertStringContainsString('<?php', $result);

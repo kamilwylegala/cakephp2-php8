@@ -45,7 +45,7 @@ class Router {
  *
  * @var array
  */
-	public static $routes = array();
+	public static $routes = [];
 
 /**
  * Have routes been loaded
@@ -68,7 +68,7 @@ class Router {
  *
  * @var array
  */
-	protected static $_prefixes = array();
+	protected static $_prefixes = [];
 
 /**
  * Directive for Router to parse out file extensions for mapping to Content-types.
@@ -82,7 +82,7 @@ class Router {
  *
  * @var array
  */
-	protected static $_validExtensions = array();
+	protected static $_validExtensions = [];
 
 /**
  * Regular expression for action names
@@ -131,54 +131,54 @@ class Router {
  *
  * @var array
  */
-	protected static $_namedExpressions = array(
+	protected static $_namedExpressions = [
 		'Action' => Router::ACTION,
 		'Year' => Router::YEAR,
 		'Month' => Router::MONTH,
 		'Day' => Router::DAY,
 		'ID' => Router::ID,
 		'UUID' => Router::UUID
-	);
+	];
 
 /**
  * Stores all information necessary to decide what named arguments are parsed under what conditions.
  *
  * @var string
  */
-	protected static $_namedConfig = array(
-		'default' => array('page', 'fields', 'order', 'limit', 'recursive', 'sort', 'direction', 'step'),
+	protected static $_namedConfig = [
+		'default' => ['page', 'fields', 'order', 'limit', 'recursive', 'sort', 'direction', 'step'],
 		'greedyNamed' => true,
 		'separator' => ':',
 		'rules' => false,
-	);
+	];
 
 /**
  * The route matching the URL of the current request
  *
  * @var array
  */
-	protected static $_currentRoute = array();
+	protected static $_currentRoute = [];
 
 /**
  * Default HTTP request method => controller action map.
  *
  * @var array
  */
-	protected static $_resourceMap = array(
-		array('action' => 'index', 'method' => 'GET', 'id' => false),
-		array('action' => 'view', 'method' => 'GET', 'id' => true),
-		array('action' => 'add', 'method' => 'POST', 'id' => false),
-		array('action' => 'edit', 'method' => 'PUT', 'id' => true),
-		array('action' => 'delete', 'method' => 'DELETE', 'id' => true),
-		array('action' => 'edit', 'method' => 'POST', 'id' => true)
-	);
+	protected static $_resourceMap = [
+		['action' => 'index', 'method' => 'GET', 'id' => false],
+		['action' => 'view', 'method' => 'GET', 'id' => true],
+		['action' => 'add', 'method' => 'POST', 'id' => false],
+		['action' => 'edit', 'method' => 'PUT', 'id' => true],
+		['action' => 'delete', 'method' => 'DELETE', 'id' => true],
+		['action' => 'edit', 'method' => 'POST', 'id' => true]
+	];
 
 /**
  * List of resource-mapped controllers
  *
  * @var array
  */
-	protected static $_resourceMapped = array();
+	protected static $_resourceMapped = [];
 
 /**
  * Maintains the request object stack for the current request.
@@ -186,7 +186,7 @@ class Router {
  *
  * @var array
  */
-	protected static $_requests = array();
+	protected static $_requests = [];
 
 /**
  * Initial state is populated the first time reload() is called which is at the bottom
@@ -195,7 +195,7 @@ class Router {
  *
  * @var array
  */
-	protected static $_initialState = array();
+	protected static $_initialState = [];
 
 /**
  * Default route class to use
@@ -341,7 +341,7 @@ class Router {
  * @return array Array of routes
  * @throws RouterException
  */
-	public static function connect($route, $defaults = array(), $options = array()) {
+	public static function connect($route, $defaults = [], $options = []) {
 		static::$initialized = true;
 
 		foreach (static::$_prefixes as $prefix) {
@@ -357,16 +357,16 @@ class Router {
 		if (isset($defaults['prefix']) && !in_array($defaults['prefix'], static::$_prefixes)) {
 			static::$_prefixes[] = $defaults['prefix'];
 		}
-		$defaults += array('plugin' => null);
+		$defaults += ['plugin' => null];
 		if (empty($options['action'])) {
-			$defaults += array('action' => 'index');
+			$defaults += ['action' => 'index'];
 		}
 		$routeClass = static::$_routeClass;
 		if (isset($options['routeClass'])) {
-			if (strpos($options['routeClass'], '.') === false) {
+			if (!str_contains($options['routeClass'], '.')) {
 				$routeClass = $options['routeClass'];
 			} else {
-				list(, $routeClass) = pluginSplit($options['routeClass'], true);
+				[, $routeClass] = pluginSplit($options['routeClass'], true);
 			}
 			$routeClass = static::_validateRouteClass($routeClass);
 			unset($options['routeClass']);
@@ -410,11 +410,11 @@ class Router {
  * @see routes
  * @return array Array of routes
  */
-	public static function redirect($route, $url, $options = array()) {
+	public static function redirect($route, $url, $options = []) {
 		App::uses('RedirectRoute', 'Routing/Route');
 		$options['routeClass'] = 'RedirectRoute';
 		if (is_string($url)) {
-			$url = array('redirect' => $url);
+			$url = ['redirect' => $url];
 		}
 		return static::connect($route, $url, $options);
 	}
@@ -471,21 +471,21 @@ class Router {
  * @param array $options Allows to control all settings: separator, greedy, reset, default
  * @return array
  */
-	public static function connectNamed($named, $options = array()) {
+	public static function connectNamed($named, $options = []) {
 		if (isset($options['separator'])) {
 			static::$_namedConfig['separator'] = $options['separator'];
 			unset($options['separator']);
 		}
 
 		if ($named === true || $named === false) {
-			$options += array('default' => $named, 'reset' => true, 'greedy' => $named);
-			$named = array();
+			$options += ['default' => $named, 'reset' => true, 'greedy' => $named];
+			$named = [];
 		} else {
-			$options += array('default' => false, 'reset' => false, 'greedy' => true);
+			$options += ['default' => false, 'reset' => false, 'greedy' => true];
 		}
 
 		if ($options['reset'] || static::$_namedConfig['rules'] === false) {
-			static::$_namedConfig['rules'] = array();
+			static::$_namedConfig['rules'] = [];
 		}
 
 		if ($options['default']) {
@@ -529,26 +529,26 @@ class Router {
  * @param array $options Options to use when generating REST routes
  * @return array Array of mapped resources
  */
-	public static function mapResources($controller, $options = array()) {
+	public static function mapResources($controller, $options = []) {
 		$hasPrefix = isset($options['prefix']);
-		$options += array(
-			'connectOptions' => array(),
+		$options += [
+			'connectOptions' => [],
 			'prefix' => '/',
 			'id' => static::ID . '|' . static::UUID
-		);
+		];
 
 		$prefix = $options['prefix'];
 		$connectOptions = $options['connectOptions'];
 		unset($options['connectOptions']);
-		if (strpos($prefix, '/') !== 0) {
+		if (!str_starts_with($prefix, '/')) {
 			$prefix = '/' . $prefix;
 		}
-		if (substr($prefix, -1) !== '/') {
+		if (!str_ends_with($prefix, '/')) {
 			$prefix .= '/';
 		}
 
 		foreach ((array)$controller as $name) {
-			list($plugin, $name) = pluginSplit($name);
+			[$plugin, $name] = pluginSplit($name);
 			$urlName = Inflector::underscore($name);
 			$plugin = Inflector::underscore($plugin);
 			if ($plugin && !$hasPrefix) {
@@ -559,14 +559,14 @@ class Router {
 				$url = $prefix . $urlName . (($params['id']) ? '/:id' : '');
 
 				Router::connect($url,
-					array(
+					[
 						'plugin' => $plugin,
 						'controller' => $urlName,
 						'action' => $params['action'],
 						'[method]' => $params['method']
-					),
+					],
 					array_merge(
-						array('id' => $options['id'], 'pass' => array('id')),
+						['id' => $options['id'], 'pass' => ['id']],
 						$connectOptions
 					)
 				);
@@ -597,13 +597,13 @@ class Router {
 		}
 
 		$ext = null;
-		$out = array();
+		$out = [];
 
-		if (strlen($url) && strpos($url, '/') !== 0) {
+		if (strlen($url) && !str_starts_with($url, '/')) {
 			$url = '/' . $url;
 		}
-		if (strpos($url, '?') !== false) {
-			list($url, $queryParameters) = explode('?', $url, 2);
+		if (str_contains($url, '?')) {
+			[$url, $queryParameters] = explode('?', $url, 2);
 			parse_str($queryParameters, $queryParameters);
 		}
 
@@ -678,8 +678,8 @@ class Router {
 			static::$_requests[] = $request;
 		} else {
 			$requestObj = new CakeRequest();
-			$request += array(array(), array());
-			$request[0] += array('controller' => false, 'action' => false, 'plugin' => null);
+			$request += [[], []];
+			$request[0] += ['controller' => false, 'action' => false, 'plugin' => null];
 			$requestObj->addParams($request[0])->addPaths($request[1]);
 			static::$_requests[] = $requestObj;
 		}
@@ -705,9 +705,9 @@ class Router {
 	public static function getRequest($current = false) {
 		if ($current) {
 			$i = count(static::$_requests) - 1;
-			return isset(static::$_requests[$i]) ? static::$_requests[$i] : null;
+			return static::$_requests[$i] ?? null;
 		}
-		return isset(static::$_requests[0]) ? static::$_requests[0] : null;
+		return static::$_requests[0] ?? null;
 	}
 
 /**
@@ -723,7 +723,7 @@ class Router {
 		if (isset(static::$_requests[0])) {
 			return static::$_requests[0]->params;
 		}
-		return array();
+		return [];
 	}
 
 /**
@@ -735,10 +735,7 @@ class Router {
  */
 	public static function getParam($name = 'controller', $current = false) {
 		$params = Router::getParams($current);
-		if (isset($params[$name])) {
-			return $params[$name];
-		}
-		return null;
+		return $params[$name] ?? null;
 	}
 
 /**
@@ -752,9 +749,9 @@ class Router {
 			return static::$_requests[count(static::$_requests) - 1];
 		}
 		if (!isset(static::$_requests[0])) {
-			return array('base' => null);
+			return ['base' => null];
 		}
-		return array('base' => static::$_requests[0]->base);
+		return ['base' => static::$_requests[0]->base];
 	}
 
 /**
@@ -831,19 +828,19 @@ class Router {
 			static::_loadRoutes();
 		}
 
-		$params = array('plugin' => null, 'controller' => null, 'action' => 'index');
+		$params = ['plugin' => null, 'controller' => null, 'action' => 'index'];
 
 		if (is_bool($full)) {
 			$escape = false;
 		} else {
-			extract($full + array('escape' => false, 'full' => false));
+			extract($full + ['escape' => false, 'full' => false]);
 		}
 
-		$path = array('base' => null);
+		$path = ['base' => null];
 		if (!empty(static::$_requests)) {
 			$request = static::$_requests[count(static::$_requests) - 1];
 			$params = $request->params;
-			$path = array('base' => $request->base, 'here' => $request->here);
+			$path = ['base' => $request->base, 'here' => $request->here];
 		}
 		if (empty($path['base'])) {
 			$path['base'] = Configure::read('App.base');
@@ -853,7 +850,7 @@ class Router {
 		$extension = $output = $q = $frag = null;
 
 		if (empty($url)) {
-			$output = isset($path['here']) ? $path['here'] : '/';
+			$output = $path['here'] ?? '/';
 			if ($full) {
 				$output = static::fullBaseUrl() . $output;
 			}
@@ -894,12 +891,12 @@ class Router {
 				} elseif (isset($url[$prefix]) && !$url[$prefix]) {
 					unset($url[$prefix]);
 				}
-				if (isset($url[$prefix]) && strpos($url['action'], $prefix . '_') === 0) {
+				if (isset($url[$prefix]) && str_starts_with($url['action'], $prefix . '_')) {
 					$url['action'] = substr($url['action'], strlen($prefix) + 1);
 				}
 			}
 
-			$url += array('controller' => $params['controller'], 'plugin' => $params['plugin']);
+			$url += ['controller' => $params['controller'], 'plugin' => $params['plugin']];
 
 			$match = false;
 
@@ -921,7 +918,7 @@ class Router {
 			if (preg_match('/^([a-z][a-z0-9.+\-]+:|:?\/\/|[#?])/i', $url)) {
 				return $url;
 			}
-			if (substr($url, 0, 1) === '/') {
+			if (str_starts_with($url, '/')) {
 				$output = substr($url, 1);
 			} else {
 				foreach (static::$_prefixes as $prefix) {
@@ -947,7 +944,7 @@ class Router {
 				$output = rtrim($output, '/');
 			}
 		}
-		return $output . $extension . static::queryString($q, array(), $escape) . $frag;
+		return $output . $extension . static::queryString($q, [], $escape) . $frag;
 	}
 
 /**
@@ -985,9 +982,9 @@ class Router {
  * @see Router::url()
  */
 	protected static function _handleNoRoute($url) {
-		$named = $args = array();
+		$named = $args = [];
 		$skip = array_merge(
-			array('bare', 'action', 'controller', 'plugin', 'prefix'),
+			['bare', 'action', 'controller', 'plugin', 'prefix'],
 			static::$_prefixes
 		);
 
@@ -1002,10 +999,10 @@ class Router {
 			}
 		}
 
-		list($args, $named) = array(Hash::filter($args), Hash::filter($named));
+		[$args, $named] = [Hash::filter($args), Hash::filter($named)];
 		foreach (static::$_prefixes as $prefix) {
 			$prefixed = $prefix . '_';
-			if (!empty($url[$prefix]) && strpos($url['action'], $prefixed) === 0) {
+			if (!empty($url[$prefix]) && str_starts_with($url['action'], $prefixed)) {
 				$url['action'] = substr($url['action'], strlen($prefixed) * -1);
 				break;
 			}
@@ -1015,7 +1012,7 @@ class Router {
 			$url['action'] = null;
 		}
 
-		$urlOut = array_filter(array($url['controller'], $url['action']));
+		$urlOut = array_filter([$url['controller'], $url['action']]);
 
 		if (isset($url['plugin'])) {
 			array_unshift($urlOut, $url['plugin']);
@@ -1057,7 +1054,7 @@ class Router {
  * @param bool $escape Whether or not to use escaped &
  * @return string|null
  */
-	public static function queryString($q, $extra = array(), $escape = false) {
+	public static function queryString($q, $extra = [], $escape = false) {
 		if (empty($q) && empty($extra)) {
 			return null;
 		}
@@ -1107,8 +1104,8 @@ class Router {
 		} else {
 			$url = $params['url'];
 		}
-		$pass = isset($params['pass']) ? $params['pass'] : array();
-		$named = isset($params['named']) ? $params['named'] : array();
+		$pass = $params['pass'] ?? [];
+		$named = $params['named'] ?? [];
 		unset(
 			$params['pass'], $params['named'], $params['paging'], $params['models'], $params['url'], $url['url'],
 			$params['autoRender'], $params['bare'], $params['requested'], $params['return'],
@@ -1137,7 +1134,7 @@ class Router {
  * @return string The string that is the reversed result of the array
  */
 	public static function reverse($params, $full = false) {
-		$params = Router::reverseToArray($params, $full);
+		$params = Router::reverseToArray($params);
 		return Router::url($params, $full);
 	}
 
@@ -1164,7 +1161,7 @@ class Router {
 		}
 		$url = '/' . $url;
 
-		while (strpos($url, '//') !== false) {
+		while (str_contains($url, '//')) {
 			$url = str_replace('//', '/', $url);
 		}
 		$url = preg_replace('/(?:(\/$))/', '', $url);

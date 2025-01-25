@@ -93,12 +93,12 @@ class ComponentCollection extends ObjectCollection implements CakeEventListener 
  * @return Component A component object, Either the existing loaded component or a new one.
  * @throws MissingComponentException when the component could not be found
  */
-	public function load($component, $settings = array()) {
+	public function load($component, $settings = []) {
 		if (isset($settings['className'])) {
 			$alias = $component;
 			$component = $settings['className'];
 		}
-		list($plugin, $name) = pluginSplit($component, true);
+		[$plugin, $name] = pluginSplit($component, true);
 		if (!isset($alias)) {
 			$alias = $name;
 		}
@@ -108,13 +108,13 @@ class ComponentCollection extends ObjectCollection implements CakeEventListener 
 		$componentClass = $name . 'Component';
 		App::uses($componentClass, $plugin . 'Controller/Component');
 		if (!class_exists($componentClass)) {
-			throw new MissingComponentException(array(
+			throw new MissingComponentException([
 				'class' => $componentClass,
 				'plugin' => substr($plugin, 0, -1)
-			));
+			]);
 		}
 		$this->_loaded[$alias] = new $componentClass($this, $settings);
-		$enable = isset($settings['enabled']) ? $settings['enabled'] : true;
+		$enable = $settings['enabled'] ?? true;
 		if ($enable) {
 			$this->enable($alias);
 		}
@@ -128,13 +128,13 @@ class ComponentCollection extends ObjectCollection implements CakeEventListener 
  * @return array
  */
 	public function implementedEvents() {
-		return array(
-			'Controller.initialize' => array('callable' => 'trigger'),
-			'Controller.startup' => array('callable' => 'trigger'),
-			'Controller.beforeRender' => array('callable' => 'trigger'),
-			'Controller.beforeRedirect' => array('callable' => 'trigger'),
-			'Controller.shutdown' => array('callable' => 'trigger'),
-		);
+		return [
+			'Controller.initialize' => ['callable' => 'trigger'],
+			'Controller.startup' => ['callable' => 'trigger'],
+			'Controller.beforeRender' => ['callable' => 'trigger'],
+			'Controller.beforeRedirect' => ['callable' => 'trigger'],
+			'Controller.shutdown' => ['callable' => 'trigger'],
+		];
 	}
 
 }

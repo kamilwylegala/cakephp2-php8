@@ -34,13 +34,6 @@ class CakeBaseReporter extends PHPUnit_TextUI_ResultPrinter {
 	protected $_headerSent = false;
 
 /**
- * Array of request parameters. Usually parsed GET params.
- *
- * @var array
- */
-	public $params = array();
-
-/**
  * Character set for the output of test reporting.
  *
  * @var string
@@ -62,12 +55,14 @@ class CakeBaseReporter extends PHPUnit_TextUI_ResultPrinter {
  * @param string $charset The character set to output with. Defaults to UTF-8
  * @param array $params Array of request parameters the reporter should use. See above.
  */
-	public function __construct($charset = 'utf-8', $params = array()) {
+	public function __construct($charset = 'utf-8', /**
+     * Array of request parameters. Usually parsed GET params.
+     */
+    public $params = []) {
 		if (!$charset) {
 			$charset = 'utf-8';
 		}
 		$this->_characterSet = $charset;
-		$this->params = $params;
 	}
 
 /**

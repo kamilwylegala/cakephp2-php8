@@ -56,7 +56,7 @@ class TextCoverageReport extends BaseCoverageReport {
  * @return string
  */
 	public function generateDiff($filename, $fileLines, $coverageData) {
-		list($covered, $total) = $this->_calculateCoveredLines($fileLines, $coverageData);
+		[$covered, $total] = $this->_calculateCoveredLines($fileLines, $coverageData);
 		$percentCovered = round(100 * $covered / $total, 2);
 		return "$filename : $percentCovered%\n";
 	}

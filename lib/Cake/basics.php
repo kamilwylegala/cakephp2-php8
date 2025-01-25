@@ -80,8 +80,8 @@ if (!function_exists('debug')) {
 		$line = '';
 		$lineInfo = '';
 		if ($showFrom) {
-			$trace = Debugger::trace(array('start' => 1, 'depth' => 2, 'format' => 'array'));
-			$file = str_replace(array(CAKE_CORE_INCLUDE_PATH, ROOT), '', $trace[0]['file']);
+			$trace = Debugger::trace(['start' => 1, 'depth' => 2, 'format' => 'array']);
+			$file = str_replace([CAKE_CORE_INCLUDE_PATH, ROOT], '', $trace[0]['file']);
 			$line = $trace[0]['line'];
 		}
 		$html = <<<HTML
@@ -138,13 +138,13 @@ if (!function_exists('stackTrace')) {
  * @return void Outputs formatted stack trace.
  * @see Debugger::trace()
  */
-	function stackTrace(array $options = array()) {
+	function stackTrace(array $options = []) {
 		if (!Configure::read('debug')) {
 			return;
 		}
 		App::uses('Debugger', 'Utility');
 
-		$options += array('start' => 0);
+		$options += ['start' => 0];
 		$options['start']++;
 		echo Debugger::trace($options);
 	}
@@ -167,7 +167,7 @@ if (!function_exists('sortByKey')) {
 		if (!is_array($array)) {
 			return null;
 		}
-		$sa = array();
+		$sa = [];
 		foreach ($array as $key => $val) {
 			$sa[$key] = $val[$sortBy];
 		}
@@ -176,7 +176,7 @@ if (!function_exists('sortByKey')) {
 		} else {
 			arsort($sa, $type);
 		}
-		$out = array();
+		$out = [];
 		foreach ($sa as $key => $val) {
 			$out[] = $array[$key];
 		}
@@ -202,7 +202,7 @@ if (!function_exists('h')) {
 		if (is_string($text)) {
 			//optimize for strings
 		} elseif (is_array($text)) {
-			$texts = array();
+			$texts = [];
 			foreach ($text as $k => $t) {
 				$texts[$k] = h($t, $double, $charset);
 			}
@@ -211,7 +211,7 @@ if (!function_exists('h')) {
 			if (method_exists($text, '__toString')) {
 				$text = (string)$text;
 			} else {
-				$text = '(object)' . get_class($text);
+				$text = '(object)' . $text::class;
 			}
 		} elseif (is_bool($text)) {
 			return $text;
@@ -230,7 +230,7 @@ if (!function_exists('h')) {
 			$charset = $double;
 			$double = true;
 		}
-		return htmlspecialchars($text, ENT_QUOTES, ($charset) ? $charset : $defaultCharset, $double);
+		return htmlspecialchars($text, ENT_QUOTES, $charset ?: $defaultCharset, $double);
 	}
 
 }
@@ -250,14 +250,14 @@ if (!function_exists('pluginSplit')) {
  * @link https://book.cakephp.org/2.0/en/core-libraries/global-constants-and-functions.html#pluginSplit
  */
 	function pluginSplit($name, $dotAppend = false, $plugin = null) {
-		if (strpos($name, '.') !== false) {
+		if (str_contains($name, '.')) {
 			$parts = explode('.', $name, 2);
 			if ($dotAppend) {
 				$parts[0] .= '.';
 			}
 			return $parts;
 		}
-		return array($plugin, $name);
+		return [$plugin, $name];
 	}
 
 }
@@ -295,11 +295,11 @@ if (!function_exists('am')) {
  * @link https://book.cakephp.org/2.0/en/core-libraries/global-constants-and-functions.html#am
  */
 	function am() {
-		$r = array();
+		$r = [];
 		$args = func_get_args();
 		foreach ($args as $a) {
 			if (!is_array($a)) {
-				$a = array($a);
+				$a = [$a];
 			}
 			$r = array_merge($r, $a);
 		}
@@ -325,7 +325,7 @@ if (!function_exists('env')) {
 			if (isset($_SERVER['HTTPS'])) {
 				return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 			}
-			return (strpos(env('SCRIPT_URI') ?? '', 'https://') === 0);
+			return (str_starts_with(env('SCRIPT_URI') ?? '', 'https://'));
 		}
 
 		if ($key === 'SCRIPT_NAME') {
@@ -377,7 +377,7 @@ if (!function_exists('env')) {
 				} elseif ($count === 2) {
 					return '.' . $host;
 				} elseif ($count === 3) {
-					$gTLD = array(
+					$gTLD = [
 						'aero',
 						'asia',
 						'biz',
@@ -399,7 +399,7 @@ if (!function_exists('env')) {
 						'tel',
 						'travel',
 						'xxx'
-					);
+					];
 					if (in_array($parts[1], $gTLD)) {
 						return '.' . $host;
 					}
@@ -514,11 +514,11 @@ if (!function_exists('clearCache')) {
 				}
 				return true;
 			}
-			$cache = array(
+			$cache = [
 				CACHE . $type . DS . '*' . $params . $ext,
 				CACHE . $type . DS . '*' . $params . '_*' . $ext
-			);
-			$files = array();
+			];
+			$files = [];
 			while ($search = array_shift($cache)) {
 				$results = glob($search);
 				if ($results !== false) {
@@ -1014,7 +1014,7 @@ if (!function_exists('LogError')) {
  */
 	function LogError($message) {
 		App::uses('CakeLog', 'Log');
-		$bad = array("\n", "\r", "\t");
+		$bad = ["\n", "\r", "\t"];
 		$good = ' ';
 		CakeLog::write('error', str_replace($bad, $good, $message));
 	}
@@ -1071,14 +1071,14 @@ if (!function_exists('json_last_error_msg')) {
  * @return string Error message.
  */
 	function json_last_error_msg() {
-		static $errors = array(
+		static $errors = [
 			JSON_ERROR_NONE => '',
 			JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
 			JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
 			JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
 			JSON_ERROR_SYNTAX => 'Syntax error',
 			JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded'
-		);
+		];
 		$error = json_last_error();
 		return array_key_exists($error, $errors) ? $errors[$error] : "Unknown error ({$error})";
 	}

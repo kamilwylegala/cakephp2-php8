@@ -30,7 +30,7 @@ if (!defined('E_USER_DEPRECATED')) {
 error_reporting(E_ALL & ~E_DEPRECATED);
 
 if (!defined('CAKE_CORE_INCLUDE_PATH')) {
-	define('CAKE_CORE_INCLUDE_PATH', dirname(dirname(__FILE__)));
+	define('CAKE_CORE_INCLUDE_PATH', dirname(__FILE__, 2));
 }
 
 if (!defined('CORE_PATH')) {
@@ -139,7 +139,7 @@ require CAKE . 'basics.php';
 require CAKE . 'Core' . DS . 'App.php';
 require CAKE . 'Error' . DS . 'exceptions.php';
 
-spl_autoload_register(array('App', 'load'));
+spl_autoload_register(['App', 'load']);
 
 App::uses('ErrorHandler', 'Error');
 App::uses('Configure', 'Core');
@@ -429,7 +429,7 @@ if (!function_exists('mb_encode_mimeheader')) {
 
 }
 
-Configure::bootstrap(isset($boot) ? $boot : true);
+Configure::bootstrap($boot ?? true);
 
 if (function_exists('mb_internal_encoding')) {
 	$encoding = Configure::read('App.encoding');

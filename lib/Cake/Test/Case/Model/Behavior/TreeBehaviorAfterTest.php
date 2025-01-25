@@ -19,7 +19,7 @@
 App::uses('Model', 'Model');
 App::uses('AppModel', 'Model');
 
-require_once dirname(dirname(__FILE__)) . DS . 'models.php';
+require_once dirname(__FILE__, 2) . DS . 'models.php';
 
 /**
  * TreeBehaviorAfterTest class
@@ -40,19 +40,19 @@ class TreeBehaviorAfterTest extends CakeTestCase {
  *
  * @var array
  */
-	public $settings = array(
+	public $settings = [
 		'modelClass' => 'AfterTree',
 		'leftField' => 'lft',
 		'rightField' => 'rght',
 		'parentField' => 'parent_id'
-	);
+	];
 
 /**
  * fixtures property
  *
  * @var array
  */
-	public $fixtures = array('core.after_tree');
+	public $fixtures = ['core.after_tree'];
 
 /**
  * Tests the afterSave callback in the model
@@ -63,12 +63,12 @@ class TreeBehaviorAfterTest extends CakeTestCase {
 		$this->Tree = new AfterTree();
 		$this->Tree->order = null;
 
-		$expected = array('AfterTree' => array('name' => 'Six and One Half Changed in AfterTree::afterSave() but not in database', 'parent_id' => 6, 'lft' => 11, 'rght' => 12));
-		$result = $this->Tree->save(array('AfterTree' => array('name' => 'Six and One Half', 'parent_id' => 6)));
+		$expected = ['AfterTree' => ['name' => 'Six and One Half Changed in AfterTree::afterSave() but not in database', 'parent_id' => 6, 'lft' => 11, 'rght' => 12]];
+		$result = $this->Tree->save(['AfterTree' => ['name' => 'Six and One Half', 'parent_id' => 6]]);
 		$expected['AfterTree']['id'] = $this->Tree->id;
 		$this->assertEquals($expected, $result);
 
-		$expected = array('AfterTree' => array('name' => 'Six and One Half', 'parent_id' => 6, 'lft' => 11, 'rght' => 12, 'id' => 8));
+		$expected = ['AfterTree' => ['name' => 'Six and One Half', 'parent_id' => 6, 'lft' => 11, 'rght' => 12, 'id' => 8]];
 		$result = $this->Tree->find('all');
 		$this->assertEquals($expected, $result[7]);
 	}

@@ -44,7 +44,7 @@ class ScaffoldView extends View {
 
 		if (!empty($prefixes)) {
 			foreach ($prefixes as $prefix) {
-				if (strpos($name, $prefix . '_') !== false) {
+				if (str_contains($name, $prefix . '_')) {
 					$name = substr($name, strlen($prefix) + 1);
 					break;
 				}
@@ -67,7 +67,7 @@ class ScaffoldView extends View {
 		$names[] = 'Scaffolds' . DS . $subDir . $name;
 
 		$paths = $this->_paths($this->plugin);
-		$exts = array($this->ext);
+		$exts = [$this->ext];
 		if ($this->ext !== '.ctp') {
 			$exts[] = '.ctp';
 		}

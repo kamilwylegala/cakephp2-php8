@@ -55,15 +55,15 @@ class TestShellTest extends CakeTestCase {
 		// Therefore, TestShell and CakeTestLoader are unnecessary.
 		$this->skipIf(version_compare(\PHPUnit\Runner\Version::id(), '9.0.0', '>='), 'This test can not be run with PHPUnit 9+');
 		parent::setUp();
-		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
-		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
+		$out = $this->getMock('ConsoleOutput', [], [], '', false);
+		$in = $this->getMock('ConsoleInput', [], [], '', false);
 
 		$this->Shell = $this->getMock(
 			'TestTestShell',
-			array('in', 'out', 'hr', 'help', 'error', 'err', '_stop', 'initialize', '_run', 'clear'),
-			array($out, $out, $in)
+			['in', 'out', 'hr', 'help', 'error', 'err', '_stop', 'initialize', '_run', 'clear'],
+			[$out, $out, $in]
 		);
-		$this->Shell->OptionParser = $this->getMock('ConsoleOptionParser', array(), array(null, false));
+		$this->Shell->OptionParser = $this->getMock('ConsoleOptionParser', [], [null, false]);
 	}
 
 /**
@@ -300,7 +300,7 @@ class TestShellTest extends CakeTestCase {
  */
 	public function testAvailableWithEmptyList() {
 		$this->Shell->startup();
-		$this->Shell->args = array('unexistant-category');
+		$this->Shell->args = ['unexistant-category'];
 		$this->Shell->expects($this->at(0))->method('out')->with(__d('cake_console', "No test cases available \n\n"));
 		$this->Shell->OptionParser->expects($this->once())->method('help');
 		$this->Shell->available();
@@ -313,7 +313,7 @@ class TestShellTest extends CakeTestCase {
  */
 	public function testAvailableCoreCategory() {
 		$this->Shell->startup();
-		$this->Shell->args = array('core');
+		$this->Shell->args = ['core'];
 		$this->Shell->expects($this->at(0))->method('out')->with('Core Test Cases:');
 		$this->Shell->expects($this->at(1))->method('out')
 			->with($this->stringContains('[1]'));
@@ -326,7 +326,7 @@ class TestShellTest extends CakeTestCase {
 
 		$this->Shell->expects($this->once())->method('_run');
 		$this->Shell->available();
-		$this->assertEquals(array('core', 'AllBehaviors'), $this->Shell->args);
+		$this->assertEquals(['core', 'AllBehaviors'], $this->Shell->args);
 	}
 
 /**
@@ -336,13 +336,13 @@ class TestShellTest extends CakeTestCase {
  */
 	public function testRunnerOptions() {
 		$this->Shell->startup();
-		$this->Shell->args = array('core', 'Basics');
-		$this->Shell->params = array('filter' => 'myFilter', 'colors' => true, 'verbose' => true);
+		$this->Shell->args = ['core', 'Basics'];
+		$this->Shell->params = ['filter' => 'myFilter', 'colors' => true, 'verbose' => true];
 
 		$this->Shell->expects($this->once())->method('_run')
 			->with(
-				array('app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'),
-				array('--filter', 'myFilter', '--colors', '--verbose')
+				['app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'],
+				['--filter', 'myFilter', '--colors', '--verbose']
 			);
 		$this->Shell->main();
 	}
@@ -354,13 +354,13 @@ class TestShellTest extends CakeTestCase {
  */
 	public function testRunnerOptionsQuiet() {
 		$this->Shell->startup();
-		$this->Shell->args = array('core', 'Basics');
-		$this->Shell->params = array('quiet' => true);
+		$this->Shell->args = ['core', 'Basics'];
+		$this->Shell->params = ['quiet' => true];
 
 		$this->Shell->expects($this->once())->method('_run')
 			->with(
-				array('app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'),
-				array('--colors')
+				['app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'],
+				['--colors']
 			);
 		$this->Shell->main();
 	}
@@ -372,13 +372,13 @@ class TestShellTest extends CakeTestCase {
  */
 	public function testRunnerOptionsDirective() {
 		$this->Shell->startup();
-		$this->Shell->args = array('core', 'Basics');
-		$this->Shell->params = array('directive' => 'memory_limit=128M');
+		$this->Shell->args = ['core', 'Basics'];
+		$this->Shell->params = ['directive' => 'memory_limit=128M'];
 
 		$this->Shell->expects($this->once())->method('_run')
 			->with(
-				array('app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'),
-				array('-d', 'memory_limit=128M', '--colors')
+				['app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'],
+				['-d', 'memory_limit=128M', '--colors']
 			);
 		$this->Shell->main();
 	}

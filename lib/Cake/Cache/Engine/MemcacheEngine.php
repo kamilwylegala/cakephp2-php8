@@ -32,7 +32,7 @@ class MemcacheEngine extends CacheEngine {
  *
  * @var array
  */
-	protected $_compiledGroupNames = array();
+	protected $_compiledGroupNames = [];
 
 /**
  * Memcache wrapper.
@@ -50,7 +50,7 @@ class MemcacheEngine extends CacheEngine {
  *
  * @var array
  */
-	public $settings = array();
+	public $settings = [];
 
 /**
  * Initialize the Cache Engine
@@ -61,32 +61,32 @@ class MemcacheEngine extends CacheEngine {
  * @param array $settings array of setting for the engine
  * @return bool True if the engine has been successfully initialized, false if not
  */
-	public function init($settings = array()) {
+	public function init($settings = []) {
 		if (!class_exists('Memcache')) {
 			return false;
 		}
 		if (!isset($settings['prefix'])) {
 			$settings['prefix'] = Inflector::slug(APP_DIR) . '_';
 		}
-		$settings += array(
+		$settings += [
 			'engine' => 'Memcache',
-			'servers' => array('127.0.0.1'),
+			'servers' => ['127.0.0.1'],
 			'compress' => false,
 			'persistent' => true
-		);
+		];
 		parent::init($settings);
 
 		if ($this->settings['compress']) {
 			$this->settings['compress'] = MEMCACHE_COMPRESSED;
 		}
 		if (is_string($this->settings['servers'])) {
-			$this->settings['servers'] = array($this->settings['servers']);
+			$this->settings['servers'] = [$this->settings['servers']];
 		}
 		if (!isset($this->_Memcache)) {
 			$return = false;
 			$this->_Memcache = new Memcache();
 			foreach ($this->settings['servers'] as $server) {
-				list($host, $port) = $this->_parseServerString($server);
+				[$host, $port] = $this->_parseServerString($server);
 				if ($this->_Memcache->addServer($host, $port, $this->settings['persistent'])) {
 					$return = true;
 				}
@@ -104,10 +104,10 @@ class MemcacheEngine extends CacheEngine {
  * @return array Array containing host, port
  */
 	protected function _parseServerString($server) {
-		if (strpos($server, 'unix://') === 0) {
-			return array($server, 0);
+		if (str_starts_with($server, 'unix://')) {
+			return [$server, 0];
 		}
-		if (substr($server, 0, 1) === '[') {
+		if (str_starts_with($server, '[')) {
 			$position = strpos($server, ']:');
 			if ($position !== false) {
 				$position++;
@@ -121,7 +121,7 @@ class MemcacheEngine extends CacheEngine {
 			$host = substr($server, 0, $position);
 			$port = substr($server, $position + 1);
 		}
-		return array($host, $port);
+		return [$host, $port];
 	}
 
 /**
@@ -163,7 +163,7 @@ class MemcacheEngine extends CacheEngine {
 	public function increment($key, $offset = 1) {
 		if ($this->settings['compress']) {
 			throw new CacheException(
-				__d('cake_dev', 'Method %s not implemented for compressed cache in %s', 'increment()', __CLASS__)
+				__d('cake_dev', 'Method %s not implemented for compressed cache in %s', 'increment()', self::class)
 			);
 		}
 		return $this->_Memcache->increment($key, $offset);
@@ -180,7 +180,7 @@ class MemcacheEngine extends CacheEngine {
 	public function decrement($key, $offset = 1) {
 		if ($this->settings['compress']) {
 			throw new CacheException(
-				__d('cake_dev', 'Method %s not implemented for compressed cache in %s', 'decrement()', __CLASS__)
+				__d('cake_dev', 'Method %s not implemented for compressed cache in %s', 'decrement()', self::class)
 			);
 		}
 		return $this->_Memcache->decrement($key, $offset);
@@ -218,7 +218,7 @@ class MemcacheEngine extends CacheEngine {
 						continue;
 					}
 					foreach (array_keys($stats) as $key) {
-						if (strpos($key, $this->settings['prefix']) === 0) {
+						if (str_starts_with($key, $this->settings['prefix'])) {
 							$this->_Memcache->delete($key);
 						}
 					}
@@ -270,7 +270,7 @@ class MemcacheEngine extends CacheEngine {
 			ksort($groups);
 		}
 
-		$result = array();
+		$result = [];
 		$groups = array_values($groups);
 		foreach ($this->settings['groups'] as $i => $group) {
 			$result[] = $group . $groups[$i];

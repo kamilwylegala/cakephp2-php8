@@ -77,7 +77,7 @@ class Shell extends CakeObject {
  *
  * @var array
  */
-	public $params = array();
+	public $params = [];
 
 /**
  * The command (method/task) that is being run.
@@ -91,7 +91,7 @@ class Shell extends CakeObject {
  *
  * @var array
  */
-	public $args = array();
+	public $args = [];
 
 /**
  * The name of the shell in camelized.
@@ -114,14 +114,14 @@ class Shell extends CakeObject {
  * @var array
  * @link https://book.cakephp.org/2.0/en/console-and-shells.html#Shell::$tasks
  */
-	public $tasks = array();
+	public $tasks = [];
 
 /**
  * Contains the loaded tasks
  *
  * @var array
  */
-	public $taskNames = array();
+	public $taskNames = [];
 
 /**
  * Contains models to load and instantiate
@@ -129,7 +129,7 @@ class Shell extends CakeObject {
  * @var array
  * @link https://book.cakephp.org/2.0/en/console-and-shells.html#Shell::$uses
  */
-	public $uses = array();
+	public $uses = [];
 
 /**
  * This shell's primary model class name, the first model in the $uses property
@@ -150,7 +150,7 @@ class Shell extends CakeObject {
  *
  * @var string
  */
-	protected $_taskMap = array();
+	protected $_taskMap = [];
 
 /**
  * stdout object.
@@ -186,7 +186,7 @@ class Shell extends CakeObject {
  *
  * @var array
  */
-	protected $_helpers = array();
+	protected $_helpers = [];
 
 /**
  *  Constructs this Shell instance.
@@ -198,21 +198,21 @@ class Shell extends CakeObject {
  */
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		if (!$this->name) {
-			$this->name = Inflector::camelize(str_replace(array('Shell', 'Task'), '', get_class($this)));
+			$this->name = Inflector::camelize(str_replace(['Shell', 'Task'], '', static::class));
 		}
 		$this->Tasks = new TaskCollection($this);
 
-		$this->stdout = $stdout ? $stdout : new ConsoleOutput('php://stdout');
-		$this->stderr = $stderr ? $stderr : new ConsoleOutput('php://stderr');
-		$this->stdin = $stdin ? $stdin : new ConsoleInput('php://stdin');
+		$this->stdout = $stdout ?: new ConsoleOutput('php://stdout');
+		$this->stderr = $stderr ?: new ConsoleOutput('php://stderr');
+		$this->stdin = $stdin ?: new ConsoleInput('php://stdin');
 
 		$this->_useLogger();
 		$parent = get_parent_class($this);
 		if ($this->tasks !== null && $this->tasks !== false) {
-			$this->_mergeVars(array('tasks'), $parent, true);
+			$this->_mergeVars(['tasks'], $parent, true);
 		}
 		if (!empty($this->uses)) {
-			$this->_mergeVars(array('uses'), $parent, false);
+			$this->_mergeVars(['uses'], $parent, false);
 		}
 	}
 
@@ -264,7 +264,7 @@ class Shell extends CakeObject {
  */
 	protected function _loadModels() {
 		if (is_array($this->uses)) {
-			list(, $this->modelClass) = pluginSplit(current($this->uses));
+			[, $this->modelClass] = pluginSplit(current($this->uses));
 			foreach ($this->uses as $modelClass) {
 				$this->loadModel($modelClass);
 			}
@@ -281,7 +281,7 @@ class Shell extends CakeObject {
 	public function __isset($name) {
 		if (is_array($this->uses)) {
 			foreach ($this->uses as $modelClass) {
-				list(, $class) = pluginSplit($modelClass);
+				[, $class] = pluginSplit($modelClass);
 				if ($name === $class) {
 					return $this->loadModel($modelClass);
 				}
@@ -302,19 +302,19 @@ class Shell extends CakeObject {
 			$modelClass = $this->modelClass;
 		}
 
-		$this->uses = ($this->uses) ? (array)$this->uses : array();
+		$this->uses = ($this->uses) ? (array)$this->uses : [];
 		if (!in_array($modelClass, $this->uses)) {
 			$this->uses[] = $modelClass;
 		}
 
-		list($plugin, $modelClass) = pluginSplit($modelClass, true);
+		[$plugin, $modelClass] = pluginSplit($modelClass, true);
 		if (!isset($this->modelClass)) {
 			$this->modelClass = $modelClass;
 		}
 
-		$this->{$modelClass} = ClassRegistry::init(array(
+		$this->{$modelClass} = ClassRegistry::init([
 			'class' => $plugin . $modelClass, 'alias' => $modelClass, 'id' => $id
-		));
+		]);
 		if (!$this->{$modelClass}) {
 			throw new MissingModelException($modelClass);
 		}
@@ -356,14 +356,14 @@ class Shell extends CakeObject {
 	public function hasMethod(string $name) {
 		try {
 			$method = new ReflectionMethod($this, $name);
-			if (!$method->isPublic() || substr($name, 0, 1) === '_') {
+			if (!$method->isPublic() || str_starts_with($name, '_')) {
 				return false;
 			}
 			if ($method->getDeclaringClass()->name === 'Shell') {
 				return false;
 			}
 			return true;
-		} catch (ReflectionException $e) {
+		} catch (ReflectionException) {
 			return false;
 		}
 	}
@@ -429,7 +429,7 @@ class Shell extends CakeObject {
 
 		$this->OptionParser = $this->getOptionParser();
 		try {
-			list($this->params, $this->args) = $this->OptionParser->parse($argv, $command);
+			[$this->params, $this->args] = $this->OptionParser->parse($argv, $command);
 		} catch (ConsoleException $e) {
 			$this->err(__d('cake_console', '<error>Error:</error> %s', $e->getMessage()));
 			$this->out($this->OptionParser->help($command));
@@ -549,7 +549,7 @@ class Shell extends CakeObject {
 			} elseif (strpos($options, '/')) {
 				$options = explode('/', $options);
 			} else {
-				$options = array($options);
+				$options = [$options];
 			}
 		}
 		if (is_array($options)) {
@@ -615,7 +615,7 @@ class Shell extends CakeObject {
  * @see CakeText::wrap()
  * @link https://book.cakephp.org/2.0/en/console-and-shells.html#Shell::wrapText
  */
-	public function wrapText($text, $options = array()) {
+	public function wrapText($text, $options = []) {
 		return CakeText::wrap($text, $options);
 	}
 
@@ -665,7 +665,7 @@ class Shell extends CakeObject {
  * @return int|bool Returns the number of bytes returned from writing to stdout.
  */
 	public function overwrite($message, $newlines = 1, $size = null) {
-		$size = $size ? $size : $this->_lastWritten;
+		$size = $size ?: $this->_lastWritten;
 
 		// Output backspaces.
 		$this->out(str_repeat("\x08", $size), 0);
@@ -768,7 +768,7 @@ class Shell extends CakeObject {
 
 		if (is_file($path) && empty($this->params['force']) && $this->interactive === true) {
 			$this->out(__d('cake_console', '<warning>File `%s` exists</warning>', $path));
-			$key = $this->in(__d('cake_console', 'Do you want to overwrite?'), array('y', 'n', 'q'), 'n');
+			$key = $this->in(__d('cake_console', 'Do you want to overwrite?'), ['y', 'n', 'q'], 'n');
 
 			if (strtolower($key) === 'q') {
 				$this->out(__d('cake_console', '<error>Quitting</error>.'), 2);
@@ -805,7 +805,7 @@ class Shell extends CakeObject {
 		if (isset($this->_helpers[$name])) {
 			return $this->_helpers[$name];
 		}
-		list($plugin, $helperClassName) = pluginSplit($name, true);
+		[$plugin, $helperClassName] = pluginSplit($name, true);
 		$helperClassNameShellHelper = Inflector::camelize($helperClassName) . "ShellHelper";
 		App::uses($helperClassNameShellHelper, $plugin . "Console/Helper");
 		if (!class_exists($helperClassNameShellHelper)) {
@@ -828,12 +828,12 @@ class Shell extends CakeObject {
 		} elseif (@include 'PHPUnit' . DS . 'Autoload.php') {
 			//@codingStandardsIgnoreEnd
 			return true;
-		} elseif (App::import('Vendor', 'phpunit', array('file' => 'PHPUnit' . DS . 'Autoload.php'))) {
+		} elseif (App::import('Vendor', 'phpunit', ['file' => 'PHPUnit' . DS . 'Autoload.php'])) {
 			return true;
 		}
 
 		$prompt = __d('cake_console', 'PHPUnit is not installed. Do you want to bake unit test files anyway?');
-		$unitTest = $this->in($prompt, array('y', 'n'), 'y');
+		$unitTest = $this->in($prompt, ['y', 'n'], 'y');
 		$result = strtolower($unitTest) === 'y' || strtolower($unitTest) === 'yes';
 
 		if ($result) {
@@ -987,11 +987,11 @@ class Shell extends CakeObject {
  * @return void
  */
 	protected function _configureStdOutLogger() {
-		CakeLog::config('stdout', array(
+		CakeLog::config('stdout', [
 			'engine' => 'Console',
-			'types' => array('notice', 'info'),
+			'types' => ['notice', 'info'],
 			'stream' => $this->stdout,
-		));
+		]);
 	}
 
 /**
@@ -1000,11 +1000,11 @@ class Shell extends CakeObject {
  * @return void
  */
 	protected function _configureStdErrLogger() {
-		CakeLog::config('stderr', array(
+		CakeLog::config('stderr', [
 			'engine' => 'Console',
-			'types' => array('emergency', 'alert', 'critical', 'error', 'warning', 'debug'),
+			'types' => ['emergency', 'alert', 'critical', 'error', 'warning', 'debug'],
 			'stream' => $this->stderr,
-		));
+		]);
 	}
 
 /**

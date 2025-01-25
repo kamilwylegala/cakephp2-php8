@@ -98,7 +98,7 @@ class ExceptionRenderer {
 			$this->controller->appError($exception);
 			return;
 		}
-		$method = $template = Inflector::variable(str_replace('Exception', '', get_class($exception)));
+		$method = $template = Inflector::variable(str_replace('Exception', '', $exception::class));
 		$code = $exception->getCode();
 
 		$methodExists = method_exists($this, $method);
@@ -157,7 +157,7 @@ class ExceptionRenderer {
 				$controller = new CakeErrorController($request, $response);
 				$controller->startupProcess();
 				$startup = true;
-			} catch (Exception $e) {
+			} catch (Exception) {
 				$startup = false;
 			}
 			// Retry RequestHandler, as another aspect of startupProcess()
@@ -169,7 +169,7 @@ class ExceptionRenderer {
 			) {
 				try {
 					$controller->RequestHandler->startup($controller);
-				} catch (Exception $e) {
+				} catch (Exception) {
 				}
 			}
 		}
@@ -187,7 +187,7 @@ class ExceptionRenderer {
  */
 	public function render() {
 		if ($this->method) {
-			call_user_func_array(array($this, $this->method), array($this->error));
+			call_user_func_array([$this, $this->method], [$this->error]);
 		}
 	}
 
@@ -201,14 +201,14 @@ class ExceptionRenderer {
 		$url = $this->controller->request->here();
 		$code = ($error->getCode() >= 400 && $error->getCode() < 506) ? $error->getCode() : 500;
 		$this->controller->response->statusCode($code);
-		$this->controller->set(array(
+		$this->controller->set([
 			'code' => $code,
 			'name' => h($error->getMessage()),
 			'message' => h($error->getMessage()),
 			'url' => h($url),
 			'error' => $error,
-			'_serialize' => array('code', 'name', 'message', 'url')
-		));
+			'_serialize' => ['code', 'name', 'message', 'url']
+		]);
 		$this->controller->set($error->getAttributes());
 		$this->_outputMessage($this->template);
 	}
@@ -226,13 +226,13 @@ class ExceptionRenderer {
 		}
 		$url = $this->controller->request->here();
 		$this->controller->response->statusCode($error->getCode());
-		$this->controller->set(array(
+		$this->controller->set([
 			'name' => h($message),
 			'message' => h($message),
 			'url' => h($url),
 			'error' => $error,
-			'_serialize' => array('name', 'message', 'url')
-		));
+			'_serialize' => ['name', 'message', 'url']
+		]);
 		$this->_outputMessage('error400');
 	}
 
@@ -250,13 +250,13 @@ class ExceptionRenderer {
 		$url = $this->controller->request->here();
 		$code = ($error->getCode() > 500 && $error->getCode() < 506) ? $error->getCode() : 500;
 		$this->controller->response->statusCode($code);
-		$this->controller->set(array(
+		$this->controller->set([
 			'name' => h($message),
 			'message' => h($message),
 			'url' => h($url),
 			'error' => $error,
-			'_serialize' => array('name', 'message', 'url')
-		));
+			'_serialize' => ['name', 'message', 'url']
+		]);
 		$this->_outputMessage('error500');
 	}
 
@@ -270,14 +270,14 @@ class ExceptionRenderer {
 		$url = $this->controller->request->here();
 		$code = 500;
 		$this->controller->response->statusCode($code);
-		$this->controller->set(array(
+		$this->controller->set([
 			'code' => $code,
 			'name' => h($error->getMessage()),
 			'message' => h($error->getMessage()),
 			'url' => h($url),
 			'error' => $error,
-			'_serialize' => array('code', 'name', 'message', 'url', 'error')
-		));
+			'_serialize' => ['code', 'name', 'message', 'url', 'error']
+		]);
 		$this->_outputMessage($this->template);
 	}
 
@@ -294,7 +294,7 @@ class ExceptionRenderer {
 			$this->controller->response->send();
 		} catch (MissingViewException $e) {
 			$attributes = $e->getAttributes();
-			if (isset($attributes['file']) && strpos($attributes['file'], 'error500') !== false) {
+			if (isset($attributes['file']) && str_contains($attributes['file'], 'error500')) {
 				$this->_outputMessageSafe('error500');
 			} else {
 				$this->_outputMessage('error500');
@@ -305,7 +305,7 @@ class ExceptionRenderer {
 				$this->controller->plugin = null;
 			}
 			$this->_outputMessageSafe('error500');
-		} catch (Exception $e) {
+		} catch (Exception) {
 			$this->_outputMessageSafe('error500');
 		}
 	}
@@ -322,7 +322,7 @@ class ExceptionRenderer {
 		$this->controller->subDir = null;
 		$this->controller->viewPath = 'Errors';
 		$this->controller->layout = 'error';
-		$this->controller->helpers = array('Form', 'Html', 'Session');
+		$this->controller->helpers = ['Form', 'Html', 'Session'];
 
 		$view = new View($this->controller);
 		$this->controller->response->body($view->render($template, 'error'));
@@ -342,10 +342,10 @@ class ExceptionRenderer {
 		$this->controller->getEventManager()->dispatch($afterFilterEvent);
 
 		$Dispatcher = new Dispatcher();
-		$afterDispatchEvent = new CakeEvent('Dispatcher.afterDispatch', $Dispatcher, array(
+		$afterDispatchEvent = new CakeEvent('Dispatcher.afterDispatch', $Dispatcher, [
 			'request' => $this->controller->request,
 			'response' => $this->controller->response
-		));
+		]);
 		$Dispatcher->getEventManager()->dispatch($afterDispatchEvent);
 	}
 
