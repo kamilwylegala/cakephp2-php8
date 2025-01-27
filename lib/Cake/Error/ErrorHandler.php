@@ -302,10 +302,6 @@ class ErrorHandler {
 				$error = 'Notice';
 				$log = LOG_NOTICE;
 				break;
-			case E_STRICT:
-				$error = 'Strict';
-				$log = LOG_NOTICE;
-				break;
 			case E_DEPRECATED:
 			case E_USER_DEPRECATED:
 				$error = 'Deprecated';
