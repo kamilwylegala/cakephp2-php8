@@ -59,6 +59,11 @@ It means that composer will look at `master` branch of repository configured und
 
 ## Changelog
 
+### 2025-02-04
+
+- Fixes for PHP 8.4: `session_set_save_handler` accepts object, removed `E_STRICT` reference.
+- Removed github action with php code sniffer. It's quite painful to work with. Need to migrate to something newer, that will affect code base as little as possible.
+
 ### 2024-11-16
 
 - Inflector fix: str_place with null.
