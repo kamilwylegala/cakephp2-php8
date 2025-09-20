@@ -121,14 +121,26 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$this->Task->connection = 'test';
 		$this->Task->interactive = true;
-		$this->Task->expects($this->at(2))->method('out')->with(' 1. BakeArticles');
-		$this->Task->expects($this->at(3))->method('out')->with(' 2. BakeArticlesBakeTags');
-		$this->Task->expects($this->at(4))->method('out')->with(' 3. BakeComments');
-		$this->Task->expects($this->at(5))->method('out')->with(' 4. BakeTags');
+
+		$outCalls = [];
+		$this->Task->expects($this->any())
+			->method('out')
+			->willReturnCallback(function($message = '') use (&$outCalls) {
+				$outCalls[] = $message;
+			});
 
 		$expected = array('BakeArticles', 'BakeArticlesBakeTags', 'BakeComments', 'BakeTags');
 		$result = $this->Task->listAll('test');
 		$this->assertEquals($expected, $result);
+
+		$this->assertArrayHasKey(1, $outCalls);
+		$this->assertEquals(' 1. BakeArticles', $outCalls[1]);
+		$this->assertArrayHasKey(2, $outCalls);
+		$this->assertEquals(' 2. BakeArticlesBakeTags', $outCalls[2]);
+		$this->assertArrayHasKey(3, $outCalls);
+		$this->assertEquals(' 3. BakeComments', $outCalls[3]);
+		$this->assertArrayHasKey(4, $outCalls);
+		$this->assertEquals(' 4. BakeTags', $outCalls[4]);
 
 		$this->Task->interactive = false;
 		$result = $this->Task->listAll();
@@ -194,8 +206,10 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testDoHelpersTrailingSpace() {
-		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
-		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Text, Number, CustomOne  '));
+		$this->Task->expects($this->exactly(2))
+			->method('in')
+			->willReturnOnConsecutiveCalls('y', ' Text, Number, CustomOne  ');
+
 		$result = $this->Task->doHelpers();
 		$expected = array('Text', 'Number', 'CustomOne');
 		$this->assertEquals($expected, $result);
@@ -207,8 +221,10 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testDoHelpersTrailingCommas() {
-		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
-		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Text, Number, CustomOne, , '));
+		$this->Task->expects($this->exactly(2))
+			->method('in')
+			->willReturnOnConsecutiveCalls('y', ' Text, Number, CustomOne, , ');
+
 		$result = $this->Task->doHelpers();
 		$expected = array('Text', 'Number', 'CustomOne');
 		$this->assertEquals($expected, $result);
@@ -231,8 +247,9 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testDoComponentsTrailingSpaces() {
-		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
-		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' RequestHandler, Security  '));
+		$this->Task->expects($this->exactly(2))
+			->method('in')
+			->willReturnOnConsecutiveCalls('y', ' RequestHandler, Security  ');
 
 		$result = $this->Task->doComponents();
 		$expected = array('Paginator', 'RequestHandler', 'Security');
@@ -245,8 +262,9 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function testDoComponentsTrailingCommas() {
-		$this->Task->expects($this->at(0))->method('in')->will($this->returnValue('y'));
-		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' RequestHandler, Security, , '));
+		$this->Task->expects($this->exactly(2))
+			->method('in')
+			->willReturnOnConsecutiveCalls('y', ' RequestHandler, Security, , ');
 
 		$result = $this->Task->doComponents();
 		$expected = array('Paginator', 'RequestHandler', 'Security');
@@ -264,10 +282,23 @@ class ControllerTaskTest extends CakeTestCase {
 		$helpers = array('Js', 'Time');
 		$components = array('Acl', 'Auth');
 
-		$this->Task->expects($this->at(4))->method('out')->with("Controller Name:\n\t$controller");
-		$this->Task->expects($this->at(5))->method('out')->with("Helpers:\n\tJs, Time");
-		$this->Task->expects($this->at(6))->method('out')->with("Components:\n\tAcl, Auth");
+		$outCalls = [];
+		$this->Task->expects($this->any())
+			->method('out')
+			->willReturnCallback(function($message = '') use (&$outCalls) {
+				$outCalls[] = $message;
+			});
+
 		$this->Task->confirmController($controller, $scaffold, $helpers, $components);
+
+		$this->assertArrayHasKey(2, $outCalls);
+		$this->assertEquals("Controller Name:\n\t$controller", $outCalls[2]);
+
+		$this->assertArrayHasKey(3, $outCalls);
+		$this->assertEquals("Helpers:\n\tJs, Time", $outCalls[3]);
+
+		$this->assertArrayHasKey(4, $outCalls);
+		$this->assertEquals("Components:\n\tAcl, Auth", $outCalls[4]);
 	}
 
 /**
@@ -305,20 +336,24 @@ class ControllerTaskTest extends CakeTestCase {
 		CakePlugin::load('ControllerTest', array('path' => APP . 'Plugin' . DS . 'ControllerTest' . DS));
 		$path = APP . 'Plugin' . DS . 'ControllerTest' . DS . 'Controller' . DS . 'ArticlesController.php';
 
-		$this->Task->expects($this->at(1))->method('createFile')->with(
-			$path,
-			new \PHPUnit\Framework\Constraint\IsAnything()
-		);
-		$this->Task->expects($this->at(3))->method('createFile')->with(
-			$path,
-			$this->stringContains('ArticlesController extends ControllerTestAppController')
-		)->will($this->returnValue(true));
+		$createFileCalls = [];
+		$this->Task->expects($this->exactly(2))
+			->method('createFile')
+			->willReturnCallback(function($filePath, $content) use (&$createFileCalls) {
+				$createFileCalls[] = ['path' => $filePath, 'content' => $content];
+				return count($createFileCalls) === 2 ? true : null;
+			});
 
 		$this->Task->bake('Articles', '--actions--', array(), array(), array());
 
 		$this->Task->plugin = 'ControllerTest';
 		$path = APP . 'Plugin' . DS . 'ControllerTest' . DS . 'Controller' . DS . 'ArticlesController.php';
 		$result = $this->Task->bake('Articles', '--actions--', array(), array(), array());
+
+		$this->assertEquals($path, $createFileCalls[0]['path']);
+
+		$this->assertEquals($path, $createFileCalls[1]['path']);
+		$this->assertStringContainsString('ArticlesController extends ControllerTestAppController', $createFileCalls[1]['content']);
 
 		$this->assertStringContainsString("App::uses('ControllerTestAppController', 'ControllerTest.Controller');", $result);
 		$this->assertEquals('ControllerTest', $this->Task->Template->templateVars['plugin']);

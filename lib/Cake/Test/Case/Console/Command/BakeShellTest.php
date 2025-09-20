@@ -101,19 +101,21 @@ class BakeShellTest extends CakeTestCase {
 			->method('execute');
 
 		$this->Shell->expects($this->once())->method('_stop');
-		$this->Shell->expects($this->at(0))
-			->method('out')
-			->with('Bake All');
 
-		$this->Shell->expects($this->at(5))
+		$outCalls = [];
+		$this->Shell->expects($this->any())
 			->method('out')
-			->with('<success>Bake All complete</success>');
+			->willReturnCallback(function($message = '') use (&$outCalls) {
+				$outCalls[] = $message;
+			});
 
 		$this->Shell->connection = '';
 		$this->Shell->params = array();
 		$this->Shell->args = array('User');
 		$this->Shell->all();
 
+		$this->assertEquals('Bake All', $outCalls[0]);
+		$this->assertEquals('<success>Bake All complete</success>', $outCalls[2]);
 		$this->assertEquals('User', $this->Shell->View->args[0]);
 	}
 }

@@ -707,19 +707,24 @@ class HtmlHelperTest extends CakeTestCase {
 		$this->assertTags($result[1], $expected);
 		$this->assertEquals(2, count($result));
 
-		$this->View->expects($this->at(0))
+		$appendCalls = [];
+		$this->View->expects($this->exactly(2))
 			->method('append')
-			->with('css', $this->matchesRegularExpression('/css_in_head.css/'));
-
-		$this->View->expects($this->at(1))
-			->method('append')
-			->with('css', $this->matchesRegularExpression('/more_css_in_head.css/'));
+			->willReturnCallback(function($type, $content) use (&$appendCalls) {
+				$appendCalls[] = ['type' => $type, 'content' => $content];
+			});
 
 		$result = $this->Html->css('css_in_head', array('inline' => false));
 		$this->assertNull($result);
 
 		$result = $this->Html->css('more_css_in_head', array('inline' => false));
 		$this->assertNull($result);
+
+		$this->assertEquals('css', $appendCalls[0]['type']);
+		$this->assertMatchesRegularExpression('/css_in_head.css/', $appendCalls[0]['content']);
+
+		$this->assertEquals('css', $appendCalls[1]['type']);
+		$this->assertMatchesRegularExpression('/more_css_in_head.css/', $appendCalls[1]['content']);
 
 		$result = $this->Html->css('screen', array('rel' => 'import'));
 		$expected = array(
@@ -939,14 +944,21 @@ class HtmlHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testBufferedCssAndScriptWithIdenticalResourceName() {
-		$this->View->expects($this->at(0))
+		$appendCalls = [];
+		$this->View->expects($this->exactly(2))
 			->method('append')
-			->with('css', $this->stringContains('test.min.css'));
-		$this->View->expects($this->at(1))
-			->method('append')
-			->with('script', $this->stringContains('test.min.js'));
+			->willReturnCallback(function($type, $content) use (&$appendCalls) {
+				$appendCalls[] = ['type' => $type, 'content' => $content];
+			});
+
 		$this->Html->css('test.min', array('inline' => false));
 		$this->Html->script('test.min', array('inline' => false));
+
+		$this->assertEquals('css', $appendCalls[0]['type']);
+		$this->assertStringContainsString('test.min.css', $appendCalls[0]['content']);
+
+		$this->assertEquals('script', $appendCalls[1]['type']);
+		$this->assertStringContainsString('test.min.js', $appendCalls[1]['content']);
 	}
 
 /**
@@ -1172,17 +1184,12 @@ class HtmlHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testScriptWithBlocks() {
-		$this->View->expects($this->at(0))
+		$appendCalls = [];
+		$this->View->expects($this->exactly(3))
 			->method('append')
-			->with('script', $this->matchesRegularExpression('/script_in_head.js/'));
-
-		$this->View->expects($this->at(1))
-			->method('append')
-			->with('script', $this->matchesRegularExpression('/bool_false.js/'));
-
-		$this->View->expects($this->at(2))
-			->method('append')
-			->with('headScripts', $this->matchesRegularExpression('/second_script.js/'));
+			->willReturnCallback(function($block, $content) use (&$appendCalls) {
+				$appendCalls[] = ['block' => $block, 'content' => $content];
+			});
 
 		$result = $this->Html->script('script_in_head', array('inline' => false));
 		$this->assertNull($result);
@@ -1192,6 +1199,15 @@ class HtmlHelperTest extends CakeTestCase {
 
 		$result = $this->Html->script('second_script', array('block' => 'headScripts'));
 		$this->assertNull($result);
+
+		$this->assertEquals('script', $appendCalls[0]['block']);
+		$this->assertMatchesRegularExpression('/script_in_head.js/', $appendCalls[0]['content']);
+
+		$this->assertEquals('script', $appendCalls[1]['block']);
+		$this->assertMatchesRegularExpression('/bool_false.js/', $appendCalls[1]['content']);
+
+		$this->assertEquals('headScripts', $appendCalls[2]['block']);
+		$this->assertMatchesRegularExpression('/second_script.js/', $appendCalls[2]['content']);
 	}
 
 /**
@@ -1318,19 +1334,24 @@ class HtmlHelperTest extends CakeTestCase {
 		);
 		$this->assertTags($result, $expected);
 
-		$this->View->expects($this->at(0))
+		$appendCalls = [];
+		$this->View->expects($this->exactly(2))
 			->method('append')
-			->with('script', $this->matchesRegularExpression('/window\.foo\s\=\s2;/'));
-
-		$this->View->expects($this->at(1))
-			->method('append')
-			->with('scriptTop', $this->stringContains('alert('));
+			->willReturnCallback(function($block, $content) use (&$appendCalls) {
+				$appendCalls[] = ['block' => $block, 'content' => $content];
+			});
 
 		$result = $this->Html->scriptBlock('window.foo = 2;', array('inline' => false));
 		$this->assertNull($result);
 
 		$result = $this->Html->scriptBlock('alert("hi")', array('block' => 'scriptTop'));
 		$this->assertNull($result);
+
+		$this->assertEquals('script', $appendCalls[0]['block']);
+		$this->assertMatchesRegularExpression('/window\.foo\s\=\s2;/', $appendCalls[0]['content']);
+
+		$this->assertEquals('scriptTop', $appendCalls[1]['block']);
+		$this->assertStringContainsString('alert(', $appendCalls[1]['content']);
 
 		$result = $this->Html->scriptBlock('window.foo = 2;', array('safe' => false, 'encoding' => 'utf-8'));
 		$expected = array(
@@ -1872,19 +1893,24 @@ class HtmlHelperTest extends CakeTestCase {
  * @return void
  */
 	public function testMetaWithBlocks() {
-		$this->View->expects($this->at(0))
+		$appendCalls = [];
+		$this->View->expects($this->exactly(2))
 			->method('append')
-			->with('meta', $this->stringContains('ROBOTS'));
-
-		$this->View->expects($this->at(1))
-			->method('append')
-			->with('metaTags', $this->stringContains('favicon.ico'));
+			->willReturnCallback(function($block, $content) use (&$appendCalls) {
+				$appendCalls[] = ['block' => $block, 'content' => $content];
+			});
 
 		$result = $this->Html->meta(array('name' => 'ROBOTS', 'content' => 'ALL'), null, array('inline' => false));
 		$this->assertNull($result);
 
 		$result = $this->Html->meta('icon', 'favicon.ico', array('block' => 'metaTags'));
 		$this->assertNull($result);
+
+		$this->assertEquals('meta', $appendCalls[0]['block']);
+		$this->assertStringContainsString('ROBOTS', $appendCalls[0]['content']);
+
+		$this->assertEquals('metaTags', $appendCalls[1]['block']);
+		$this->assertStringContainsString('favicon.ico', $appendCalls[1]['content']);
 	}
 
 /**

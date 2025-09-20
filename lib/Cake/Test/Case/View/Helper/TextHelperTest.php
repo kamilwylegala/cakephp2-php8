@@ -80,14 +80,27 @@ class TextHelperTest extends CakeTestCase {
 	public function testTextHelperProxyMethodCalls() {
 		$methods = array(
 			'highlight', 'stripLinks', 'truncate', 'tail', 'excerpt', 'toList',
-			);
+		);
+
 		$CakeText = $this->getMock('CakeTextMock', $methods);
 		$Text = new TextHelperTestObject($this->View, array('engine' => 'CakeTextMock'));
 		$Text->attach($CakeText);
+
+		$calledMethods = [];
 		foreach ($methods as $method) {
-			$CakeText->expects($this->at(0))->method($method);
+			$CakeText->expects($this->once())
+				->method($method)
+				->willReturnCallback(function() use ($method, &$calledMethods) {
+					$calledMethods[] = $method;
+					return null;
+				});
+		}
+
+		foreach ($methods as $method) {
 			$Text->{$method}('who', 'what', 'when', 'where', 'how');
 		}
+
+		$this->assertEquals($methods, $calledMethods);
 	}
 
 /**

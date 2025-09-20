@@ -53,7 +53,12 @@ class ApiShellTest extends CakeTestCase {
  */
 	public function testMethodNameDetection() {
 		$this->Shell->expects($this->any())->method('in')->will($this->returnValue('q'));
-		$this->Shell->expects($this->at(0))->method('out')->with('Controller');
+		$outCalls = [];
+		$this->Shell->expects($this->any())
+			->method('out')
+			->willReturnCallback(function($message = '') use (&$outCalls) {
+				$outCalls[] = $message;
+			});
 
 		$expected = array(
 			'1. afterFilter()',
@@ -86,10 +91,12 @@ class ApiShellTest extends CakeTestCase {
 			'28. validate()',
 			'29. validateErrors()'
 		);
-		$this->Shell->expects($this->at(2))->method('out')->with($expected);
 
 		$this->Shell->args = array('controller');
 		$this->Shell->paths['controller'] = CAKE . 'Controller' . DS;
 		$this->Shell->main();
+
+		$this->assertEquals('Controller', $outCalls[0]);
+		$this->assertEquals($expected, $outCalls[1]);
 	}
 }

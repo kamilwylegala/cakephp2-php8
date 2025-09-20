@@ -76,14 +76,27 @@ class NumberHelperTest extends CakeTestCase {
 		$methods = array(
 			'precision', 'toReadableSize', 'toPercentage', 'format',
 			'currency', 'addFormat',
-			);
+		);
+
 		$CakeNumber = $this->getMock('CakeNumberMock', $methods);
 		$Number = new NumberHelperTestObject($this->View, array('engine' => 'CakeNumberMock'));
 		$Number->attach($CakeNumber);
+
+		$calledMethods = [];
 		foreach ($methods as $method) {
-			$CakeNumber->expects($this->at(0))->method($method);
+			$CakeNumber->expects($this->once())
+				->method($method)
+				->willReturnCallback(function() use ($method, &$calledMethods) {
+					$calledMethods[] = $method;
+					return null;
+				});
+		}
+
+		foreach ($methods as $method) {
 			$Number->{$method}('who', 'what', 'when', 'where', 'how');
 		}
+
+		$this->assertEquals($methods, $calledMethods);
 	}
 
 /**

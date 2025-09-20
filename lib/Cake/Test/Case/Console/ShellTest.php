@@ -245,29 +245,9 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testIn() {
-		$this->Shell->stdin->expects($this->at(0))
+		$this->Shell->stdin->expects($this->exactly(6))
 			->method('read')
-			->will($this->returnValue('n'));
-
-		$this->Shell->stdin->expects($this->at(1))
-			->method('read')
-			->will($this->returnValue('Y'));
-
-		$this->Shell->stdin->expects($this->at(2))
-			->method('read')
-			->will($this->returnValue('y'));
-
-		$this->Shell->stdin->expects($this->at(3))
-			->method('read')
-			->will($this->returnValue('y'));
-
-		$this->Shell->stdin->expects($this->at(4))
-			->method('read')
-			->will($this->returnValue('y'));
-
-		$this->Shell->stdin->expects($this->at(5))
-			->method('read')
-			->will($this->returnValue('0'));
+			->willReturnOnConsecutiveCalls('n', 'Y', 'y', 'y', 'y', '0');
 
 		$result = $this->Shell->in('Just a test?', array('y', 'n'), 'n');
 		$this->assertEquals('n', $result);
@@ -306,29 +286,24 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testOut() {
-		$this->Shell->stdout->expects($this->at(0))
+		$writeCalls = [];
+		$this->Shell->stdout->expects($this->exactly(4))
 			->method('write')
-			->with("Just a test", 1);
-
-		$this->Shell->stdout->expects($this->at(1))
-			->method('write')
-			->with(array('Just', 'a', 'test'), 1);
-
-		$this->Shell->stdout->expects($this->at(2))
-			->method('write')
-			->with(array('Just', 'a', 'test'), 2);
-
-		$this->Shell->stdout->expects($this->at(3))
-			->method('write')
-			->with('', 1);
+			->willReturnCallback(function($message, $newlines = 1) use (&$writeCalls) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+			});
 
 		$this->Shell->out('Just a test');
-
 		$this->Shell->out(array('Just', 'a', 'test'));
-
 		$this->Shell->out(array('Just', 'a', 'test'), 2);
-
 		$this->Shell->out();
+
+		$this->assertEquals([
+			['message' => "Just a test", 'newlines' => 1],
+			['message' => array('Just', 'a', 'test'), 'newlines' => 1],
+			['message' => array('Just', 'a', 'test'), 'newlines' => 2],
+			['message' => '', 'newlines' => 1]
+		], $writeCalls);
 	}
 
 /**
@@ -337,12 +312,12 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testVerboseOutput() {
-		$this->Shell->stdout->expects($this->at(0))->method('write')
-			->with('Verbose', 1);
-		$this->Shell->stdout->expects($this->at(1))->method('write')
-			->with('Normal', 1);
-		$this->Shell->stdout->expects($this->at(2))->method('write')
-			->with('Quiet', 1);
+		$writeCalls = [];
+		$this->Shell->stdout->expects($this->exactly(3))
+			->method('write')
+			->willReturnCallback(function($message, $newlines) use (&$writeCalls) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+			});
 
 		$this->Shell->params['verbose'] = true;
 		$this->Shell->params['quiet'] = false;
@@ -350,6 +325,12 @@ class ShellTest extends CakeTestCase {
 		$this->Shell->out('Verbose', 1, Shell::VERBOSE);
 		$this->Shell->out('Normal', 1, Shell::NORMAL);
 		$this->Shell->out('Quiet', 1, Shell::QUIET);
+
+		$this->assertEquals([
+			['message' => 'Verbose', 'newlines' => 1],
+			['message' => 'Normal', 'newlines' => 1],
+			['message' => 'Quiet', 'newlines' => 1]
+		], $writeCalls);
 	}
 
 /**
@@ -376,27 +357,29 @@ class ShellTest extends CakeTestCase {
  */
 	public function testOverwrite() {
 		$number = strlen('Some text I want to overwrite');
+		$writeCalls = [];
+		$returnValues = [$number, $number, 9, $number - 9, null];
+		$callIndex = 0;
 
-		$this->Shell->stdout->expects($this->at(0))
+		$this->Shell->stdout->expects($this->exactly(5))
 			->method('write')
-			->with('Some <info>text</info> I want to overwrite', 0)
-			->will($this->returnValue($number));
-
-		$this->Shell->stdout->expects($this->at(1))
-			->method('write')
-			->with(str_repeat("\x08", $number), 0);
-
-		$this->Shell->stdout->expects($this->at(2))
-			->method('write')
-			->with('Less text', 0)
-			->will($this->returnValue(9));
-
-		$this->Shell->stdout->expects($this->at(3))
-			->method('write')
-			->with(str_repeat(' ', $number - 9), 0);
+			->willReturnCallback(function($message, $newlines) use (&$writeCalls, &$callIndex, $returnValues) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+				$return = $returnValues[$callIndex];
+				$callIndex++;
+				return $return;
+			});
 
 		$this->Shell->out('Some <info>text</info> I want to overwrite', 0);
 		$this->Shell->overwrite('Less text');
+
+		$this->assertEquals([
+			['message' => 'Some <info>text</info> I want to overwrite', 'newlines' => 0],
+			['message' => str_repeat("\x08", $number), 'newlines' => 0],
+			['message' => 'Less text', 'newlines' => 0],
+			['message' => str_repeat(' ', $number - 9), 'newlines' => 0],
+			['message' => "\n", 'newlines' => 0],
+		], $writeCalls);
 	}
 
 /**
@@ -405,29 +388,24 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testErr() {
-		$this->Shell->stderr->expects($this->at(0))
+		$writeCalls = [];
+		$this->Shell->stderr->expects($this->exactly(4))
 			->method('write')
-			->with("Just a test", 1);
-
-		$this->Shell->stderr->expects($this->at(1))
-			->method('write')
-			->with(array('Just', 'a', 'test'), 1);
-
-		$this->Shell->stderr->expects($this->at(2))
-			->method('write')
-			->with(array('Just', 'a', 'test'), 2);
-
-		$this->Shell->stderr->expects($this->at(3))
-			->method('write')
-			->with('', 1);
+			->willReturnCallback(function($message, $newlines = 1) use (&$writeCalls) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+			});
 
 		$this->Shell->err('Just a test');
-
 		$this->Shell->err(array('Just', 'a', 'test'));
-
 		$this->Shell->err(array('Just', 'a', 'test'), 2);
-
 		$this->Shell->err();
+
+		$this->assertEquals([
+			['message' => 'Just a test', 'newlines' => 1],
+			['message' => ['Just', 'a', 'test'], 'newlines' => 1],
+			['message' => ['Just', 'a', 'test'], 'newlines' => 2],
+			['message' => '', 'newlines' => 1]
+		], $writeCalls);
 	}
 
 /**
@@ -454,24 +432,30 @@ class ShellTest extends CakeTestCase {
  */
 	public function testHr() {
 		$bar = '---------------------------------------------------------------';
-
-		$this->Shell->stdout->expects($this->at(0))->method('write')->with('', 0);
-		$this->Shell->stdout->expects($this->at(1))->method('write')->with($bar, 1);
-		$this->Shell->stdout->expects($this->at(2))->method('write')->with('', 0);
-
-		$this->Shell->stdout->expects($this->at(3))->method('write')->with("", true);
-		$this->Shell->stdout->expects($this->at(4))->method('write')->with($bar, 1);
-		$this->Shell->stdout->expects($this->at(5))->method('write')->with("", true);
-
-		$this->Shell->stdout->expects($this->at(6))->method('write')->with("", 2);
-		$this->Shell->stdout->expects($this->at(7))->method('write')->with($bar, 1);
-		$this->Shell->stdout->expects($this->at(8))->method('write')->with("", 2);
+		$writeCalls = [];
+		$this->Shell->stdout->expects($this->exactly(9))
+			->method('write')
+			->willReturnCallback(function($message, $newlines) use (&$writeCalls) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+			});
 
 		$this->Shell->hr();
-
 		$this->Shell->hr(true);
-
 		$this->Shell->hr(2);
+
+		$this->assertEquals([
+			['message' => '', 'newlines' => 0],
+			['message' => $bar, 'newlines' => 1],
+			['message' => '', 'newlines' => 0],
+
+			['message' => '', 'newlines' => true],
+			['message' => $bar, 'newlines' => 1],
+			['message' => '', 'newlines' => true],
+
+			['message' => '', 'newlines' => 2],
+			['message' => $bar, 'newlines' => 1],
+			['message' => '', 'newlines' => 2]
+		], $writeCalls);
 	}
 
 /**
@@ -480,17 +464,12 @@ class ShellTest extends CakeTestCase {
  * @return void
  */
 	public function testError() {
-		$this->Shell->stderr->expects($this->at(0))
+		$writeCalls = [];
+		$this->Shell->stderr->expects($this->exactly(3))
 			->method('write')
-			->with("<error>Error:</error> Foo Not Found", 1);
-
-		$this->Shell->stderr->expects($this->at(1))
-			->method('write')
-			->with("<error>Error:</error> Foo Not Found", 1);
-
-		$this->Shell->stderr->expects($this->at(2))
-			->method('write')
-			->with("Searched all...", 1);
+			->willReturnCallback(function($message, $newlines) use (&$writeCalls) {
+				$writeCalls[] = ['message' => $message, 'newlines' => $newlines];
+			});
 
 		$this->Shell->error('Foo Not Found');
 		$this->assertSame($this->Shell->stopped, 1);
@@ -499,6 +478,12 @@ class ShellTest extends CakeTestCase {
 
 		$this->Shell->error('Foo Not Found', 'Searched all...');
 		$this->assertSame($this->Shell->stopped, 1);
+
+		$this->assertEquals([
+			['message' => '<error>Error:</error> Foo Not Found', 'newlines' => 1],
+			['message' => '<error>Error:</error> Foo Not Found', 'newlines' => 1],
+			['message' => 'Searched all...', 'newlines' => 1]
+		], $writeCalls);
 	}
 
 /**
@@ -634,13 +619,15 @@ class ShellTest extends CakeTestCase {
 
 		$this->Shell->interactive = true;
 
-		$this->Shell->stdin->expects($this->at(0))
+		$readReturns = ['n', 'y'];
+		$readCallIndex = 0;
+		$this->Shell->stdin->expects($this->exactly(2))
 			->method('read')
-			->will($this->returnValue('n'));
-
-		$this->Shell->stdin->expects($this->at(1))
-			->method('read')
-			->will($this->returnValue('y'));
+			->willReturnCallback(function() use ($readReturns, &$readCallIndex) {
+				$return = $readReturns[$readCallIndex];
+				$readCallIndex++;
+				return $return;
+			});
 
 		$contents = "<?php{$eol}echo 'yet another test';{$eol}\$te = 'st';{$eol}";
 		$result = $this->Shell->createFile($file, $contents);

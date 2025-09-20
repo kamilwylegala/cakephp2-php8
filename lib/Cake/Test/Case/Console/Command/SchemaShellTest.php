@@ -270,11 +270,15 @@ class SchemaShellTest extends CakeTestCase {
 		$this->Shell->params['force'] = false;
 		$this->Shell->args = array('snapshot');
 		$this->Shell->Schema = $this->getMock('CakeSchema');
-		$this->Shell->Schema->expects($this->at(0))->method('read')->will($this->returnValue(array('schema data')));
-		$this->Shell->Schema->expects($this->at(0))->method('write')->will($this->returnValue(true));
 
-		$this->Shell->Schema->expects($this->at(1))->method('read');
-		$this->Shell->Schema->expects($this->at(1))->method('write')->with(array('schema data', 'file' => 'schema_0.php'));
+		$this->Shell->Schema->expects($this->once())
+			->method('read')
+			->willReturn(array('schema data'));
+
+		$this->Shell->Schema->expects($this->once())
+			->method('write')
+			->with(array('schema data', 'file' => 'schema_0.php'))
+			->willReturn(true);
 
 		$this->Shell->generate();
 	}
@@ -312,19 +316,30 @@ class SchemaShellTest extends CakeTestCase {
 
 		$this->Shell->expects($this->once())->method('in')->will($this->returnValue('o'));
 
-		$this->Shell->expects($this->at(2))->method('out')
-			->with(new PHPUnit\Framework\Constraint\RegularExpression('/Schema file:\s[a-z\.]+\sgenerated/'));
+		$outCalls = [];
+		$this->Shell->expects($this->any())
+			->method('out')
+			->willReturnCallback(function($message = '') use (&$outCalls) {
+				$outCalls[] = $message;
+			});
 
 		$this->Shell->Schema = $this->getMock('CakeSchema');
 		$this->Shell->Schema->path = TMP;
-		$this->Shell->Schema->expects($this->once())->method('read')->will($this->returnValue(array('schema data')));
-		$this->Shell->Schema->expects($this->once())->method('write')->will($this->returnValue(true));
 
-		$this->Shell->Schema->expects($this->once())->method('read');
-		$this->Shell->Schema->expects($this->once())->method('write')
-			->with(array('schema data', 'file' => 'schema.php'));
+		$this->Shell->Schema->expects($this->once())
+			->method('read')
+			->will($this->returnValue(array('schema data')));
+
+		$this->Shell->Schema->expects($this->once())
+			->method('write')
+			->with(array('schema data', 'file' => 'schema.php'))
+			->will($this->returnValue(true));
 
 		$this->Shell->generate();
+
+		$this->assertArrayHasKey(1, $outCalls);
+		$this->assertMatchesRegularExpression('/Schema file:\s[a-z\.]+\sgenerated/', $outCalls[1]);
+
 		unlink(TMP . 'schema.php');
 	}
 

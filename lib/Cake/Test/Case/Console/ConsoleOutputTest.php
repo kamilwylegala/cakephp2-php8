@@ -24,23 +24,22 @@ App::uses('ConsoleOutput', 'Console');
  * @package       Cake.Test.Case.Console
  */
 class ConsoleOutputTest extends CakeTestCase {
-
-/**
- * setup
- *
- * @return void
- */
+	/**
+	 * setup
+	 *
+	 * @return void
+	 */
 	public function setUp() : void {
 		parent::setUp();
 		$this->output = $this->getMock('ConsoleOutput', array('_write'));
 		$this->output->outputAs(ConsoleOutput::COLOR);
 	}
 
-/**
- * tearDown
- *
- * @return void
- */
+	/**
+	 * tearDown
+	 *
+	 * @return void
+	 */
 	public function tearDown() : void {
 		parent::tearDown();
 		unset($this->output);
@@ -94,32 +93,39 @@ class ConsoleOutputTest extends CakeTestCase {
 		$this->output->write(array('Line', 'Line', 'Line'));
 	}
 
-/**
- * test writing an array of messages.
- *
- * @return void
- */
+	/**
+	 * test writing an array of messages.
+	 *
+	 * @return void
+	 */
 	public function testOverwrite() {
 		$testString = "Text";
+		$overwriteTestString = "Overwriting text";
 
-		$this->output->expects($this->at(0))->method('_write')
-			->with($testString);
-
-		$this->output->expects($this->at(1))->method('_write')
-			->with("");
-
-		$this->output->expects($this->at(2))->method('_write')
-			->with("Overwriting text");
+		$actualCalls = [];
+		$this->output->expects($this->any(4))
+			->method('_write')
+			->willReturnCallback(function($arg) use (&$actualCalls) {
+				$actualCalls[] = $arg;
+			});
 
 		$this->output->write($testString, 0);
-		$this->output->overwrite("Overwriting text");
+		$this->output->overwrite($overwriteTestString);
+
+		// 呼び出し後に検証
+		$this->assertEquals([
+			$testString,
+			"",
+			$overwriteTestString,
+			"\n",
+		], $actualCalls);
 	}
 
-/**
- * test getting a style.
- *
- * @return void
- */
+	/**
+	 * test getting a style.
+	 *
+	 * @return void
+	 */
 	public function testStylesGet() {
 		$result = $this->output->styles('error');
 		$expected = array('text' => 'red', 'underline' => true);
