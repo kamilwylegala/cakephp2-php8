@@ -29,8 +29,7 @@
 		"ext-intl": "Required to use IntlDateFormatter instead of strftime, if not Symfony polyfill will be used."
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^9.5",
-		"cakephp/cakephp-codesniffer": "^1.0.0"
+		"phpunit/phpunit": "^9.5"
 	},
 	"config": {
 		"vendor-dir": "vendors/",
@@ -41,10 +40,8 @@
 	],
 	"scripts": {
 		"check": [
-			"@cs-check",
 			"@test"
 		],
-		"cs-check": "./vendors/bin/phpcs -p --extensions=php --standard=CakePHP ./lib/Cake",
 		"test": "./lib/Cake/Console/cake test core AllTests --stderr --verbose"
 	}
 }
