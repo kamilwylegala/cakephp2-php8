@@ -161,14 +161,23 @@ class Mysql extends DboSource {
 		$config = $this->config;
 		$this->connected = false;
 
+		// PDO::MYSQL_ATTR_* constants are deprecated in PHP 8.5; Pdo\Mysql class is available since PHP 8.1
+		if (class_exists('Pdo\Mysql')) {
+			$mysqlAttrUseBufferedQuery = Pdo\Mysql::ATTR_USE_BUFFERED_QUERY;
+			$mysqlAttrInitCommand = Pdo\Mysql::ATTR_INIT_COMMAND;
+		} else {
+			$mysqlAttrUseBufferedQuery = PDO::MYSQL_ATTR_USE_BUFFERED_QUERY;
+			$mysqlAttrInitCommand = PDO::MYSQL_ATTR_INIT_COMMAND;
+		}
+
 		$flags = $config['flags'] + array(
 			PDO::ATTR_PERSISTENT => $config['persistent'],
-			PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+			$mysqlAttrUseBufferedQuery => true,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 		);
 
 		if (!empty($config['encoding'])) {
-			$flags[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . $config['encoding'];
+			$flags[$mysqlAttrInitCommand] = 'SET NAMES ' . $config['encoding'];
 		}
 		if (!empty($config['ssl_key']) && !empty($config['ssl_cert'])) {
 			$flags[PDO::MYSQL_ATTR_SSL_KEY] = $config['ssl_key'];
