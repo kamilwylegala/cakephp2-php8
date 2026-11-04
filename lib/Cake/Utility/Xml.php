@@ -107,7 +107,7 @@ class Xml {
 			return static::_loadXml($input, $options);
 		} elseif ($options['readFile'] && file_exists($input)) {
 			return static::_loadXml(file_get_contents($input), $options);
-		} elseif ($options['readFile'] && strpos($input, 'http://') === 0 || strpos($input, 'https://') === 0) {
+		} elseif ($options['readFile'] && (strpos($input, 'http://') === 0 || strpos($input, 'https://') === 0)) {
 			try {
 				$socket = new HttpSocket(array('request' => array('redirect' => 10)));
 				$response = $socket->get($input);

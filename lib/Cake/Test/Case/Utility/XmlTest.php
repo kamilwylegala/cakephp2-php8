@@ -202,6 +202,17 @@ class XmlTest extends CakeTestCase {
 	}
 
 /**
+ * Test that the readFile option disables https url parsing too.
+ *
+ * @return void
+ */
+	public function testBuildFromHttpsUrlWhenDisabled() {
+		$this->expectException(XmlException::class);
+		$xml = 'https://www.google.com';
+		Xml::build($xml, array('readFile' => false));
+	}
+
+/**
  * data provider function for testBuildInvalidData
  *
  * @return array
